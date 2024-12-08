@@ -1,0 +1,8 @@
+menu "Drivers"
+
+rsource "auxdisplay/Kconfig"
+rsource "gpio/Kconfig"
+rsource "led_strip/Kconfig"
+rsource "sensor/Kconfig"
+
+endmenu

@@ -1,0 +1,5 @@
+# NTURT dashboard configuration
+
+if BOARD_DASHBOARD
+
+endif # BOARD_DASHBOARD

@@ -1,0 +1,18 @@
+description: |
+  RES Instrument ZX series linear traveral sensor.
+
+compatible: "res,zx"
+
+include: sensor-device.yaml
+
+properties:
+  io-channels:
+    type: phandle-array
+    required: true
+    description: |
+      The ADC channel connected to the sensor.
+  stroke:
+    type: int
+    required: true
+    description: |
+      Stroke of the sensor in mm.

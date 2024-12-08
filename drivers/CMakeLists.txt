@@ -1,0 +1,4 @@
+add_subdirectory_ifdef(CONFIG_AUXDISPLAY auxdisplay)
+add_subdirectory_ifdef(CONFIG_GPIO gpio)
+add_subdirectory_ifdef(CONFIG_LED_STRIP led_strip)
+add_subdirectory_ifdef(CONFIG_SENSOR sensor)

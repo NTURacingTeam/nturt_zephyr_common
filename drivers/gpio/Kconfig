@@ -1,0 +1,5 @@
+if GPIO
+
+rsource "Kconfig.74hc595"
+
+endif # GPIO

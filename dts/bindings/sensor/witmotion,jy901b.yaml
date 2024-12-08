@@ -1,0 +1,7 @@
+description: |
+  Wit Motion JY901B Ten-Axis Intertial Measurement Unit. See more info at
+  https://wit-motion.yuque.com/wumwnr/docs/sozgn8
+
+compatible: "witmotion,jy901b"
+
+include: [sensor-device.yaml, i2c-device.yaml]

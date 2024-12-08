@@ -1,0 +1,29 @@
+description: |
+  SSI Technologies P51 series pressure sensor with current output.
+
+compatible: "ssi,p51-curr"
+
+include: sensor-device.yaml
+
+properties:
+  io-channels:
+    type: phandle-array
+    required: true
+    description: |
+      The ADC channel connected to the sensor.
+  full-scale:
+    type: int
+    required: true
+    description: |
+      Sensor pressure full scale in psi.
+  shunt-resistor:
+    type: int
+    required: true
+    description: |
+      Value of the shunt resistor in milli-ohms.
+  tolerance:
+    type: int
+    default: 5
+    description: |
+      Current value tolerance before it's considered out
+      of valid range and in percentage.

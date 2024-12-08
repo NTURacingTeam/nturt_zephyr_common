@@ -1,0 +1,19 @@
+description: |
+  Array of LEDs controlled by GPIO as a single LED strip.
+
+compatible: gpio-led-strip
+
+include: led-strip.yaml
+
+properties:
+  red-gpios:
+    type: phandle-array
+    description: GPIO pins for red channel.
+
+  green-gpios:
+    type: phandle-array
+    description: GPIO pins for green channel.
+
+  blue-gpios:
+    type: phandle-array
+    description: GPIO pins for blue channel.

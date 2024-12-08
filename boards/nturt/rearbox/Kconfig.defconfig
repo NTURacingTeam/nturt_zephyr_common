@@ -1,0 +1,5 @@
+# NTURT rearbox configuration
+
+if BOARD_REARBOX
+
+endif # BOARD_REARBOX

@@ -1,0 +1,24 @@
+menuconfig JY901B
+    bool "Wit Motion JY901B Ten-Axis Intertial Measurement Unit"
+    default y
+    depends on I2C && DT_HAS_WITMOTION_JY901B_ENABLED
+    help
+      Enable driver for JY901B I2C-based ten-axis intertial measurement unit.
+
+if JY901B
+
+choice
+  prompt "JY901B_ORIEN_MODE"
+  default JY901B_ORIEN_ABSLOUTE
+  help
+    Specify the type of orientation angles/quaternions to be used by the driver.
+
+config JY901B_ORIEN_ABSLOUTE
+  bool "Absolute orientation using magnetometer"
+
+config JY901B_ORIEN_RELATIVE
+  bool "Relative orientation without magnetometer"
+
+endchoice
+
+endif # JY901B

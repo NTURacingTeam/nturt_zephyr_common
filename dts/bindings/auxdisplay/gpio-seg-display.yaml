@@ -1,0 +1,86 @@
+description: |
+  Seven segment displays that are controlled by GPIOs with decimal point
+  support. Forms a multi-digit auxiliary display from multiple displays.
+
+  Example configuration:
+
+  auxdisplay_0: auxdisplay {
+      compatible = "gpio-seg-display";
+      #address-cells = <1>;
+      #size-cells = <0>;
+      decimal-point;
+      columns = <2>;
+      rows = <1>;
+      status = "okay";
+
+      seg-display@0 {
+          reg = <0>;
+          segment-gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>,
+                          <&gpioa 1 GPIO_ACTIVE_HIGH>,
+                          <&gpioa 2 GPIO_ACTIVE_HIGH>,
+                          <&gpioa 3 GPIO_ACTIVE_HIGH>,
+                          <&gpioa 4 GPIO_ACTIVE_HIGH>,
+                          <&gpioa 5 GPIO_ACTIVE_HIGH>,
+                          <&gpioa 6 GPIO_ACTIVE_HIGH>,
+                          <&gpioa 7 GPIO_ACTIVE_HIGH>;
+      };
+
+      seg-display@1 {
+          reg = <1>;
+          segment-gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>,
+                          <&gpiob 1 GPIO_ACTIVE_HIGH>,
+                          <&gpiob 2 GPIO_ACTIVE_HIGH>,
+                          <&gpiob 3 GPIO_ACTIVE_HIGH>,
+                          <&gpiob 4 GPIO_ACTIVE_HIGH>,
+                          <&gpiob 5 GPIO_ACTIVE_HIGH>,
+                          <&gpiob 6 GPIO_ACTIVE_HIGH>,
+                          <&gpiob 7 GPIO_ACTIVE_HIGH>;
+      };
+  };
+
+compatible: gpio-seg-display
+
+include: auxdisplay-device.yaml
+
+properties:
+  "#address-cells":
+    required: true
+    const: 1
+
+  "#size-cells":
+    required: true
+    const: 0
+
+  decimal-point:
+    type: boolean
+    description: |
+      If present, the 7-segment display has a decimal point.
+
+child-binding:
+  description: |
+    Each 7-segment display in the auxiliary display.
+
+  properties:
+    reg:
+      type: array
+      required: true
+      description: |
+        Index of the 7-segment display in the auxiliary display, the index
+        increments from left to right, top to bottom.
+
+    segment-gpios:
+      type: phandle-array
+      required: true
+      description: |
+        An array of GPIOs one per segment. The index of GPIOs correspond to
+        segments according to the following diagram. Some displays also have a
+        decimal point which can be specified as an optional segment with the
+        index 7.
+
+              0
+              ---
+            5|   |1
+              -6-
+            4|   |2
+              ---  .
+              3    7

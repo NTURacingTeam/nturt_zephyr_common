@@ -1,0 +1,24 @@
+menuconfig NTURT
+    bool "NTURT common library"
+    help
+      Enables NTU Racing Team common library
+
+if NTURT
+
+module = NTURT
+module-str = NTURT
+source "subsys/logging/Kconfig.template.log_config"
+
+config NTURT_FRONT_INV
+    bool "Has front inverter"
+
+config NTURT_FRONT_WHL_SPD
+    bool "Has front front wheel speed sensor"
+    depends on !NTURT_FRONT_INV
+
+config NTURT_FRONT_SUSP
+    bool "Has front suspension"
+
+rsource "subsys/Kconfig"
+
+endif # NTURT

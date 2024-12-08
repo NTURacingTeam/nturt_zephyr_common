@@ -1,0 +1,16 @@
+menuconfig GPIO_74HC595
+    bool "Diodes Incorporated 74HC595 shift register as GPIO extender"
+    default y
+    depends on SPI &&  DT_HAS_DIODES_74HC595_ENABLED
+    help
+      Enable driver for 74HC595 shift register as GPIO extender
+
+if GPIO_74HC595
+
+config GPIO_74HC595_INIT_PRIORITY
+    int "Init priority"
+    default 71
+    help
+      Device driver initialization priority.
+
+endif # GPIO_74HC595

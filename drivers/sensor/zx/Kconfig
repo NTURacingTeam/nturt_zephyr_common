@@ -1,0 +1,10 @@
+menuconfig ZX
+    bool "RES Instrument ZX series linear traveral sensor"
+    default y
+    depends on ADC && DT_HAS_RES_ZX_ENABLED
+    help
+      Enable driver for ZX series linear traveral sensor.
+
+if ZX
+
+endif # ZX

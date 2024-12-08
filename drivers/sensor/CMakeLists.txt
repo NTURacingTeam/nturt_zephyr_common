@@ -1,0 +1,5 @@
+add_subdirectory_ifdef(CONFIG_AMT21 amt21)
+add_subdirectory_ifdef(CONFIG_HALL_RPM hall-rpm)
+add_subdirectory_ifdef(CONFIG_JY901B jy901b)
+add_subdirectory_ifdef(CONFIG_P51_CURR p51-curr)
+add_subdirectory_ifdef(CONFIG_ZX zx)

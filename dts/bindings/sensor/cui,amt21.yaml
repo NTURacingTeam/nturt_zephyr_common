@@ -1,0 +1,17 @@
+description: |
+  CDI Devices AMT21 series absolute encoder.
+
+compatible: "cui,amt21"
+
+include: [sensor-device.yaml, uart-device.yaml]
+
+properties:
+  addr:
+    type: int
+    required: true
+    description: Device address as specified in the datasheet.
+
+  multi-turn:
+    type: boolean
+    description: |
+      If the encoder is multi-turn, i.e. part number AMT21xC, D, G, or H.

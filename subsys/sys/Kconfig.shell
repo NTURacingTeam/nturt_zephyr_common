@@ -1,0 +1,35 @@
+config NTURT_SHELL
+    bool "Shell module"
+    depends on SHELL
+
+if NTURT_SHELL
+
+config NTURT_ALL_SHELL
+    bool "Enable (almost) all useful shells from various subsystems"
+    default y
+    select THREAD_ANALYZER
+    imply ADC_SHELL if ADC
+    imply BBRAM_SHELL if BBRAM
+    imply CAN_SHELL if CAN
+    imply CHARACTER_FRAMEBUFFER_SHELL if CHARACTER_FRAMEBUFFER
+    imply COUNTER_SHELL if COUNTER
+    imply DAC_SHELL if DAC
+    imply DEBUG_COREDUMP_SHELL if DEBUG_COREDUMP
+    imply EEPROM_SHELL if EEPROM
+    imply FILE_SYSTEM_SHELL if FILE_SYSTEM
+    imply FILE_SYSTEM_SHELL_TEST_COMMANDS if FILE_SYSTEM
+    imply FLASH_MAP_SHELL if FLASH_MAP
+    imply FLASH_SHELL if FLASH
+    imply GPIO_SHELL if GPIO
+    imply HWINFO_SHELL if HWINFO
+    imply I2C_SHELL if I2C
+    imply INPUT_SHELL if INPUT
+    imply LED_SHELL if LED
+    imply PWM_SHELL if PWM
+    imply RTC_SHELL if RTC
+    imply SENSOR_SHELL if SENSOR
+    imply SETTINGS_SHELL if SETTINGS
+    imply SPI_SHELL if SPI
+    imply STATS_SHELL if STATS
+
+endif # NTURT_SHELL

@@ -1,0 +1,10 @@
+menuconfig LED_STRIP_GPIO
+    bool "Array of LEDs controlled by GPIO as a single LED strip."
+    default y
+    depends on GPIO && DT_HAS_GPIO_LED_STRIP_ENABLED
+    help
+      Enable driver for GPIO controlled LED strip.
+
+if LED_STRIP_GPIO
+
+endif # LED_STRIP_GPIO

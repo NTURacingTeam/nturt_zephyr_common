@@ -1,0 +1,16 @@
+menuconfig NTURT_SYS
+    bool "System module"
+
+if NTURT_SYS
+
+config NTURT_SYS_INIT_PRIORITY
+    int "NTURT system module init priority"
+    default 0
+    help
+      NTURT common library system module initialization priority.
+
+rsource "Kconfig.fs"
+rsource "Kconfig.rtc"
+rsource "Kconfig.shell"
+
+endif # NTURT_SYS

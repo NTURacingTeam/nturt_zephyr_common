@@ -1,0 +1,30 @@
+description: |
+  General hall efect gear tooth senso.
+
+compatible: "hall-rpm"
+
+include: sensor-device.yaml
+
+properties:
+  gpios:
+    type: phandle-array
+    required: true
+    description: |
+      The GPIO pin connected to the sensor.
+  num-tooth:
+    type: int
+    required: true
+    description: |
+      Number of tooth in the gear.
+  sampling-freq:
+    type: int
+    default: 100
+    description: |
+      Sampling frequency in Hz.
+  time-const:
+    type: int
+    default: 100
+    description: |
+      Time constant tau for exponetial average filter in millisecond. With
+      sampling time interval T much smaller than time constant, the smoothing
+      factor alpha is approximately equal to T/tau.

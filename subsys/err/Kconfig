@@ -1,0 +1,14 @@
+menuconfig NTURT_ERR
+    bool "Error handling module"
+    default y
+    select ZBUS
+
+if NTURT_ERR
+
+config NTURT_ERR_INIT_PRIORITY
+    int "NTURT error module init priority"
+    default 90
+    help
+      NTURT common library error module initialization priority.
+
+endif # NTURT_ERR
