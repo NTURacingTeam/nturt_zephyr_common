@@ -4,6 +4,99 @@
 Zephyr Services
 ===============
 
+Data Passing
+============
+
+Zephyr provides various ways to pass data between threads and ISRs, the
+following tables summerizes the differences between them:
+
+Kernel Services for Data Passing
+--------------------------------
+
+Generally, both the producing and consuming sides of the data passing methods
+provided by the kernel can be accross multiple contexts, i.e., threads and ISRs,
+as the them utilizes locks in both the producing and consuming sides. In
+addition, since this methods are also kernel objects, thay have the same
+functionalites such as `object cores
+<https://docs.zephyrproject.org/4.0.0/kernel/object_cores/index.html>`_, `object
+tracing
+<https://docs.zephyrproject.org/4.0.0/services/tracing/index.html#object-tracking>`_,
+etc. as other kernel objects.
+
+.. table::
+   :widths: 15 10 15 15 20
+
+   +---------------+-----------+--------------+----------------+-----------------------+
+   |    Object     | Data size | Data storage | Data passed by |       Features        |
+   +===============+===========+==============+================+=======================+
+   | FIFO/LIFO     | Arbitrary | User managed | Pointer        | Intrusive structure   |
+   +---------------+-----------+--------------+----------------+-----------------------+
+   | Stack         | Word      | Array        | Copy           | For passing pointers  |
+   +---------------+-----------+--------------+----------------+-----------------------+
+   | Pipe          | Byte      | Ring buffer  | Copy           | For passing raw bytes |
+   +---------------+-----------+--------------+----------------+-----------------------+
+   | Message Queue | Fixed     | Ring buffer  | Copy           | For passing structs   |
+   +---------------+-----------+--------------+----------------+-----------------------+
+   | Mailbox       | Arbitrary | User managed | Pointer        | Destined transfer     |
+   +---------------+-----------+--------------+----------------+-----------------------+
+
+Refer to the `data passing section of the kernel service documentation
+<https://docs.zephyrproject.org/latest/kernel/services/index.html#data-passing>`_
+for more details.
+
+Kernel Data Structures for Data Passing
+---------------------------------------
+
+Two data structures provided by the kernel are specifically designed for data
+passing, namely single producer single consumer (SPSC) and multiple producer
+single consumer (MPSC) packet buffers. And there are also lockless versions of
+them that is intrusive and requires the user to manage the data storage.
+
+Note that as the name suggests, SPSC is designed for passing data between a
+single producing context and a single consuming context, and MPSC is designed
+for multiple producing contexts and a single consuming context, unlike the
+kernel services for data passing that allows multiple producing and consuming
+contexts.
+
+.. table::
+   :widths: 15 10 15 15 20
+
+   +--------------------+-----------+--------------+----------------+-------------------------+
+   |       Object       | Data size | Data storage | Data passed by |        Features         |
+   +====================+===========+==============+================+=========================+
+   | SPSC/MPSC          | Arbitrary | Ring Buffer  | Copy           | Arbitrary-sized packets |
+   +--------------------+-----------+--------------+----------------+-------------------------+
+   | Lockless SPSC/MPSC | Arbitrary | User managed | Pointer        | Lockless                |
+   +--------------------+-----------+--------------+----------------+-------------------------+
+   | Winstream          | Byte      | Ring buffer  | Copy           | Lockless SPSC           |
+   +--------------------+-----------+--------------+----------------+-------------------------+
+
+Refer to the `kernel data structures
+<https://docs.zephyrproject.org/4.0.0/kernel/data_structures/index.html>`_ for
+more details.
+
+.. note::
+   The Winstream data structure is not documented in the kernel data structures
+   documentation, but the API documentation is available in `its file reference
+   <https://docs.zephyrproject.org/4.0.0/doxygen/html/winstream_8h.html>`_.
+
+OS Services for Data Passing
+----------------------------
+
+Data passing methods provided by OS services are built on top of the kernel ones
+and have additional features such as sublisher/subscriber model, callbacks, etc.
+
+.. table::
+   :widths: 15 10 15 15 20
+
+   +--------+-----------+--------------+----------------+-----------+
+   | Object | Data size | Data storage | Data passed by | Features  |
+   +========+===========+==============+================+===========+
+   | Zbus   | Fixed     | Queue        | Pointer/Copy   | Callbacks |
+   +--------+-----------+--------------+----------------+-----------+
+
+Refer to their respective documentations for more details.
+
 Logging
 =======
 
@@ -52,10 +145,10 @@ address 0x198 (102*4 in decimal) and for STM32G4 series, it is fired from FDCAN2
 Reference
 ---------
 
-.. [#] `zephyr sysview usage
+.. [#] `Zephyr sysview usage
    <https://blog.ekko.cool/zephyr%20sysview%20%E4%BD%BF%E7%94%A8?locale=zh>`_
 .. [#] `sysview_get_interrupt() source code that determines the ISR number
-   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/subsys/tracing/sysview/sysview.c#L24>_`
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/subsys/tracing/sysview/sysview.c#L24>`_
 
 LittleFS
 ========
