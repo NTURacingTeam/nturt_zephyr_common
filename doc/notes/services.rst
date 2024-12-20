@@ -53,9 +53,9 @@ Reference
 ---------
 
 .. [#] `zephyr sysview usage
-  <https://blog.ekko.cool/zephyr%20sysview%20%E4%BD%BF%E7%94%A8?locale=zh>`_
+   <https://blog.ekko.cool/zephyr%20sysview%20%E4%BD%BF%E7%94%A8?locale=zh>`_
 .. [#] `sysview_get_interrupt() source code that determines the ISR number
-  <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/subsys/tracing/sysview/sysview.c#L24>_`
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/subsys/tracing/sysview/sysview.c#L24>_`
 
 LittleFS
 ========
@@ -87,26 +87,26 @@ mounted manually. The following code snippet shows how to do so:
 
 .. code-block:: c
 
-  static struct fs_littlefs lfsfs;
-  static struct fs_mount_t mp = {
-      .type = FS_LITTLEFS,
-      .fs_data = &lfsfs,
-      .flags = FS_MOUNT_FLAG_USE_DISK_ACCESS,
-      .storage_dev = CONFIG_SDMMC_VOLUME_NAME,
-      .mnt_point = "/" CONFIG_SDMMC_VOLUME_NAME ":",
-  };
+   static struct fs_littlefs lfsfs;
+   static struct fs_mount_t mp = {
+       .type = FS_LITTLEFS,
+       .fs_data = &lfsfs,
+       .flags = FS_MOUNT_FLAG_USE_DISK_ACCESS,
+       .storage_dev = CONFIG_SDMMC_VOLUME_NAME,
+       .mnt_point = "/" CONFIG_SDMMC_VOLUME_NAME ":",
+   };
 
-  fs_mount(&mp);
+   fs_mount(&mp);
 
 Reference
 ---------
 
 .. [#] `LittleFS littlefs_init_cfg() source code
-  <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L822>`_
-  that initializes read, program, and lookhead buffer sizes
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L822>`_
+   that initializes read, program, and lookhead buffer sizes
 .. [#] `LittleFS lfs_init() source code
-  <https://github.com/zephyrproject-rtos/littlefs/blob/zephyr/lfs.c#L4114>`_
-  that allocate read, program, and lookhead buffer
+   <https://github.com/zephyrproject-rtos/littlefs/blob/zephyr/lfs.c#L4114>`_
+   that allocate read, program, and lookhead buffer
 .. [#] `LittleFS littlefs_open() source code
-  <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L302>`_
-  that allocate file cache
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L302>`_
+   that allocate file cache

@@ -1,7 +1,11 @@
-.. _development_archecture:
+.. _archecture:
 
 ============
 Architecture
 ============
 
-.. doxygenfile:: nturt/message.h
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   vehicle_control_unit

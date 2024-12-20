@@ -56,10 +56,10 @@ source, the following code snippet is used:
 
 .. code-block:: dts
 
-  &fdcan1 {
-      clocks = <&rcc STM32_CLOCK_BUS_APB1 0x02000000>,
-              <&rcc STM32_SRC_PLL_Q FDCAN_SEL(1)>;
-  };
+   &fdcan1 {
+       clocks = <&rcc STM32_CLOCK_BUS_APB1 0x02000000>,
+               <&rcc STM32_SRC_PLL_Q FDCAN_SEL(1)>;
+   };
 
 ``STM32_SRC_*`` is easy to determine, but ``*_SEL(X)`` is not. To determine it,
 you have to refer to the clock configuration register (CCIPR) of the reset and
@@ -68,9 +68,9 @@ listed in the table.
 
 .. note::
 
-  The default configurations in ``stm32*.dtsi`` may only define bus clock
-  source, but you still have to copy it to your own device tree and add the
-  domain clock of your choice.
+   The default configurations in ``stm32*.dtsi`` may only define bus clock
+   source, but you still have to copy it to your own device tree and add the
+   domain clock of your choice.
 
 Direct Memory Access (DMA)
 ==========================
@@ -87,9 +87,9 @@ through `CONFIG_I2C_.*_DMA
 
 .. note::
 
-  Support for UART async API can be checked by Kconfig option
-  `CONFIG_SERIAL_SUPPORT_ASYNC
-  <https://docs.zephyrproject.org/3.7.0/kconfig.html#CONFIG_SERIAL_SUPPORT_ASYNC>`_.
+   Support for UART async API can be checked by Kconfig option
+   `CONFIG_SERIAL_SUPPORT_ASYNC
+   <https://docs.zephyrproject.org/3.7.0/kconfig.html#CONFIG_SERIAL_SUPPORT_ASYNC>`_.
 
 Since unlike UART has native API support for DMA, SPI and I\ :sup:`2`\ C drivers
 may have some creative ways to utilize DMA. For example, for STM32 SPI, DMA is
@@ -108,9 +108,9 @@ series.
 
 .. note::
   
-  The device tree configurations for DMA can be referenced from
-  `zephyr/tests/drivers/uart/uart_async_api/boards
-  <https://github.com/zephyrproject-rtos/zephyr/tree/v4.0-branch/tests/drivers/uart/uart_async_api/boards>`_.
+   The device tree configurations for DMA can be referenced from
+   `zephyr/tests/drivers/uart/uart_async_api/boards
+   <https://github.com/zephyrproject-rtos/zephyr/tree/v4.0-branch/tests/drivers/uart/uart_async_api/boards>`_.
 
 DAM with data cache
 -------------------
@@ -142,11 +142,11 @@ Reference
 ---------
 
 .. [#] `Zephyr STM32 SPI driver source code
-  <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/drivers/spi/spi_ll_stm32.c#L1080>`_
-  that uses DMA in synchronous API
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/drivers/spi/spi_ll_stm32.c#L1080>`_
+   that uses DMA in synchronous API
 .. [#] `Zephyr SMT32 UART driver source code
-  <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0-branch/drivers/serial/uart_stm32.c#L1580>`_
-  that set the DMA source address in async mode to the buffer
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0-branch/drivers/serial/uart_stm32.c#L1580>`_
+   that set the DMA source address in async mode to the buffer
 
 General Purpose Input/Output (GPIO)
 ===================================
@@ -169,10 +169,10 @@ LED API.
 
 .. note::
 
-  Since there may be multiple LEDs defined under the same ``gpio-leds`` device,
-  the LED API requires ``LED number`` to specify which LED to control. And the
-  ``LED number`` of a specific LED is the order it is defined in the
-  ``gpio-leds`` device, **no matter if the LED is disabled or not** [#]_.
+   Since there may be multiple LEDs defined under the same ``gpio-leds`` device,
+   the LED API requires ``LED number`` to specify which LED to control. And the
+   ``LED number`` of a specific LED is the order it is defined in the
+   ``gpio-leds`` device, **no matter if the LED is disabled or not** [#]_.
 
 Input
 -----
@@ -185,9 +185,9 @@ currently it only supports callbacks APIs with no polling support.
 
 .. note::
 
-  Every children of ``gpio-keys`` devices must have a unique ``zephyr,code``
-  property to identify the key. Available options start from `INPUT_KEY_RESERVED
-  <https://docs.zephyrproject.org/3.6.0/services/input/index.html#c.INPUT_KEY_RESERVED>`_.
+   Every children of ``gpio-keys`` devices must have a unique ``zephyr,code``
+   property to identify the key. Available options start from `INPUT_KEY_RESERVED
+   <https://docs.zephyrproject.org/3.6.0/services/input/index.html#c.INPUT_KEY_RESERVED>`_.
 
 EXIT in STM32
 -------------
@@ -200,20 +200,20 @@ pin number, only one of them can be used for external interrupt triggers.
 
 .. note::
 
-  Though EXIT input 0~15 for GPIOs does not map to NVIC IRQ numbers one-to-one
-  (whcih means that they may share the same ISR), when the driver handlers the
-  interrupt, it will check registers of EXIT to determine which pin triggered
-  the interrupt and handle them accordingly [#]_.
+   Though EXIT input 0~15 for GPIOs does not map to NVIC IRQ numbers one-to-one
+   (whcih means that they may share the same ISR), when the driver handlers the
+   interrupt, it will check registers of EXIT to determine which pin triggered
+   the interrupt and handle them accordingly [#]_.
 
 Reference
 ---------
 
 .. [#] `Zephyr GPIO LED driver source code that enumerates LEDs
-  <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0-branch/drivers/led/led_gpio.c#L88>`_
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0-branch/drivers/led/led_gpio.c#L88>`_
 .. [#] `Zephyr EXIT driver source code
-  <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7-branch/drivers/interrupt_controller/intc_exti_stm32.c#L245>`_
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7-branch/drivers/interrupt_controller/intc_exti_stm32.c#L245>`_
 .. [#] `Zephyr EXIT driver ISR source code
-  <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7-branch/drivers/interrupt_controller/intc_exti_stm32.c#L170>`_
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7-branch/drivers/interrupt_controller/intc_exti_stm32.c#L170>`_
 
 Pulse Width Modulation (PWM)
 ============================
@@ -225,27 +225,27 @@ STM32G4 series, the following code snippet is used:
 
 .. code-block:: dts
 
-  #include <dt-bindings/pwm/stm32_pwm.h>
+   #include <dt-bindings/pwm/stm32_pwm.h>
 
-  &tim1 {
-      ...
+   &tim1 {
+       ...
 
-      pwm1: pwm1 {
-          pinctrl-0 = <&tim1_ch1n_pa7>;
-          pinctrl-names = "default";
-          status = "okay";
-      };
-  };
-  ...
+       pwm1: pwm1 {
+           pinctrl-0 = <&tim1_ch1n_pa7>;
+           pinctrl-names = "default";
+           status = "okay";
+       };
+   };
+   ...
 
-  &pwmleds {
-      compatible = "pwm-leds";
-      ...
+   &pwmleds {
+       compatible = "pwm-leds";
+       ...
 
-      pwmled {
-          pwms = <&pwm1 1 PWM_MSEC(1) STM32_PWM_COMPLEMENTARY>;
-      };
-  };
+       pwmled {
+           pwms = <&pwm1 1 PWM_MSEC(1) STM32_PWM_COMPLEMENTARY>;
+       };
+   };
 
 Universal Asynchronous Receiver/Transmitter (UART)
 ==================================================
@@ -264,7 +264,7 @@ Reference
 ---------
 
 .. [#] MAX487E Datasheet, Switching Characteristics, Driver Disable Time from
-  Low
+   Low
 
 Battery Backed RAM (BBRAM)
 ==========================
@@ -281,13 +281,13 @@ tree overlay like so:
 
 .. code-block:: dts
 
-  &rtc {
-      bbram: backup_regs {
-          compatible = "st,stm32-bbram";
-          st,backup-regs = <32>;
-          status = "okay";
-      };
-  };
+   &rtc {
+       bbram: backup_regs {
+           compatible = "st,stm32-bbram";
+           st,backup-regs = <32>;
+           status = "okay";
+       };
+   };
 
 Where ``st,backup-regs`` is the number of backup register of the STM32 and
 the exact values should refer to the reference manuals.
@@ -305,5 +305,5 @@ Reference
 ---------
 
 .. [#] `Zephyr CAN driver source code
-  <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/include/zephyr/drivers/can/can_mcan.h#L1318>`_
-  that limits the maximum baud rate to 800kbps
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/include/zephyr/drivers/can/can_mcan.h#L1318>`_
+   that limits the maximum baud rate to 800kbps

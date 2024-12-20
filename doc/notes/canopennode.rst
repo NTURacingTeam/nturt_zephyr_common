@@ -54,8 +54,8 @@ The following is a list of filters added by CANopenNode:
 
 .. note::
 
-  Since STM32 only supports up to 28 standard ID filters, caution must be taken
-  when configuring CANopenNode.
+   Since STM32 only supports up to 28 standard ID filters, caution must be taken
+   when configuring CANopenNode.
 
 Service Data Object (SDO)
 =========================
@@ -96,8 +96,8 @@ of the error status bits can be found in `CO_EM_errorStatusBits_t
 
 .. note::
 
-  The length of ``Error status bits`` must grow coorespondingly to the number of
-  manufacturer specific errors.
+   The length of ``Error status bits`` must grow coorespondingly to the number of
+   manufacturer specific errors.
 
 Error register
 --------------
@@ -117,20 +117,20 @@ In CANopen standard the EMCY write payload has the following format [#]_:
 
 .. code-block:: none
 
-    0        1          2         3                              7
-  +------------+----------------+----------------------------------+
-  | error code | error register | manufacturer-specific error code |
-  +------------+----------------+----------------------------------+
+     0        1          2         3                              7
+   +------------+----------------+----------------------------------+
+   | error code | error register | manufacturer-specific error code |
+   +------------+----------------+----------------------------------+
 
 CANopenNode uses the first byte of manaufacturer-specific error code to transmit
 its ``Error status bits``, so the payload becomes:
 
 .. code-block:: none
 
-    0        1         2                  3           4                              7
-  +------------+----------------+------------------------------------------------------+
-  | error code | error register | error status bits | manufacturer-specific error code |
-  +------------+----------------+------------------------------------------------------+
+     0        1         2                  3           4                              7
+   +------------+----------------+------------------------------------------------------+
+   | error code | error register | error status bits | manufacturer-specific error code |
+   +------------+----------------+------------------------------------------------------+
 
 CANopenNode also recognizes the first byte of manaufacturer-specific error code
 as ``Error status bits`` when receiving EMCY messages from other nodes. The
@@ -139,11 +139,11 @@ the prototype:
 
 .. code-block:: c
 
-  void pFunctSignalRx(const uint16_t ident,
-                      const uint16_t errorCode,
-                      const uint8_t errorRegister,
-                      const uint8_t errorBit,
-                      const uint32_t infoCode);
+   void pFunctSignalRx(const uint16_t ident,
+                       const uint16_t errorCode,
+                       const uint8_t errorRegister,
+                       const uint8_t errorBit,
+                       const uint32_t infoCode);
 
 Where ``errorBit`` is for ``Error status bits`` (and ``infoCode`` for the rest
 of the manufacturer-specific error code).
@@ -158,11 +158,11 @@ the following format:
 
 .. code-block:: none
 
-  32     24               16           0
-  +------+----------------+------------+
-  | 0x00 | error register | error code |
-  +------+----------------+------------+
-  MSB                                LSB
+   32     24               16           0
+   +------+----------------+------------+
+   | 0x00 | error register | error code |
+   +------+----------------+------------+
+   MSB                                LSB
 
 where error code is one of the standard error codes defined in CiA 301.
 
@@ -177,16 +177,16 @@ Reference
 =========
 
 .. [#] `Zephyr CAN bus driver documentation
-  <https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving>`_
-  on receiving messages
+   <https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving>`_
+   on receiving messages
 .. [#] `CANopenNode CO_EM_process() source code (1)
-  <https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L251>`_ 
-  that manages error register
+   <https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L251>`_ 
+   that manages error register
 .. [#] CiA 301, section 7.5.2.2 Error register
 .. [#] CiA 301, section 7.2.7.3.1 Protocol EMCY write
 .. [#] `CANopenNode CO_EM_process() source code (2)
-  <https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L310>`_
-  that mantains pre-defined error fields
+   <https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L310>`_
+   that mantains pre-defined error fields
 .. [#] `CANopenNode CO_EM_init() source code
-  <https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L179>`_
-  that receives all EMCY messages
+   <https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L179>`_
+   that receives all EMCY messages

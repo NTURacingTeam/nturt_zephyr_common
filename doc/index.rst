@@ -1,30 +1,33 @@
-============================
-NTURT Zephyr Documentation
-============================
+====================================
+NTU Racing Team Zephyr Documentation
+====================================
 
-**Welcome to the NTURT Zephyr documentation.**
+**Welcome to the NTU Racing Team Zephyr documentation.**
 
 .. toctree::
-    :titlesonly:
-    :maxdepth: 1
-    :hidden:
+   :caption: Architecture
+   :maxdepth: 1
+   :hidden:
 
-    architecture/index
-    build/index
-    notes/index
+   architecture/index
 
-Contents
-========
+.. toctree::
+   :caption: Common Library
+   :maxdepth: 1
+   :hidden:
 
-* :doc:`architecture/index <architecture/index>`
-    - Placeholder for architecture.
-* :doc:`build/index <build/index>`
-    - Placeholder for build.
-* :doc:`notes/index <notes/index>`
-    - Placeholder for notes.
+   library/index
+
+.. toctree::
+   :caption: Developing
+   :maxdepth: 1
+   :hidden:
+
+   notes/index
 
 Indices and Tables
 ==================
 
 * :ref:`genindex`
+* :ref:`modindex`
 * :ref:`search`
