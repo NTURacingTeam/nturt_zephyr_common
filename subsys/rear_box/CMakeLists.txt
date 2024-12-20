@@ -1,5 +1,9 @@
-target_sources_ifdef(CONFIG_NTURT_REAR_BOX_API app PRIVATE
+if(CONFIG_NTURT_REAR_BOX_API)
+
+target_sources(app PRIVATE
     cmd.c
     ctrl.c
     states.c
 )
+
+endif()
