@@ -23,6 +23,7 @@ NTU Racing Team Zephyr Documentation
    :maxdepth: 1
    :hidden:
 
+   doc
    notes/index
 
 Indices and Tables

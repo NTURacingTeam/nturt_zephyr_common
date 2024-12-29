@@ -37,7 +37,7 @@ setting the Kconfig option `CONFIG_HEAP_MEM_POOL_SIZE
 to a non-zero value.
 
 Reference
-~~~~~~~~~
+---------
 
 .. [#] `Zephyr malloc.c source code
    <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/lib/libc/common/source/stdlib/malloc.c>`_

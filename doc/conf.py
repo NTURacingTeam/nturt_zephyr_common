@@ -7,7 +7,7 @@ subprocess.call("doxygen Doxyfile.in", shell=True)
 
 # -- Project --------------------------------------------------------------
 
-project = "NTURT Zephyr"
+project = "NTURT Zephyr Common Library"
 copyright = "2024, NTU Racing Team"
 author = "NTU Racing Team members"
 
@@ -35,7 +35,7 @@ html_theme_options = {
     "prev_next_buttons_location": "bottom",
 }
 # html_baseurl = ""
-html_title = "NTURT Zephyr Documentation"
+html_title = "NTURT Zephyr Common Library Documentation"
 html_logo = "images/logo.png"
 # github_url = ""
 html_static_path = ["_static"]
@@ -43,9 +43,9 @@ html_static_path = ["_static"]
 # -- Options for Breathe plugin -------------------------------------------
 
 breathe_projects = {
-	"NTURT Zephyr": "_build_doxygen/xml/"
+	"NTURT Zephyr Common Library": "_build_doxygen/xml/"
 }
-breathe_default_project = "NTURT Zephyr"
+breathe_default_project = "NTURT Zephyr Common Library"
 breathe_domain_by_extension = {
     "h": "c",
     "c": "c",
