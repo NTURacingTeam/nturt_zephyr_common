@@ -1,4 +1,0 @@
-# SPDX-License-Identifier: Apache-2.0
-
-config BOARD_NUCLEO_G431KB
-	select SOC_STM32G431XX
