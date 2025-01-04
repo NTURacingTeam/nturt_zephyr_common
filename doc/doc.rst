@@ -1,8 +1,8 @@
 .. _doc:
 
-============================
-Documentation Implementation
-============================
+==================
+Doc Implementation
+==================
 
 This page explains how the documentation is implemented in the NTURT Zephyr
 Common Library and how to build it from the source.
@@ -15,7 +15,7 @@ Requirements
 
 This documentation requires the following packages:
 
-Apt packages
+APT packages
 ~~~~~~~~~~~~
 
 .. code-block:: none
@@ -31,13 +31,13 @@ Apt packages
    1.9.6, you may need to download it manually from `Doxygen Download
    <https://www.doxygen.nl/download.html>`_.
 
-Pip modules
+pip modules
 ~~~~~~~~~~~
 
 .. code-block:: none
 
    breathe    
-   Sphinx
+   sphinx
    sphinx-rtd-theme
 
 Building the Documentation
@@ -47,7 +47,7 @@ To build the documentation, run the following command:
 
 .. code-block:: bash
 
-   # in <project_root>/doc
+   # in <nturt_zephyr_common_root>/doc
    make html
 
 then the main documentation and API reference will be built in the

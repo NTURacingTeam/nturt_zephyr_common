@@ -4,48 +4,11 @@
 Zephyr Drivers
 ==============
 
-Device Tree
-===========
+Clock control
+=============
 
-Using device tree to describe hardware configurations across different platforms
-is a great design in my opinion, especially for microcontrollers where there are
-lots of vendors with their unique features for similar peripherals. However,
-just like Zephyr's disadvantages, the documentation and examples are few,
-especially for vendor specific configurations. Here are some tips for using
-device tree in Zephyr:
-
-Device tree includes
---------------------
-
-Decive tree supports including other device tree files just like how C does, but
-without a language service provider (LSP) like IntelliSense for C/C++ or Pylance
-for Python, it is hard to find where the included files are. The following are
-some common places where Zephyr may put these files:
-
-- Device tree header files (.dtsi) for a specific architecture in ``zephyr/dts``
-- C header files (.h) for constants and macros in
-  ``zephyr/include/zephyr/dt-bindings``
-- Board support package (BSP) files in ``zephyr/boards``
-- Vendor specific device tree files (especially for ping control) in
-  ``modules/hal/<vendor>/dts``
-
-Device tree macros
-------------------
-
-Since device tree in Zephyr is processed into C macros for the compiler to
-further process, it supports including C hearder files as well as using macros
-defined in it.
-
-For example, you may see ``clock-frequency = <DT_FREQ_K(48)>;``, in clock
-configs where ``DT_FREQ_K`` is a macro defined as ``DT_FREQ_M(x) ((x) * 1000)``
-in ``zephyr/dts/common/freq.h``.
-
-STM32 device tree
------------------
-
-For STM32, it is a good idea to use STM32CubeMX as a reference when configuring
-the device tree as most of the time is just copying the configurations from
-STM32CubeMX to the device tree.
+STM32 domain clocks
+-------------------
 
 However, for peripherals that support domain clocks, clock source macros
 ``STM32_SRC_*`` and clock selection macros ``*_SEL(X)`` are used to determine
@@ -58,7 +21,7 @@ source, the following code snippet is used:
 
    &fdcan1 {
        clocks = <&rcc STM32_CLOCK_BUS_APB1 0x02000000>,
-               <&rcc STM32_SRC_PLL_Q FDCAN_SEL(1)>;
+                <&rcc STM32_SRC_PLL_Q FDCAN_SEL(1)>;
    };
 
 ``STM32_SRC_*`` is easy to determine, but ``*_SEL(X)`` is not. To determine it,
@@ -307,3 +270,31 @@ Reference
 .. [#] `Zephyr CAN driver source code
    <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/include/zephyr/drivers/can/can_mcan.h#L1318>`_
    that limits the maximum baud rate to 800kbps
+
+Secure Digital Input Output (SDIO)
+==================================
+
+Typically, microcontrollers provide SDIO bus controllers to connect SD cards or 
+MultiMedia cards such as `espressif,esp32-sdhc-slot
+<https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/sdhc/espressif%2Cesp32-sdhc-slot.html#dtbinding-espressif-esp32-sdhc-slot>`_
+native SDIO controller or SDIO in SPI mode `zephyr,sdhc-spi-slot
+<https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/sdhc/zephyr%2Csdhc-spi-slot.html#dtbinding-zephyr-sdhc-spi-slot>`_
+device bindings and they are marked as ``sd bus`` in Zephyr and implements the
+`SDHC API
+<https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sdhc.html>`_. Such
+API can then be used to connect to SD card using `zephyr,sdmmc-disk
+<https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/sd/zephyr%2Csdmmc-disk.html#dtbinding-zephyr-sdmmc-disk>`_
+or MMC using `zephyr,mmc-disk
+<https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/sd/zephyr%2Cmmc-disk.html#dtbinding-zephyr-mmc-disk>`_
+device bindings that implements `disk access API
+<https://docs.zephyrproject.org/4.0.0/doxygen/html/group__disk__access__interface.html>`_
+for file system.
+
+However, currently STM32 drivers for SDIO does not expose the SDHC API, but
+rather directly defines `st,stm32-sdmmc
+<https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/mmc/st%2Cstm32-sdmmc.html#dtbinding-st-stm32-sdmmc>`_
+device binging that directly implements the disk access API. This means that
+STM32 microcontrollers are not able to connect other devices such as WiFi
+modules that uses SDIO and cannot be tested by tests for SDHC controllers such
+as ``tests/drivers/sdhc`` or ``tests/subsys/sd/sdmmc`` which requires generic
+``zephyr,sdmmc-disk`` binding.

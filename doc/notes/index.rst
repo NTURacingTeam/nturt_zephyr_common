@@ -11,6 +11,8 @@ considerations when developing applications on Zephyr.
    :maxdepth: 1
 
    common
+   config
    drivers
    services
    canopennode
+   test

@@ -24,6 +24,7 @@ NTU Racing Team Zephyr Documentation
    :hidden:
 
    doc
+   test
    notes/index
 
 Indices and Tables
