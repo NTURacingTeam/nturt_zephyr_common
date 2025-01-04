@@ -1,0 +1,6 @@
+- connected: true
+  id: 066CFF534867784967194438
+  platform: ep6_vcu
+  product: STM32 STLink
+  runner: openocd
+  serial: /dev/ttyACM0

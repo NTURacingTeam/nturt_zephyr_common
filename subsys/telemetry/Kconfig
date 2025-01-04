@@ -1,0 +1,16 @@
+menuconfig NTURT_TM
+    bool "Telemetry module"
+    depends on SYS_HASH_FUNC32
+    depends on SYS_HASH_MAP
+    help
+      ""
+
+if NTURT_TM
+
+config NTURT_TM_INIT_PRIORITY
+    int "Telemetry module init priority"
+    default 50
+    help
+      Telemetry module initialization priority.
+
+endif # NTURT_TM
