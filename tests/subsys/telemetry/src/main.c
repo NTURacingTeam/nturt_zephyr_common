@@ -16,7 +16,8 @@
 
 #define GROUP_ID 0x20
 
-#define _DATA_LISTIFY(i, ...) TM_DATA_DEFINE(GROUP_DATA_START + i, sizeof(int))
+#define _DATA_LISTIFY(i, ...) \
+  _TM_DATA_DEFINE(CONCAT(__tm_group, i), GROUP_DATA_START + i, sizeof(int))
 
 /* type ----------------------------------------------------------------------*/
 struct tm_backend_fixture {

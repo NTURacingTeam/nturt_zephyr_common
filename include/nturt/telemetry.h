@@ -49,13 +49,12 @@
  * @param[in] addr Address of the data.
  * @param[in] size Size of the data.
  *
- * @note Since the name of the data is automatically generated using `__LINE__`
- * and `__COUNTER__` macros, there may be a linker error if data defined in
- * other translation units also happen to have the same name. To avoid this,
- * _TM_DATA_DEFINE can be used directly by providing a unique name.
+ * @note Since the name of the data is automatically generated using @p addr ,
+ * the name would be illegal if @p addr contains numeric operations. To avoid
+ * this, _TM_DATA_DEFINE can be used directly by providing a unique name.
  */
 #define TM_DATA_DEFINE(addr, size) \
-  _TM_DATA_DEFINE(CONCAT(__tm_data, __LINE__, __COUNTER__), addr, size)
+  _TM_DATA_DEFINE(CONCAT(__tm_data, addr), addr, size)
 
 #define _TM_GROUP_DATA_ADDRS_NAME(name) CONCAT(name, _data_addrs)
 
@@ -77,13 +76,12 @@
  * @param[in] id ID of the group.
  * @param[in] ... Addresses of the data in the group.
  *
- * @note Since the name of the group is automatically generated using `__LINE__`
- * and `__COUNTER__` macros, there may be a linker error if group defined in
- * other translation units also happen to have the same name. To avoid this,
- * _TM_GROUP_DEFINE can be used directly by providing a unique name.
+ * @note Since the name of the data is automatically generated using @p id ,
+ * the name would be illegal if @p id contains numeric operations. To avoid
+ * this, _TM_DATA_DEFINE can be used directly by providing a unique name.
  */
 #define TM_GROUP_DEFINE(id, ...) \
-  _TM_GROUP_DEFINE(CONCAT(__tm_group, __LINE__, __COUNTER__), id, __VA_ARGS__)
+  _TM_GROUP_DEFINE(CONCAT(__tm_group, id), id, __VA_ARGS__)
 
 /**
  * @brief Instantiate a telemetry backend.
