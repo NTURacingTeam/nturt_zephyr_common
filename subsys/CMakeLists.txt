@@ -1,3 +1,4 @@
+add_subdirectory(cmd)
 add_subdirectory(err)
 add_subdirectory(msg)
 add_subdirectory(sensors)
