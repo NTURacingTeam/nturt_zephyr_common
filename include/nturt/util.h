@@ -6,6 +6,7 @@
 
 // zephyr includes
 #include <zephyr/kernel.h>
+#include <zephyr/sys/atomic.h>
 #include <zephyr/sys/util.h>
 
 // project includes
@@ -132,84 +133,96 @@
  */
 
 /**
- * @addtogroup WorkContext Work Context
+ * @addtogroup WorkCtxBuf Work Context Buffer
  *
  * @{
  */
 
-#define _WORK_CTX_BUF_DEFINE(I, WORK, CTX, ARGS) \
-  [I] = {                                        \
-      .work = Z_WORK_INITIALIZER(WORK),          \
-      .ctx = CTX,                                \
-      .args = ARGS[I],                           \
+#define _WORK_CTX_DEFINE(_i, _work_handler, _ctx, _args) \
+  [_i] = {                                               \
+      .work = Z_WORK_INITIALIZER(_work_handler),         \
+      .ctx = _ctx,                                       \
+      .args = _args[_i],                                 \
   }
 
 /**
  * @brief Define work context buffer for the bottom half of an ISR.
  *
- * @param NAME Name of the work context buffer.
- * @param SIZE Size of the work context buffer, i.e. the number of simultaneous
- * bottom half can be executed.
- * @param WORK Bottom half entry point.
- * @param CTX Context for the bottom half.
- * @param ARGS_TYPE Type of the arguments for the bottom half.
+ * @param[in] _name Name of the buffer.
+ * @param[in] _size Size of the buffer, i.e. the number of simultaneous works
+ * that can be submitted.
+ * @param[in] _work_handler Work entry point.
+ * @param[in] _cts Context of the work.
+ * @param[in] _args_type Type of the arguments for the work.
  */
-#define WORK_CTX_BUF_DEFINE(NAME, SIZE, WORK, CTX, ARGS_TYPE) \
-  static ARGS_TYPE __work_args_##NAME[SIZE];                  \
-                                                              \
-  static struct work_ctx NAME[] = {                           \
-      LISTIFY(SIZE, _WORK_CTX_BUF_DEFINE, (, ), WORK, CTX,    \
-              &__work_args_##NAME),                           \
+#define WORK_CTX_BUF_DEFINE(_name, _size, _work_handler, _ctx, _args_type) \
+  static _args_type CONCAT(_name, _work_args)[_size];                      \
+  static struct work_ctx CONCAT(_name, _work_ctx)[] = {                    \
+      LISTIFY(_size, _WORK_CTX_DEFINE, (, ), _work_handler, _ctx,          \
+              &CONCAT(_name, _work_args)),                                 \
+  };                                                                       \
+  static struct work_ctx_buf _name = {                                     \
+      .size = _size,                                                       \
+      .work_ctxs = CONCAT(_name, _work_ctx),                               \
   }
 
 /**
- * @brief Get the context for the bottom half.
+ * @brief Get the context of the work.
  *
- * @param WORK Work pointer passed to the bottom half.
- * @return Context for the bottom half.
+ * @param[in] _work Pointer to work passed to work handler.
+ * @return Context of the work.
  */
-#define WORK_CTX(WORK) \
-  (((struct work_ctx*)CONTAINER_OF(WORK, struct work_ctx, work))->ctx)
+#define WORK_CTX(_work) \
+  (((struct work_ctx*)CONTAINER_OF(_work, struct work_ctx, work))->ctx)
 
 /**
- * @brief Get the arguments for the bottom half.
+ * @brief Get the arguments for the work.
  *
- * @param WORK Work pointer passed to the bottom half.
- * @return Arguments for the bottom half.
+ * @param[in] _work Pointer to work passed to the work handler.
+ * @return Arguments for the work.
  */
-#define WORK_CTX_ARGS(WORK) \
-  (((struct work_ctx*)CONTAINER_OF(WORK, struct work_ctx, work))->args)
+#define WORK_CTX_ARGS(_work) \
+  (((struct work_ctx*)CONTAINER_OF(_work, struct work_ctx, work))->args)
 
 /**
- * @} // WorkContext
+ * @} // WorkCtxBuf
  */
 
 /* types ---------------------------------------------------------------------*/
 /**
- * @addtogroup WorkContext
+ * @addtogroup WorkCtxBuf
  *
  * @{
  */
 
-/// @brief Work context for the bottom half.
+/// @brief Work context.
 struct work_ctx {
-  /// @brief Work for the bottom half.
+  /// @brief Work.
   struct k_work work;
 
-  /// @brief Context for the bottom half.
-  void* ctx;
+  /// @brief Pointer to context of the work.
+  void* const ctx;
 
-  /// @brief Arguments for the bottom half.
-  void* args;
+  /// @brief Pointer to arguments for the work.
+  void* const args;
+};
+
+/// @brief Work context buffer.
+struct work_ctx_buf {
+  /// @brief Size of the work context buffer.
+  const size_t size;
+
+  /// @brief Array of work context buffer.
+  struct work_ctx* const work_ctxs;
 };
 
 /**
- * @} // WorkContext
+ * @} // WorkCtxBuf
  */
 
 /* function declaration ------------------------------------------------------*/
 /**
- * @addtogroup WorkContext
+ * @addtogroup WorkCtxBuf
  *
  * @{
  */
@@ -217,14 +230,13 @@ struct work_ctx {
 /**
  * @brief Allocate a work context. Return NULL if all work context are in use.
  *
- * @param buf Work context buffer to allocate from.
- * @param size Size of the work context buffer.
+ * @param[in] buf Work context buffer to allocate from.
  * @return Allocated work context. NULL if all work context are in use.
  */
-struct work_ctx* work_ctx_alloc(struct work_ctx* buf, size_t size);
+struct work_ctx* work_ctx_buf_alloc(struct work_ctx_buf* buf);
 
 /**
- * @} // WorkContext
+ * @} // WorkCtxBuf
  */
 
 /**
