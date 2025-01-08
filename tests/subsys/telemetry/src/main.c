@@ -1,3 +1,6 @@
+// glibc include
+#include <stddef.h>
+
 // zephyr include
 #include <zephyr/sys/util.h>
 #include <zephyr/ztest.h>
@@ -16,7 +19,7 @@
 
 #define GROUP_ID 0x20
 
-#define _DATA_LISTIFY(i, ...) \
+#define _GROUP_DATA_LISTIFY(i, ...) \
   _TM_DATA_DEFINE(CONCAT(__tm_group, i), GROUP_DATA_START + i, sizeof(int))
 
 /* type ----------------------------------------------------------------------*/
@@ -27,11 +30,9 @@ struct tm_backend_fixture {
 };
 
 /* static function declaration -----------------------------------------------*/
-static void backend_init(struct tm_backend *backend);
-static void backend_publish_dummy(struct tm_backend *backend,
-                                  const uint32_t group_id);
-static void backend_publish(struct tm_backend *backend,
-                            const uint32_t group_id);
+static void backend_init(void *user_data);
+static void backend_publish_dummy(uint32_t group_id, void *user_data);
+static void backend_publish(uint32_t group_id, void *user_data);
 
 /* static variables ----------------------------------------------------------*/
 static struct tm_backend_fixture tm_backend_fixture = {
@@ -44,15 +45,28 @@ static struct tm_backend_fixture tm_backend_fixture = {
 
 TM_DATA_DEFINE(SINGLE_DATA, sizeof(int));
 
-LISTIFY(GROUP_DATA_SIZE, _DATA_LISTIFY, (;));
+LISTIFY(GROUP_DATA_SIZE, _GROUP_DATA_LISTIFY, (;));
 TM_GROUP_DEFINE(GROUP_ID, LISTIFY(GROUP_DATA_SIZE, GROUP_DATA_ADDR, (, )));
 
 TM_BACKEND_DEFINE(tm_backend, &tm_backend_fixture.api, &tm_backend_fixture,
                   GROUP_ID);
 
 /* static function definition ------------------------------------------------*/
-static void backend_publish_dummy(struct tm_backend *backend,
-                                  const uint32_t group_id) {}
+static void backend_publish_dummy(uint32_t group_id, void *user_data) {
+  (void)group_id;
+  (void)user_data;
+}
+
+static void backend_init(void *user_data) {
+  struct tm_backend_fixture *fixture = user_data;
+  fixture->init_times++;
+}
+
+static void backend_publish(uint32_t group_id, void *user_data) {
+  (void)user_data;
+
+  ztest_check_expected_value(group_id);
+}
 
 /* tm ------------------------------------------------------------------------*/
 static void tm_before(void *fixture) {
@@ -218,19 +232,6 @@ ZTEST(tm, test_group_access_commit) {
 }
 
 /* tm_backend ----------------------------------------------------------------*/
-static void backend_init(struct tm_backend *backend) {
-  struct tm_backend_fixture *fixture =
-      (struct tm_backend_fixture *)backend->data;
-  fixture->init_times++;
-}
-
-static void backend_publish(struct tm_backend *backend,
-                            const uint32_t group_id) {
-  (void)backend;
-
-  ztest_check_expected_value(group_id);
-}
-
 static void *tm_backend_setup() { return &tm_backend_fixture; }
 
 static void tm_backend_before(void *_fixture) {

@@ -50,24 +50,22 @@
  * @param[in] size Size of the data.
  *
  * @note Since the name of the data is automatically generated using @p addr ,
- * the name would be illegal if @p addr contains numeric operations. To avoid
- * this, _TM_DATA_DEFINE can be used directly by providing a unique name.
+ * the name would be illegal if @p addr contains characters other than
+ * alphanumericals or underscores. To avoid this, _TM_DATA_DEFINE can be used
+ * directly by providing a unique name.
  */
-#define TM_DATA_DEFINE(addr, size) \
-  _TM_DATA_DEFINE(CONCAT(__tm_data, addr), addr, size)
-
-#define _TM_GROUP_DATA_ADDRS_NAME(name) CONCAT(name, _data_addrs)
+#define TM_DATA_DEFINE(addr, size) _TM_DATA_DEFINE(__tm_data_##addr, addr, size)
 
 #define _TM_GROUP_DEFINE(_name, _id, ...)                                     \
   BUILD_ASSERT(                                                               \
       NUM_VA_ARGS(__VA_ARGS__) < sizeof(((struct tm_group *)0)->updated) * 8, \
       "number of data in telemetry group of id " #_id                         \
       " is greater then the number of bits of tm_group::updated");            \
-  static const uint32_t _TM_GROUP_DATA_ADDRS_NAME(_name)[] = {__VA_ARGS__};   \
+  static const uint32_t CONCAT(_name, _data_addrs)[] = {__VA_ARGS__};         \
   STRUCT_SECTION_ITERABLE(tm_group, _name) = {                                \
       .id = _id,                                                              \
       .num_data = NUM_VA_ARGS(__VA_ARGS__),                                   \
-      .data_addrs = _TM_GROUP_DATA_ADDRS_NAME(_name),                         \
+      .data_addrs = CONCAT(_name, _data_addrs),                               \
   }
 
 /**
@@ -77,8 +75,9 @@
  * @param[in] ... Addresses of the data in the group.
  *
  * @note Since the name of the data is automatically generated using @p id ,
- * the name would be illegal if @p id contains numeric operations. To avoid
- * this, _TM_DATA_DEFINE can be used directly by providing a unique name.
+ * the name would be illegal if @p id contains characters other than
+ * alphanumericals or underscores. To avoid this, _TM_GROUP_DEFINE can be used
+ * directly by providing a unique name.
  */
 #define TM_GROUP_DEFINE(id, ...) \
   _TM_GROUP_DEFINE(CONCAT(__tm_group, id), id, __VA_ARGS__)
@@ -88,10 +87,10 @@
  *
  * @param[in] _name Name of the backend.
  * @param[in] _api Pointer to telemetry backend API.
- * @param[in] _data Pointer to custom data of the backend.
+ * @param[in] _user_data Pointer to custom data of the backend.
  * @param[in] ... Group IDs associated with the backend.
  */
-#define TM_BACKEND_DEFINE(_name, _api, _data, ...)                             \
+#define TM_BACKEND_DEFINE(_name, _api, _user_data, ...)                        \
   static const uint32_t _name##_group_ids[] = {__VA_ARGS__};                   \
   static struct tm_backend_list_elm _name##_entries[NUM_VA_ARGS(__VA_ARGS__)]; \
   STRUCT_SECTION_ITERABLE(tm_backend, _name) = {                               \
@@ -99,14 +98,12 @@
       .group_ids = _name##_group_ids,                                          \
       .api = _api,                                                             \
       .elements = _name##_entries,                                             \
-      .data = _data,                                                           \
+      .user_data = _user_data,                                                 \
   }
 
 /* type ----------------------------------------------------------------------*/
-struct tm_backend;
-typedef void (*tm_backend_init_t)(struct tm_backend *backend);
-typedef void (*tm_backend_publish_t)(struct tm_backend *backend,
-                                     const uint32_t group_id);
+typedef void (*tm_backend_init_t)(void *user_data);
+typedef void (*tm_backend_publish_t)(uint32_t group_id, void *user_data);
 
 /**
  * @brief List element for telemetry backend.
@@ -223,7 +220,7 @@ struct tm_backend {
   struct tm_backend_list_elm *const elements;
 
   /// @brief Custom data of the backend.
-  void *const data;
+  void *const user_data;
 };
 
 /* function definition -------------------------------------------------------*/
@@ -285,7 +282,7 @@ int tm_group_commit(uint32_t id);
  * @param[in] backend Pointer to the backend.
  */
 static inline void tm_backend_init(struct tm_backend *backend) {
-  backend->api->init(backend);
+  backend->api->init(backend->user_data);
 }
 
 /**
@@ -295,8 +292,8 @@ static inline void tm_backend_init(struct tm_backend *backend) {
  * @param[in] group_id ID of the group to publish.
  */
 static inline void tm_backend_publish(struct tm_backend *backend,
-                                      const uint32_t group_id) {
-  backend->api->publish(backend, group_id);
+                                      uint32_t group_id) {
+  backend->api->publish(group_id, backend->user_data);
 }
 
 /**
