@@ -6,12 +6,12 @@ description: |
 
   auxdisplay_0: auxdisplay {
       compatible = "gpio-seg-display";
-      #address-cells = <1>;
-      #size-cells = <0>;
-      decimal-point;
+      pwms = <&pwm1 0 PWM_MSEC(1) PWM_POLARITY_NORMAL>;
       columns = <2>;
       rows = <1>;
-      status = "okay";
+      decimal-point;
+      #address-cells = <1>;
+      #size-cells = <0>;
 
       seg-display@0 {
           reg = <0>;
@@ -46,11 +46,13 @@ properties:
   "#address-cells":
     required: true
     const: 1
-
   "#size-cells":
     required: true
     const: 0
-
+  pwms:
+    type: phandle-array
+    description: |
+      PWM for controlling display brightness. Absent if not supported.
   decimal-point:
     type: boolean
     description: |
@@ -67,7 +69,6 @@ child-binding:
       description: |
         Index of the 7-segment display in the auxiliary display, the index
         increments from left to right, top to bottom.
-
     segment-gpios:
       type: phandle-array
       required: true

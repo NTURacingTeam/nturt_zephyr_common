@@ -10,7 +10,6 @@ properties:
     type: int
     required: true
     description: Device address as specified in the datasheet.
-
   multi-turn:
     type: boolean
     description: |

@@ -25,5 +25,5 @@ properties:
     type: int
     default: 5
     description: |
-      Current value tolerance before it's considered out
-      of valid range and in percentage.
+      Current value tolerance before it's considered out of valid range in
+      percentage.
