@@ -1,0 +1,112 @@
+description: |
+  #include <zephyr/dt-bindings/input/deadzone_mode.h>
+
+compatible: "sensor-axis"
+
+include: base.yaml
+
+properties:
+  poll-period:
+    type: int
+    default: 10
+    description: |
+      How often to get new sensor samples for the various axes in milliseconds.
+
+child-binding:
+  description: |
+    Each axis this device controls.
+
+  properties:
+    zephyr,axis:
+      type: int
+      required: true
+      description: |
+        The input code that this axis will produce, typically any of
+        INPUT_ABS_*.
+    out-min:
+      type: int
+      default: 0
+      description: |
+        Minimum value to output on input events.
+    out-max:
+      type: int
+      default: 255
+      description: |
+        Maximum value to output on input events.
+    deadzone-mode:
+      type: int
+      default: 0
+      description: |
+        The mode of deadzone. Can be either INPUT_DEADZONE_MODE_CENTER or
+        INPUT_DEADZONE_MODE_EDGE. If CENTER is specified, sensor value within
+        the center plus or minus the deadzone size will be reported as center.
+        If EDGE is specified, sensor value within the minimum value plus the
+        deadzone size will be reported as the minimum value.
+      enum:
+        - 0
+        - 1
+    deadzone-size:
+      type: int
+      default: 0
+      description: |
+        Deadzone size of the sensor in percentage. Set to 0 to disable deadzone.
+        Note that if both noise and deadzone are enabled, the deadzone should be
+        greater than noise.
+    noise:
+      type: int
+      default: 0
+      description: |
+        Change in sensor value before a new value is reported in one-millionth
+        part. Set to 0 to disable noise filter.
+        Note that if both noise and deadzone are enabled, the deadzone should be
+        greater than noise.
+    dev-tolerance:
+      type: int
+      default: 100
+      description: |
+        The tolerance of value deviation between any two sensors used in this
+        axis in percentage. Set to 100 to disable deviation check.
+
+  child-binding:
+    description: |
+      Each sensor this axis combines into.
+    properties:
+      sensor:
+        type: phandle
+        required: true
+        description: |
+          The sensor to fetch data from.
+      zephyr,channel:
+        type: int
+        required: true
+        description: |
+          The channel of the sensor to fetch data from.
+      in-min:
+        type: array
+        required: true
+        description: |
+          Minimum value from the sensor that corresponds to minimum output
+          value.
+          The format is the same as struct sensor_value in <X Y>, where X is the
+          integer part and Y is the one-
+          millionth part.
+      in-max:
+        type: array
+        required: true
+        description: |
+          Maximum value from the sensor that corresponds to maximum output
+          value.
+          The format is the same as struct sensor_value in <X Y>, where X is the
+          integer part and Y is the one-
+          millionth part.
+      range-tolerance:
+        type: int
+        default: 0
+        description: |
+          Sensor value tolerance to go below minimum or above maximum before
+          it's considered out of range in percentage.
+      weight:
+        type: int
+        default: 1
+        description: |
+          The weight of this sensor channel in the final output.

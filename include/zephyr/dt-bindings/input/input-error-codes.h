@@ -1,0 +1,16 @@
+#ifndef ZEPHYR_INCLUDE_DT_BINDINGS_INPUT_INPUT_ERROR_CODES_H_
+#define ZEPHYR_INCLUDE_DT_BINDINGS_INPUT_INPUT_ERROR_CODES_H_
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+#define INPUT_EV_ERROR INPUT_EV_VENDOR_START
+
+#define INPUT_ERROR_NONE 0x00
+#define INPUT_ERROR_IO 0x01
+#define INPUT_ERROR_BUSY 0x02
+
+#define INPUT_ERROR_UNDER 0x10
+#define INPUT_ERROR_OVER 0x11
+#define INPUT_ERROR_DEV 0x12 /**< Value deviation error */
+
+#endif  // ZEPHYR_INCLUDE_DT_BINDINGS_INPUT_INPUT_ERROR_CODES_H_

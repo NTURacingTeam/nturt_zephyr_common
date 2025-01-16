@@ -1,0 +1,32 @@
+menuconfig INPUT_SENSOR_AXIS
+    bool "Axis input driver using data from sensors"
+    default y
+    depends on DT_HAS_SENSOR_AXIS_ENABLED
+    depends on SENSOR
+    help
+      Enable driver for axis input driver using data from sensors.
+
+if INPUT_SENSOR_AXIS
+
+config INPUT_SENSOR_AXIS_THREAD_STACK_SIZE
+    int "Sensor axis processing thread stack size"
+    default 512
+    help
+      Thread stack size for sensor axis processing thread
+
+config INPUT_SENSOR_AXIS_THREAD_PRIORITY
+    int "sensor axis processing thread priority"
+    default 0
+    help
+      Thread priority for sensor axis processing thread
+
+config INPUT_SENSOR_AXIS_SETTINGS
+	bool "Sensor axis settings support"
+	default y
+	depends on SETTINGS
+	help
+	  Support for saving calibration data for sensor axis. Exposes a
+	  sensor_axis_calibration_save() function to save the calibration into
+	  settings and load them automatically on startup.
+
+endif # INPUT_SENSOR_AXIS
