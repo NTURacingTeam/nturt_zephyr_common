@@ -1,0 +1,50 @@
+description: |
+  Generic analog sensor. Linearly interpolates voltage to sensor value. Clamps
+  the value for voltages within tolerance range or returns error if voltage is
+  out of range.
+
+compatible: "analog-generic-sensor"
+
+include: sensor-device.yaml
+
+properties:
+  io-channels:
+    type: phandle-array
+    required: true
+    description: |
+      The ADC channel connected to the sensor.
+  zephyr,channel:
+    type: int
+    required: true
+    description: |
+      Sensor channel of this device.
+  min-voltage:
+    type: int
+    required: true
+    description: |
+      Minimum voltage range in millivolts.
+  max-voltage:
+    type: int
+    required: true
+    description: |
+      Maximum voltage range in millivolts.
+  min-value:
+    type: array
+    required: true
+    description: |
+      Reported sensor value when min-voltage is read. The format is the same as
+      sensor_value in <X Y>, where X is the integer part and Y is the one-
+      millionth part.
+  max-value:
+    type: array
+    required: true
+    description: |
+      Reported sensor value when max-voltage is read. The format is the same as
+      struct sensor_value in <X Y>, where X is the integer part and Y is the
+      one-millionth part.
+  tolerance:
+    type: int
+    default: 5
+    description: |
+      Voltage tolerance to go below minimum or above maximum before it's
+      considered out of range in percentage.
