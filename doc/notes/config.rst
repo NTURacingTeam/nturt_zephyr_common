@@ -36,7 +36,7 @@ Since device tree in Zephyr is processed into C macros for the compiler to
 further process, it supports including C hearder files as well as using macros
 defined in it.
 
-For example, you may see ``clock-frequency = <DT_FREQ_K(48)>;``, in clock
+For example, you may see ``clock-frequency = <DT_FREQ_K(48)>``, in clock
 configs where ``DT_FREQ_K`` is a macro defined as ``DT_FREQ_M(x) ((x) * 1000)``
 in ``zephyr/dts/common/freq.h``.
 
@@ -73,9 +73,9 @@ board may not be indentified if the extensions are not correct.
 References
 ----------
 
-.. [#] `Write Kconfig files
+.. [#] `Board Porting Guid: Write Kconfig files
    <https://docs.zephyrproject.org/4.0.0/hardware/porting/board_porting.html#write-kconfig-files>`_
-.. [#] `Board revision configuration adjustment
+.. [#] `Board Porting Guid: Board revision configuration adjustment
    <https://docs.zephyrproject.org/4.0.0/hardware/porting/board_porting.html#board-revision-configuration-adjustment>`_
-.. [#] `Create your board directory
+.. [#] `Board Porting Guid: Create your board directory
    <https://docs.zephyrproject.org/4.0.0/hardware/porting/board_porting.html#create-your-board-directory>`_

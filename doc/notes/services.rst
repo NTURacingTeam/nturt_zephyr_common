@@ -76,6 +76,7 @@ Refer to the `kernel data structures
 more details.
 
 .. note::
+
    The Winstream data structure is not documented in the kernel data structures
    documentation, but the API documentation is available in `its file reference
    <https://docs.zephyrproject.org/4.0.0/doxygen/html/winstream_8h.html>`_.
@@ -96,6 +97,11 @@ and have additional features such as sublisher/subscriber model, callbacks, etc.
    +--------+-----------+--------------+----------------+-----------+
 
 Refer to their respective documentations for more details.
+
+Pooled Parallel Preemptible Priority-based Work Queues (P4WQ)
+=============================================================
+
+TODO
 
 Logging
 =======
@@ -203,3 +209,56 @@ Reference
 .. [#] `LittleFS littlefs_open() source code
    <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L302>`_
    that allocate file cache
+
+Sensing Subsystem
+=================
+
+The `sensing subsystem
+<https://docs.zephyrproject.org/4.0.0/services/sensing/index.html>`_ provides a
+high level of accessing sensors, such as scheduling sampling for multiple
+clients that requests data at different rates, and fusing multiple sensors to
+provide a new kind of data (e.g. fusing two IMUs on the lid and the base of a
+foldable phone to calculate the hinge angle).
+
+However, dispite being merged to the mainline in 2023, the sensing subsystem is
+still very much a half-baked system, and currently seemed to be not in active
+development. Yet it is still a good starting point for managing multiple sensors
+with a single interface.
+
+Duplicated Sensor Data Types
+----------------------------
+
+In the documentation of sensing subsystem,
+:c:struct:`sensing_sensor_value_q31` is the data type for sensor data, which is
+almost the same as :c:struct:`sensor_q31_data` used for the sensor driver. The
+only difference is that the timestamp is in micro seconds for the former and in
+nano seconds for the latter [#]_ [#]_.
+
+Since sensor driver is a more mature system, its data type should be used for
+sensor data type in the sensing subsystem.
+
+Sensor Scheduling
+-----------------
+
+Sample scheduling is done internally by first setting
+``SENSOR_ATTR_SAMPLING_FREQUENCY`` sensor attribute based on the minimum
+requested sampling intervals of all clients, and then downsample the data via a
+timer that only passes the data to the clients when the time elapsed from the
+last sample is greater than the period [#]_. Which means that the actual
+sampling interval will be longer and unpredictable if the underlying sensor
+driver sampling jitters. Both of which are not ideal for real-time applications.
+
+A better approach would be to set the sensor driver sampling rate based on the
+greatest common factor of all clients' requested sampling intervals with some
+kind of tolerence for the jitter.
+
+References
+----------
+
+.. [#] `Definition of sensing_sensor_value_q31
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/sensing/sensing_datatypes.h#L116>`_
+.. [#] `Definition of sensor_q31_data
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/drivers/sensor_data_types.h#L92>`_
+.. [#] `Sensing subsystem source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/dispatch.c#L38>`_
+   that dispatches sensor data to clients

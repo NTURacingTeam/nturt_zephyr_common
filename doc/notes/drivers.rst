@@ -73,7 +73,7 @@ series.
   
    The device tree configurations for DMA can be referenced from
    `zephyr/tests/drivers/uart/uart_async_api/boards
-   <https://github.com/zephyrproject-rtos/zephyr/tree/v4.0-branch/tests/drivers/uart/uart_async_api/boards>`_.
+   <https://github.com/zephyrproject-rtos/zephyr/tree/v4.0.0/tests/drivers/uart/uart_async_api/boards>`_.
 
 DAM with data cache
 -------------------
@@ -105,11 +105,37 @@ Reference
 ---------
 
 .. [#] `Zephyr STM32 SPI driver source code
-   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/drivers/spi/spi_ll_stm32.c#L1080>`_
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/drivers/spi/spi_ll_stm32.c#L1080>`_
    that uses DMA in synchronous API
 .. [#] `Zephyr SMT32 UART driver source code
-   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0-branch/drivers/serial/uart_stm32.c#L1580>`_
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/serial/uart_stm32.c#L1580>`_
    that set the DMA source address in async mode to the buffer
+
+Battery Backed RAM (BBRAM)
+==========================
+
+Zephyr provides a battery backed RAM (BBRAM) driver that allows you to store
+data across system resets through `BBRAM API
+<https://docs.zephyrproject.org/3.6.0/hardware/peripherals/bbram.html>`_.
+Depending on the hardware, the data may be persisted even if the main power is
+lost, being kept by the dedicated battery, hence the name.
+
+However, not all STM32 serise device tree include ``st,stm32-bbram`` device that
+corrsepond to BBRAM. To use it, add it to ``st,stm32-rtc`` device in the device
+tree overlay like so:
+
+.. code-block:: dts
+
+   &rtc {
+       bbram: backup_regs {
+           compatible = "st,stm32-bbram";
+           st,backup-regs = <32>;
+           status = "okay";
+       };
+   };
+
+Where ``st,backup-regs`` is the number of backup register of the STM32 and
+the exact values should refer to the reference manuals.
 
 General Purpose Input/Output (GPIO)
 ===================================
@@ -172,11 +198,11 @@ Reference
 ---------
 
 .. [#] `Zephyr GPIO LED driver source code that enumerates LEDs
-   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0-branch/drivers/led/led_gpio.c#L88>`_
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/led/led_gpio.c#L88>`_
 .. [#] `Zephyr EXIT driver source code
-   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7-branch/drivers/interrupt_controller/intc_exti_stm32.c#L245>`_
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/drivers/interrupt_controller/intc_exti_stm32.c#L245>`_
 .. [#] `Zephyr EXIT driver ISR source code
-   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7-branch/drivers/interrupt_controller/intc_exti_stm32.c#L170>`_
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/drivers/interrupt_controller/intc_exti_stm32.c#L170>`_
 
 Pulse Width Modulation (PWM)
 ============================
@@ -229,32 +255,6 @@ Reference
 .. [#] MAX487E Datasheet, Switching Characteristics, Driver Disable Time from
    Low
 
-Battery Backed RAM (BBRAM)
-==========================
-
-Zephyr provides a battery backed RAM (BBRAM) driver that allows you to store
-data across system resets through `BBRAM API
-<https://docs.zephyrproject.org/3.6.0/hardware/peripherals/bbram.html>`_.
-Depending on the hardware, the data may be persisted even if the main power is
-lost, being kept by the dedicated battery, hence the name.
-
-However, not all STM32 serise device tree include ``st,stm32-bbram`` device that
-corrsepond to BBRAM. To use it, add it to ``st,stm32-rtc`` device in the device
-tree overlay like so:
-
-.. code-block:: dts
-
-   &rtc {
-       bbram: backup_regs {
-           compatible = "st,stm32-bbram";
-           st,backup-regs = <32>;
-           status = "okay";
-       };
-   };
-
-Where ``st,backup-regs`` is the number of backup register of the STM32 and
-the exact values should refer to the reference manuals.
-
 CAN Bus
 =======
 
@@ -268,7 +268,7 @@ Reference
 ---------
 
 .. [#] `Zephyr CAN driver source code
-   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/include/zephyr/drivers/can/can_mcan.h#L1318>`_
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/include/zephyr/drivers/can/can_mcan.h#L1322>`_
    that limits the maximum baud rate to 800kbps
 
 Secure Digital Input Output (SDIO)
@@ -298,3 +298,69 @@ STM32 microcontrollers are not able to connect other devices such as WiFi
 modules that uses SDIO and cannot be tested by tests for SDHC controllers such
 as ``tests/drivers/sdhc`` or ``tests/subsys/sd/sdmmc`` which requires generic
 ``zephyr,sdmmc-disk`` binding.
+
+Real Time I/O (RTIO)
+====================
+
+`RTIO <https://docs.zephyrproject.org/4.0.0/services/rtio/index.html>`_ is a set
+of interfaces inspired by Linux's ``io_uring`` that facilitates multiplexed
+asynchronous I/O operations. After its adoption in 3.4.0, it has quickly become
+the norm for defining new APIs for asynchronous I/O operations in Zephyr but
+currently only includes I2C, SPI, and sensor drivers. Today still very few
+drivers natively support RTIO (i.e. use DMA or other coprocessors for true
+asynchronous transaction), threre are fallbacks that wraps the synchronous API
+to RTIO API for the above three drivers [#]_ [#]_ [#]_.
+
+The official documentation does not provide much information about the use of
+RTIO, but you can refer to the code and comments in `I2C lookpack sample
+<https://docs.zephyrproject.org/4.0.0/samples/drivers/i2c/rtio_loopback/README.html#i2c-rtio-loopback>`_
+for a sample usage of RTIO and `RTIO reference
+<https://docs.zephyrproject.org/4.0.0/doxygen/html/group__rtio.html>`_ for API
+documentation.
+
+Work Request
+------------
+
+Aside from relaying on interrupts to achieve non-blocking operations, RTIO also
+provides work request API to dispatch work that requires blocking operations
+such as the aforementioned fallbacks.
+
+.. note::
+
+   The work request API is neither documented in RTIO documentation nor in a
+   doxygen group that can be referenced from the RTIO group. It's only available
+   in `its file reference
+   <https://docs.zephyrproject.org/4.0.0/doxygen/html/work_8h.html>`_.
+
+References
+----------
+
+.. [#] `SPI driver source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/spi/spi_rtio.c>`_
+   for RTIO fallback
+.. [#] `I2C driver source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/i2c/i2c_rtio_default.c>`_
+   for RTIO fallback
+.. [#] `Sensor driver source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c>`_
+   for RTIO fallback
+
+Sensors
+=======
+
+Asynchronous API
+----------------
+
+Sensor async API is built on top of RTIO, its usage can be referenced from the
+`sensor read and decode
+<https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sensor/read_and_decode.html>`_
+documentation.
+
+To create a new sensor driver that support sensor async API, both the decoder
+API and the async read initialization (:c:member:`sensor_driver_api.submit`) can
+be referenced from `default_rtio_sensor.c
+<https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c>`_.
+Since default implementation for ``submit`` does not support streaming, the
+implementation of it can be referenced from existing drivers such as
+`adxl345_stream.c
+<https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/adi/adxl345/adxl345_stream.c>`_. 

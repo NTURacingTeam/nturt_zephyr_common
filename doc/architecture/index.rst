@@ -9,3 +9,4 @@ Architecture
    :hidden:
 
    vehicle_control_unit
+   survey
