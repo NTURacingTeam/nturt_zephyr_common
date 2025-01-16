@@ -1,7 +1,7 @@
 menuconfig GPIO_74HC595
     bool "Diodes Incorporated 74HC595 shift register as GPIO extender"
     default y
-    depends on SPI &&  DT_HAS_DIODES_74HC595_ENABLED
+    depends on SPI && DT_HAS_DIODES_74HC595_ENABLED
     help
       Enable driver for 74HC595 shift register as GPIO extender
 

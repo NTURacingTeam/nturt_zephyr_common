@@ -1,5 +1,5 @@
 menuconfig LED_STRIP_GPIO
-    bool "Array of LEDs controlled by GPIO as a single LED strip."
+    bool "Array of LEDs controlled by GPIO as a single LED strip"
     default y
     depends on GPIO && DT_HAS_GPIO_LED_STRIP_ENABLED
     help

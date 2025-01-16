@@ -10,10 +10,11 @@
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/auxdisplay.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/pwm.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/util.h>
 
-LOG_MODULE_REGISTER(auxdisplay_gpio_seg_display, CONFIG_AUXDISPLAY_LOG_LEVEL);
+LOG_MODULE_REGISTER(gpio_seg_display, CONFIG_AUXDISPLAY_LOG_LEVEL);
 
 /*
  *    0
@@ -24,6 +25,9 @@ LOG_MODULE_REGISTER(auxdisplay_gpio_seg_display, CONFIG_AUXDISPLAY_LOG_LEVEL);
  *   ---  .
  *    3    7
  */
+
+#define BRIGHTNESS_MIN (0)
+#define BRIGHTNESS_MAX (100)
 
 #define CHAR_OFF (0)
 
@@ -63,31 +67,26 @@ LOG_MODULE_REGISTER(auxdisplay_gpio_seg_display, CONFIG_AUXDISPLAY_LOG_LEVEL);
 
 struct gpio_map {
   const struct device *gpio_port;
-
   gpio_port_pins_t mask;
-
   gpio_port_pins_t value;
 };
 
 struct seg_gpio {
   int index;
-
   gpio_pin_t pin;
 };
 
-struct auxdisplay_gpio_seg_display_data {
+struct gpio_seg_display_data {
   struct gpio_map *gpio_map;
-
   struct seg_gpio (*gpios)[8];
+  int brightness;
 };
 
-struct auxdisplay_gpio_seg_display_config {
+struct gpio_seg_display_config {
   const struct gpio_dt_spec (*gpios)[8];
-
   int num_disp;
-
   bool decimal_point;
-
+  struct pwm_dt_spec brightness_pwm;
   struct auxdisplay_capabilities capabilities;
 };
 
@@ -97,7 +96,7 @@ static const uint8_t num_map[] = {
 };
 
 static int set_gpios(const struct device *dev) {
-  struct auxdisplay_gpio_seg_display_data *data = dev->data;
+  struct gpio_seg_display_data *data = dev->data;
 
   int ret;
   for (int i = 0; data->gpio_map[i].gpio_port != NULL; i++) {
@@ -113,10 +112,10 @@ static int set_gpios(const struct device *dev) {
   return 0;
 }
 
-static int auxdisplay_gpio_seg_display_write(const struct device *dev,
-                                             const uint8_t *chr, uint16_t len) {
-  struct auxdisplay_gpio_seg_display_data *data = dev->data;
-  const struct auxdisplay_gpio_seg_display_config *config = dev->config;
+static int gpio_seg_display_write(const struct device *dev, const uint8_t *chr,
+                                  uint16_t len) {
+  struct gpio_seg_display_data *data = dev->data;
+  const struct gpio_seg_display_config *config = dev->config;
 
   uint8_t val[config->num_disp];
   for (int i = 0; i < config->num_disp; i++) {
@@ -248,42 +247,75 @@ static int auxdisplay_gpio_seg_display_write(const struct device *dev,
   return set_gpios(dev);
 }
 
-static int auxdisplay_gpio_seg_display_on(const struct device *dev) {
+static int gpio_seg_display_on(const struct device *dev) {
   (void)dev;
 
   return 0;
 }
 
-static int auxdisplay_gpio_seg_display_clear(const struct device *dev) {
-  const struct auxdisplay_gpio_seg_display_config *config = dev->config;
+int gpio_seg_display_brightness_get(const struct device *dev,
+                                    uint8_t *brightness) {
+  struct gpio_seg_display_data *data = dev->data;
+  const struct gpio_seg_display_config *config = dev->config;
+
+  if (!config->brightness_pwm.dev) {
+    return -ENOTSUP;
+  }
+
+  *brightness = data->brightness;
+  return 0;
+}
+
+int gpio_seg_display_brightness_set(const struct device *dev,
+                                    uint8_t brightness) {
+  struct gpio_seg_display_data *data = dev->data;
+  const struct gpio_seg_display_config *config = dev->config;
+
+  if (!config->brightness_pwm.dev) {
+    return -ENOTSUP;
+  }
+
+  if (brightness < BRIGHTNESS_MIN || brightness > BRIGHTNESS_MAX) {
+    return -EINVAL;
+  }
+
+  data->brightness = brightness;
+  pwm_set_pulse_dt(&config->brightness_pwm,
+                   config->brightness_pwm.period * brightness / BRIGHTNESS_MAX);
+
+  return 0;
+}
+
+static int gpio_seg_display_clear(const struct device *dev) {
+  const struct gpio_seg_display_config *config = dev->config;
   char blank[config->num_disp + 1];
   memset(blank, ' ', config->num_disp);
 
-  return auxdisplay_gpio_seg_display_write(dev, blank, config->num_disp);
+  return gpio_seg_display_write(dev, blank, config->num_disp);
 }
 
-static int auxdisplay_gpio_seg_display_off(const struct device *dev) {
-  return auxdisplay_gpio_seg_display_clear(dev);
+static int gpio_seg_display_off(const struct device *dev) {
+  return gpio_seg_display_clear(dev);
 }
 
-static int auxdisplay_gpio_seg_display_capabilities_get(
+static int gpio_seg_display_capabilities_get(
     const struct device *dev, struct auxdisplay_capabilities *capabilities) {
-  const struct auxdisplay_gpio_seg_display_config *config = dev->config;
+  const struct gpio_seg_display_config *config = dev->config;
 
   memcpy(capabilities, &config->capabilities,
          sizeof(struct auxdisplay_capabilities));
   return 0;
 }
 
-static int auxdisplay_gpio_seg_display_is_busy(const struct device *dev) {
+static int gpio_seg_display_is_busy(const struct device *dev) {
   (void)dev;
 
   return 0;
 }
 
-static int auxdisplay_gpio_seg_display_init(const struct device *dev) {
-  struct auxdisplay_gpio_seg_display_data *data = dev->data;
-  const struct auxdisplay_gpio_seg_display_config *config = dev->config;
+static int gpio_seg_display_init(const struct device *dev) {
+  struct gpio_seg_display_data *data = dev->data;
+  const struct gpio_seg_display_config *config = dev->config;
 
   int ret;
   int num_gpio = config->decimal_point ? 8 : 7;
@@ -323,7 +355,7 @@ static int auxdisplay_gpio_seg_display_init(const struct device *dev) {
     }
   }
 
-  ret = auxdisplay_gpio_seg_display_clear(dev);
+  ret = gpio_seg_display_clear(dev);
   if (ret < 0) {
     return ret;
   }
@@ -331,13 +363,15 @@ static int auxdisplay_gpio_seg_display_init(const struct device *dev) {
   return 0;
 }
 
-static const struct auxdisplay_driver_api auxdisplay_gpio_seg_display_api = {
-    .display_on = auxdisplay_gpio_seg_display_on,
-    .display_off = auxdisplay_gpio_seg_display_off,
-    .capabilities_get = auxdisplay_gpio_seg_display_capabilities_get,
-    .clear = auxdisplay_gpio_seg_display_clear,
-    .is_busy = auxdisplay_gpio_seg_display_is_busy,
-    .write = auxdisplay_gpio_seg_display_write,
+static const struct auxdisplay_driver_api gpio_seg_display_api = {
+    .display_on = gpio_seg_display_on,
+    .display_off = gpio_seg_display_off,
+    .capabilities_get = gpio_seg_display_capabilities_get,
+    .clear = gpio_seg_display_clear,
+    .brightness_get = gpio_seg_display_brightness_get,
+    .brightness_set = gpio_seg_display_brightness_set,
+    .is_busy = gpio_seg_display_is_busy,
+    .write = gpio_seg_display_write,
 };
 
 #define VALIDATE_GPIO_NUM(id, decimal_point)                          \
@@ -353,7 +387,7 @@ static const struct auxdisplay_driver_api auxdisplay_gpio_seg_display_api = {
       LISTIFY(DT_PROP_LEN(id, segment_gpios), _DISP_GPIO, (, ), id), \
   }
 
-#define AUXDISPLAY_GPIO_SEG_DISPLAY_INIT(inst)                                 \
+#define GPIO_SEG_DISPLAY_INIT(inst)                                            \
   DT_INST_FOREACH_CHILD_SEP_VARGS(inst, VALIDATE_GPIO_NUM, (;),                \
                                   DT_INST_PROP(inst, decimal_point));          \
                                                                                \
@@ -362,29 +396,35 @@ static const struct auxdisplay_driver_api auxdisplay_gpio_seg_display_api = {
   static struct seg_gpio seg_gpios_##inst[DT_INST_CHILD_NUM_STATUS_OKAY(inst)] \
                                          [8];                                  \
                                                                                \
-  static struct auxdisplay_gpio_seg_display_data                               \
-      auxdisplay_gpio_seg_display_data##inst = {                               \
-          .gpio_map = gpio_map_##inst,                                         \
-          .gpios = seg_gpios_##inst,                                           \
+  static struct gpio_seg_display_data gpio_seg_display_data##inst = {          \
+      .gpio_map = gpio_map_##inst,                                             \
+      .gpios = seg_gpios_##inst,                                               \
   };                                                                           \
                                                                                \
   static const struct gpio_dt_spec gpios_##inst[][8] = {                       \
       DT_INST_FOREACH_CHILD_STATUS_OKAY_SEP(inst, DISP_GPIO, (, )),            \
   };                                                                           \
                                                                                \
-  static const struct auxdisplay_gpio_seg_display_config                       \
-      auxdisplay_gpio_seg_display_config##inst = {                             \
+  static const struct gpio_seg_display_config gpio_seg_display_config##inst =  \
+      {                                                                        \
           .gpios = gpios_##inst,                                               \
           .num_disp = DT_INST_CHILD_NUM_STATUS_OKAY(inst),                     \
           .decimal_point = DT_INST_PROP(inst, decimal_point),                  \
+          .brightness_pwm = PWM_DT_SPEC_INST_GET_OR(inst, {}),                 \
           .capabilities =                                                      \
               {                                                                \
                   .columns = DT_INST_PROP(inst, columns),                      \
                   .rows = DT_INST_PROP(inst, rows),                            \
                   .brightness =                                                \
                       {                                                        \
-                          .minimum = AUXDISPLAY_LIGHT_NOT_SUPPORTED,           \
-                          .maximum = AUXDISPLAY_LIGHT_NOT_SUPPORTED,           \
+                          .minimum =                                           \
+                              COND_CODE_1(DT_INST_NODE_HAS_PROP(inst, pwms),   \
+                                          BRIGHTNESS_MIN,                      \
+                                          (AUXDISPLAY_LIGHT_NOT_SUPPORTED)),   \
+                          .maximum =                                           \
+                              COND_CODE_1(DT_INST_NODE_HAS_PROP(inst, pwms),   \
+                                          BRIGHTNESS_MAX,                      \
+                                          (AUXDISPLAY_LIGHT_NOT_SUPPORTED)),   \
                       },                                                       \
                   .backlight =                                                 \
                       {                                                        \
@@ -394,10 +434,9 @@ static const struct auxdisplay_driver_api auxdisplay_gpio_seg_display_api = {
               },                                                               \
   };                                                                           \
                                                                                \
-  DEVICE_DT_INST_DEFINE(inst, &auxdisplay_gpio_seg_display_init, NULL,         \
-                        &auxdisplay_gpio_seg_display_data##inst,               \
-                        &auxdisplay_gpio_seg_display_config##inst,             \
-                        POST_KERNEL, CONFIG_AUXDISPLAY_INIT_PRIORITY,          \
-                        &auxdisplay_gpio_seg_display_api);
+  DEVICE_DT_INST_DEFINE(                                                       \
+      inst, &gpio_seg_display_init, NULL, &gpio_seg_display_data##inst,        \
+      &gpio_seg_display_config##inst, POST_KERNEL,                             \
+      CONFIG_AUXDISPLAY_INIT_PRIORITY, &gpio_seg_display_api);
 
-DT_INST_FOREACH_STATUS_OKAY(AUXDISPLAY_GPIO_SEG_DISPLAY_INIT)
+DT_INST_FOREACH_STATUS_OKAY(GPIO_SEG_DISPLAY_INIT)

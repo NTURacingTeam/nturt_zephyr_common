@@ -19,6 +19,4 @@ config NTURT_FRONT_WHL_SPD
 config NTURT_FRONT_SUSP
     bool "Has front suspension"
 
-rsource "subsys/Kconfig"
-
 endif # NTURT

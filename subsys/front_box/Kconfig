@@ -1,5 +1,6 @@
 menuconfig NTURT_FRONT_BOX_API
     bool "Front box API"
+    depends on NTURT
 
 if NTURT_FRONT_BOX_API
 

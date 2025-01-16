@@ -1,4 +1,5 @@
 menuconfig NTURT_SENSORS
+    depends on NTURT
     bool "Sensor module"
 
 if NTURT_SENSORS

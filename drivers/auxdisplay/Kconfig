@@ -1,5 +1,5 @@
 if AUXDISPLAY
 
-rsource "Kconfig.gpio_seg_display"
+rsource "gpio-seg-display/Kconfig"
 
 endif # AUXDISPLAY

@@ -1,4 +1,4 @@
-menu "Subsystems"
+menu "Subsystems and OS Services"
 
 rsource "cmd/Kconfig"
 rsource "err/Kconfig"

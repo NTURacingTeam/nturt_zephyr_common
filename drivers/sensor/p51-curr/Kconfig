@@ -1,7 +1,8 @@
 menuconfig P51_CURR
     bool "SSI Technologies P51 series pressure sensor with current output"
     default y
-    depends on ADC && DT_HAS_SSI_P51_CURR_ENABLED
+    depends on DT_HAS_SSI_P51_CURR_ENABLED
+    select ADC
     help
       Enable driver for P51 series pressure sensor.
 

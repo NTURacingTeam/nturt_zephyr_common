@@ -1,4 +1,5 @@
 menuconfig NTURT_SYS
+    depends on NTURT
     bool "System module"
 
 if NTURT_SYS

@@ -1,3 +1,5 @@
-zephyr_library()
+if(CONFIG_GPIO)
 
-zephyr_library_sources_ifdef(CONFIG_GPIO_74HC595 gpio_74hc595.c)
+add_subdirectory(74hc595)
+
+endif()

@@ -1,3 +1,9 @@
+if(CONFIG_JY901B)
+
 zephyr_library()
 
-zephyr_library_sources_ifdef(CONFIG_JY901B jy901b.c)
+zephyr_library_sources(
+    jy901b.c
+)
+
+endif()

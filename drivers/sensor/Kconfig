@@ -1,6 +1,7 @@
 if SENSOR
 
 rsource "amt21/Kconfig"
+rsource "analog-generic-sensor/Kconfig"
 rsource "hall-rpm/Kconfig"
 rsource "jy901b/Kconfig"
 rsource "p51-curr/Kconfig"

@@ -1,5 +1,10 @@
-add_subdirectory_ifdef(CONFIG_AMT21 amt21)
-add_subdirectory_ifdef(CONFIG_HALL_RPM hall-rpm)
-add_subdirectory_ifdef(CONFIG_JY901B jy901b)
-add_subdirectory_ifdef(CONFIG_P51_CURR p51-curr)
-add_subdirectory_ifdef(CONFIG_ZX zx)
+if(CONFIG_SENSOR)
+
+add_subdirectory(amt21)
+add_subdirectory(analog-generic-sensor)
+add_subdirectory(hall-rpm)
+add_subdirectory(jy901b)
+add_subdirectory(p51-curr)
+add_subdirectory(zx)
+
+endif()

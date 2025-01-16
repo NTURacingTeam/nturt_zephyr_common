@@ -1,5 +1,5 @@
 if LED_STRIP
 
-rsource "Kconfig.gpio"
+rsource "gpio/Kconfig"
 
 endif # LED_STRIP

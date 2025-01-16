@@ -8,6 +8,6 @@ add_subdirectory(telemetry)
 add_subdirectory(front_box)
 add_subdirectory(rear_box)
 
-target_sources(app PRIVATE
+target_sources_ifdef(CONFIG_NTURT app PRIVATE
     util.c
 )

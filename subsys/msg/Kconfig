@@ -1,5 +1,6 @@
 menuconfig NTURT_MSG
     bool "Message module"
+    depends on NTURT
     depends on CANOPENNODE
 
 if NTURT_MSG

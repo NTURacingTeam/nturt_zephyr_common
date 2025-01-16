@@ -1,5 +1,6 @@
 menuconfig NTURT_REAR_BOX_API
     bool "Rear box APIs"
+    depends on NTURT
     depends on NTURT_MSG_SDO_CLI
     help
       Enable APIs to control rear box

@@ -1,5 +1,6 @@
 menuconfig NTURT_ERR
     bool "Error handling module"
+    depends on NTURT
     select ZBUS
 
 if NTURT_ERR

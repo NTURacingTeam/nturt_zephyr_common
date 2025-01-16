@@ -1,9 +1,9 @@
-if(CONFIG_AMT21)
+if(CONFIG_LED_STRIP_GPIO)
 
 zephyr_library()
 
 zephyr_library_sources(
-    amt21.c
+    led_strip_gpio.c
 )
 
 endif()

@@ -1,0 +1,11 @@
+menuconfig ANALOG_GENERIC_SENSOR
+    bool "Generic analog sensor"
+    default y
+    depends on DT_HAS_ANALOG_GENERIC_SENSOR_ENABLED
+    select ADC
+    help
+      Enable driver for generic analog sensor.
+
+if ANALOG_GENERIC_SENSOR
+
+endif # ANALOG_GENERIC_SENSOR

@@ -1,4 +1,5 @@
 menuconfig NTURT_TM
+    depends on NTURT
     bool "Telemetry module"
     depends on SYS_HASH_FUNC32
     depends on SYS_HASH_MAP

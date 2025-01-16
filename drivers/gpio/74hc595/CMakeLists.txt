@@ -1,9 +1,9 @@
-if(CONFIG_AMT21)
+if(CONFIG_GPIO_74HC595)
 
 zephyr_library()
 
 zephyr_library_sources(
-    amt21.c
+    gpio_74hc595.c
 )
 
 endif()

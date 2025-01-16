@@ -1,3 +1,5 @@
-zephyr_library()
+if(CONFIG_AUXDISPLAY)
 
-zephyr_library_sources_ifdef(CONFIG_AUXDISPLAY_GPIO_SEG_DISPLAY auxdisplay_gpio_seg_display.c)
+add_subdirectory(gpio-seg-display)
+
+endif()
