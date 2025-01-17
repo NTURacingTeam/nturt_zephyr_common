@@ -388,6 +388,13 @@ static int channel_error_update(const struct device* dev, uint16_t error,
       break;
     }
 
+    case INPUT_ERROR_NODEV: {
+      const char* sensor_name = info;
+      LOG_ERR("Sensor %s not ready, channel %s is disabled", sensor_name,
+              dev->name);
+      break;
+    }
+
     case INPUT_ERROR_OVER: {
       const int32_t* val = info;
       LOG_ERR("Channel %s deviates by %d%%", dev->name,
@@ -421,6 +428,11 @@ static int channel_get(const struct device* dev, int32_t* _out) {
   int32_t val_max = INT32_MIN;
   for (int i = 0; i < config->num_sensor; i++) {
     const struct device* sensor = config->sensors[i];
+
+    if (!device_is_ready(sensor)) {
+      return channel_error_update(dev, INPUT_ERROR_NODEV, -ENODEV,
+                                  sensor->name);
+    }
 
     int32_t val;
     ret = sensor_get(sensor, &val);
@@ -485,8 +497,14 @@ static void sensor_axis_thread(void* arg1, void* arg2, void* arg3) {
 
 static int sensor_axis_sensor_init(const struct device* dev) {
   struct sensor_axis_sensor_data* data = dev->data;
+  const struct sensor_axis_sensor_config* config = dev->config;
 
   k_mutex_init(&data->raw_cb.lock);
+
+  if (!device_is_ready(config->sensor)) {
+    LOG_ERR("Sensor %s not ready", config->sensor->name);
+    return -ENODEV;
+  }
 
   return 0;
 }
@@ -604,40 +622,40 @@ static int sensor_axis_calib_load(const char* key, size_t len,
 
 #endif  // CONFIG_INPUT_SENSOR_AXIS_SETTINGS
 
-#define SENSOR_AXIS_SENSOR_DEFINE(node_id)                                  \
-  static struct sensor_axis_sensor_data node_id##_data = {                  \
-      .error = INPUT_ERROR_NONE,                                            \
-      .raw_cb =                                                             \
-          {                                                                 \
-              .cb = NULL,                                                   \
-          },                                                                \
-  };                                                                        \
-                                                                            \
-  const static struct sensor_axis_sensor_config node_id##_config = {        \
-      .sensor = DEVICE_DT_GET(DT_PHANDLE(node_id, sensor)),                 \
-      .channel = DT_PROP(node_id, zephyr_channel),                          \
-      .calib = (struct sensor_axis_sensor_calib[]){{                        \
-          .in_min =                                                         \
-              {                                                             \
-                  .val1 = DT_PROP_BY_IDX(node_id, in_min, 0) +              \
-                          ZERO_OR_COMPILE_ERROR(                            \
-                              DT_PROP_LEN(node_id, in_min) == 2),           \
-                  .val2 = DT_PROP_BY_IDX(node_id, in_min, 1),               \
-              },                                                            \
-          .in_max =                                                         \
-              {                                                             \
-                  .val1 = DT_PROP_BY_IDX(node_id, in_max, 0) +              \
-                          ZERO_OR_COMPILE_ERROR(                            \
-                              DT_PROP_LEN(node_id, in_max) == 2),           \
-                  .val2 = DT_PROP_BY_IDX(node_id, in_max, 1),               \
-              },                                                            \
-      }},                                                                   \
-      .range_tolerance = DT_PROP(node_id, range_tolerance),                 \
-  };                                                                        \
-                                                                            \
-  DEVICE_DT_DEFINE(node_id, sensor_axis_sensor_init, NULL, &node_id##_data, \
-                   &node_id##_config, POST_KERNEL,                          \
-                   CONFIG_SENSOR_INIT_PRIORITY, NULL)
+#define SENSOR_AXIS_SENSOR_DEFINE(node_id)                                     \
+  static struct sensor_axis_sensor_data node_id##_data = {                     \
+      .error = INPUT_ERROR_NONE,                                               \
+      .raw_cb =                                                                \
+          {                                                                    \
+              .cb = NULL,                                                      \
+          },                                                                   \
+  };                                                                           \
+                                                                               \
+  const static struct sensor_axis_sensor_config node_id##_config = {           \
+      .sensor = DEVICE_DT_GET(DT_PHANDLE(node_id, sensor)),                    \
+      .channel = DT_PROP(node_id, zephyr_channel),                             \
+      .calib = (struct sensor_axis_sensor_calib[]){{                           \
+          .in_min =                                                            \
+              {                                                                \
+                  .val1 = DT_PROP_BY_IDX(node_id, in_min, 0) +                 \
+                          ZERO_OR_COMPILE_ERROR(                               \
+                              DT_PROP_LEN(node_id, in_min) == 2),              \
+                  .val2 = DT_PROP_BY_IDX(node_id, in_min, 1),                  \
+              },                                                               \
+          .in_max =                                                            \
+              {                                                                \
+                  .val1 = DT_PROP_BY_IDX(node_id, in_max, 0) +                 \
+                          ZERO_OR_COMPILE_ERROR(                               \
+                              DT_PROP_LEN(node_id, in_max) == 2),              \
+                  .val2 = DT_PROP_BY_IDX(node_id, in_max, 1),                  \
+              },                                                               \
+      }},                                                                      \
+      .range_tolerance = DT_PROP(node_id, range_tolerance),                    \
+  };                                                                           \
+                                                                               \
+  DEVICE_DT_DEFINE(node_id, sensor_axis_sensor_init, NULL, &node_id##_data,    \
+                   &node_id##_config, POST_KERNEL, CONFIG_INPUT_INIT_PRIORITY, \
+                   NULL)
 
 #define _SENSOR_AXIS_SENSOR_WEIGHT(node_id) DT_PROP(node_id, weight)
 
@@ -678,7 +696,7 @@ static int sensor_axis_calib_load(const char* key, size_t len,
   };                                                                         \
                                                                              \
   DEVICE_DT_DEFINE(node_id, NULL, NULL, &node_id##_data, &node_id##_config,  \
-                   POST_KERNEL, CONFIG_SENSOR_INIT_PRIORITY, NULL)
+                   POST_KERNEL, CONFIG_INPUT_INIT_PRIORITY, NULL)
 
 #define _SENSOR_AXIS_CHANNEL_AXIS(node_id) DT_PROP(node_id, zephyr_axis)
 
@@ -700,6 +718,6 @@ static int sensor_axis_calib_load(const char* key, size_t len,
                                                                               \
   DEVICE_DT_INST_DEFINE(inst, sensor_axis_init, NULL,                         \
                         &sensor_axis_data_##inst, &sensor_axis_config_##inst, \
-                        POST_KERNEL, CONFIG_SENSOR_INIT_PRIORITY, NULL);
+                        POST_KERNEL, CONFIG_INPUT_INIT_PRIORITY, NULL);
 
 DT_INST_FOREACH_STATUS_OKAY(SENSOR_AXIS_INIT)

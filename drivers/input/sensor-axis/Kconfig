@@ -1,10 +1,10 @@
 menuconfig INPUT_SENSOR_AXIS
-    bool "Axis input driver using data from sensors"
+    bool "Axis input device using data from sensors"
     default y
     depends on DT_HAS_SENSOR_AXIS_ENABLED
     depends on SENSOR
     help
-      Enable driver for axis input driver using data from sensors.
+      Enable driver for axis input device using data from sensors.
 
 if INPUT_SENSOR_AXIS
 

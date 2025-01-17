@@ -68,7 +68,7 @@ child-binding:
         Minimum value to output on input events.
     out-max:
       type: int
-      default: 255
+      default: 100
       description: |
         Maximum value to output on input events.
     deadzone-mode:
