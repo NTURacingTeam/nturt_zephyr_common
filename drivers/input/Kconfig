@@ -1,5 +1,6 @@
 if INPUT
 
+rsource "accel/Kconfig"
 rsource "sensor-axis/Kconfig"
 
 endif # INPUT

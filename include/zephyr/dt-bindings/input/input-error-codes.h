@@ -14,4 +14,6 @@
 #define INPUT_ERROR_OVER 0x11
 #define INPUT_ERROR_DEV 0x12 /**< Value deviation error */
 
+#define INPUT_ERROR_PEDAL_PLAUS 0x20 /**< Pedal plausibility error */
+
 #endif  // ZEPHYR_INCLUDE_DT_BINDINGS_INPUT_INPUT_ERROR_CODES_H_

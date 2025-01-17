@@ -1,0 +1,34 @@
+description: |
+  Accelerator input device comforming to the FSAE rule EV4.7, APPS / Brake Pedal
+  Plausibility Check. It takes both the input value from APPS and BSE from
+  code INPUT_ABS_THROTTLE and INPUT_ABS_BRAKE, respectively. The final
+  accelerator value will be reported by this device in INPUT_ABS_THROTTLE.
+
+compatible: "nturt,accel"
+
+include: base.yaml
+
+properties:
+  accel:
+    type: phandle
+    required: true
+    description: |
+      Accelerator input device.
+
+  brake:
+    type: phandle
+    required: true
+    description: |
+      Brake input device.
+
+  min:
+    type: int
+    default: 0
+    description: |
+      Minimum value of both input and output.
+
+  max:
+    type: int
+    default: 100
+    description: |
+      Maximum value of both input and output.
