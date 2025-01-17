@@ -202,12 +202,12 @@ out:
 
 /**
  * @brief Update sensor error.
- * 
+ *
  * @param[in] dev The sensor to update.
  * @param[in] error New error code to update.
  * @param[in] ret Current return value.
  * @param[in] info Additional information to report.
- * 
+ *
  * @return Original @p ret if success, negative error number otherwise.
  */
 static int sensor_error_update(const struct device* dev, uint16_t error,
@@ -297,13 +297,17 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   int64_t range = DIV_ROUND_CLOSEST(max - min, 1000);
   val = DIV_ROUND_CLOSEST((val - min) * 1000, range);
 
-  /* clamp or report out of range */
-  if (val < -config->range_tolerance * 10000) {
-    return sensor_error_update(dev, INPUT_ERROR_UNDER, -EINVAL, &sensor_val);
-  } else if (val < 0) {
+  if (config->range_tolerance >= 0) {
+    if (val < -config->range_tolerance * 10000) {
+      return sensor_error_update(dev, INPUT_ERROR_UNDER, -EINVAL, &sensor_val);
+
+    } else if (val > 1000000 + config->range_tolerance * 10000) {
+      return sensor_error_update(dev, INPUT_ERROR_OVER, -EINVAL, &sensor_val);
+    }
+  }
+
+  if (val < 0) {
     val = 0;
-  } else if (val > 1000000 + config->range_tolerance * 10000) {
-    return sensor_error_update(dev, INPUT_ERROR_OVER, -EINVAL, &sensor_val);
   } else if (val > 1000000) {
     val = 1000000;
   }
@@ -349,12 +353,12 @@ static int32_t out_deadzone(const struct device* dev, int32_t out) {
 
 /**
  * @brief Update channel error.
- * 
+ *
  * @param[in] dev The channel to update.
  * @param[in] error New error code to update.
  * @param[in] ret Current return value.
  * @param[in] info Additional information to report.
- * 
+ *
  * @return Original @p ret if success, negative error number otherwise.
  */
 static int channel_error_update(const struct device* dev, uint16_t error,

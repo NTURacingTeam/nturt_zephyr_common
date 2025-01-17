@@ -1,5 +1,43 @@
 description: |
-  #include <zephyr/dt-bindings/input/deadzone_mode.h>
+  Sesnor based axis input device.
+
+  Implement an input device generating absolute axis events by periodically
+  reading from sensors and combines multiple redundant sensor data into a
+  channel.
+
+  Example configuration:
+
+  #include <zephyr/dt-bindings/input/deadzone-modes.h>
+  #include <zephyr/dt-bindings/input/input-event-codes.h>
+
+  sensor-axis {
+      compatible = "senssor-axis";
+      poll-period-ms = <10>;
+
+      axis-x {
+          zephyr,axis = <INPUT_ABS_X>;
+          deadzone-mode = <INPUT_DEADZONE_MODE_EDGE>;
+          deadzone-size = <5>; // 5%
+          noise = <1000>; // 1%
+          dev-tolerance = <10>; // 10%
+
+          axis-x-0 {
+              sensor = <&sensor0>;
+              zephyr,channel = <36>; // SENSOR_CHAN_ROTATION
+              in-min = <0 0>;
+              in-max = <15 0>;
+              range-tolerance = <10>; // 10%
+          };
+
+          axis-x-1 {
+              sensor = <&sensor1>;
+              zephyr,channel = <36>; // SENSOR_CHAN_ROTATION
+              in-min = <15 0>;
+              in-max = <0 0>;
+              range-tolerance = <10>; // 10%
+          };
+      };
+  };
 
 compatible: "sensor-axis"
 
@@ -43,8 +81,8 @@ child-binding:
         If EDGE is specified, sensor value within the minimum value plus the
         deadzone size will be reported as the minimum value.
       enum:
-        - 0
-        - 1
+        - 0 # INPUT_DEADZONE_MODE_CENTER
+        - 1 # INPUT_DEADZONE_MODE_EDGE
     deadzone-size:
       type: int
       default: 0
@@ -101,10 +139,11 @@ child-binding:
           millionth part.
       range-tolerance:
         type: int
-        default: 0
+        default: -1
         description: |
           Sensor value tolerance to go below minimum or above maximum before
-          it's considered out of range in percentage.
+          it's considered out of range in percentage. Clamp to value within
+          the tolerance range. Set to -1 to disable range check.
       weight:
         type: int
         default: 1
