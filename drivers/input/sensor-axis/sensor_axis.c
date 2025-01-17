@@ -215,11 +215,18 @@ static int sensor_error_update(const struct device* dev, uint16_t error,
   struct sensor_axis_sensor_data* data = dev->data;
   const struct sensor_axis_sensor_config* config = dev->config;
 
-  if (data->error != INPUT_ERROR_NONE || data->error == error) {
+  int ret2;
+  if (data->error == INPUT_ERROR_NONE && error != INPUT_ERROR_NONE) {
+    ret2 = input_report(dev, INPUT_EV_ERROR, error, true, true, K_NO_WAIT);
+
+  } else if (data->error != INPUT_ERROR_NONE && error == INPUT_ERROR_NONE) {
+    ret2 =
+        input_report(dev, INPUT_EV_ERROR, data->error, false, true, K_NO_WAIT);
+
+  } else {
     return ret;
   }
 
-  int ret2 = input_report(dev, INPUT_EV_ERROR, error, true, true, K_NO_WAIT);
   if (ret2 < 0) {
     LOG_ERR("input_report failed: %s", strerror(-ret2));
     return ret2;
@@ -365,11 +372,18 @@ static int channel_error_update(const struct device* dev, uint16_t error,
                                 int ret, const void* info) {
   struct sensor_axis_channel_data* data = dev->data;
 
-  if (data->error != INPUT_ERROR_NONE || data->error == error) {
+  int ret2;
+  if (data->error == INPUT_ERROR_NONE && error != INPUT_ERROR_NONE) {
+    ret2 = input_report(dev, INPUT_EV_ERROR, error, true, true, K_NO_WAIT);
+
+  } else if (data->error != INPUT_ERROR_NONE && error == INPUT_ERROR_NONE) {
+    ret2 =
+        input_report(dev, INPUT_EV_ERROR, data->error, false, true, K_NO_WAIT);
+
+  } else {
     return ret;
   }
 
-  int ret2 = input_report(dev, INPUT_EV_ERROR, error, true, true, K_NO_WAIT);
   if (ret2 < 0) {
     LOG_ERR("input_report failed: %s", strerror(-ret2));
     return ret2;
@@ -447,7 +461,7 @@ static int channel_get(const struct device* dev, int32_t* _out) {
 
   int32_t val_dev = val_max - val_min;
   if (val_dev > config->dev_tolerance * 10000) {
-    channel_error_update(dev, INPUT_ERROR_DEV, -EINVAL, &val_dev);
+    return channel_error_update(dev, INPUT_ERROR_DEV, -EINVAL, &val_dev);
   }
 
   ret = channel_error_update(dev, INPUT_ERROR_NONE, 0, NULL);
