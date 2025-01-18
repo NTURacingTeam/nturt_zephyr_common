@@ -4,6 +4,29 @@
 Zephyr Drivers
 ==============
 
+Device Initialization
+=====================
+
+Each device are initialized at boot time by their initialization functions with
+`different initialization levels and priorities
+<https://docs.zephyrproject.org/4.0.0/kernel/drivers/index.html#initialization-levels>`_.
+The initialization functions with the same level and priorities are called in
+their dependency order. And devices that depend on other devices cannot be
+initialized before the devices they depend on are initialized.
+
+Device Dependency
+-----------------
+
+The dependency of each node in the device tree is determined by:
+
+- The child is dependent on the parent node.
+- The node that references another node (using phandle) is dependent on the
+  referenced node.
+
+And the final order is listed in
+``zephyr/include/generated/zephyr/devicetree_generated.h`` of the build
+directory.
+
 Clock control
 =============
 
