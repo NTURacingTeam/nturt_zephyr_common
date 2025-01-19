@@ -1,8 +1,7 @@
 menuconfig INPUT_SENSOR_AXIS
     bool "Axis input device using data from sensors"
+    depends on DT_HAS_SENSOR_AXIS_ENABLED && SENSOR
     default y
-    depends on DT_HAS_SENSOR_AXIS_ENABLED
-    depends on SENSOR
     help
       Enable driver for axis input device using data from sensors.
 
@@ -22,8 +21,8 @@ config INPUT_SENSOR_AXIS_THREAD_PRIORITY
 
 config INPUT_SENSOR_AXIS_SETTINGS
 	bool "Sensor axis settings support"
-	default y
 	depends on SETTINGS
+	default y
 	help
 	  Support for saving calibration data for sensor axis. Exposes a
 	  sensor_axis_calibration_save() function to save the calibration into

@@ -1,7 +1,7 @@
 menuconfig HALL_RPM
     bool "Hall-effect gear tooth speed sensor"
-    default y
     depends on DT_HAS_HALL_RPM_ENABLED
+    default y
     select GPIO
     help
       Enable driver for hall-effect gear tooth speed sensor.

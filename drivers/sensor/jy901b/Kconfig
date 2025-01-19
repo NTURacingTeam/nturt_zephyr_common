@@ -1,7 +1,7 @@
 menuconfig JY901B
     bool "Wit Motion JY901B Ten-Axis Intertial Measurement Unit"
-    default y
     depends on DT_HAS_WITMOTION_JY901B_ENABLED
+    default y
     select I2C
     help
       Enable driver for JY901B I2C-based ten-axis intertial measurement unit.

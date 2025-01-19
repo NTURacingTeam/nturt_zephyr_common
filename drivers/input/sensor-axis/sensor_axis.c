@@ -539,9 +539,11 @@ static int sensor_axis_init(const struct device* dev) {
     return -ENODEV;
   }
 
+#ifdef CONFIG_THREAD_NAME
   char thread_name[CONFIG_THREAD_MAX_NAME_LEN];
   snprintf(thread_name, sizeof(thread_name), "input_sensor_axis_%s", dev->name);
   k_thread_name_set(&data->thread, thread_name);
+#endif // CONFIG_THREAD_NAME
 
   k_timer_start(&data->timer, K_MSEC(config->poll_period),
                 K_MSEC(config->poll_period));

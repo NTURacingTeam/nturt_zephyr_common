@@ -1,7 +1,7 @@
 menuconfig INPUT_ACCEL
     bool "Accelerator input device comforming to the FSAE rules"
-    default y
     depends on DT_HAS_NTURT_ACCEL_ENABLED
+    default y
     help
       Enable driver for accelerator input device to conform to FSAE rule EV4.7,
       APPS / Brake Pedal Plausibility Check.

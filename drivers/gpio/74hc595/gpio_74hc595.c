@@ -17,9 +17,9 @@
 
 LOG_MODULE_REGISTER(gpio_74hc595, CONFIG_GPIO_LOG_LEVEL);
 
-#if CONFIG_SPI_INIT_PRIORITY >= CONFIG_GPIO_74HC595_INIT_PRIORITY
-#error SPI_INIT_PRIORITY must be lower than GPIO_74HC595_INIT_PRIORITY
-#endif
+#define INIT_PRIORITY                                                \
+  COND_CODE_1(CONFIG_GPIO_INIT_PRIORITY >= CONFIG_SPI_INIT_PRIORITY, \
+              (CONFIG_GPIO_INIT_PRIORITY), (CONFIG_SPI_INIT_PRIORITY))
 
 struct gpio_74hc595_data {
   struct k_mutex lock;
@@ -215,7 +215,7 @@ static const struct gpio_driver_api gpio_74hc595_api = {
   DEVICE_DT_DEFINE(id, &gpio_74hc595_init, NULL,                         \
                    &gpio_74hc595_child_data_##id,                        \
                    &gpio_74hc595_child_config_##id, POST_KERNEL,         \
-                   CONFIG_GPIO_74HC595_INIT_PRIORITY, &gpio_74hc595_api);
+                   INIT_PRIORITY, &gpio_74hc595_api);
 
 #define GPIO_74HC595_INIT(inst)                                                \
   static uint8_t output_##inst[] = {                                           \
