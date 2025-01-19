@@ -14,10 +14,6 @@
 // project includes
 #include "nturt/sys.h"
 
-#if !DT_HAS_CHOSEN(nturt_rtc)
-#error "Requires nturt,rtc to be chosen in the devicetree"
-#endif
-
 LOG_MODULE_REGISTER(nturt_sys_rtc, CONFIG_NTURT_LOG_LEVEL);
 
 /* static function declaration -----------------------------------------------*/

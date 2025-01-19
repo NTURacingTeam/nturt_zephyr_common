@@ -32,7 +32,7 @@ static struct fs_mount_t fs_mnt = {
     .type = FS_LITTLEFS,
     .fs_data = &lfsfs,
     .flags = FS_MOUNT_FLAG_USE_DISK_ACCESS,
-    .storage_dev = CONFIG_NTURT_SD_DISK_NAME,
+    .storage_dev = CONFIG_NTURT_SYS_FS_SD_DISK_NAME,
     .mnt_point = CONFIG_NTURT_SYS_FS_MOUNT_POINT,
 };
 #endif
@@ -45,7 +45,8 @@ static int init(void) {
 
   ret = fs_mount(&fs_mnt);
   if (ret < 0) {
-    LOG_ERR("Fail to mount %s: %s", CONFIG_NTURT_SD_DISK_NAME, strerror(-ret));
+    LOG_ERR("Fail to mount %s: %s", CONFIG_NTURT_SYS_FS_SD_DISK_NAME,
+            strerror(-ret));
   }
 
   return 0;

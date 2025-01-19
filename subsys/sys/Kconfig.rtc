@@ -1,6 +1,10 @@
+DT_CHOSEN_NTURT_RTC := nturt,rtc
+
 config NTURT_SYS_RTC
     bool "Real-time clock system module"
-    depends on RTC
+    depends on $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_RTC))
+    default y
+    select RTC
     select POSIX_TIMERS
     help
       Initialize RTC time to dummy time if power had lost and set posix realtime
@@ -15,5 +19,11 @@ config NTURT_LOG_REALTIME
     select LOG_TIMESTAMP_USE_REALTIME
     help
       Use real-time clock time as logging system timestamp.
+
+config NTURT_SYS_RTC_SHELL
+    bool "Real-time clock shell"
+    depends on NTURT_SYS_SHELL
+    default y
+    select RTC_SHELL
 
 endif # NTURT_SYS_RTC

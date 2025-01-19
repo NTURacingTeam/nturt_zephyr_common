@@ -1,6 +1,7 @@
 config NTURT_SYS_FS
     bool "File system module"
-    depends on DISK_ACCESS && FILE_SYSTEM
+    select DISK_ACCESS
+    select FILE_SYSTEM
     help
       Automatically mount SD card to file system of choise.
 
@@ -12,22 +13,28 @@ config NTURT_SYS_FS_MOUNT_POINT
 
 choice NTURT_SYS_FS_TYPE
     prompt "Which file system to use"
-    default NTURT_SYS_FS_LITTLE_FS
+    default NTURT_SYS_FS_FAT_FS
 
 config NTURT_SYS_FS_FAT_FS
     bool "Uses FatFs as the file system"
-    depends on FAT_FILESYSTEM_ELM
+    select FAT_FILESYSTEM_ELM
 
 config NTURT_SYS_FS_LITTLE_FS
     bool "Uses LittleFs as the file system"
-    depends on FILE_SYSTEM_LITTLEFS
+    select FILE_SYSTEM_LITTLEFS
     select FS_LITTLEFS_BLK_DEV
 
 endchoice
 
-config NTURT_SD_DISK_NAME
+config NTURT_SYS_FS_SD_DISK_NAME
     string "SD card disk name to mount"
     default "SD" if NTURT_SYS_FS_FAT_FS
     default "SDMMC"
+
+config NTURT_SYS_FS_SHELL
+    bool "File system shell"
+    depends on NTURT_SYS_SHELL
+    default y
+    select FILE_SYSTEM_SHELL
 
 endif # NTURT_SYS_FS

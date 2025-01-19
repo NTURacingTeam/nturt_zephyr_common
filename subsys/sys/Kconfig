@@ -1,6 +1,6 @@
 menuconfig NTURT_SYS
     depends on NTURT
-    bool "System module"
+    bool "Basic system functionalities"
 
 if NTURT_SYS
 
@@ -10,8 +10,19 @@ config NTURT_SYS_INIT_PRIORITY
     help
       NTURT common library system module initialization priority.
 
+config NTURT_SYS_SHELL
+    bool "Shell support"
+    select SHELL
+
+DT_CHOSEN_NTURT_BUZZER := nturt,buzzer
+
+config NTURT_SYS_REBOOT_SOUND
+    bool "Reboot sound"
+    depends on $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_BUZZER))
+    default y
+    select GPIO
+
 rsource "Kconfig.fs"
 rsource "Kconfig.rtc"
-rsource "Kconfig.shell"
 
 endif # NTURT_SYS

@@ -5,6 +5,12 @@
 #include <time.h>
 
 /**
+ * @brief Reset system.
+ * 
+ */
+void sys_reset();
+
+/**
  * @brief Set system time.
  * 
  * @param time Time to set.
