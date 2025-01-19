@@ -1,0 +1,27 @@
+identifier: ep6_vcu
+name: NTURT Epsilon 6 Vehicle Control Unit
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+ram: 1060
+flash: 2048
+supported:
+  - dma
+  - gpio
+  - pwm
+  - adc
+  - dac
+  - counter
+  - rtc
+  - watchdog
+  - uart
+  - i2c
+  - spi
+  - can
+  # sdhc in stm32 is not directly accessable, but through sdmmc disk access
+  # included here for tests that requires sdmmc disk access but mark as sdhc
+  - sdhc
+  - usb_device
+  - usbd
+vendor: nturt

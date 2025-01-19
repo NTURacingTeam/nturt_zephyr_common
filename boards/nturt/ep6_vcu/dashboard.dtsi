@@ -1,0 +1,376 @@
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <zephyr/dt-bindings/led/led.h>
+#include <zephyr/dt-bindings/display/ili9xxx.h>
+#include <freq.h>
+
+/ {
+    chosen {
+        zephyr,display = &display;
+
+        nturt,rtd-light = &rtd_light;
+        nturt,speed-display = &speed_display;
+        nturt,battery-display = &battery_display;
+        nturt,accel-display = &accel_display;
+        nturt,brake-display = &brake_display;
+    };
+
+    matrix_leds: matrix-leds {
+        compatible = "gpio-leds";
+
+        matrix-led-0 {
+            gpios = <&ex_gpio1 7 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-1 {
+            gpios = <&ex_gpio1 6 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-2 {
+            gpios = <&ex_gpio1 5 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-3 {
+            gpios = <&ex_gpio1 4 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-4 {
+            gpios = <&ex_gpio1 3 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-5 {
+            gpios = <&ex_gpio1 2 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-6 {
+            gpios = <&ex_gpio1 1 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-7 {
+            gpios = <&ex_gpio1 0 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-8 {
+            gpios = <&ex_gpio0 7 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-9 {
+            gpios = <&ex_gpio0 6 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-10 {
+            gpios = <&ex_gpio0 5 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-11 {
+            gpios = <&ex_gpio0 4 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-12 {
+            gpios = <&ex_gpio0 3 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-13 {
+            gpios = <&ex_gpio0 2 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-14 {
+            gpios = <&ex_gpio0 1 GPIO_ACTIVE_HIGH>;
+        };
+
+        matrix-led-15 {
+            gpios = <&ex_gpio0 0 GPIO_ACTIVE_HIGH>;
+        };
+    };
+
+    speed_display: gpio-seg-display-speed {
+        compatible = "gpio-seg-display";
+        pwms = <&pwm4 2 PWM_MSEC(1) PWM_POLARITY_NORMAL>;
+        columns = <2>;
+        rows = <1>;
+        decimal-point;
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        seg-display@0 {
+            reg = <0>;
+            segment-gpios = <&ex_gpio5 0 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio5 1 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio5 2 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio5 3 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio5 4 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio5 5 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio5 6 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio5 7 GPIO_ACTIVE_HIGH>;
+        };
+
+        seg-display@1 {
+            reg = <1>;
+            segment-gpios = <&ex_gpio4 0 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio4 1 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio4 2 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio4 3 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio4 4 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio4 5 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio4 6 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio4 7 GPIO_ACTIVE_HIGH>;
+        };
+    };
+
+    battery_display: gpio-seg-display-battery {
+        compatible = "gpio-seg-display";
+        columns = <2>;
+        rows = <1>;
+        decimal-point;
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        seg-display@0 {
+            reg = <0>;
+            segment-gpios = <&ex_gpio3 0 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio3 1 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio3 2 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio3 3 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio3 4 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio3 5 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio3 6 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio3 7 GPIO_ACTIVE_HIGH>;
+        };
+
+        seg-display@1 {
+            reg = <1>;
+            segment-gpios = <&ex_gpio2 0 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio2 1 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio2 2 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio2 3 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio2 4 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio2 5 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio2 6 GPIO_ACTIVE_HIGH>,
+                            <&ex_gpio2 7 GPIO_ACTIVE_HIGH>;
+        };
+    };
+
+    accel_display: gpio-led-strip-accel {
+        compatible = "gpio-led-strip";
+        chain-length = <20>;
+        color-mapping = <LED_COLOR_ID_RED>;
+        red-gpios = <&ex_gpio8 4 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio8 5 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio8 6 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio8 7 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio9 0 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio9 1 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio9 2 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio9 3 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio9 4 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio9 5 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio9 6 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio9 7 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio10 0 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio10 1 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio10 2 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio10 3 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio10 4 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio10 5 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio10 6 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio10 7 GPIO_ACTIVE_HIGH>;
+    };
+
+    brake_display: gpio-led-strip-brake {
+        compatible = "gpio-led-strip";
+        chain-length = <20>;
+        color-mapping = <LED_COLOR_ID_RED>;
+        red-gpios = <&ex_gpio8 3 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio8 2 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio8 1 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio8 0 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio7 7 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio7 6 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio7 5 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio7 4 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio7 3 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio7 2 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio7 1 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio7 0 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio6 7 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio6 6 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio6 5 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio6 4 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio6 3 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio6 2 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio6 1 GPIO_ACTIVE_HIGH>,
+                    <&ex_gpio6 0 GPIO_ACTIVE_HIGH>;
+    };
+
+    buttons: buttons {
+        compatible = "gpio-keys";
+        debounce-interval-ms = <20>;
+
+        btn1: btn-1 {
+            gpios = <&gpioe 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zephyr,code = <INPUT_BTN_1>;
+        };
+
+        btn2: btn-2 {
+            gpios = <&gpiod 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zephyr,code = <INPUT_BTN_2>;
+        };
+
+        btn3: btn-3 {
+            gpios = <&gpiod 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zephyr,code = <INPUT_BTN_3>;
+        };
+
+        btn4: btn-4 {
+            gpios = <&gpiod 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zephyr,code = <INPUT_BTN_4>;
+        };
+
+        btn5: btn-5 {
+            gpios = <&gpiod 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zephyr,code = <INPUT_BTN_5>;
+        };
+
+        btn6: btn-6 {
+            gpios = <&gpiog 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zephyr,code = <INPUT_BTN_6>;
+        };
+
+        btn7: btn-7 {
+            gpios = <&gpiod 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zephyr,code = <INPUT_BTN_7>;
+        };
+    };
+
+    double-tap {
+        input = <&buttons>;
+        compatible = "zephyr,input-double-tap";
+        input-codes = <INPUT_BTN_1>;
+        double-tap-codes = <INPUT_BTN_1>;
+        double-tap-delay-ms = <300>;
+        status = "disabled";
+    };
+
+    longpress {
+        input = <&buttons>;
+        compatible = "zephyr,input-longpress";
+        input-codes = <INPUT_BTN_1>;
+        short-codes = <INPUT_BTN_1>;
+        long-codes = <INPUT_BTN_1>;
+        long-delay-ms = <1000>;
+        status = "disabled";
+    };
+};
+
+&dummy_leds {
+    rtd_light: rtd-light {
+        gpios = <&gpiod 9 GPIO_ACTIVE_HIGH>;
+    };
+};
+
+&i2c2 {
+
+};
+
+&spi4 {
+    74hc595@0 {
+        compatible = "diodes,74hc595";
+        reg = <0>;
+        spi-max-frequency = <DT_FREQ_M(5)>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        ex_gpio0: ex-gpio@0 {
+            reg = <0>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio1: ex-gpio@1 {
+            reg = <1>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio2: ex-gpio@2 {
+            reg = <2>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio3: ex-gpio@3 {
+            reg = <3>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio4: ex-gpio@4 {
+            reg = <4>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio5: ex-gpio@5 {
+            reg = <5>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio6: ex-gpio@6 {
+            reg = <6>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio7: ex-gpio@7 {
+            reg = <7>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio8: ex-gpio@8 {
+            reg = <8>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio9: ex-gpio@9 {
+            reg = <9>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        ex_gpio10: ex-gpio@a {
+            reg = <10>;
+            gpio-controller;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+    };
+};
+
+&spi6 {
+
+};
+
+&mipi_dbi {
+    display: ili9488@0 {
+        compatible = "ilitek,ili9488";
+        reg = <0>;
+        mipi-max-frequency = <DT_FREQ_M(20)>;
+        pwms = <&pwm4 1 PWM_MSEC(1) PWM_POLARITY_NORMAL>;
+        pixel-format = <ILI9XXX_PIXEL_FORMAT_RGB565>;
+        width = <480>;
+        height = <320>;
+    };
+};

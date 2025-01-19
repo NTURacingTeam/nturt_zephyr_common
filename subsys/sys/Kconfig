@@ -1,5 +1,6 @@
 menuconfig NTURT_SYS
     depends on NTURT
+    select REBOOT
     bool "Basic system functionalities"
 
 if NTURT_SYS

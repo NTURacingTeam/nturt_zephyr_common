@@ -1,0 +1,101 @@
+// #include <zephyr/drivers/sensor.h>
+
+/ {
+    chosen {
+        nturt,apps1 = &apps1;
+        nturt,apps2 = &apps2;
+        nturt,bse1 = &bse1;
+        nturt,bse2 = &bse2;
+        nturt,steer_encoder = &steer_encoder;
+    };
+
+    apps1: accel-encoder1 {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc3 2>;
+        zephyr,channel = <36>; // SENSOR_CHAN_ROTATION
+        min-voltage = <600>;
+        max-voltage = <3000>;
+        min-value = <0 0>;
+        max-value = <15 0>;
+    };
+
+    apps2: accel-encoder2 {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc1 17>;
+        zephyr,channel = <36>; // SENSOR_CHAN_ROTATION
+        min-voltage = <600>;
+        max-voltage = <3000>;
+        min-value = <0 0>;
+        max-value = <15 0>;
+    };
+
+    bse1: brake-press1 {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc3 3>;
+        zephyr,channel = <14>; // SENSOR_CHAN_PRESS
+        min-voltage = <600>;
+        max-voltage = <3000>;
+        min-value = <0 0>;
+        max-value = <100 0>;
+    };
+
+    bse2: brake-press2 {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc3 7>;
+        zephyr,channel = <14>; // SENSOR_CHAN_PRESS
+        min-voltage = <600>;
+        max-voltage = <3000>;
+        min-value = <0 0>;
+        max-value = <100 0>;
+    };
+
+    steer_encoder: steer-encoder {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc1 14>;
+        zephyr,channel = <36>; // SENSOR_CHAN_ROTATION
+        min-voltage = <600>;
+        max-voltage = <3000>;
+        min-value = <(-180) 0>;
+        max-value = <180 0>;
+    };
+
+    susp_f1: susp_f1 {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc3 4>;
+        zephyr,channel = <26>; // SENSOR_CHAN_DISTANCE
+        min-voltage = <600>;
+        max-voltage = <3000>;
+        min-value = <0 0>;
+        max-value = <10 0>;
+    };
+
+    susp_f2: susp_f2 {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc3 8>;
+        zephyr,channel = <26>; // SENSOR_CHAN_DISTANCE
+        min-voltage = <600>;
+        max-voltage = <3000>;
+        min-value = <0 0>;
+        max-value = <10 0>;
+    };
+
+    susp_r1: susp_r1 {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc3 5>;
+        zephyr,channel = <26>; // SENSOR_CHAN_DISTANCE
+        min-voltage = <600>;
+        max-voltage = <3000>;
+        min-value = <0 0>;
+        max-value = <10 0>;
+    };
+
+    susp_r2: susp_r2 {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc3 9>;
+        zephyr,channel = <26>; // SENSOR_CHAN_DISTANCE
+        min-voltage = <600>;
+        max-voltage = <3000>;
+        min-value = <0 0>;
+        max-value = <10 0>;
+    };
+};
