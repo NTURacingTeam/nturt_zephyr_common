@@ -47,6 +47,20 @@ For STM32, it is a good idea to use STM32CubeMX as a reference when configuring
 the device tree as most of the time is just copying the configurations from
 STM32CubeMX to the device tree.
 
+Kconfig
+=======
+
+Kconfig Macros
+--------------
+
+Kconfig also `supports macros
+<https://www.kernel.org/doc/html/latest/kbuild/kconfig-macro-language.html>`_,
+which is mainly used in Zephyr for accessing the device tree. It is useful for
+example to enable a feature only when a specific property is defined in the
+device tree. The supported macros can be referenced from `Custom Kconfig
+Preprocessor Functions
+<https://docs.zephyrproject.org/4.0.0/build/kconfig/preprocessor-functions.html>`_.
+
 Porting New Boards to Zephyr
 ============================
 

@@ -25,7 +25,13 @@ The dependency of each node in the device tree is determined by:
 
 And the final order is listed in
 ``zephyr/include/generated/zephyr/devicetree_generated.h`` of the build
-directory.
+directory [#]_.
+
+References
+----------
+
+.. [#] `Zephyr Device Tree HOWTOs
+   <https://docs.zephyrproject.org/4.0.0/build/dts/howtos.html#get-your-devicetree-and-generated-header>`_
 
 Clock control
 =============
