@@ -101,7 +101,38 @@ Refer to their respective documentations for more details.
 Pooled Parallel Preemptible Priority-based Work Queues (P4WQ)
 =============================================================
 
-TODO
+Aside from the `kernel work queue
+<https://docs.zephyrproject.org/4.0.0/kernel/services/threads/workqueue.html>`_
+that runs only in one thread, Zephyr provides a more advanced work queue system
+called P4WQ that provides parallel execution of works using thread pool based on
+its priority, with the tradeoff not having delayable works and thread pool
+control API. Additionally, it is not documented in the Zephyr documentation, and
+its API documentation is only available in `its file reference
+<https://docs.zephyrproject.org/4.0.0/doxygen/html/p4wq_8h.html>`_. P4WQ can be
+enabled by Kconfig option ``CONFIG_SCHED_DEADLINE``.
+
+:c:struct:`k_p4wq_work` is used to define a work item, where
+:c:member:`k_p4wq_work.priority` and :c:member:`k_p4wq_work.deadline` are what
+the priority and the deadline of the thread will be when the work is executed.
+This however means that when all threads are busy, newly submitted works with
+higher priority will not preempt the lower priority works that are already being
+executed [#]_.
+
+.. note::
+
+   Thread deadline in Zephyr is only considered when scheduling threads with the
+   same priority using `earliest deadline first scheduling
+   <https://en.wikipedia.org/wiki/Earliest_deadline_first_scheduling>`_ [#]_.
+
+References
+----------
+
+.. [#] `p4wq source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/lib/os/p4wq.c#L283>`_
+   that breaks priority guarantee
+.. [#] `k_thread_deadline_set()
+   <https://docs.zephyrproject.org/4.0.0/doxygen/html/group__thread__apis.html#gad887f16c1dd6f3247682a83beb22d1ce>`_
+   API documentation
 
 Logging
 =======
