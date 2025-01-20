@@ -1,7 +1,7 @@
 DT_CHOSEN_NTURT_RTC := nturt,rtc
 
-config NTURT_SYS_RTC
-    bool "Real-time clock system module"
+menuconfig NTURT_SYS_RTC
+    bool "Real-time clock system"
     depends on $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_RTC))
     default y
     select RTC

@@ -1,8 +1,8 @@
-if(CONFIG_ZX)
+if(CONFIG_NTURT_SYS_RTC)
 
 zephyr_library()
 zephyr_library_sources(
-    zx.c
+    rtc.c
 )
 
 endif()

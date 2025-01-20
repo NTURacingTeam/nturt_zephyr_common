@@ -1,5 +1,5 @@
-config NTURT_SYS_FS
-    bool "File system module"
+menuconfig NTURT_SYS_FS
+    bool "File system"
     select DISK_ACCESS
     select FILE_SYSTEM
     help

@@ -1,5 +1,8 @@
 if(CONFIG_NTURT_ERR)
 
-target_sources(app PRIVATE err.c)
+zephyr_library()
+zephyr_library_sources(
+    err.c
+)
 
 endif()

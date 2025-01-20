@@ -51,6 +51,7 @@ struct sensor_axis_sensor_config {
 struct sensor_axis_channel_data {
   uint16_t error;
   int32_t prev_out;
+  int accum_error_time;
 };
 
 struct sensor_axis_channel_config {
@@ -60,10 +61,13 @@ struct sensor_axis_channel_config {
   int* weights;
   int32_t out_min;
   int32_t out_max;
-  int32_t deadzone_mode;
-  int32_t deadzone_size;
-  int32_t noise;
-  int32_t dev_tolerance;
+  int deadzone_mode;
+  int deadzone_size;
+  int noise;
+  int dev_tolerance;
+  int poll_period;
+  int time_tolerance;
+  int time_tolerance_decay;
 };
 
 struct sensor_axis_data {
@@ -313,11 +317,7 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
     }
   }
 
-  if (val < 0) {
-    val = 0;
-  } else if (val > 1000000) {
-    val = 1000000;
-  }
+  val = CLAMP(val, 0, 1000000);
 
   ret = sensor_error_update(dev, INPUT_ERROR_NONE, 0, NULL);
   if (ret < 0) {
@@ -328,57 +328,52 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   return 0;
 }
 
-static int32_t out_deadzone(const struct device* dev, int32_t out) {
-  const struct sensor_axis_channel_config* config = dev->config;
-
-  if (config->deadzone_size == 0) {
-    return out;
-  }
-
-  switch (config->deadzone_mode) {
-    case INPUT_DEADZONE_MODE_CENTER:
-      if (out < 500000 + config->deadzone_size * 10000 &&
-          out > 500000 - config->deadzone_size * 10000) {
-        return 500000;
-      }
-
-      break;
-
-    case INPUT_DEADZONE_MODE_EDGE:
-      if (out < config->deadzone_size * 10000) {
-        return 0;
-      }
-
-      break;
-
-    default:
-      return -1;
-  }
-
-  return out;
-}
-
 /**
- * @brief Update channel error.
+ * @brief Update channel error considering the time tolerance.
  *
  * @param[in] dev The channel to update.
  * @param[in] error New error code to update.
  * @param[in] ret Current return value.
  * @param[in] info Additional information to report.
  *
- * @return Original @p ret if success, negative error number otherwise.
+ * @retval @p ret If success.
+ * @retval -EAGAIN If during accmulating error time decay, the error is still
+ * set.
+ * @retval others Negative error number if `input_report` fails.
  */
 static int channel_error_update(const struct device* dev, uint16_t error,
                                 int ret, const void* info) {
   struct sensor_axis_channel_data* data = dev->data;
+  const struct sensor_axis_channel_config* config = dev->config;
 
   int ret2;
-  if (data->error == INPUT_ERROR_NONE && error != INPUT_ERROR_NONE) {
-    ret2 = input_report(dev, INPUT_EV_ERROR, error, true, true, K_NO_WAIT);
+  if (error != INPUT_ERROR_NONE && data->error == INPUT_ERROR_NONE) {
+    data->accum_error_time = MIN(data->accum_error_time + config->poll_period,
+                                 config->time_tolerance);
+    LOG_DBG("Channel %s accumulated error time increases to %d ms", dev->name,
+            data->accum_error_time);
 
-  } else if (data->error != INPUT_ERROR_NONE && error == INPUT_ERROR_NONE) {
-    ret2 =
-        input_report(dev, INPUT_EV_ERROR, data->error, false, true, K_NO_WAIT);
+    if (data->accum_error_time >= config->time_tolerance) {
+      ret2 = input_report(dev, INPUT_EV_ERROR, error, true, true, K_NO_WAIT);
+
+    } else {
+      return ret;
+    }
+
+  } else if (error == INPUT_ERROR_NONE && data->error != INPUT_ERROR_NONE) {
+    data->accum_error_time =
+        MAX(data->accum_error_time -
+                config->time_tolerance * config->time_tolerance_decay / 100,
+            0);
+    LOG_DBG("Channel %s accumulated error time decreases to %d ms", dev->name,
+            data->accum_error_time);
+
+    if (data->accum_error_time == 0) {
+      ret2 = input_report(dev, INPUT_EV_ERROR, error, false, true, K_NO_WAIT);
+
+    } else {
+      return -EAGAIN;
+    }
 
   } else {
     return ret;
@@ -418,6 +413,36 @@ static int channel_error_update(const struct device* dev, uint16_t error,
   }
 
   return ret;
+}
+
+static int32_t out_deadzone(const struct device* dev, int32_t out) {
+  const struct sensor_axis_channel_config* config = dev->config;
+
+  if (config->deadzone_size == 0) {
+    return out;
+  }
+
+  switch (config->deadzone_mode) {
+    case INPUT_DEADZONE_MODE_CENTER:
+      if (IN_RANGE(out, 500000 - config->deadzone_size * 10000,
+                   500000 + config->deadzone_size * 10000)) {
+        return 500000;
+      }
+
+      break;
+
+    case INPUT_DEADZONE_MODE_EDGE:
+      if (out < config->deadzone_size * 10000) {
+        return 0;
+      }
+
+      break;
+
+    default:
+      return -1;
+  }
+
+  return out;
 }
 
 /**
@@ -469,7 +494,8 @@ static int channel_get(const struct device* dev, int32_t* _out) {
     return ret;
   }
 
-  int32_t out = out_deadzone(dev, val_accum / config->total_weight);
+  int32_t out =
+      out_deadzone(dev, DIV_ROUND_CLOSEST(val_accum, config->total_weight));
   if (abs(out - data->prev_out) < config->noise) {
     return 0;
   }
@@ -543,7 +569,7 @@ static int sensor_axis_init(const struct device* dev) {
   char thread_name[CONFIG_THREAD_MAX_NAME_LEN];
   snprintf(thread_name, sizeof(thread_name), "input_sensor_axis_%s", dev->name);
   k_thread_name_set(&data->thread, thread_name);
-#endif // CONFIG_THREAD_NAME
+#endif  // CONFIG_THREAD_NAME
 
   k_timer_start(&data->timer, K_MSEC(config->poll_period),
                 K_MSEC(config->poll_period));
@@ -689,6 +715,7 @@ static int sensor_axis_calib_load(const char* key, size_t len,
   static struct sensor_axis_channel_data node_id##_data = {                  \
       .error = INPUT_ERROR_NONE,                                             \
       .prev_out = 0,                                                         \
+      .accum_error_time = 0,                                                 \
   };                                                                         \
                                                                              \
   const static struct sensor_axis_channel_config node_id##_config = {        \
@@ -709,6 +736,9 @@ static int sensor_axis_calib_load(const char* key, size_t len,
                                 DT_PROP(node_id, deadzone_size) * 10000 >=   \
                                     DT_PROP(node_id, noise)),                \
       .dev_tolerance = DT_PROP(node_id, dev_tolerance),                      \
+      .poll_period = DT_PROP(DT_PARENT(node_id), poll_period),               \
+      .time_tolerance = DT_PROP(node_id, time_tolerance),                    \
+      .time_tolerance_decay = DT_PROP(node_id, time_tolerance_decay),        \
   };                                                                         \
                                                                              \
   DEVICE_DT_DEFINE(node_id, NULL, NULL, &node_id##_data, &node_id##_config,  \

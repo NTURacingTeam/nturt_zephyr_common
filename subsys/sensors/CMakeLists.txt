@@ -1,5 +1,8 @@
 if(CONFIG_NTURT_SENSORS)
 
-target_sources(app PRIVATE sensors.c)
+zephyr_library()
+zephyr_library_sources(
+    sensors.c
+)
 
 endif()

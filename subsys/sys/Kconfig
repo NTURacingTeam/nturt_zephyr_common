@@ -1,15 +1,15 @@
 menuconfig NTURT_SYS
+    bool "Basic system functionalities"
     depends on NTURT
     select REBOOT
-    bool "Basic system functionalities"
 
 if NTURT_SYS
 
 config NTURT_SYS_INIT_PRIORITY
-    int "NTURT system module init priority"
+    int "NTURT basic system init priority"
     default 0
     help
-      NTURT common library system module initialization priority.
+      NTURT basic system initialization priority.
 
 config NTURT_SYS_SHELL
     bool "Shell support"
@@ -23,7 +23,7 @@ config NTURT_SYS_REBOOT_SOUND
     default y
     select GPIO
 
-rsource "Kconfig.fs"
-rsource "Kconfig.rtc"
+rsource "fs/Kconfig"
+rsource "rtc/Kconfig"
 
 endif # NTURT_SYS

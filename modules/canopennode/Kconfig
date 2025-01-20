@@ -1,0 +1,47 @@
+menuconfig NTURT_MSG
+    bool "Message module"
+    depends on NTURT
+    depends on CANOPENNODE
+
+if NTURT_MSG
+
+config NTURT_MSG_HB
+    bool "Enable processing CANopen heartbeat object from other nodes"
+    help
+      Consume the heartbeat object of nodes defined in object dictionary 0x1016
+      and set cooresponding errors if the node is not in NMT operational or
+      timeout.
+
+config NTURT_MSG_SDO_SRV
+    bool "Enable event driver SDO server"
+    help
+      Process SDO requests immediately after reception instead of processing
+      periodically in the mainline thread
+
+config NTURT_MSG_SDO_CLI
+    bool "Enable SDO client helper functions"
+    help
+      SDO client helper functions that better utilizes Zephyr kernel and easier
+      to use
+
+config NTURT_MSG_SDO_CLI_BUF_SIZE
+    int "SDO client buffer size"
+    default 5
+    help
+      Number of concurrent SDO client request
+
+config NTURT_MSG_TIME
+    bool "Enable processing CANopen TIME object"
+    depends on NTURT_SYS_RTC
+    default y
+    help
+      Set system time to the timestamp from CANopen when receiving TIME object
+      for the first time after system reboot
+
+config NTURT_MSG_INIT_PRIORITY
+    int "NTURT message module init priority"
+    default 20
+    help
+      NTURT common library message module initialization priority.
+
+endif # NTURT_MSG

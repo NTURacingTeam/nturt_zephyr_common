@@ -2,8 +2,13 @@ description: |
   Sesnor based axis input device.
 
   Implement an input device generating absolute axis events by periodically
-  reading from sensors and combines multiple redundant sensor data into a
-  channel.
+  reading from sensors and optionally combines multiple sensors into a single
+  axis event using weighted average.
+
+  Offers deadzone and noise filters for primitive sensor data processing, as
+  well as changing individual sensor input range during runtime and save the
+  calibrations using settings subsystem. Range and deviation checks are also
+  provided with optional time tolerance for data plausibility.
 
   Example configuration:
 
@@ -59,8 +64,7 @@ child-binding:
       type: int
       required: true
       description: |
-        The input code that this axis will produce, typically any of
-        INPUT_ABS_*.
+        The input code that this axis will report, typically one of INPUT_ABS_*.
     out-min:
       type: int
       default: 0
@@ -94,8 +98,8 @@ child-binding:
       type: int
       default: 0
       description: |
-        Change in sensor value before a new value is reported in one-millionth
-        part. Set to 0 to disable noise filter.
+        Change in combined sensor value before a new input event is reported in
+        one-millionth part. Set to 0 to disable noise filter.
         Note that if both noise and deadzone are enabled, the deadzone should be
         greater than noise.
     dev-tolerance:
@@ -104,6 +108,25 @@ child-binding:
       description: |
         The tolerance of value deviation between any two sensors used in this
         axis in percentage. Set to 100 to disable deviation check.
+    time-tolerance:
+      type: int
+      default: 0
+      description: |
+        Amount of time to wait in milliseconds before reporting this axis
+        invalid due to out of range or deviation errors. During time tolerance
+        no input will be reported. Set to 0 to disable time tolerance.
+        Note that channel time tolerance does not affect sensor reporting
+        errors.
+    time-tolerance-decay:
+      type: int
+      default: 100
+      description: |
+        Decay rate of accumulated error time (accumulated_time -= time_tolerance 
+        * decay_rate) in percentage when the axis passes all checks. It can be
+        used to avoid sporadic successes mixed in the failures to be considered
+        valid. It is also used to clear the error once the accumulated error
+        time has decayed to 0. Set to 100 to disable decay and immediately clear
+        error once the axis passes all checks.
 
   child-binding:
     description: |
