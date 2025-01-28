@@ -179,7 +179,12 @@ static void phy_generic_decode(const struct device *dev, struct rtio_cqe *cqe,
   ret = decoder->decode(cqe_buf, chan, &fit, frame_count, sqe_buf);
   if (ret < 0) {
     LOG_ERR("Failed to decode: %s", strerror(-ret));
-    goto err_sqe_buf;
+
+    // buffer for the sqe is always allocated by the RTIO context, since the sqe
+    // is submitted by sensor_read_async_mempool from
+    // sensing_sensor_polling_timer
+    rtio_release_buffer(sqe->r, sqe_buf, sqe_buf_len);
+    goto out_cqe_buf;
   }
 
 out_cqe_buf:
@@ -187,17 +192,12 @@ out_cqe_buf:
 
 out:
   rtio_cqe_release(&phy_generic_sensor_rtio, cqe);
+
   if (ret < 0) {
     rtio_iodev_sqe_err(sqe, ret);
   } else {
     rtio_iodev_sqe_ok(sqe, ret);
   }
-
-err_sqe_buf:
-  // buffer for the sqe is always allocated by the RTIO context, since the sqe
-  // is submitted by sensor_read_async_mempool from sensing_sensor_polling_timer
-  rtio_release_buffer(&sqe->r, sqe_buf, sqe_buf_len);
-  goto out_cqe_buf;
 }
 
 static void phy_generic_thread(void *arg1, void *arg2, void *arg3) {
