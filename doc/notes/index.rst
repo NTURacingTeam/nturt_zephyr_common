@@ -12,6 +12,7 @@ considerations when developing applications on Zephyr.
 
    common
    config
+   kernel
    drivers
    services
    canopennode
