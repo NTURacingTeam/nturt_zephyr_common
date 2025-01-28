@@ -1,0 +1,33 @@
+menuconfig SENSING_PHY_GENERIC
+    bool "Generic physical sensor for sensing subsystem"
+    default y
+    depends on DT_HAS_ZEPHYR_SENSING_PHY_GENERIC_ENABLED
+    help
+      Enable driver for generic physical sensor for sensing subsystem.
+
+if SENSING_PHY_GENERIC
+
+config SENSING_PHY_GENERIC_THREAD_STACK_SIZE
+    int "Underlying thread stack size"
+    default 256
+    help
+      Stack size of the underlying thread for decoding read sensor data.
+
+config SENSING_PHY_GENERIC_THREAD_PRIORITY
+    int "Underlying thread priority"
+    default 0
+    help
+      Priority of the underlying thread for decoding read sensor data.
+
+config SENSING_PHY_GENERIC_RTIO_BLOCK_SIZE_PER_TYPE
+    int "RTIO mempool block number per sensor type"
+    default 8
+    help
+      Number of RTIO mempool block per sensor type. This driver internally uses
+      sensor read and decode API for accessing the underlying sensor, which
+      requires RTIO with mempool to store the read data. Internally the block
+      size is 8 for both 32 and 64 bit compatibility, and number of block is
+      this option times the total number of sensor types of devices compatible
+      of "zephyr,sensing-phy-generic-sensor".
+
+endif # SENSING_PHY_GENERIC

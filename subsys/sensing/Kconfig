@@ -1,0 +1,5 @@
+if SENSING
+
+rsource "sensor/Kconfig"
+
+endif # SENSING

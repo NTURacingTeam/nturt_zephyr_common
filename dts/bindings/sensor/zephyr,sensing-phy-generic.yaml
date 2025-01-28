@@ -1,0 +1,20 @@
+description: |
+  Generic physical sensor for sensing subsystem.
+
+compatible: "zephyr,sensing-phy-generic"
+
+include: zephyr,sensing-phy-sensor.yaml
+
+properties:
+  fake-interval:
+    type: boolean
+    description: |
+      Sensing subsystem uses SENSOR_ATTR_SAMPLING_FREQUENCY to set interval. If
+      the underlying sensor does not support this attribute, this property can
+      be set to true to fake the interval and prevent errors.
+  fake-sensitivity:
+    type: boolean
+    description: |
+      Sesning subsystem uses SENSOR_ATTR_HYSTERESIS to set sensitivity. If the
+      underlying sensor does not support this attribute, this property can be
+      set to true to fake the sensitivity and prevent errors.
