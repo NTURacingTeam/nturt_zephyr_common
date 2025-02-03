@@ -1,6 +1,8 @@
 description: |
   Generic physical sensor for sensing subsystem.
 
+  Currently does not support sensor streaming.
+
 compatible: "zephyr,sensing-phy-generic"
 
 include: zephyr,sensing-phy-sensor.yaml

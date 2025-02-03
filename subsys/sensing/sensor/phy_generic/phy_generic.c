@@ -106,6 +106,7 @@ static void phy_generic_submit(const struct device *dev,
   ret = sensor_read_async_mempool(sensor_iodev, &phy_generic_sensor_rtio, sqe);
 
   if (ret < 0) {
+    LOG_ERR("Failed to submit sensor read: %s", strerror(-ret));
     rtio_iodev_sqe_err(sqe, ret);
   }
 }

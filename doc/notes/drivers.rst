@@ -389,7 +389,14 @@ To create a new sensor driver that support sensor async API, both the decoder
 API and the async read initialization (:c:member:`sensor_driver_api.submit`) can
 be referenced from `default_rtio_sensor.c
 <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c>`_.
-Since default implementation for ``submit`` does not support streaming, the
+Since default implementation for ``submit`` does not support streaming [#]_, the
 implementation of it can be referenced from existing drivers such as
 `adxl345_stream.c
 <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/adi/adxl345/adxl345_stream.c>`_. 
+
+References
+----------
+
+.. [#] `sensor_iodev_submit() source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c#L25>`_
+   that does not support streaming
