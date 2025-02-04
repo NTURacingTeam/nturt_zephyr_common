@@ -3,6 +3,21 @@ description: |
   the value for voltages within tolerance range or returns error if voltage is
   out of range.
 
+  Example configuration:
+
+  #include <zephyr/dt-bindings/sensor/sensor-channels.h>
+
+  analog-generic-sensor {
+      compatible = "analog-generic-sensor";
+      io-channels = <&adc0 0>;
+      zephyr,channel = <SENSOR_CHAN_ROTATION>;
+      min-voltage = <0>;
+      max-voltage = <3300>;
+      min-value = <0 0>;
+      max-value = <360 0>;
+      tolerance = <5>;
+  };
+
 compatible: "analog-generic-sensor"
 
 include: sensor-device.yaml

@@ -17,16 +17,16 @@
 LOG_MODULE_REGISTER(phy_generic_sensor, CONFIG_SENSING_LOG_LEVEL);
 
 /* macro ---------------------------------------------------------------------*/
-#define _NUM_TYPE(inst) DT_INST_PROP_LEN(inst, sensor_types)
+#define _NUM_CHANNELS(inst) DT_INST_PROP_LEN(inst, zephyr_channels)
 
-#define NUM_TYPE \
-  (FOR_EACH(_NUM_TYPE, (, ), DT_INST_FOREACH_STATUS_OKAY(IDENTITY)))
+#define NUM_CHANNELS \
+  (FOR_EACH(_NUM_CHANNELS, (, ), DT_INST_FOREACH_STATUS_OKAY(IDENTITY)))
 
 /* type ----------------------------------------------------------------------*/
 struct phy_generic_config {
   const struct device *underlying_device;
-  size_t num_type;
-  uint16_t *sensor_types;
+  size_t num_channel;
+  enum sensor_channel *channels;
   struct rtio_iodev **sensor_iodevs;
   bool fake_interval;
   bool fake_sensitivity;
@@ -38,8 +38,9 @@ static void phy_generic_thread(void *arg1, void *arg2, void *arg3);
 /* static variable -----------------------------------------------------------*/
 /// @brief RTIO for reading sensors.
 RTIO_DEFINE_WITH_MEMPOOL(
-    phy_generic_sensor_rtio, Z_POW2_CEIL(NUM_TYPE), Z_POW2_CEIL(NUM_TYPE),
-    CONFIG_SENSING_PHY_GENERIC_RTIO_BLOCK_SIZE_PER_TYPE *NUM_TYPE, 8,
+    phy_generic_sensor_rtio, Z_POW2_CEIL(NUM_CHANNELS),
+    Z_POW2_CEIL(NUM_CHANNELS),
+    CONFIG_SENSING_PHY_GENERIC_RTIO_BLOCK_SIZE_PER_TYPE *NUM_CHANNELS, 8,
     alignof(void *));
 
 K_THREAD_DEFINE(SENSING_PHY_GENERIC,
@@ -55,13 +56,6 @@ static int phy_generic_init(const struct device *dev) {
     LOG_ERR("Underlying device %s is not ready",
             config->underlying_device->name);
     return -ENODEV;
-  }
-
-  for (int i = 0; i < config->num_type; i++) {
-    struct rtio_iodev *sensor_iodev = config->sensor_iodevs[i];
-    struct sensor_read_config *read_config = sensor_iodev->data;
-    read_config->channels[0].chan_type =
-        sensing_sensor_type_to_chan(config->sensor_types[i]);
   }
 
   return 0;
@@ -176,7 +170,7 @@ static void phy_generic_decode(const struct device *dev, struct rtio_cqe *cqe,
   // integer devide always rounds down
   frame_count = (sqe_buf_len - base_size) / frame_size + 1;
 
-  uint32_t fit;
+  uint32_t fit = 0;
   ret = decoder->decode(cqe_buf, chan, &fit, frame_count, sqe_buf);
   if (ret < 0) {
     LOG_ERR("Failed to decode: %s", strerror(-ret));
@@ -224,32 +218,32 @@ static const struct sensor_driver_api phy_generic_api = {
 
 #define _SENSOR_IODEV_NAME(inst, idx) phy_generic_iodev_##inst##_##idx
 
-#define _SENSOR_IODEV_DEFINE(node_id, prop, idx, inst) \
-  SENSOR_DT_READ_IODEV(_SENSOR_IODEV_NAME(inst, idx),  \
-                       DT_PHANDLE(node_id, underlying_device), {0, 0});
+#define _SENSOR_IODEV_DEFINE(node_id, prop, idx, inst)         \
+  SENSOR_DT_READ_IODEV(_SENSOR_IODEV_NAME(inst, idx),          \
+                       DT_PHANDLE(node_id, underlying_device), \
+                       {DT_PROP_BY_IDX(node_id, zephyr_channels, idx), 0});
 
 #define _SENSOR_IODEV_PTR(node_id, prop, idx, inst) \
   &_SENSOR_IODEV_NAME(inst, idx)
 
-#define PHY_GENERIC_SENSOR_INIT(inst)                                       \
-  DT_INST_FOREACH_PROP_ELEM_VARGS(inst, sensor_types, _SENSOR_IODEV_DEFINE, \
-                                  inst);                                    \
-                                                                            \
-  static const struct phy_generic_config phy_generic_config_##inst = {      \
-      .underlying_device =                                                  \
-          DEVICE_DT_GET(DT_INST_PHANDLE(inst, underlying_device)),          \
-      .num_type = DT_INST_PROP_LEN(inst, sensor_types),                     \
-      .sensor_types = (uint16_t[])DT_INST_PROP(inst, sensor_types),         \
-      .sensor_iodevs =                                                      \
-          (struct rtio_iodev *[]){DT_INST_FOREACH_PROP_ELEM_SEP_VARGS(      \
-              inst, sensor_types, _SENSOR_IODEV_PTR, (, ), inst)},          \
-      .fake_interval = DT_INST_PROP(inst, fake_interval),                   \
-      .fake_sensitivity = DT_INST_PROP(inst, fake_sensitivity),             \
-  };                                                                        \
-                                                                            \
-  SENSING_SENSORS_DT_INST_DEFINE(inst, NULL, NULL, &phy_generic_init, NULL, \
-                                 NULL, &phy_generic_config_##inst,          \
-                                 POST_KERNEL, CONFIG_SENSOR_INIT_PRIORITY,  \
-                                 &phy_generic_api);
+#define PHY_GENERIC_SENSOR_INIT(inst)                                          \
+  DT_INST_FOREACH_PROP_ELEM_VARGS(inst, zephyr_channels, _SENSOR_IODEV_DEFINE, \
+                                  inst);                                       \
+                                                                               \
+  static const struct phy_generic_config phy_generic_config_##inst = {         \
+      .underlying_device =                                                     \
+          DEVICE_DT_GET(DT_INST_PHANDLE(inst, underlying_device)),             \
+      .num_channel = DT_INST_PROP_LEN(inst, zephyr_channels),                  \
+      .channels = (enum sensor_channel[])DT_INST_PROP(inst, zephyr_channels),  \
+      .sensor_iodevs =                                                         \
+          (struct rtio_iodev *[]){DT_INST_FOREACH_PROP_ELEM_SEP_VARGS(         \
+              inst, zephyr_channels, _SENSOR_IODEV_PTR, (, ), inst)},          \
+      .fake_interval = DT_INST_PROP(inst, fake_interval),                      \
+      .fake_sensitivity = DT_INST_PROP(inst, fake_sensitivity),                \
+  };                                                                           \
+                                                                               \
+  SENSING_SENSORS_DT_INST_DEFINE(                                              \
+      inst, NULL, &phy_generic_init, NULL, NULL, &phy_generic_config_##inst,   \
+      POST_KERNEL, CONFIG_SENSOR_INIT_PRIORITY, &phy_generic_api);
 
 DT_INST_FOREACH_STATUS_OKAY(PHY_GENERIC_SENSOR_INIT)
