@@ -35,7 +35,7 @@ ArduPilot
    :align: center
    :width: 100%
 
-`Code overview <https://ardupilot.org/dev/docs/apmcopter-code-overview.html>`_
+`ArduPilot code overview <https://ardupilot.org/dev/docs/apmcopter-code-overview.html>`_
 
 PX4
 ---
@@ -58,4 +58,4 @@ Marlin
 Kilpper
 -------
 
-`Code overview <https://www.klipper3d.org/Code_Overview.html>`_
+`Kilpper code overview <https://www.klipper3d.org/Code_Overview.html>`_

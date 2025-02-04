@@ -7,8 +7,8 @@ subprocess.call("doxygen Doxyfile.in", shell=True)
 
 # -- Project --------------------------------------------------------------
 
-project = "NTURT Zephyr Common Library"
-copyright = "2024, NTU Racing Team"
+project = "NTU Racing Team Zephyr Common"
+copyright = "2025, NTU Racing Team"
 author = "NTU Racing Team members"
 
 # -- General configuration ------------------------------------------------
@@ -35,7 +35,7 @@ html_theme_options = {
     "prev_next_buttons_location": "bottom",
 }
 # html_baseurl = ""
-html_title = "NTURT Zephyr Common Library Documentation"
+html_title = "NTU Racing Team Zephyr Common Documentation"
 html_logo = "images/logo.png"
 # github_url = ""
 html_static_path = ["_static"]

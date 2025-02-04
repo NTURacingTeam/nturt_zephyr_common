@@ -78,7 +78,7 @@ more details.
 .. note::
 
    The Winstream data structure is not documented in the kernel data structures
-   documentation, but the API documentation is available in `its file reference
+   documentation, but the API documentation is available in `the file reference
    <https://docs.zephyrproject.org/4.0.0/doxygen/html/winstream_8h.html>`_.
 
 OS Services for Data Passing
@@ -241,20 +241,30 @@ Reference
    <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L302>`_
    that allocate file cache
 
+.. _notes_services_sensing_subsystem:
+
 Sensing Subsystem
 =================
 
 The `sensing subsystem
 <https://docs.zephyrproject.org/4.0.0/services/sensing/index.html>`_ provides a
 high level of accessing sensors, such as scheduling sampling for multiple
-clients that requests data at different rates, and fusing multiple sensors to
-provide a new kind of data (e.g. fusing two IMUs on the lid and the base of a
-foldable phone to calculate the hinge angle).
+clients that requests data at different rates and resoultons (since currently
+most sensor drivers are designed for single client only [#]_), and fusing
+multiple sensors to provide a new kind of data (e.g. fusing two IMUs on the lid
+and the base of a foldable phone to calculate the hinge angle).
 
-However, dispite being merged to the mainline in 2023, the sensing subsystem is
-still very much a half-baked system, and currently seemed to be not in active
-development. Yet it is still a good starting point for managing multiple sensors
-with a single interface.
+However, dispite `being merged to the mainline in October 2023
+<https://github.com/zephyrproject-rtos/zephyr/pull/64478>`_, the sensing
+subsystem is still only a minimum viable product as of Zephyr 4.0.0 lacking some
+important features such as batch reading and error reporting [#]_. And currently
+seemed to be not in active development anymore.
+
+Yet it is still a good starting point for managing multiple sensors with a
+single interface.
+
+Some issues of the sensing subsystem should be considered or addressed before
+being adopted:
 
 Duplicated Sensor Data Types
 ----------------------------
@@ -265,8 +275,43 @@ almost the same as :c:struct:`sensor_q31_data` used for the sensor driver. The
 only difference is that the timestamp is in micro seconds for the former and in
 nano seconds for the latter [#]_ [#]_.
 
-Since sensor driver is a more mature system, its data type should be used for
-sensor data type in the sensing subsystem.
+This is probably due to :c:struct:`sensor_q31_data` being introduced later than
+the initial proposal of the sensing subsystem. However, since
+:c:struct:`sensor_q31_data` is widely adopted by the sensor driver, it should be
+used as the sensor data type in the sensing subsystem instead of
+:c:struct:`sensing_sensor_value_q31`.
+
+Use of HID Sensor Type (instead of existing :c:enum:`sensor_channel`)
+---------------------------------------------------------------------
+
+Intel (the author of the sensor subsystem) uses HID sensor types instead of the
+existing :c:enum:`sensor_channel` of sensor types from CHRE (context hub runtime
+environmrnt) since they claimed that it is the only cross-OS standard for sensor
+types [#]_. However, they did not implement any other part of the HID standard,
+making the choice of using HID sensor type that's incompatible with the existing
+:c:enum:`sensor_channel` existing sensor drivers depends on some what abrubtly.
+Additionally, the sensing subsystem configures the sensor using
+`sensing_set_config()
+<https://docs.zephyrproject.org/4.0.0/doxygen/html/group__sensing__api.html#ga46591a2d29f5b5e160a72bbe289884ab>`_
+that requires :c:enum:`sensor_channel` as the parameter as mentioned in the
+next section, it is better to stick to :c:enum:`sensor_channel` for sensor
+types.
+
+Confusing Device API
+--------------------
+
+During development, the sensing subsystem sensor device API is required to be 
+the same as the sensor driver :c:struct:`sensor_driver_api` as mentioned in
+`this RFC <https://github.com/zephyrproject-rtos/zephyr/issues/62223>`_. As as
+result, when setting required interval and senstivity using
+`sensing_set_config()
+<https://docs.zephyrproject.org/4.0.0/doxygen/html/group__sensing__api.html#ga46591a2d29f5b5e160a72bbe289884ab>`_,
+it sets ``SENSOR_ATTR_SAMPLING_FREQUENCY`` and ``SENSOR_ATTR_HYSTERESIS``
+attributes, respectively, of the channel corresponding to that HID sensor type
+via `sensor_attr_set()
+<https://docs.zephyrproject.org/4.0.0/doxygen/html/group__sensor__interface.html#gafbf65226a227e9f8824908bc38e336f5>`_ [#]_ [#]_,
+which is somewhat confusing, but have to bare in mind when developing sensor
+subsystem drivers.
 
 Sensor Scheduling
 -----------------
@@ -286,10 +331,23 @@ kind of tolerence for the jitter.
 References
 ----------
 
+.. [#] `Sensor fetch and get
+   <https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sensor/fetch_and_get.html>`_
+   warning
+.. [#] `Sensing subsystem dispatch_task() source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/dispatch.c#L102>`_
+   that ignores cqe result codes
 .. [#] `Definition of sensing_sensor_value_q31
    <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/sensing/sensing_datatypes.h#L116>`_
 .. [#] `Definition of sensor_q31_data
    <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/drivers/sensor_data_types.h#L92>`_
-.. [#] `Sensing subsystem source code
+.. [#] `Sensing Subsystem Design Discussion
+   <https://github.com/zephyrproject-rtos/zephyr/files/12561847/Sensing.Subsystem.Design.-.Zephyr.pdf>`_,
+   slide 13
+.. [#] `Sensing subsystem send_data_to_clients() source code
    <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/dispatch.c#L38>`_
    that dispatches sensor data to clients
+.. [#] `Sensing subsystem set_arbitrate_interval() source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/sensor_mgmt.c#L92>`_
+.. [#] `Sensing subsystem set_arbitrate_sensitivity() source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/sensor_mgmt.c#L170>`_
