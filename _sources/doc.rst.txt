@@ -1,0 +1,71 @@
+.. _doc:
+
+==================
+Doc Implementation
+==================
+
+This page explains how the documentation is implemented in the NTURT Zephyr
+Common Library and how to build it from the source.
+
+Building the Documentation
+==========================
+
+Requirements
+------------
+
+This documentation requires the following packages:
+
+APT packages
+~~~~~~~~~~~~
+
+.. code-block:: none
+
+   doxygen=1.12.0
+   graphviz
+   make
+
+.. note::
+
+   The version of doxygen is important as the configuration file is spciific to
+   that version. Since currently the latest version of doxygen in ubuntu is
+   1.9.6, you may need to download it manually from `Doxygen Download
+   <https://www.doxygen.nl/download.html>`_.
+
+pip modules
+~~~~~~~~~~~
+
+.. literalinclude:: requirements.txt
+   :language: none
+
+Building the Documentation
+--------------------------
+
+To build the documentation, run the following command:
+
+.. code-block:: bash
+
+   # in <nturt_zephyr_common_root>/doc
+   make html
+
+then the main documentation and API reference will be built in the
+``_build/html`` and ``_build_doxygen/html`` directories respectively, which can
+be viewed in a browser by opening the ``index.html`` file.
+
+Implementation Details
+======================
+
+Main Documentation
+------------------
+
+The main documentation that you are reading right now is generated using `Sphinx
+<https://www.sphinx-doc.org/en/master/>`_ with `Read the Docs
+<https://docs.readthedocs.io/en/stable/>`_ theme. And API references generated
+by Doxygen are exported to the main documentation using `Breathe
+<https://breathe.readthedocs.io/en/latest/index.html>`_.
+
+API Reference
+-------------
+
+The API reference is generated using `Doxygen
+<https://www.doxygen.nl/index.html>`_ with `Doxygen Awesome
+<https://jothepro.github.io/doxygen-awesome-css/index.html>`_ theme.

@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zephyr Services &mdash; NTURT Zephyr Common Library Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CANopenNode" href="canopennode.html" />
+    <link rel="prev" title="Zephyr Drivers" href="drivers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">Common Library</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../doc.html">Doc Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">Testing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer’s Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="common.html">Common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Zephyr Configuration System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html">Zephyr Kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drivers.html">Zephyr Drivers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Zephyr Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-passing">Data Passing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kernel-services-for-data-passing">Kernel Services for Data Passing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kernel-data-structures-for-data-passing">Kernel Data Structures for Data Passing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#os-services-for-data-passing">OS Services for Data Passing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pooled-parallel-preemptible-priority-based-work-queues-p4wq">Pooled Parallel Preemptible Priority-based Work Queues (P4WQ)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tracing">Tracing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#custom-systemview-description">Custom SystemView Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interrupt-service-routine-isr-number">Interrupt Service Routine (ISR) Number</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#littlefs">LittleFS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id13">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sensing-subsystem">Sensing Subsystem</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#duplicated-sensor-data-types">Duplicated Sensor Data Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sensor-scheduling">Sensor Scheduling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id21">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="canopennode.html">CANopenNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Testing in Zephyr</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NTURT Zephyr Common Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Developer’s Note</a></li>
+      <li class="breadcrumb-item active">Zephyr Services</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notes/services.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="zephyr-services">
+<span id="notes-services"></span><h1>Zephyr Services<a class="headerlink" href="#zephyr-services" title="Link to this heading"></a></h1>
+<section id="data-passing">
+<h2>Data Passing<a class="headerlink" href="#data-passing" title="Link to this heading"></a></h2>
+<p>Zephyr provides various ways to pass data between threads and ISRs, the
+following tables summerizes the differences between them:</p>
+<section id="kernel-services-for-data-passing">
+<h3>Kernel Services for Data Passing<a class="headerlink" href="#kernel-services-for-data-passing" title="Link to this heading"></a></h3>
+<p>Generally, both the producing and consuming sides of the data passing methods
+provided by the kernel can be accross multiple contexts, i.e., threads and ISRs,
+as the them utilizes locks in both the producing and consuming sides. In
+addition, since this methods are also kernel objects, thay have the same
+functionalites such as <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/kernel/object_cores/index.html">object cores</a>, <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/services/tracing/index.html#object-tracking">object
+tracing</a>,
+etc. as other kernel objects.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 13.3%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 26.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Object</p></th>
+<th class="head"><p>Data size</p></th>
+<th class="head"><p>Data storage</p></th>
+<th class="head"><p>Data passed by</p></th>
+<th class="head"><p>Features</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>FIFO/LIFO</p></td>
+<td><p>Arbitrary</p></td>
+<td><p>User managed</p></td>
+<td><p>Pointer</p></td>
+<td><p>Intrusive structure</p></td>
+</tr>
+<tr class="row-odd"><td><p>Stack</p></td>
+<td><p>Word</p></td>
+<td><p>Array</p></td>
+<td><p>Copy</p></td>
+<td><p>For passing pointers</p></td>
+</tr>
+<tr class="row-even"><td><p>Pipe</p></td>
+<td><p>Byte</p></td>
+<td><p>Ring buffer</p></td>
+<td><p>Copy</p></td>
+<td><p>For passing raw bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>Message Queue</p></td>
+<td><p>Fixed</p></td>
+<td><p>Ring buffer</p></td>
+<td><p>Copy</p></td>
+<td><p>For passing structs</p></td>
+</tr>
+<tr class="row-even"><td><p>Mailbox</p></td>
+<td><p>Arbitrary</p></td>
+<td><p>User managed</p></td>
+<td><p>Pointer</p></td>
+<td><p>Destined transfer</p></td>
+</tr>
+</tbody>
+</table>
+<p>Refer to the <a class="reference external" href="https://docs.zephyrproject.org/latest/kernel/services/index.html#data-passing">data passing section of the kernel service documentation</a>
+for more details.</p>
+</section>
+<section id="kernel-data-structures-for-data-passing">
+<h3>Kernel Data Structures for Data Passing<a class="headerlink" href="#kernel-data-structures-for-data-passing" title="Link to this heading"></a></h3>
+<p>Two data structures provided by the kernel are specifically designed for data
+passing, namely single producer single consumer (SPSC) and multiple producer
+single consumer (MPSC) packet buffers. And there are also lockless versions of
+them that is intrusive and requires the user to manage the data storage.</p>
+<p>Note that as the name suggests, SPSC is designed for passing data between a
+single producing context and a single consuming context, and MPSC is designed
+for multiple producing contexts and a single consuming context, unlike the
+kernel services for data passing that allows multiple producing and consuming
+contexts.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 13.3%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 26.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Object</p></th>
+<th class="head"><p>Data size</p></th>
+<th class="head"><p>Data storage</p></th>
+<th class="head"><p>Data passed by</p></th>
+<th class="head"><p>Features</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SPSC/MPSC</p></td>
+<td><p>Arbitrary</p></td>
+<td><p>Ring Buffer</p></td>
+<td><p>Copy</p></td>
+<td><p>Arbitrary-sized packets</p></td>
+</tr>
+<tr class="row-odd"><td><p>Lockless SPSC/MPSC</p></td>
+<td><p>Arbitrary</p></td>
+<td><p>User managed</p></td>
+<td><p>Pointer</p></td>
+<td><p>Lockless</p></td>
+</tr>
+<tr class="row-even"><td><p>Winstream</p></td>
+<td><p>Byte</p></td>
+<td><p>Ring buffer</p></td>
+<td><p>Copy</p></td>
+<td><p>Lockless SPSC</p></td>
+</tr>
+</tbody>
+</table>
+<p>Refer to the <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/kernel/data_structures/index.html">kernel data structures</a> for
+more details.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Winstream data structure is not documented in the kernel data structures
+documentation, but the API documentation is available in <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/winstream_8h.html">its file reference</a>.</p>
+</div>
+</section>
+<section id="os-services-for-data-passing">
+<h3>OS Services for Data Passing<a class="headerlink" href="#os-services-for-data-passing" title="Link to this heading"></a></h3>
+<p>Data passing methods provided by OS services are built on top of the kernel ones
+and have additional features such as sublisher/subscriber model, callbacks, etc.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 13.3%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 26.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Object</p></th>
+<th class="head"><p>Data size</p></th>
+<th class="head"><p>Data storage</p></th>
+<th class="head"><p>Data passed by</p></th>
+<th class="head"><p>Features</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Zbus</p></td>
+<td><p>Fixed</p></td>
+<td><p>Queue</p></td>
+<td><p>Pointer/Copy</p></td>
+<td><p>Callbacks</p></td>
+</tr>
+</tbody>
+</table>
+<p>Refer to their respective documentations for more details.</p>
+</section>
+</section>
+<section id="pooled-parallel-preemptible-priority-based-work-queues-p4wq">
+<h2>Pooled Parallel Preemptible Priority-based Work Queues (P4WQ)<a class="headerlink" href="#pooled-parallel-preemptible-priority-based-work-queues-p4wq" title="Link to this heading"></a></h2>
+<p>Aside from the <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/kernel/services/threads/workqueue.html">kernel work queue</a>
+that runs only in one thread, Zephyr provides a more advanced work queue system
+called P4WQ that provides parallel execution of works using thread pool based on
+its priority, with the tradeoff not having delayable works and thread pool
+control API. Additionally, it is not documented in the Zephyr documentation, and
+its API documentation is only available in <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/p4wq_8h.html">its file reference</a>. P4WQ can be
+enabled by Kconfig option <code class="docutils literal notranslate"><span class="pre">CONFIG_SCHED_DEADLINE</span></code>.</p>
+<p><code class="xref c c-struct docutils literal notranslate"><span class="pre">k_p4wq_work</span></code> is used to define a work item, where
+<code class="xref c c-member docutils literal notranslate"><span class="pre">k_p4wq_work.priority</span></code> and <code class="xref c c-member docutils literal notranslate"><span class="pre">k_p4wq_work.deadline</span></code> are what
+the priority and the deadline of the thread will be when the work is executed.
+This however means that when all threads are busy, newly submitted works with
+higher priority will not preempt the lower priority works that are already being
+executed <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Thread deadline in Zephyr is only considered when scheduling threads with the
+same priority using <a class="reference external" href="https://en.wikipedia.org/wiki/Earliest_deadline_first_scheduling">earliest deadline first scheduling</a> <a class="footnote-reference brackets" href="#id5" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+</div>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/lib/os/p4wq.c#L283">p4wq source code</a>
+that breaks priority guarantee</p>
+</aside>
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__thread__apis.html#gad887f16c1dd6f3247682a83beb22d1ce">k_thread_deadline_set()</a>
+API documentation</p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Link to this heading"></a></h2>
+<p>Zephyr provides a comprehensive logging system that provides various logging
+backends (i.e., where these log messages will be outputed to) such as console or
+file system.</p>
+<p>File system backend enabled by Kconfig option <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/kconfig.html#CONFIG_LOG_BACKEND_FS">CONFIG_LOG_BACKEND_FS</a> is
+particularly handy since it will only log message only after the file system is
+mounted.</p>
+</section>
+<section id="tracing">
+<h2>Tracing<a class="headerlink" href="#tracing" title="Link to this heading"></a></h2>
+<p>Zephyr provides a tracing system that allows you to trace the execution of
+kernel objects such as threads, work queues and mutexes, etc. Here we use
+<a class="reference external" href="https://www.segger.com/products/development-tools/systemview/">Segger SystemView</a>
+as the tracing backend.</p>
+<section id="custom-systemview-description">
+<h3>Custom SystemView Description<a class="headerlink" href="#custom-systemview-description" title="Link to this heading"></a></h3>
+<p>Though SystemView provides description table for Zephyr, it’s not complete as
+mentioned in the <a class="reference external" href="https://docs.zephyrproject.org/3.7.0/services/tracing/index.html#segger-systemview-support">tracing subsystem documentation</a>.
+However, to add the proper description for Zephyr, the correct description file,
+i.e. <code class="docutils literal notranslate"><span class="pre">zephyr/supsys/tracing/sysview/SYSVIEW_Zephyr.txt</span></code>, should be placed at
+<code class="docutils literal notranslate"><span class="pre">/opt/SEGGER/SystemView/Description</span></code> <a class="footnote-reference brackets" href="#id8" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> for Linux and Mac OS systems, or at
+<code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\SEGGER\SystemView\Description</span></code> for Windows systems.</p>
+</section>
+<section id="interrupt-service-routine-isr-number">
+<h3>Interrupt Service Routine (ISR) Number<a class="headerlink" href="#interrupt-service-routine-isr-number" title="Link to this heading"></a></h3>
+<p>When ISR is executed, it does not have a name that is easily recognizable.
+Instead a number is used to identify the ISR. For cortex-M series, the number is
+the first nine bits of Interrupt Control and State Register (ICSR) register of
+the System Control Block (SCB) in the CPU <a class="footnote-reference brackets" href="#id9" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Which corresponds to the number
+of the ISR to be called in the interrupt vector table.</p>
+<p>For STM32 microcontrollers, this table is listed in Interrupt and exception
+vectors in the Nested vectored interrupt controller (NVIC) section in the
+reference manual. For example, if the ISR number is 102, it corresponds to
+address 0x198 (102*4 in decimal) and for STM32G4 series, it is fired from FDCAN2_IT0 line.</p>
+</section>
+<section id="reference">
+<h3>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://blog.ekko.cool/zephyr%20sysview%20%E4%BD%BF%E7%94%A8?locale=zh">Zephyr sysview usage</a></p>
+</aside>
+<aside class="footnote brackets" id="id9" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/subsys/tracing/sysview/sysview.c#L24">sysview_get_interrupt() source code that determines the ISR number</a></p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="littlefs">
+<h2>LittleFS<a class="headerlink" href="#littlefs" title="Link to this heading"></a></h2>
+<p>LittleFS support both non-volatile memory (NVM) such as internal flash or
+external SPI flash and block device such as SD cards or USB drives. However,
+since there is little to no example for the latter, some quirks are worth noting
+here, and a SD card block device is used here as an example.</p>
+<p>Though LittleFS provides <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/build/dts/api/bindings/fs/zephyr%2Cfstab%2Clittlefs.html#dtbinding-zephyr-fstab-littlefs">device tree bindings</a>
+for configuring the file system, it is mainly designed for NVM. For block
+devices, LittleFS will determine the block size when mounting the device, and
+set other parameters such as the read and program size the same as the block
+size and lookhead size four times the block size <a class="footnote-reference brackets" href="#id14" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. Since it does not know
+how big the block size will be, it simply uses <code class="xref c c-func docutils literal notranslate"><span class="pre">melloc()</span></code> to allocate the
+read, program, and lookhead buffers for the block device <a class="footnote-reference brackets" href="#id15" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>, so be sure to
+enable <code class="xref c c-func docutils literal notranslate"><span class="pre">melloc()</span></code> and set the heap size to at least six times the size of
+the block size.</p>
+<p>Additionally, LittleFS uses <code class="xref c c-func docutils literal notranslate"><span class="pre">k_heap_alloc()</span></code> for allocating file caches
+<a class="footnote-reference brackets" href="#id16" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> using a memory pool controlled by Kconfig option
+<a class="reference external" href="https://docs.zephyrproject.org/latest/kconfig.html#CONFIG_FS_LITTLEFS_CACHE_SIZE">CONFIG_FS_LITTLEFS_CACHE_SIZE</a>,
+so also make sure to set it to values greater than block size.</p>
+<p>Since the automount feature is not available for block devices, they must be
+mounted manually. The following code snippet shows how to do so:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">fs_littlefs</span><span class="w"> </span><span class="n">lfsfs</span><span class="p">;</span>
+<span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">fs_mount_t</span><span class="w"> </span><span class="n">mp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FS_LITTLEFS</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">fs_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lfsfs</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FS_MOUNT_FLAG_USE_DISK_ACCESS</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">storage_dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CONFIG_SDMMC_VOLUME_NAME</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">mnt_point</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="n">CONFIG_SDMMC_VOLUME_NAME</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="n">fs_mount</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mp</span><span class="p">);</span>
+</pre></div>
+</div>
+<section id="id13">
+<h3>Reference<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id14" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">5</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L822">LittleFS littlefs_init_cfg() source code</a>
+that initializes read, program, and lookhead buffer sizes</p>
+</aside>
+<aside class="footnote brackets" id="id15" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">6</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/littlefs/blob/zephyr/lfs.c#L4114">LittleFS lfs_init() source code</a>
+that allocate read, program, and lookhead buffer</p>
+</aside>
+<aside class="footnote brackets" id="id16" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">7</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L302">LittleFS littlefs_open() source code</a>
+that allocate file cache</p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="sensing-subsystem">
+<h2>Sensing Subsystem<a class="headerlink" href="#sensing-subsystem" title="Link to this heading"></a></h2>
+<p>The <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/services/sensing/index.html">sensing subsystem</a> provides a
+high level of accessing sensors, such as scheduling sampling for multiple
+clients that requests data at different rates, and fusing multiple sensors to
+provide a new kind of data (e.g. fusing two IMUs on the lid and the base of a
+foldable phone to calculate the hinge angle).</p>
+<p>However, dispite being merged to the mainline in 2023, the sensing subsystem is
+still very much a half-baked system, and currently seemed to be not in active
+development. Yet it is still a good starting point for managing multiple sensors
+with a single interface.</p>
+<section id="duplicated-sensor-data-types">
+<h3>Duplicated Sensor Data Types<a class="headerlink" href="#duplicated-sensor-data-types" title="Link to this heading"></a></h3>
+<p>In the documentation of sensing subsystem,
+<code class="xref c c-struct docutils literal notranslate"><span class="pre">sensing_sensor_value_q31</span></code> is the data type for sensor data, which is
+almost the same as <code class="xref c c-struct docutils literal notranslate"><span class="pre">sensor_q31_data</span></code> used for the sensor driver. The
+only difference is that the timestamp is in micro seconds for the former and in
+nano seconds for the latter <a class="footnote-reference brackets" href="#id22" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id23" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>.</p>
+<p>Since sensor driver is a more mature system, its data type should be used for
+sensor data type in the sensing subsystem.</p>
+</section>
+<section id="sensor-scheduling">
+<h3>Sensor Scheduling<a class="headerlink" href="#sensor-scheduling" title="Link to this heading"></a></h3>
+<p>Sample scheduling is done internally by first setting
+<code class="docutils literal notranslate"><span class="pre">SENSOR_ATTR_SAMPLING_FREQUENCY</span></code> sensor attribute based on the minimum
+requested sampling intervals of all clients, and then downsample the data via a
+timer that only passes the data to the clients when the time elapsed from the
+last sample is greater than the period <a class="footnote-reference brackets" href="#id24" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a>. Which means that the actual
+sampling interval will be longer and unpredictable if the underlying sensor
+driver sampling jitters. Both of which are not ideal for real-time applications.</p>
+<p>A better approach would be to set the sensor driver sampling rate based on the
+greatest common factor of all clients’ requested sampling intervals with some
+kind of tolerence for the jitter.</p>
+</section>
+<section id="id21">
+<h3>References<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id22" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">8</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/sensing/sensing_datatypes.h#L116">Definition of sensing_sensor_value_q31</a></p>
+</aside>
+<aside class="footnote brackets" id="id23" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">9</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/drivers/sensor_data_types.h#L92">Definition of sensor_q31_data</a></p>
+</aside>
+<aside class="footnote brackets" id="id24" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">10</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/dispatch.c#L38">Sensing subsystem source code</a>
+that dispatches sensor data to clients</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="drivers.html" class="btn btn-neutral float-left" title="Zephyr Drivers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="canopennode.html" class="btn btn-neutral float-right" title="CANopenNode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, NTU Racing Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

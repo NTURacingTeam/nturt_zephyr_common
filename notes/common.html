@@ -1,0 +1,177 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Common &mdash; NTURT Zephyr Common Library Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Zephyr Configuration System" href="config.html" />
+    <link rel="prev" title="Developer’s Note" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">Common Library</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../doc.html">Doc Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">Testing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer’s Note</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Common</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-c-programming-language">The C Programming Language</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#built-in-functions">Built-in Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#zephyr">Zephyr</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dynamic-memory-allocation">Dynamic Memory Allocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Zephyr Configuration System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html">Zephyr Kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drivers.html">Zephyr Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Zephyr Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canopennode.html">CANopenNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Testing in Zephyr</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NTURT Zephyr Common Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Developer’s Note</a></li>
+      <li class="breadcrumb-item active">Common</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notes/common.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="common">
+<span id="notes-common"></span><h1>Common<a class="headerlink" href="#common" title="Link to this heading"></a></h1>
+<section id="the-c-programming-language">
+<h2>The C Programming Language<a class="headerlink" href="#the-c-programming-language" title="Link to this heading"></a></h2>
+<section id="built-in-functions">
+<h3>Built-in Functions<a class="headerlink" href="#built-in-functions" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">__builtin_ffs()</span></code></p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">__builtin_clz()</span></code></p></li>
+</ul>
+<p><a class="reference external" href="https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html">GCC built-in functions</a></p>
+</section>
+</section>
+<section id="zephyr">
+<h2>Zephyr<a class="headerlink" href="#zephyr" title="Link to this heading"></a></h2>
+<section id="dynamic-memory-allocation">
+<h3>Dynamic Memory Allocation<a class="headerlink" href="#dynamic-memory-allocation" title="Link to this heading"></a></h3>
+<p>Zephyr provides both <code class="docutils literal notranslate"><span class="pre">libc</span></code> <code class="xref c c-func docutils literal notranslate"><span class="pre">malloc()</span></code> and its own <code class="xref c c-func docutils literal notranslate"><span class="pre">k_melloc()</span></code>
+functions for dynamic memory allocation. It replaces the common <code class="docutils literal notranslate"><span class="pre">libc</span></code>
+implementations with its own one as described in <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/develop/languages/c/index.html#dynamic-memory-management">Zephyr documentation</a>.</p>
+<p>However, <code class="xref c c-func docutils literal notranslate"><span class="pre">malloc()</span></code> does not share the same heap with <code class="xref c c-func docutils literal notranslate"><span class="pre">k_melloc()</span></code>
+<a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, namely enabling one does not necessarily enable the other.
+<code class="xref c c-func docutils literal notranslate"><span class="pre">malloc()</span></code> can be enabled by setting the Kconfig option
+<a class="reference external" href="https://docs.zephyrproject.org/3.6.0/kconfig.html#CONFIG_COMMON_LIBC_MALLOC_ARENA_SIZE">CONFIG_COMMON_LIBC_MALLOC_ARENA_SIZE</a>
+to a non-zero value. By the same token, <code class="xref c c-func docutils literal notranslate"><span class="pre">k_melloc()</span></code> can be enabled by
+setting the Kconfig option <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/kconfig.html#CONFIG_HEAP_MEM_POOL_SIZE">CONFIG_HEAP_MEM_POOL_SIZE</a>
+to a non-zero value.</p>
+</section>
+<section id="reference">
+<h3>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/lib/libc/common/source/stdlib/malloc.c">Zephyr malloc.c source code</a></p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Developer’s Note" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="config.html" class="btn btn-neutral float-right" title="Zephyr Configuration System" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, NTU Racing Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

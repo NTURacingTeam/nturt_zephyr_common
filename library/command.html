@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command System &mdash; NTURT Zephyr Common Library Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Telemetry System" href="telemetry.html" />
+    <link rel="prev" title="Common Library" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Common Library</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Command System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#design">Design</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry System</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../doc.html">Doc Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notes/index.html">Developer’s Note</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NTURT Zephyr Common Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Common Library</a></li>
+      <li class="breadcrumb-item active">Command System</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/library/command.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="command-system">
+<span id="library-command"></span><h1>Command System<a class="headerlink" href="#command-system" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The command system provides an standard interface for a module to provide
+commands for other modules or communication protocols to control it. A command
+consists of the following parts:</p>
+<ul class="simple">
+<li><p><strong>Opcode</strong>: An integer that uniquely identifies the command.</p></li>
+<li><p><strong>Immediate Handler</strong>: An optional function that is called when the command is
+invoked, which is used to execute the command in the same context of the
+invocation or to validate the operand if the command has a deffered handler.</p></li>
+<li><p><strong>Deferred Handler</strong>: An optional function that is queued to be executed in a
+dedicated thread when the command requires a longer execution time or cannot
+be executed in ISRs.</p></li>
+</ul>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+</section>
+<section id="design">
+<h2>Design<a class="headerlink" href="#design" title="Link to this heading"></a></h2>
+<section id="architecture">
+<h3>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__cmd"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">cmd</span></span></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.CMD_NO_HANDLER">
+<span class="target" id="group__cmd_1ga70d89d7e222db39d768ad3a16333796a"></span><span class="sig-name descname"><span class="n"><span class="pre">CMD_NO_HANDLER</span></span></span><a class="headerlink" href="#c.CMD_NO_HANDLER" title="Link to this definition"></a><br /></dt>
+<dd><p>Indicate that the command has no handler of this type. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.CMD_DEFINE">
+<span class="target" id="group__cmd_1ga7a9a24874810ca1ffa4017e9c7194f6c"></span><span class="sig-name descname"><span class="n"><span class="pre">CMD_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">opcode</span></span>, <span class="n"><span class="pre">immed</span></span>, <span class="n"><span class="pre">deffered</span></span>, <span class="n"><span class="pre">user_data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.CMD_DEFINE" title="Link to this definition"></a><br /></dt>
+<dd><p>Define a command. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the name of the command is automatically generated using <code class="docutils literal notranslate"><span class="pre">opcode</span></code> , the name would be illegal if <code class="docutils literal notranslate"><span class="pre">opcode</span></code> contains characters other than alphanumericals or underscores. To avoid this, _CMD_DEFINE can be used directly by providing a unique name. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>opcode</strong> – <strong>[in]</strong> Command opcode. </p></li>
+<li><p><strong>immed</strong> – <strong>[in]</strong> Immediate handler of type <a class="reference internal" href="#group__cmd_1ga12f14670490745300e33d6841ae10a03"><span class="std std-ref">cmd_immed_handler_t</span></a>, or <a class="reference internal" href="#group__cmd_1ga70d89d7e222db39d768ad3a16333796a"><span class="std std-ref">CMD_NO_HANDLER</span></a> if not required. </p></li>
+<li><p><strong>deffered</strong> – <strong>[in]</strong> Deffered handler of type <a class="reference internal" href="#group__cmd_1ga2c9c69215b6a7c11be67e7186d211e16"><span class="std std-ref">cmd_deffered_handler_t</span></a>, or <a class="reference internal" href="#group__cmd_1ga70d89d7e222db39d768ad3a16333796a"><span class="std std-ref">CMD_NO_HANDLER</span></a> if not required. </p></li>
+<li><p><strong>user_data</strong> – <strong>[in]</strong> Pointer to custom data of the command.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.cmd_invoke_typed">
+<span class="target" id="group__cmd_1gad6477e8150e745dd167b17989c6e0cf1"></span><span class="sig-name descname"><span class="n"><span class="pre">cmd_invoke_typed</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_opcode</span></span>, <span class="n"><span class="pre">_operand</span></span>, <span class="n"><span class="pre">_operand_type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cmd_invoke_typed" title="Link to this definition"></a><br /></dt>
+<dd><p>Invoke a command with specific operand type. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_opcode</strong> – <strong>[in]</strong> Command opcode. </p></li>
+<li><p><strong>_operand</strong> – <strong>[in]</strong> Operand for the command. </p></li>
+<li><p><strong>_operand_type</strong> – <strong>[in]</strong> Type of the operand.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Same as <a class="reference internal" href="#group__cmd_1ga10d4839ae86ecf36598f16c5c3b7c30c"><span class="std std-ref">cmd_invoke</span></a>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.cmd_invoke_auto">
+<span class="target" id="group__cmd_1ga484505d80e7749ca448bee0125211803"></span><span class="sig-name descname"><span class="n"><span class="pre">cmd_invoke_auto</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">opcode</span></span>, <span class="n"><span class="pre">operand</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cmd_invoke_auto" title="Link to this definition"></a><br /></dt>
+<dd><p>Invoke a command with operand type inferred from <code class="docutils literal notranslate"><span class="pre">operand</span></code> . </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>opcode</strong> – <strong>[in]</strong> Command opcode. </p></li>
+<li><p><strong>operand</strong> – <strong>[in]</strong> Operand for the command.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Same as <a class="reference internal" href="#group__cmd_1ga10d4839ae86ecf36598f16c5c3b7c30c"><span class="std std-ref">cmd_invoke</span></a>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.cmd_immed_handler_t">
+<span class="target" id="group__cmd_1ga12f14670490745300e33d6841ae10a03"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cmd_immed_handler_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">opcode</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">operand</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">operand_size</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.cmd_immed_handler_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Immediate handler of a command. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param opcode<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Command opcode. </p>
+</dd>
+<dt class="field-even">Param operand<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Operand for the command. </p>
+</dd>
+<dt class="field-odd">Param user_data<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Custom data of the command.</p>
+</dd>
+<dt class="field-even">Retval 0<span class="colon">:</span></dt>
+<dd class="field-even"><p>For success. </p>
+</dd>
+<dt class="field-odd">Retval -EINVAL<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If the operand is invalid. </p>
+</dd>
+<dt class="field-even">Retval others<span class="colon">:</span></dt>
+<dd class="field-even"><p>Negative error number. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.cmd_deffered_handler_t">
+<span class="target" id="group__cmd_1ga2c9c69215b6a7c11be67e7186d211e16"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cmd_deffered_handler_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">opcode</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">operand</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">operand_size</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.cmd_deffered_handler_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Deffered handler of a command. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param opcode<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Command opcode. </p>
+</dd>
+<dt class="field-even">Param operand<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Operand for the command. </p>
+</dd>
+<dt class="field-odd">Param user_data<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Custom data of the command. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.cmd_invoke">
+<span class="target" id="group__cmd_1ga10d4839ae86ecf36598f16c5c3b7c30c"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cmd_invoke</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">opcode</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">operand</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">operand_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cmd_invoke" title="Link to this definition"></a><br /></dt>
+<dd><p>Invoke a command. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>opcode</strong> – <strong>[in]</strong> Command opcode. </p></li>
+<li><p><strong>operand</strong> – <strong>[in]</strong> Operand for the command. </p></li>
+<li><p><strong>operand_size</strong> – <strong>[in]</strong> Size of the operand.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return values<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>0</strong> – For success. </p></li>
+<li><p><strong>-ENOENT</strong> – If the opcode does not exist. </p></li>
+<li><p><strong>-EINVAL</strong> – If the operand is invalid. </p></li>
+<li><p><strong>-ENOMEM</strong> – If the buffer for deffered handler is full. </p></li>
+<li><p><strong>others</strong> – Negative error number returned by immediate handler. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.cmd_invoke_void">
+<span class="target" id="group__cmd_1ga7e4bc35495c6a79f1b603630b12dcf10"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cmd_invoke_void</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">opcode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cmd_invoke_void" title="Link to this definition"></a><br /></dt>
+<dd><p>Invoke a command without operand. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>opcode</strong> – <strong>[in]</strong> Command opcode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Same as <a class="reference internal" href="#group__cmd_1ga10d4839ae86ecf36598f16c5c3b7c30c"><span class="std std-ref">cmd_invoke</span></a>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.cmd">
+<span class="target" id="structcmd"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cmd</span></span></span><a class="headerlink" href="#c.cmd" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;nturt/cmd.h&gt;</em></div>
+<p>Command. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.cmd.opcode">
+<span class="target" id="structcmd_1afadee3bb5de818c0b00019b3326ce121"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">opcode</span></span></span><a class="headerlink" href="#c.cmd.opcode" title="Link to this definition"></a><br /></dt>
+<dd><p>Opcode of the command. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.cmd.immed">
+<span class="target" id="structcmd_1a0e0d415dc4a9da9cae11368881166c68"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.cmd_immed_handler_t" title="cmd_immed_handler_t"><span class="n"><span class="pre">cmd_immed_handler_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">immed</span></span></span><a class="headerlink" href="#c.cmd.immed" title="Link to this definition"></a><br /></dt>
+<dd><p>Immediate handler. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.cmd.deffered">
+<span class="target" id="structcmd_1aafbfe9d1ba72e361261bd5794cc55f48"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.cmd_deffered_handler_t" title="cmd_deffered_handler_t"><span class="n"><span class="pre">cmd_deffered_handler_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">deffered</span></span></span><a class="headerlink" href="#c.cmd.deffered" title="Link to this definition"></a><br /></dt>
+<dd><p>Deffered handler. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.cmd.user_data">
+<span class="target" id="structcmd_1a9ecfe707eab87c5b6160b67d05ef7efc"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">user_data</span></span></span><a class="headerlink" href="#c.cmd.user_data" title="Link to this definition"></a><br /></dt>
+<dd><p>Custom data of the command. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Common Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="telemetry.html" class="btn btn-neutral float-right" title="Telemetry System" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, NTU Racing Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
