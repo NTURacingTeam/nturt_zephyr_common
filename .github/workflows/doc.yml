@@ -1,0 +1,63 @@
+name: Documentation Build
+
+on:
+  push:
+    branch:
+      - master
+
+env:
+  DOXYGEN_VERSION: 1.12.0
+
+jobs:
+  doc-check:
+    name: Check for documentation changes
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.changed.outputs.any_modified }}
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Check for documentation changes
+      id: changed
+      uses: tj-actions/changed-files@v45
+      with:
+        files: |
+          .github/workflows/doc.yml
+          doc/
+          include/
+  
+  doc-build:
+    name: Build documentation
+    needs:
+    - doc-check
+    if: ${{ needs.doc-check.outputs.changed == 'true' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Install Dependencies
+      # pip modules installed by sphinx-notes/pages
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y graphviz make wget
+        wget --no-verbose "https://github.com/doxygen/doxygen/releases/download/Release_${DOXYGEN_VERSION//./_}/doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz"
+        sudo tar xf doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz -C /opt
+        echo "/opt/doxygen-${DOXYGEN_VERSION}/bin" >> $GITHUB_PATH
+    
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Build documentation
+      id: build
+      uses: sphinx-notes/pages@v3
+      with:
+        documentation_path: doc
+        requirements_path: doc/requirements.txt
+        publish: false
+    
+    - name: Publish to github pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ${{ steps.build.outputs.artifact }}

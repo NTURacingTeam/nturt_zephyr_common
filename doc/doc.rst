@@ -34,11 +34,8 @@ APT packages
 pip modules
 ~~~~~~~~~~~
 
-.. code-block:: none
-
-   breathe    
-   sphinx
-   sphinx-rtd-theme
+.. literalinclude:: requirements.txt
+   :language: none
 
 Building the Documentation
 --------------------------
