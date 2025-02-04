@@ -380,17 +380,17 @@ Sensors
 Asynchronous API
 ----------------
 
-Sensor async API is built on top of RTIO, its usage can be referenced from the
-`sensor read and decode
+Sensor asynchronous driver API is built on top of RTIO, and its usage can be
+referenced from the `sensor read and decode
 <https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sensor/read_and_decode.html>`_
 documentation.
 
-To create a new sensor driver that support sensor async API, both the decoder
+To create a new sensor driver that support asynchronous API, both the decoder
 API and the async read initialization (:c:member:`sensor_driver_api.submit`) can
 be referenced from `default_rtio_sensor.c
 <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c>`_.
-Since default implementation for ``submit`` does not support streaming [#]_, the
-implementation of it can be referenced from existing drivers such as
+And since default implementation for ``submit`` does not support streaming [#]_,
+the implementation of it can be referenced from existing drivers such as
 `adxl345_stream.c
 <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/adi/adxl345/adxl345_stream.c>`_. 
 

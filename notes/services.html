@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zephyr Services &mdash; NTURT Zephyr Common Library Documentation</title>
+  <title>Zephyr Services &mdash; NTU Racing Team Zephyr Common Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -79,13 +79,15 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#littlefs">LittleFS</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id13">Reference</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">Reference</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#sensing-subsystem">Sensing Subsystem</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#duplicated-sensor-data-types">Duplicated Sensor Data Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#use-of-hid-sensor-type-instead-of-existing-sensor-channel">Use of HID Sensor Type (instead of existing <code class="xref c c-enum docutils literal notranslate"><span class="pre">sensor_channel</span></code>)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#confusing-device-api">Confusing Device API</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sensor-scheduling">Sensor Scheduling</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id21">References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id26">References</a></li>
 </ul>
 </li>
 </ul>
@@ -102,7 +104,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">NTURT Zephyr Common Library</a>
+          <a href="../index.html">NTU Racing Team Zephyr Common</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -241,7 +243,7 @@ more details.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The Winstream data structure is not documented in the kernel data structures
-documentation, but the API documentation is available in <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/winstream_8h.html">its file reference</a>.</p>
+documentation, but the API documentation is available in <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/winstream_8h.html">the file reference</a>.</p>
 </div>
 </section>
 <section id="os-services-for-data-passing">
@@ -290,22 +292,22 @@ enabled by Kconfig option <code class="docutils literal notranslate"><span class
 the priority and the deadline of the thread will be when the work is executed.
 This however means that when all threads are busy, newly submitted works with
 higher priority will not preempt the lower priority works that are already being
-executed <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+executed <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Thread deadline in Zephyr is only considered when scheduling threads with the
-same priority using <a class="reference external" href="https://en.wikipedia.org/wiki/Earliest_deadline_first_scheduling">earliest deadline first scheduling</a> <a class="footnote-reference brackets" href="#id5" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+same priority using <a class="reference external" href="https://en.wikipedia.org/wiki/Earliest_deadline_first_scheduling">earliest deadline first scheduling</a> <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 </div>
 <section id="references">
 <h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id4" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/lib/os/p4wq.c#L283">p4wq source code</a>
 that breaks priority guarantee</p>
 </aside>
-<aside class="footnote brackets" id="id5" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__thread__apis.html#gad887f16c1dd6f3247682a83beb22d1ce">k_thread_deadline_set()</a>
 API documentation</p>
 </aside>
@@ -333,7 +335,7 @@ as the tracing backend.</p>
 mentioned in the <a class="reference external" href="https://docs.zephyrproject.org/3.7.0/services/tracing/index.html#segger-systemview-support">tracing subsystem documentation</a>.
 However, to add the proper description for Zephyr, the correct description file,
 i.e. <code class="docutils literal notranslate"><span class="pre">zephyr/supsys/tracing/sysview/SYSVIEW_Zephyr.txt</span></code>, should be placed at
-<code class="docutils literal notranslate"><span class="pre">/opt/SEGGER/SystemView/Description</span></code> <a class="footnote-reference brackets" href="#id8" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> for Linux and Mac OS systems, or at
+<code class="docutils literal notranslate"><span class="pre">/opt/SEGGER/SystemView/Description</span></code> <a class="footnote-reference brackets" href="#id7" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> for Linux and Mac OS systems, or at
 <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\SEGGER\SystemView\Description</span></code> for Windows systems.</p>
 </section>
 <section id="interrupt-service-routine-isr-number">
@@ -341,7 +343,7 @@ i.e. <code class="docutils literal notranslate"><span class="pre">zephyr/supsys/
 <p>When ISR is executed, it does not have a name that is easily recognizable.
 Instead a number is used to identify the ISR. For cortex-M series, the number is
 the first nine bits of Interrupt Control and State Register (ICSR) register of
-the System Control Block (SCB) in the CPU <a class="footnote-reference brackets" href="#id9" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Which corresponds to the number
+the System Control Block (SCB) in the CPU <a class="footnote-reference brackets" href="#id8" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Which corresponds to the number
 of the ISR to be called in the interrupt vector table.</p>
 <p>For STM32 microcontrollers, this table is listed in Interrupt and exception
 vectors in the Nested vectored interrupt controller (NVIC) section in the
@@ -351,12 +353,12 @@ address 0x198 (102*4 in decimal) and for STM32G4 series, it is fired from FDCAN2
 <section id="reference">
 <h3>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h3>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id8" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://blog.ekko.cool/zephyr%20sysview%20%E4%BD%BF%E7%94%A8?locale=zh">Zephyr sysview usage</a></p>
 </aside>
-<aside class="footnote brackets" id="id9" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/subsys/tracing/sysview/sysview.c#L24">sysview_get_interrupt() source code that determines the ISR number</a></p>
 </aside>
 </aside>
@@ -372,13 +374,13 @@ here, and a SD card block device is used here as an example.</p>
 for configuring the file system, it is mainly designed for NVM. For block
 devices, LittleFS will determine the block size when mounting the device, and
 set other parameters such as the read and program size the same as the block
-size and lookhead size four times the block size <a class="footnote-reference brackets" href="#id14" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. Since it does not know
+size and lookhead size four times the block size <a class="footnote-reference brackets" href="#id13" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. Since it does not know
 how big the block size will be, it simply uses <code class="xref c c-func docutils literal notranslate"><span class="pre">melloc()</span></code> to allocate the
-read, program, and lookhead buffers for the block device <a class="footnote-reference brackets" href="#id15" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>, so be sure to
+read, program, and lookhead buffers for the block device <a class="footnote-reference brackets" href="#id14" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>, so be sure to
 enable <code class="xref c c-func docutils literal notranslate"><span class="pre">melloc()</span></code> and set the heap size to at least six times the size of
 the block size.</p>
 <p>Additionally, LittleFS uses <code class="xref c c-func docutils literal notranslate"><span class="pre">k_heap_alloc()</span></code> for allocating file caches
-<a class="footnote-reference brackets" href="#id16" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> using a memory pool controlled by Kconfig option
+<a class="footnote-reference brackets" href="#id15" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> using a memory pool controlled by Kconfig option
 <a class="reference external" href="https://docs.zephyrproject.org/latest/kconfig.html#CONFIG_FS_LITTLEFS_CACHE_SIZE">CONFIG_FS_LITTLEFS_CACHE_SIZE</a>,
 so also make sure to set it to values greater than block size.</p>
 <p>Since the automount feature is not available for block devices, they must be
@@ -395,21 +397,21 @@ mounted manually. The following code snippet shows how to do so:</p>
 <span class="n">fs_mount</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mp</span><span class="p">);</span>
 </pre></div>
 </div>
-<section id="id13">
-<h3>Reference<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<section id="id12">
+<h3>Reference<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id14" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">5</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id13" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">5</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L822">LittleFS littlefs_init_cfg() source code</a>
 that initializes read, program, and lookhead buffer sizes</p>
 </aside>
-<aside class="footnote brackets" id="id15" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">6</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id14" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">6</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/littlefs/blob/zephyr/lfs.c#L4114">LittleFS lfs_init() source code</a>
 that allocate read, program, and lookhead buffer</p>
 </aside>
-<aside class="footnote brackets" id="id16" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">7</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id15" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">7</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L302">LittleFS littlefs_open() source code</a>
 that allocate file cache</p>
 </aside>
@@ -417,25 +419,60 @@ that allocate file cache</p>
 </section>
 </section>
 <section id="sensing-subsystem">
-<h2>Sensing Subsystem<a class="headerlink" href="#sensing-subsystem" title="Link to this heading"></a></h2>
+<span id="notes-services-sensing-subsystem"></span><h2>Sensing Subsystem<a class="headerlink" href="#sensing-subsystem" title="Link to this heading"></a></h2>
 <p>The <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/services/sensing/index.html">sensing subsystem</a> provides a
 high level of accessing sensors, such as scheduling sampling for multiple
-clients that requests data at different rates, and fusing multiple sensors to
-provide a new kind of data (e.g. fusing two IMUs on the lid and the base of a
-foldable phone to calculate the hinge angle).</p>
-<p>However, dispite being merged to the mainline in 2023, the sensing subsystem is
-still very much a half-baked system, and currently seemed to be not in active
-development. Yet it is still a good starting point for managing multiple sensors
-with a single interface.</p>
+clients that requests data at different rates and resoultons (since currently
+most sensor drivers are designed for single client only <a class="footnote-reference brackets" href="#id27" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>), and fusing
+multiple sensors to provide a new kind of data (e.g. fusing two IMUs on the lid
+and the base of a foldable phone to calculate the hinge angle).</p>
+<p>However, dispite <a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/pull/64478">being merged to the mainline in October 2023</a>, the sensing
+subsystem is still only a minimum viable product as of Zephyr 4.0.0 lacking some
+important features such as batch reading and error reporting <a class="footnote-reference brackets" href="#id28" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>. And currently
+seemed to be not in active development anymore.</p>
+<p>Yet it is still a good starting point for managing multiple sensors with a
+single interface.</p>
+<p>Some issues of the sensing subsystem should be considered or addressed before
+being adopted:</p>
 <section id="duplicated-sensor-data-types">
 <h3>Duplicated Sensor Data Types<a class="headerlink" href="#duplicated-sensor-data-types" title="Link to this heading"></a></h3>
 <p>In the documentation of sensing subsystem,
 <code class="xref c c-struct docutils literal notranslate"><span class="pre">sensing_sensor_value_q31</span></code> is the data type for sensor data, which is
 almost the same as <code class="xref c c-struct docutils literal notranslate"><span class="pre">sensor_q31_data</span></code> used for the sensor driver. The
 only difference is that the timestamp is in micro seconds for the former and in
-nano seconds for the latter <a class="footnote-reference brackets" href="#id22" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id23" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>.</p>
-<p>Since sensor driver is a more mature system, its data type should be used for
-sensor data type in the sensing subsystem.</p>
+nano seconds for the latter <a class="footnote-reference brackets" href="#id29" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id30" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>.</p>
+<p>This is probably due to <code class="xref c c-struct docutils literal notranslate"><span class="pre">sensor_q31_data</span></code> being introduced later than
+the initial proposal of the sensing subsystem. However, since
+<code class="xref c c-struct docutils literal notranslate"><span class="pre">sensor_q31_data</span></code> is widely adopted by the sensor driver, it should be
+used as the sensor data type in the sensing subsystem instead of
+<code class="xref c c-struct docutils literal notranslate"><span class="pre">sensing_sensor_value_q31</span></code>.</p>
+</section>
+<section id="use-of-hid-sensor-type-instead-of-existing-sensor-channel">
+<h3>Use of HID Sensor Type (instead of existing <code class="xref c c-enum docutils literal notranslate"><span class="pre">sensor_channel</span></code>)<a class="headerlink" href="#use-of-hid-sensor-type-instead-of-existing-sensor-channel" title="Link to this heading"></a></h3>
+<p>Intel (the author of the sensor subsystem) uses HID sensor types instead of the
+existing <code class="xref c c-enum docutils literal notranslate"><span class="pre">sensor_channel</span></code> of sensor types from CHRE (context hub runtime
+environmrnt) since they claimed that it is the only cross-OS standard for sensor
+types <a class="footnote-reference brackets" href="#id31" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>. However, they did not implement any other part of the HID standard,
+making the choice of using HID sensor type that’s incompatible with the existing
+<code class="xref c c-enum docutils literal notranslate"><span class="pre">sensor_channel</span></code> existing sensor drivers depends on some what abrubtly.
+Additionally, the sensing subsystem configures the sensor using
+<a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__sensing__api.html#ga46591a2d29f5b5e160a72bbe289884ab">sensing_set_config()</a>
+that requires <code class="xref c c-enum docutils literal notranslate"><span class="pre">sensor_channel</span></code> as the parameter as mentioned in the
+next section, it is better to stick to <code class="xref c c-enum docutils literal notranslate"><span class="pre">sensor_channel</span></code> for sensor
+types.</p>
+</section>
+<section id="confusing-device-api">
+<h3>Confusing Device API<a class="headerlink" href="#confusing-device-api" title="Link to this heading"></a></h3>
+<p>During development, the sensing subsystem sensor device API is required to be
+the same as the sensor driver <code class="xref c c-struct docutils literal notranslate"><span class="pre">sensor_driver_api</span></code> as mentioned in
+<a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/issues/62223">this RFC</a>. As as
+result, when setting required interval and senstivity using
+<a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__sensing__api.html#ga46591a2d29f5b5e160a72bbe289884ab">sensing_set_config()</a>,
+it sets <code class="docutils literal notranslate"><span class="pre">SENSOR_ATTR_SAMPLING_FREQUENCY</span></code> and <code class="docutils literal notranslate"><span class="pre">SENSOR_ATTR_HYSTERESIS</span></code>
+attributes, respectively, of the channel corresponding to that HID sensor type
+via <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__sensor__interface.html#gafbf65226a227e9f8824908bc38e336f5">sensor_attr_set()</a> <a class="footnote-reference brackets" href="#id32" id="id23" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id33" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a>,
+which is somewhat confusing, but have to bare in mind when developing sensor
+subsystem drivers.</p>
 </section>
 <section id="sensor-scheduling">
 <h3>Sensor Scheduling<a class="headerlink" href="#sensor-scheduling" title="Link to this heading"></a></h3>
@@ -443,28 +480,51 @@ sensor data type in the sensing subsystem.</p>
 <code class="docutils literal notranslate"><span class="pre">SENSOR_ATTR_SAMPLING_FREQUENCY</span></code> sensor attribute based on the minimum
 requested sampling intervals of all clients, and then downsample the data via a
 timer that only passes the data to the clients when the time elapsed from the
-last sample is greater than the period <a class="footnote-reference brackets" href="#id24" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a>. Which means that the actual
+last sample is greater than the period <a class="footnote-reference brackets" href="#id34" id="id25" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a>. Which means that the actual
 sampling interval will be longer and unpredictable if the underlying sensor
 driver sampling jitters. Both of which are not ideal for real-time applications.</p>
 <p>A better approach would be to set the sensor driver sampling rate based on the
 greatest common factor of all clients’ requested sampling intervals with some
 kind of tolerence for the jitter.</p>
 </section>
-<section id="id21">
-<h3>References<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<section id="id26">
+<h3>References<a class="headerlink" href="#id26" title="Link to this heading"></a></h3>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id22" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">8</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id27" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">8</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sensor/fetch_and_get.html">Sensor fetch and get</a>
+warning</p>
+</aside>
+<aside class="footnote brackets" id="id28" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">9</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/dispatch.c#L102">Sensing subsystem dispatch_task() source code</a>
+that ignores cqe result codes</p>
+</aside>
+<aside class="footnote brackets" id="id29" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">10</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/sensing/sensing_datatypes.h#L116">Definition of sensing_sensor_value_q31</a></p>
 </aside>
-<aside class="footnote brackets" id="id23" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">9</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id30" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">11</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/drivers/sensor_data_types.h#L92">Definition of sensor_q31_data</a></p>
 </aside>
-<aside class="footnote brackets" id="id24" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">10</a><span class="fn-bracket">]</span></span>
-<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/dispatch.c#L38">Sensing subsystem source code</a>
+<aside class="footnote brackets" id="id31" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">12</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/files/12561847/Sensing.Subsystem.Design.-.Zephyr.pdf">Sensing Subsystem Design Discussion</a>,
+slide 13</p>
+</aside>
+<aside class="footnote brackets" id="id32" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">13</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/dispatch.c#L38">Sensing subsystem send_data_to_clients() source code</a>
 that dispatches sensor data to clients</p>
+</aside>
+<aside class="footnote brackets" id="id33" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">14</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/sensor_mgmt.c#L92">Sensing subsystem set_arbitrate_interval() source code</a></p>
+</aside>
+<aside class="footnote brackets" id="id34" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id25">15</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/sensor_mgmt.c#L170">Sensing subsystem set_arbitrate_sensitivity() source code</a></p>
 </aside>
 </aside>
 </section>
@@ -482,7 +542,7 @@ that dispatches sensor data to clients</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, NTU Racing Team.</p>
+    <p>&#169; Copyright 2025, NTU Racing Team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

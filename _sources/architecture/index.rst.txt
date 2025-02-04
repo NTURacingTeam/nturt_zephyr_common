@@ -10,3 +10,4 @@ Architecture
 
    vehicle_control_unit
    survey
+   sensing

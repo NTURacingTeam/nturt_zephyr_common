@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zephyr Drivers &mdash; NTURT Zephyr Common Library Documentation</title>
+  <title>Zephyr Drivers &mdash; NTU Racing Team Zephyr Common Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -118,7 +118,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">NTURT Zephyr Common Library</a>
+          <a href="../index.html">NTU Racing Team Zephyr Common</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -487,14 +487,14 @@ for RTIO fallback</p>
 <h2>Sensors<a class="headerlink" href="#sensors" title="Link to this heading"></a></h2>
 <section id="asynchronous-api">
 <h3>Asynchronous API<a class="headerlink" href="#asynchronous-api" title="Link to this heading"></a></h3>
-<p>Sensor async API is built on top of RTIO, its usage can be referenced from the
-<a class="reference external" href="https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sensor/read_and_decode.html">sensor read and decode</a>
+<p>Sensor asynchronous driver API is built on top of RTIO, and its usage can be
+referenced from the <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sensor/read_and_decode.html">sensor read and decode</a>
 documentation.</p>
-<p>To create a new sensor driver that support sensor async API, both the decoder
+<p>To create a new sensor driver that support asynchronous API, both the decoder
 API and the async read initialization (<code class="xref c c-member docutils literal notranslate"><span class="pre">sensor_driver_api.submit</span></code>) can
 be referenced from <a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c">default_rtio_sensor.c</a>.
-Since default implementation for <code class="docutils literal notranslate"><span class="pre">submit</span></code> does not support streaming <a class="footnote-reference brackets" href="#id29" id="id27" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>, the
-implementation of it can be referenced from existing drivers such as
+And since default implementation for <code class="docutils literal notranslate"><span class="pre">submit</span></code> does not support streaming <a class="footnote-reference brackets" href="#id29" id="id27" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>,
+the implementation of it can be referenced from existing drivers such as
 <a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/adi/adxl345/adxl345_stream.c">adxl345_stream.c</a>.</p>
 </section>
 <section id="id28">
@@ -521,7 +521,7 @@ that does not support streaming</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, NTU Racing Team.</p>
+    <p>&#169; Copyright 2025, NTU Racing Team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

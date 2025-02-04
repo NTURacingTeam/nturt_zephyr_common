@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Doc Implementation &mdash; NTURT Zephyr Common Library Documentation</title>
+  <title>Doc Implementation &mdash; NTU Racing Team Zephyr Common Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -63,6 +63,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#id1">Building the Documentation</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying-to-github-pages-with-github-actions">Deploying to GitHub Pages with GitHub Actions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#implementation-details">Implementation Details</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#main-documentation">Main Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a></li>
@@ -80,7 +81,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">NTURT Zephyr Common Library</a>
+          <a href="index.html">NTU Racing Team Zephyr Common</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -100,8 +101,8 @@
              
   <section id="doc-implementation">
 <span id="doc"></span><h1>Doc Implementation<a class="headerlink" href="#doc-implementation" title="Link to this heading"></a></h1>
-<p>This page explains how the documentation is implemented in the NTURT Zephyr
-Common Library and how to build it from the source.</p>
+<p>This page explains how the documentation is implemented in the NTU Racing Team
+Zephyr Common and how to build it from the source.</p>
 <section id="building-the-documentation">
 <h2>Building the Documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading"></a></h2>
 <section id="requirements">
@@ -142,6 +143,17 @@ make<span class="w"> </span>html
 be viewed in a browser by opening the <code class="docutils literal notranslate"><span class="pre">index.html</span></code> file.</p>
 </section>
 </section>
+<section id="deploying-to-github-pages-with-github-actions">
+<h2>Deploying to GitHub Pages with GitHub Actions<a class="headerlink" href="#deploying-to-github-pages-with-github-actions" title="Link to this heading"></a></h2>
+<p>For ease of access, the main documentation you are reading right now is deployed
+to GitHub Pages at <a class="reference external" href="https://nturacingteam.github.io/nturt_zephyr_common">https://nturacingteam.github.io/nturt_zephyr_common</a>,
+which is automated using GiHub Actions.</p>
+<p>The GitHub Actions workflow is defined in <a class="reference external" href="https://github.com/NTURacingTeam/nturt_zephyr_common/blob/master/.github/workflows/doc.yml">.github/workflows/doc.yml</a>.
+And it mainly uses <a class="reference external" href="https://github.com/marketplace/actions/sphinx-to-github-pages">Sphinx to GitHub Pages</a> and <a class="reference external" href="https://github.com/marketplace/actions/github-pages-action">GitHub
+Pages</a> actions to
+build and deploy the documentation. The installation process is the same as
+described above, with the Doxygen installation copied from <a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/.github/workflows/doc-build.yml#L73">Zephyr</a>.</p>
+</section>
 <section id="implementation-details">
 <h2>Implementation Details<a class="headerlink" href="#implementation-details" title="Link to this heading"></a></h2>
 <section id="main-documentation">
@@ -167,7 +179,7 @@ by Doxygen are exported to the main documentation using <a class="reference exte
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, NTU Racing Team.</p>
+    <p>&#169; Copyright 2025, NTU Racing Team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

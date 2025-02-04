@@ -4,8 +4,8 @@
 Doc Implementation
 ==================
 
-This page explains how the documentation is implemented in the NTURT Zephyr
-Common Library and how to build it from the source.
+This page explains how the documentation is implemented in the NTU Racing Team
+Zephyr Common and how to build it from the source.
 
 Building the Documentation
 ==========================
@@ -50,6 +50,22 @@ To build the documentation, run the following command:
 then the main documentation and API reference will be built in the
 ``_build/html`` and ``_build_doxygen/html`` directories respectively, which can
 be viewed in a browser by opening the ``index.html`` file.
+
+Deploying to GitHub Pages with GitHub Actions
+=============================================
+
+For ease of access, the main documentation you are reading right now is deployed
+to GitHub Pages at `<https://nturacingteam.github.io/nturt_zephyr_common>`_,
+which is automated using GiHub Actions. 
+
+The GitHub Actions workflow is defined in `.github/workflows/doc.yml
+<https://github.com/NTURacingTeam/nturt_zephyr_common/blob/master/.github/workflows/doc.yml>`_.
+And it mainly uses `Sphinx to GitHub Pages
+<https://github.com/marketplace/actions/sphinx-to-github-pages>`_ and `GitHub
+Pages <https://github.com/marketplace/actions/github-pages-action>`_ actions to
+build and deploy the documentation. The installation process is the same as
+described above, with the Doxygen installation copied from `Zephyr
+<https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/.github/workflows/doc-build.yml#L73>`_.
 
 Implementation Details
 ======================
