@@ -1,0 +1,33 @@
+#include <zephyr/dt-bindings/sensor/sensor-channels.h>
+#include "dt-settings.h"
+
+/ {
+    adc: adc-emul {
+        compatible = "zephyr,adc-emul";
+        nchannels = <1>;
+        ref-internal-mv = <5000>;
+        #io-channel-cells = <1>;
+        #address-cells = <1>;
+	    #size-cells = <0>;
+
+        channel@0 {
+            reg = <0>;
+            zephyr,gain = "ADC_GAIN_1";
+            zephyr,reference = "ADC_REF_INTERNAL";
+            zephyr,vref-mv = <5000>;
+            zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+            zephyr,resolution = <14>;
+        };
+    };
+
+    sensor: analog-generic-sensor {
+        compatible = "analog-generic-sensor";
+        io-channels = <&adc 0>;
+        zephyr,channel = <SENSOR_CHAN>;
+        min-voltage = <MIN_VOLTAGE>;
+        max-voltage = <MAX_VOLTAGE>;
+        min-value = <MIN_VALUE 0>;
+        max-value = <MAX_VALUE 0>;
+        tolerance = <TOLARENCE>;
+    };
+};

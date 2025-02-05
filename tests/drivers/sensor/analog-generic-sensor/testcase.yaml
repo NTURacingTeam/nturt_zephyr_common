@@ -1,0 +1,17 @@
+common:
+  tags:
+    - drivers
+    - sensor
+    - analog-generic-sensor
+  harness: ztest
+  integration_platforms:
+    - native_sim
+tests:
+  drivers.sensor.analog-generic-sensor: {}
+  drivers.sensor.analog-generic-sensor.sanitizer:
+    platform_allow:
+      - native_sim
+      - native_sim/native/64    
+    extra_configs:
+      - CONFIG_ASAN=y
+      - CONFIG_UBSAN=y
