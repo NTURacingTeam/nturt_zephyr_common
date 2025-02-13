@@ -13,7 +13,7 @@
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/sensor.h>
-#include <zephyr/dt-bindings/input/deadzone-modes.h>
+#include <zephyr/dt-bindings/input/sensor-axis.h>
 #include <zephyr/dt-bindings/input/input-error-codes.h>
 #include <zephyr/input/input.h>
 #include <zephyr/kernel.h>

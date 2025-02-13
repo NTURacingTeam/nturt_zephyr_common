@@ -12,8 +12,9 @@ description: |
 
   Example configuration:
 
-  #include <zephyr/dt-bindings/input/deadzone-modes.h>
+  #include <zephyr/dt-bindings/sensor/sensor-channels.h>
   #include <zephyr/dt-bindings/input/input-event-codes.h>
+  #include <zephyr/dt-bindings/input/sensor-axis.h>
 
   sensor-axis {
       compatible = "senssor-axis";
@@ -28,7 +29,7 @@ description: |
 
           axis-x-0 {
               sensor = <&sensor0>;
-              zephyr,channel = <36>; // SENSOR_CHAN_ROTATION
+              zephyr,channel = <SENSOR_CHAN_ROTATION>;
               in-min = <0 0>;
               in-max = <15 0>;
               range-tolerance = <10>; // 10%
@@ -36,7 +37,7 @@ description: |
 
           axis-x-1 {
               sensor = <&sensor1>;
-              zephyr,channel = <36>; // SENSOR_CHAN_ROTATION
+              zephyr,channel = <SENSOR_CHAN_ROTATION>;
               in-min = <15 0>;
               in-max = <0 0>;
               range-tolerance = <10>; // 10%
