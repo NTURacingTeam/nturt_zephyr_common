@@ -25,6 +25,23 @@
  */
 
 /**
+ * @brief Get the deferenced type of a pointer type.
+ *
+ * @param[in] type The pointer type.
+ * @return The type of the pointer type.
+ */
+#define DEREF_TYPE(type) __typeof__(*((type)0))
+
+/**
+ * @brief Get the type of a struct field.
+ *
+ * @param[in] type The structure cintaining the field of interest.
+ * @param[in] member The field to return the type of.
+ * @return The type of the field.
+ */
+#define TYPEOF_FIELD(type, member) __typeof__(((type*)0)->member)
+
+/**
  * @brief Macro that discards all arguments and expend to zephyr @ref EMPTY.
  *
  * @param ... Variable list of arguments to discard.

@@ -1,0 +1,8 @@
+menuconfig NTURT_MSG
+    bool "Inter-thread communication system"
+    depends on NTURT
+    select ZBUS
+
+if NTURT_MSG
+
+endif # NTURT_MSG
