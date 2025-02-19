@@ -27,7 +27,7 @@
 
 /* macro ---------------------------------------------------------------------*/
 /// @brief List of all messages without msg_ prefix.
-#define MSG_LIST MSG_SENSOR_LIST
+#define MSG_LIST MSG_SENSOR_LIST, MSG_STAT_LIST
 
 /**
  * @} // msg_interface

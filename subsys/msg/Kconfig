@@ -5,4 +5,10 @@ menuconfig NTURT_MSG
 
 if NTURT_MSG
 
+config NTURT_MSG_INIT_PRIORITY
+    int "NTURT message module init priority"
+    default 10
+    help
+      Message module initialization priority.
+
 endif # NTURT_MSG

@@ -14,11 +14,6 @@
 // project includes
 #include "nturt/msg/interfaces/common.h"
 
-/* macro ---------------------------------------------------------------------*/
-/// @brief List of sensor messages without msg_ prefix.
-#define MSG_SENSOR_LIST imu_data, gps_data, wheel_data, susp_data
-
-/* type ----------------------------------------------------------------------*/
 /**
  * @defgroup msg_interface_sensor Sensor Message
  * @brief Sensor message type definitions.
@@ -26,6 +21,11 @@
  * @{
  */
 
+/* macro ---------------------------------------------------------------------*/
+/// @brief List of sensor messages without msg_ prefix.
+#define MSG_SENSOR_LIST imu_data, gps_data, wheel_data, susp_data
+
+/* type ----------------------------------------------------------------------*/
 /**
  * @brief IMU data message.
  *

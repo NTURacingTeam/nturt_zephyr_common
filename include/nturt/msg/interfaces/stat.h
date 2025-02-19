@@ -11,10 +11,12 @@
 #ifndef NTURT_MSG_INTERFACES_STAT_H_
 #define NTURT_MSG_INTERFACES_STAT_H_
 
+// glibc includes
+#include <stdint.h>
+
 // project includes
 #include "nturt/msg/interfaces/common.h"
 
-/* type ----------------------------------------------------------------------*/
 /**
  * @defgroup msg_interface_stat State Message
  * @brief State message type definitions.
@@ -22,12 +24,17 @@
  * @{
  */
 
+/* macro ---------------------------------------------------------------------*/
+/// @brief List of state messages without msg_ prefix.
+#define MSG_STAT_LIST vehicle_stat
+
+/* type ----------------------------------------------------------------------*/
 /**
  * @brief Vehicle state message.
  *
  * @todo
  */
-struct msg_vehicle_state {
+struct msg_vehicle_stat {
   /** Message header. */
   struct msg_header header;
 };

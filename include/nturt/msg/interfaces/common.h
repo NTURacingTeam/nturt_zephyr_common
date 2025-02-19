@@ -19,16 +19,22 @@
  * @{
  */
 
+/* macro ---------------------------------------------------------------------*/
+#define MSG_HEADER_INITIALIZER()                               \
+  {                                                            \
+      .timestamp_ns = k_ticks_to_ns_floor64(k_uptime_ticks()), \
+  }
+
 /* type ----------------------------------------------------------------------*/
 /**
  * @brief Message header.
  *
  */
 struct msg_header {
-  /** 
+  /**
    * Timestamp when the msg is generated as attained by
    * `k_ticks_to_ns_floor64(k_uptime_ticks())`. Same convention as sensor
-   * drivers. 
+   * drivers.
    */
   uint64_t timestamp_ns;
 };
