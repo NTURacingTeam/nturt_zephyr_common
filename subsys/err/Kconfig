@@ -1,7 +1,10 @@
 menuconfig NTURT_ERR
-    bool "Error handling module"
+    bool "Error passing and handling module"
     depends on NTURT
-    select ZBUS
+    select SYS_HASH_FUNC32
+    select SYS_HASH_MAP
+    help
+      ""
 
 if NTURT_ERR
 

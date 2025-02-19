@@ -25,6 +25,15 @@
  */
 
 /**
+ * @brief Logical XOR.
+ *
+ * @param[in] a First operand.
+ * @param[in] b Second operand.
+ * @return True if only one of the operands is true-like, i.e. not equal to 0.
+ */
+#define XOR(a, b) (!(a) ^ !(b))
+
+/**
  * @brief Get the deferenced type of a pointer type.
  *
  * @param[in] type The pointer type.

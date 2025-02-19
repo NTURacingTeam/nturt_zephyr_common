@@ -1,192 +1,224 @@
+/**
+ * @file
+ * @brief Error passing and handling.
+ *
+ * @author quantumspawner
+ * @version 0.0.1
+ * @date 2025-02-17
+ * @copyright Copyright (c) 2025 NTU Racing Team
+ */
+
 #ifndef NTURT_ERR_H_
 #define NTURT_ERR_H_
 
 // glibc includes
 #include <stdbool.h>
+#include <stddef.h>
+#include <sys/queue.h>
 
 // zephyr includes
+#include <zephyr/sys/iterable_sections.h>
 #include <zephyr/sys/util.h>
-#include <zephyr/zbus/zbus.h>
-
-// project incldues
-#include "nturt/util.h"
 
 /**
  * @addtogroup Err Error
- *
  * @{
  */
 
 /* macros --------------------------------------------------------------------*/
-/**
- * @addtogroup ErrMacro Error Macros
- *
- * @{
- */
+/// @brief Flag indicating the error is set.
+#define ERR_FLAG_SET BIT(4)
 
-/// @brief Error severity. Warning means that the system can continue to
-/// operate.
-#define ERR_SEV_WARN false
+/// @brief Flag mask indicating the severity of the error.
+#define ERR_FLAG_SEV_MASK (ERR_SEV_INFO | ERR_SEV_WARN | ERR_SEV_FATAL)
 
-/// @brief Error severity. Fatal means that the system must stop.
-#define ERR_SEV_FATAL true
-
-/// @brief Error code set bit.
-#define ERR_CODE_SET BIT(31)
-
-/// @brief Error code clear bit.
-#define ERR_CODE_CLEAR 0
-
-/// @brief Invalid error code.
-#define ERR_CODE_INVALID BIT(31)
-
-/// @brief Prefix for error code names.
-#define ERR_CODE_PREFIX ERR_CODE_
-
-/**
- * @brief Define an error code.
- *
- * @param CODE Error code.
- * @param SER Error severity, one of @ref ERR_SEV_WARN or @ref ERR_SEV_FATAL.
- */
-#define ERR_CODE(CODE, SER) CODE, SER
-
-/**
- * @brief Listify error codes defined by @ref ERR_CODE.
- *
- * @param ... List of error codes.
- */
-#define ERR_CODE_LISTIFY(...) __VA_ARGS__
-
-/**
- * @brief Check if error code is valid.
- *
- * @param LIST List of error codes defined by @ref ERR_CODE_LISTIFY.
- */
-#define ERR_CODE_VALIDATE(LIST)             \
-  BUILD_ASSERT(NUM_VA_ARGS(LIST) / 2 <= 31, \
-               "Too many error codes. Only supports up to 31.")
-
-#define _ERR_CODE_DECLARE(I, X, _) CONCAT(ERR_CODE_PREFIX, X) = BIT(I)
-
-/**
- * @brief Declare the values of the error codes using enum.
- *
- * @param LIST List of error codes defined by @ref ERR_CODE_LISTIFY.
- */
-#define ERR_CODE_DECLARE(LIST) \
-  enum err_code { FOR_EACH_PAIR_IDX(_ERR_CODE_DECLARE, (, ), LIST) }
-
-#define _ERR_CODE_STR_MAP_DEFINE(X, _) #X
-
-/**
- * @brief Define the error code name string map, which can be accessed by
- * @p NAME [err_index]. Where err_index is LOG2(error_code).
- *
- * @param NAME Name of the map.
- * @param LIST List of error codes defined by @ref ERR_CODE_LISTIFY.
- */
-#define ERR_CODE_STR_MAP_DEFINE(NAME, LIST)                \
-  static const char* NAME[] = {                            \
-      FOR_EACH_PAIR(_ERR_CODE_STR_MAP_DEFINE, (, ), LIST), \
+#define _ERR_DEFINE(_name, _errcode, _serverity, _desc, ...)                \
+  STRUCT_SECTION_ITERABLE(err, _name) = {                                   \
+      .errcode = _errcode,                                                  \
+      .flags = _serverity | COND_CODE_1(__VA_OPT__(1), (__VA_ARGS__), (0)), \
+      .desc = _desc,                                                        \
   }
 
-#define _ERR_CODE_GET_FATAL_MASK(I, _, Y) COND_CODE_1(Y, (BIT(I)), (0))
-
 /**
- * @brief Get the mask of fatal error codes.
+ * @brief Define an error.
  *
- * @param LIST List of error codes defined by @ref ERR_CODE_LISTIFY.
+ * @param[in] errcode Code of the error.
+ * @param[in] serverity Serverity of the error.
+ * @param[in] desc Description of the error.
+ * @param[in] ... Flags of the error.
  */
-#define ERR_CODE_GET_FATAL_MASK(LIST) \
-  (FOR_EACH_PAIR_IDX(_ERR_CODE_GET_FATAL_MASK, (|), LIST))
+#define ERR_DEFINE(errcode, serverity, desc, ...) \
+  _ERR_DEFINE(CONCAT(__err_, errcode), errcode, serverity, desc, __VA_ARGS__)
 
-#define _ERR_CODE_GET_WARN_MASK(I, _, Y) COND_CODE_0(Y, (BIT(I)), (0))
+#define _ERR_FILTER_LAST          \
+  {                               \
+      .type = ERR_FILTER_INVALID, \
+  }
 
 /**
- * @brief Get the mask of warning error codes.
+ * @brief Error filter for error codes.
+ * 
+ * @param[in] ... Error codes to filter.
+ */
+#define ERR_FILTER_CODE(...)                 \
+  {                                          \
+      .type = ERR_FILTER_CODE,               \
+      .size = NUM_VA_ARGS(__VA_ARGS__),      \
+      .errcodes = (uint32_t[]){__VA_ARGS__}, \
+  }
+
+/**
+ * @brief Error filter for severities.
+ * 
+ * @param[in] ... Severities to filter.
+ */
+#define ERR_FILTER_SEV(...)                     \
+  {                                             \
+      .type = ERR_FILTER_SEV,                   \
+      .size = NUM_VA_ARGS(__VA_ARGS__),         \
+      .serverities = (uint32_t[]){__VA_ARGS__}, \
+  }
+
+#define _ERR_CALLBACK_DEFINE(_name, _handler, _user_data, ...) \
+  STRUCT_SECTION_ITERABLE(err_callback, _name) = {             \
+      .handler = _handler,                                     \
+      .user_data = _user_data,                                 \
+      .filters = (struct err_filter[]){COND_CODE_1(            \
+          __VA_OPT__(1), (__VA_ARGS__, _ERR_FILTER_LAST),      \
+          (_ERR_FILTER_LAST))},                                \
+  }
+
+/**
+ * @brief Define an error callback.
+ * 
+ * @param[in] handler Handler of the error.
+ * @param[in] user_data Pointer to custom data for the callback.
+ * @param[in] ... Filters for the error callback.
+ */
+#define ERR_CALLBACK_DEFINE(handler, user_data, ...)                        \
+  _ERR_CALLBACK_DEFINE(CONCAT(__err_handler_, handler), handler, user_data, \
+                       __VA_ARGS__)
+
+/* types ---------------------------------------------------------------------*/
+/**
+ * @brief Error handler type.
  *
- * @param LIST List of error codes defined by @ref ERR_CODE_LISTIFY.
+ * @param errcode Code of the error.
+ * @param set True if the error is set, false if the error is cleared.
+ * @param user_data Pointer to custom user data for the callback.
  */
-#define ERR_CODE_GET_WARN_MASK(LIST) \
-  (FOR_EACH_PAIR_IDX(_ERR_CODE_GET_WARN_MASK, (|), LIST))
+typedef void (*err_handler_t)(uint32_t errcode, bool set, void* user_data);
 
 /**
- * @brief Iterate over each individual error code in a combined error.
+ * @brief Error severity.
  *
- * @param ERR Combined error code.
- * @param CODE Individual error code.
  */
-#define ERR_CODE_FOR_EACH(ERR, CODE)  \
-  for (int __i = 0; ERR >> __i != 0;) \
-    if ((__i += __builtin_ffs(ERR >> __i)) && (CODE = BIT(__i - 1)))
+enum err_sev {
+  /** Error disabled, indicating this error is not used. */
+  ERR_SEV_DISABLED = 0,
 
-/// @brief Define the error code list.
-#define ERR_CODE_LIST                                                          \
-  ERR_CODE_LISTIFY(                                                            \
-      ERR_CODE(NODE_FB, ERR_SEV_FATAL), ERR_CODE(NODE_RB, ERR_SEV_FATAL),      \
-      ERR_CODE(NODE_RPI, ERR_SEV_FATAL), ERR_CODE(NODE_ACC, ERR_SEV_FATAL),    \
-      ERR_CODE(NODE_INV_FL, ERR_SEV_FATAL),                                    \
-      ERR_CODE(NODE_INV_FR, ERR_SEV_FATAL),                                    \
-      ERR_CODE(NODE_INV_RL, ERR_SEV_FATAL),                                    \
-      ERR_CODE(NODE_INV_RR, ERR_SEV_FATAL), ERR_CODE(CAN, ERR_SEV_FATAL),      \
-      ERR_CODE(STEER, ERR_SEV_FATAL), ERR_CODE(APPS1, ERR_SEV_FATAL),          \
-      ERR_CODE(APPS2, ERR_SEV_FATAL), ERR_CODE(APPS_PLAUS, ERR_SEV_FATAL),     \
-      ERR_CODE(BSE_F, ERR_SEV_FATAL), ERR_CODE(BSE_R, ERR_SEV_FATAL),          \
-      ERR_CODE(PEDAL_PLAUS, ERR_SEV_WARN),                                     \
-      ERR_CODE(WHEEL_SPEED_L, ERR_SEV_FATAL),                                  \
-      ERR_CODE(WHEEL_SPEED_R, ERR_SEV_FATAL),                                  \
-      ERR_CODE(SUSP_DIVE, ERR_SEV_WARN), ERR_CODE(SUSP_ROLL, ERR_SEV_WARN),    \
-      ERR_CODE(STAT_ACC, ERR_SEV_FATAL), ERR_CODE(STAT_INV_FL, ERR_SEV_FATAL), \
-      ERR_CODE(STAT_INV_FR, ERR_SEV_FATAL),                                    \
-      ERR_CODE(STAT_INV_RL, ERR_SEV_FATAL),                                    \
-      ERR_CODE(STAT_INV_RR, ERR_SEV_FATAL))
+  /** Info serverity, the system operates normally. */
+  ERR_SEV_INFO = BIT(0),
 
-#define ERR_CODE_APPS_MASK \
-  (ERR_CODE_APPS1 | ERR_CODE_APPS2 | ERR_CODE_APPS_PLAUS)
+  /** Warning serverity, the system may continue running. */
+  ERR_SEV_WARN = BIT(1),
 
-#define ERR_CODE_BSE_MASK (ERR_CODE_BSE_F | ERR_CODE_BSE_R)
-
-#define ERR_CODE_PEDALS_MASK \
-  (ERR_CODE_APPS_MASK | ERR_CODE_BSE_MASK | ERR_CODE_PEDAL_PLAUS)
+  /** Fatal serverity, the system must be stopped. */
+  ERR_SEV_FATAL = BIT(2),
+};
 
 /**
- * @} // ErrMacro
- */
-
-ERR_CODE_VALIDATE(ERR_CODE_LIST);
-
-#define ERR_CODE_FATAL_MASK ERR_CODE_GET_FATAL_MASK(ERR_CODE_LIST)
-
-#define ERR_CODE_WARN_MASK ERR_CODE_GET_WARN_MASK(ERR_CODE_LIST)
-
-/* types
- * ---------------------------------------------------------------------*/
-typedef uint32_t err_t;
-
-ERR_CODE_DECLARE(ERR_CODE_LIST);
-
-/* exported varaibles
- * --------------------------------------------------------*/
-ZBUS_CHAN_DECLARE(err_chan);
-
-/* function declaration
- * ------------------------------------------------------*/
-/**
- * @brief Set or clear errors. Multiple error codes can be set at once.
- * Must be ones defined by @ref ERR_CODE_LISTIFY.
+ * @brief Error filter type.
  *
- * @param errors Errors to set or clear.
- * @param set Set or clear errors.
  */
-void err_set_errors(err_t errors, bool set);
+enum err_filter_type {
+  /** Invalid filter. */
+  ERR_FILTER_INVALID = 0,
+
+  /** Filter for error codes. */
+  ERR_FILTER_CODE = 1,
+
+  /** Filter for severities. */
+  ERR_FILTER_SEV = 2,
+};
+
+/**
+ * @brief Error.
+ *
+ */
+struct err {
+  /** Code of the error. */
+  uint32_t errcode;
+
+  /** Description of the error. */
+  const char* desc;
+
+  /* Flags of the error. */
+  uint32_t flags;
+
+  /** List entry of the error. */
+  TAILQ_ENTRY(err) next;
+};
+
+/**
+ * @brief Error filter for error callbacks.
+ *
+ */
+struct err_filter {
+  /** Type of the filter. */
+  enum err_filter_type type;
+
+  /** Number of elements in the filter. */
+  size_t size;
+
+  union {
+    /** Error codes to filter. */
+    uint32_t* errcodes;
+
+    /** Severities to filter. */
+    uint32_t* serverities;
+  };
+};
+
+/**
+ * @brief Error callback.
+ *
+ */
+struct err_callback {
+  /** Error handler */
+  err_handler_t handler;
+
+  /** User data for the callback functions. */
+  void* user_data;
+
+  /** Number of error filters. */
+  size_t size;
+
+  /** Array of error filters. */
+  struct err_filter* filters;
+};
+
+/// @cond
+
+TAILQ_HEAD(err_list, err);
+
+/// @endcond
+
+/* function declaration ------------------------------------------------------*/
+/**
+ * @brief Set or clear error.
+ *
+ * @param errcode Error code to set or clear.
+ * @param set True to set error, false to clear error.
+ */
+int err_report(uint32_t errcode, bool set);
 
 /**
  * @brief Get the current errors.
  *
  * @return Current errors.
  */
-err_t err_get_errors();
+// err_t err_get_errors();
 
 /**
  * @} // Err

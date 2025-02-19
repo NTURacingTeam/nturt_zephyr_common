@@ -1,0 +1,16 @@
+common:
+  harness: ztest
+  integration_platforms:
+    - native_sim
+  tags:
+    - subsys
+    - err
+tests:
+  subsys.msg: {}
+  subsys.msg.sanitizer:
+    platform_allow:
+      - native_sim
+      - native_sim/native/64
+    extra_configs:
+      - CONFIG_ASAN=y
+      - CONFIG_UBSAN=y
