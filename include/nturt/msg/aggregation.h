@@ -22,7 +22,7 @@
 #include <zephyr/sys/util.h>
 
 // nturt includes
-#include <nturt/util.h>
+#include <nturt/sys/util.h>
 
 /**
  * @defgroup msg_agg Message Aggregation

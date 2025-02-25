@@ -1,9 +1,9 @@
 menuconfig NTURT_CMD
     bool "Commmand module"
     depends on NTURT
-    depends on SYS_HASH_FUNC32
-    depends on SYS_HASH_MAP
     select MPSC_PBUF
+    select SYS_HASH_FUNC32
+    select SYS_HASH_MAP
     help
       ""
 
@@ -19,18 +19,18 @@ config NTURT_CMD_BUF_SIZE
     int "Command module buffer size"
     default 256
     help
-      Command module buffer size
+      Command module buffer size.
 
 config NTURT_CMD_PROCESS_THREAD_STACK_SIZE
     int "Command module process thread stack size"
     default 512
     help
-      Command module process thread size
+      Command module process thread size.
 
 config NTURT_CMD_PROCESS_THREAD_PRIORITY
     int "Command module process thread priority"
     default 1
     help
-      Command module process thread priority
+      Command module process thread priority.
 
 endif # NTURT_CMD

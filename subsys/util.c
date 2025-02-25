@@ -1,4 +1,4 @@
-#include "nturt/util.h"
+#include "nturt/sys/util.h"
 
 // glibc includes
 #include <stddef.h>

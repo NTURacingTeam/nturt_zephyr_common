@@ -1,5 +1,15 @@
-#ifndef NTURT_UTIL_H_
-#define NTURT_UTIL_H_
+/**
+ * @file
+ * @brief Utility.
+ *
+ * @author quantumspawner
+ * @version 0.0.1
+ * @date 2025-02-25
+ * @copyright Copyright (c) 2025 NTU Racing Team
+ */
+
+#ifndef NTURT_SYS_UTIL_H_
+#define NTURT_SYS_UTIL_H_
 
 // glibc includes
 #include <stddef.h>
@@ -9,21 +19,12 @@
 #include <zephyr/sys/atomic.h>
 #include <zephyr/sys/util.h>
 
-// project includes
-#include "nturt/util_loops.h"
-
 /**
- * @addtogroup Util Util
- *
- */
-
-/* macros --------------------------------------------------------------------*/
-/**
- * @addtogroup UtilMacro Utility Macros
- *
+ * @addtogroup Util Utility
  * @{
  */
 
+/* macros --------------------------------------------------------------------*/
 /**
  * @brief Logical XOR.
  *
@@ -51,84 +52,15 @@
 #define TYPEOF_FIELD(type, member) __typeof__(((type*)0)->member)
 
 /**
- * @brief Macro that discards all arguments and expend to zephyr @ref EMPTY.
+ * @brief Macro that discards all arguments and expend to zephyr EMPTY.
  *
  * @param ... Variable list of arguments to discard.
- * @return zephyr @ref EMPTY.
+ * @return zephyr EMPTY.
  */
 #define DISCARD(...) EMPTY
 
 /**
- * @brief Similar to Zephyr @ref REVERSE_ARGS but reverses the arguments in
- * pairs.
- *
- * @note Only accepts even number of arguments and up to 64 pairs.
- * @param ... Variable argument list.
- */
-#define REVERSE_PAIRS(...)                                             \
-  Z_FOR_EACH_PAIR_ENGINE(Z_FOR_EACH_PAIR_EXEC, (, ), Z_BYPASS_PAIR, _, \
-                         __VA_ARGS__)
-
-/**
- * @brief Similar to Zephyr @ref FOR_EACH but iterates over pairs of arguments.
- *
- * @note Only accepts even number of arguments and up to 64 pairs.
- * @param F Macro to invoke.
- * @param sep Separator (e.g. comma or semicolon). Must be in parentheses; this
- * is required to enable providing a comma as separator.
- * @param ... Variable argument list. The macro @p F is invoked as <tt>F(x,
- * y)</tt> for each pair (x, y) in the list.
- */
-#define FOR_EACH_PAIR(F, sep, ...) \
-  Z_FOR_EACH_PAIR(F, sep, REVERSE_PAIRS(__VA_ARGS__))
-
-/**
- * @brief Similar to Zephyr @ref FOR_EACH_IDX but iterates over pairs of
- * arguments.
- *
- * @note Only accepts even number of arguments and up to 64 pairs.
- * @param F Macro to invoke.
- * @param sep Separator (e.g. comma or semicolon). Must be in parentheses; this
- * is required to enable providing a comma as separator.
- * @param ... Variable argument list. The macro @p F is invoked as <tt>F(index,
- * x, y)</tt> for each pair (x, y) in the list.
- */
-#define FOR_EACH_PAIR_IDX(F, sep, ...) \
-  Z_FOR_EACH_PAIR_IDX(F, sep, REVERSE_PAIRS(__VA_ARGS__))
-
-/**
- * @brief Similar to Zephyr @ref FOR_EACH_FIXED_ARG but iterates over pairs of
- * arguments.
- *
- * @note Only accepts even number of arguments and up to 64 pairs.
- * @param F Macro to invoke.
- * @param sep Separator (e.g. comma or semicolon). Must be in parentheses; this
- * is required to enable providing a comma as separator.
- * @param fixed_arg Fixed argument passed to @p F as the second macro parameter.
- * @param ... Variable argument list. The macro @p F is invoked as
- * <tt>F(x, y, fixed_arg)</tt> for each pair (x, y) in the list.
- */
-#define FOR_EACH_PAIR_FIXED_ARG(F, sep, fixed_arg, ...) \
-  Z_FOR_EACH_PAIR_FIXED_ARG(F, sep, fixed_arg, REVERSE_PAIRS(__VA_ARGS__))
-
-/**
- * @brief Similar to Zephyr @ref FOR_EACH_IDX_FIXED_ARG but iterates over pairs
- * of arguments.
- *
- * @note Only accepts even number of arguments and up to 64 pairs.
- * @param F Macro to invoke.
- * @param sep Separator (e.g. comma or semicolon). Must be in parentheses; this
- * is required to enable providing a comma as separator.
- * @param fixed_arg Fixed argument passed to @p F as the second macro parameter.
- * @param ... Variable argument list. The macro @p F is invoked as
- * <tt>F(index, x, y, fixed_arg)</tt> for each pair (x, y) in the list.
- */
-#define FOR_EACH_PAIR_IDX_FIXED_ARG(F, sep, fixed_arg, ...) \
-  Z_FOR_EACH_PAIR_IDX_FIXED_ARG(F, sep, fixed_arg, REVERSE_PAIRS(__VA_ARGS__))
-
-/**
- * @brief Same as zephyr @ref GET_GET_ARG_N but accepts macro expansion for @p N
- * .
+ * @brief Same as zephyr GET_GET_ARG_N but accepts macro expansion for @p N .
  *
  * @param N Argument index to fetch. Counter from 1.
  * @param ... Variable list of arguments from which one argument is returned.
@@ -154,16 +86,6 @@
  */
 #define BIT_SET_AND_CLEAR(NUM, BIT_) FLAG_SET_AND_CLEAR(NUM, BIT(BIT_))
 
-/**
- * @} // UtilMacro
- */
-
-/**
- * @addtogroup WorkCtxBuf Work Context Buffer
- *
- * @{
- */
-
 #define _WORK_CTX_DEFINE(_i, _work_handler, _ctx, _args) \
   [_i] = {                                               \
       .work = Z_WORK_INITIALIZER(_work_handler),         \
@@ -178,7 +100,7 @@
  * @param[in] _size Size of the buffer, i.e. the number of simultaneous works
  * that can be submitted.
  * @param[in] _work_handler Work entry point.
- * @param[in] _cts Context of the work.
+ * @param[in] _ctx Context of the work.
  * @param[in] _args_type Type of the arguments for the work.
  */
 #define WORK_CTX_BUF_DEFINE(_name, _size, _work_handler, _ctx, _args_type) \
@@ -210,17 +132,7 @@
 #define WORK_CTX_ARGS(_work) \
   (((struct work_ctx*)CONTAINER_OF(_work, struct work_ctx, work))->args)
 
-/**
- * @} // WorkCtxBuf
- */
-
 /* types ---------------------------------------------------------------------*/
-/**
- * @addtogroup WorkCtxBuf
- *
- * @{
- */
-
 /// @brief Work context.
 struct work_ctx {
   /// @brief Work.
@@ -242,17 +154,7 @@ struct work_ctx_buf {
   struct work_ctx* const work_ctxs;
 };
 
-/**
- * @} // WorkCtxBuf
- */
-
 /* function declaration ------------------------------------------------------*/
-/**
- * @addtogroup WorkCtxBuf
- *
- * @{
- */
-
 /**
  * @brief Allocate a work context. Return NULL if all work context are in use.
  *
@@ -262,11 +164,7 @@ struct work_ctx_buf {
 struct work_ctx* work_ctx_buf_alloc(struct work_ctx_buf* buf);
 
 /**
- * @} // WorkCtxBuf
+ * @} // Utility
  */
 
-/**
- * @} // Util
- */
-
-#endif  // NTURT_UTIL_H_
+#endif  // NTURT_SYS_UTIL_H_

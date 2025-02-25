@@ -9,7 +9,7 @@
 /**
  * @brief Sensor axis API
  * @defgroup input_sensor_axis Sensor axis API
- * @ingroup io_interfaces
+ * @ingroup input_interface
  * @{
  */
 
@@ -23,7 +23,7 @@
  */
 typedef void (*sensor_axis_sensor_raw_cb_t)(const struct device* dev,
                                             const struct sensor_value* val,
-                                            void* user_da_data);
+                                            void* user_data);
 
 /* function declaration ------------------------------------------------------*/
 /**

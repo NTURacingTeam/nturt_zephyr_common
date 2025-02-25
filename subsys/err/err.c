@@ -11,7 +11,7 @@
 #include <zephyr/sys/hash_map.h>
 
 // project includes
-#include "nturt/util.h"
+#include "nturt/sys/util.h"
 
 LOG_MODULE_REGISTER(nturt_err, CONFIG_NTURT_LOG_LEVEL);
 

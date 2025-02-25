@@ -24,7 +24,6 @@
 
 /**
  * @addtogroup cmd Command
- *
  * @{
  */
 
@@ -70,7 +69,7 @@
     }                                                                        \
     COND_CODE_1(IS_EQ(immed, CMD_NO_HANDLER), (return 0;),                   \
                 (type operand; memcpy(&operand, _operand, sizeof(type));     \
-                 return immed(_user_data, operand);))                        \
+                 return immed(operand, _user_data);))                        \
   }                                                                          \
   IF_DISABLED(                                                               \
       IS_EQ(deffered, CMD_NO_HANDLER),                                       \
@@ -79,7 +78,7 @@
         (void)_operand_size;                                                 \
         type operand;                                                        \
         memcpy(&operand, _operand, sizeof(type));                            \
-        deffered(_user_data, operand);                                       \
+        deffered(operand, _user_data);                                       \
       }))                                                                    \
   _CMD_DEFINE(name, opcode, CONCAT(__cmd_immed_, name),                      \
               COND_CODE_1(IS_EQ(deffered, CMD_NO_HANDLER), (CMD_NO_HANDLER), \
