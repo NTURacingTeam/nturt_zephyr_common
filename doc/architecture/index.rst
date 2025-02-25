@@ -10,4 +10,5 @@ Architecture
 
    vehicle_control_unit
    survey
+   message
    sensing

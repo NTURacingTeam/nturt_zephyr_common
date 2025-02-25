@@ -1,0 +1,14 @@
+/**
+
+@brief Device Driver APIs
+@defgroup io_interfaces Device Driver APIs
+@{
+@}
+
+@brief Input Interface
+@defgroup input_interface Input Interface
+@ingroup io_interfaces
+@{
+@}
+
+*/

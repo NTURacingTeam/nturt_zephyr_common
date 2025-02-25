@@ -3,7 +3,7 @@
 
 import subprocess
 
-subprocess.call("doxygen Doxyfile.in", shell=True)
+subprocess.call("doxygen _doxygen/Doxyfile", shell=True)
 
 # -- Project --------------------------------------------------------------
 
@@ -36,8 +36,8 @@ html_theme_options = {
 }
 # html_baseurl = ""
 html_title = "NTU Racing Team Zephyr Common Documentation"
-html_logo = "images/logo.png"
-# github_url = ""
+html_logo = "_static/images/logo.png"
+github_url = "https://github.com/NTURacingTeam/nturt_zephyr_common"
 html_static_path = ["_static"]
 
 # -- Options for Breathe plugin -------------------------------------------
