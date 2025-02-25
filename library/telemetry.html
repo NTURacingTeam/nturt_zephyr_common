@@ -46,6 +46,7 @@
               <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decisions/index.html">Architecture Decision Records</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
 <ul class="current">
@@ -58,7 +59,26 @@
 <li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_DATA_DEFINE"><code class="docutils literal notranslate"><span class="pre">TM_DATA_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_GROUP_DEFINE"><code class="docutils literal notranslate"><span class="pre">TM_GROUP_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_BACKEND_DEFINE"><code class="docutils literal notranslate"><span class="pre">TM_BACKEND_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_backend_init_t"><code class="docutils literal notranslate"><span class="pre">tm_backend_init_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_backend_publish_t"><code class="docutils literal notranslate"><span class="pre">tm_backend_publish_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_data_get"><code class="docutils literal notranslate"><span class="pre">tm_data_get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_data_update"><code class="docutils literal notranslate"><span class="pre">tm_data_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_group_access_begin"><code class="docutils literal notranslate"><span class="pre">tm_group_access_begin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_group_access_end"><code class="docutils literal notranslate"><span class="pre">tm_group_access_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_group_commit"><code class="docutils literal notranslate"><span class="pre">tm_group_commit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_backend_init"><code class="docutils literal notranslate"><span class="pre">tm_backend_init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_backend_publish"><code class="docutils literal notranslate"><span class="pre">tm_backend_publish()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_backend_list_elm"><code class="docutils literal notranslate"><span class="pre">tm_backend_list_elm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_data"><code class="docutils literal notranslate"><span class="pre">tm_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_group"><code class="docutils literal notranslate"><span class="pre">tm_group</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_backend_api"><code class="docutils literal notranslate"><span class="pre">tm_backend_api</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_backend"><code class="docutils literal notranslate"><span class="pre">tm_backend</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -132,7 +152,7 @@ transmission of data.</p></li>
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
 <dl>
 <dt class="sig sig-object cpp">
-<span class="target" id="group__tm"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">tm</span></span></dt>
+<span class="target" id="group__tm"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">Telemetry</span></span></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
 <dl class="c macro">

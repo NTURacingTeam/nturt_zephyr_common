@@ -24,6 +24,16 @@ The hardware is optimized for motor control, so the software can be simple.
 `ST motor control course: FOC library about interrupt
 <https://www.youtube.com/watch?v=ctN6wYqE970&list=PLnMKNibPkDnFxzg5RExF_MNOxX6wfT95M&index=10>`_
 
+Vechicle Controllers
+====================
+
+CogniPilot - Cerebri
+--------------------
+
+Publisher/subscriber model.
+
+`GitHub: CogniPilot/cerebri <https://github.com/CogniPilot/cerebri>`_
+
 Flight Controllers
 ==================
 

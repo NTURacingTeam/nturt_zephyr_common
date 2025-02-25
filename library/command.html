@@ -46,6 +46,7 @@
               <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decisions/index.html">Architecture Decision Records</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
 <ul class="current">
@@ -57,7 +58,18 @@
 <li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#c.CMD_NO_HANDLER"><code class="docutils literal notranslate"><span class="pre">CMD_NO_HANDLER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.CMD_DEFINE"><code class="docutils literal notranslate"><span class="pre">CMD_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.cmd_invoke_typed"><code class="docutils literal notranslate"><span class="pre">cmd_invoke_typed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.cmd_invoke_auto"><code class="docutils literal notranslate"><span class="pre">cmd_invoke_auto</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.cmd_immed_handler_t"><code class="docutils literal notranslate"><span class="pre">cmd_immed_handler_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.cmd_deffered_handler_t"><code class="docutils literal notranslate"><span class="pre">cmd_deffered_handler_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.cmd_invoke"><code class="docutils literal notranslate"><span class="pre">cmd_invoke()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.cmd_invoke_void"><code class="docutils literal notranslate"><span class="pre">cmd_invoke_void()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.cmd"><code class="docutils literal notranslate"><span class="pre">cmd</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry System</a></li>
@@ -126,7 +138,7 @@ be executed in ISRs.</p></li>
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
 <dl>
 <dt class="sig sig-object cpp">
-<span class="target" id="group__cmd"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">cmd</span></span></dt>
+<span class="target" id="group__cmd"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">Command</span></span></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
 <dl class="c macro">

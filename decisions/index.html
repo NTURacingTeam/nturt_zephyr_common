@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zephyr Kernel &mdash; NTU Racing Team Zephyr Common Documentation</title>
+  <title>Architecture Decision Records &mdash; NTU Racing Team Zephyr Common Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Zephyr Drivers" href="drivers.html" />
-    <link rel="prev" title="Zephyr Configuration System" href="config.html" /> 
+    <link rel="next" title="Inter-Thread Communcation" href="00-inter_thread_comm.html" />
+    <link rel="prev" title="Sensing System" href="../architecture/sensing.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,32 +44,23 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../decisions/index.html">Architecture Decision Records</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture Decision Records</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-inter_thread_comm.html">Inter-Thread Communcation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../library/index.html">Common Library</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developing</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../doc.html">Doc Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../test.html">Testing</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer’s Note</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="common.html">Common</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html">Zephyr Configuration System</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Zephyr Kernel</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#boot-sequence">Boot Sequence</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="drivers.html">Zephyr Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="emulation.html">Zephyr Device Emulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="services.html">Zephyr Services</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test.html">Testing in Zephyr</a></li>
-<li class="toctree-l2"><a class="reference internal" href="canopennode.html">CANopenNode</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../notes/index.html">Developer’s Note</a></li>
 </ul>
 
         </div>
@@ -86,10 +77,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">Developer’s Note</a></li>
-      <li class="breadcrumb-item active">Zephyr Kernel</li>
+      <li class="breadcrumb-item active">Architecture Decision Records</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/notes/kernel.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/decisions/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -97,12 +87,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="zephyr-kernel">
-<span id="notes-kernel"></span><h1>Zephyr Kernel<a class="headerlink" href="#zephyr-kernel" title="Link to this heading"></a></h1>
-<section id="boot-sequence">
-<h2>Boot Sequence<a class="headerlink" href="#boot-sequence" title="Link to this heading"></a></h2>
-<p>The boot sequence of Zephyr is not in the documentation, but can be referenced
-form <a class="reference external" href="https://www.youtube.com/watch?v=tAH5fy0rSo4">this conference recording</a>.</p>
+  <section id="architecture-decision-records">
+<span id="decisions"></span><h1>Architecture Decision Records<a class="headerlink" href="#architecture-decision-records" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>A template is provided at <code class="docutils literal notranslate"><span class="pre">templates/decisions.tmpl</span></code> for ADRs.</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Blog: <a class="reference external" href="https://okorkmaz.medium.com/adr-deep-dive-into-architecture-decision-records-8c110ce7d74e">ADR: Deep Dive into Architecture Decision Records</a></p></li>
+<li><p>GitHib: <a class="reference external" href="https://github.com/joelparkerhenderson/architecture-decision-record">joelparkerhenderson/architecture-decision-record</a></p></li>
+<li><p>Template: <a class="reference external" href="https://github.com/joelparkerhenderson/architecture-decision-record/tree/main/locales/en/templates/decision-record-template-by-jeff-tyree-and-art-akerman">Template by Jeff Tyree and Art Akerman</a></p></li>
+<li><p>Examples: <a class="reference external" href="https://github.com/joelparkerhenderson/architecture-decision-record/tree/main/locales/en/examples">Examples</a></p></li>
+</ul>
 </section>
 </section>
 
@@ -110,8 +107,8 @@ form <a class="reference external" href="https://www.youtube.com/watch?v=tAH5fy0
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="config.html" class="btn btn-neutral float-left" title="Zephyr Configuration System" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="drivers.html" class="btn btn-neutral float-right" title="Zephyr Drivers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../architecture/sensing.html" class="btn btn-neutral float-left" title="Sensing System" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="00-inter_thread_comm.html" class="btn btn-neutral float-right" title="Inter-Thread Communcation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

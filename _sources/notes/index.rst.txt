@@ -14,6 +14,7 @@ considerations when developing applications on Zephyr.
    config
    kernel
    drivers
+   emulation
    services
-   canopennode
    test
+   canopennode

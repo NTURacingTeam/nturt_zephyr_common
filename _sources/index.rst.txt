@@ -10,6 +10,7 @@ NTU Racing Team Zephyr Documentation
    :hidden:
 
    architecture/index
+   decisions/index
 
 .. toctree::
    :caption: Common Library

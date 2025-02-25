@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zephyr Kernel &mdash; NTU Racing Team Zephyr Common Documentation</title>
+  <title>Zephyr Device Emulation &mdash; NTU Racing Team Zephyr Common Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Zephyr Drivers" href="drivers.html" />
-    <link rel="prev" title="Zephyr Configuration System" href="config.html" /> 
+    <link rel="next" title="Zephyr Services" href="services.html" />
+    <link rel="prev" title="Zephyr Drivers" href="drivers.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -59,12 +59,12 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer’s Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="common.html">Common</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html">Zephyr Configuration System</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Zephyr Kernel</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#boot-sequence">Boot Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html">Zephyr Kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drivers.html">Zephyr Drivers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Zephyr Device Emulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bus-emulation">Bus Emulation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="drivers.html">Zephyr Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="emulation.html">Zephyr Device Emulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="services.html">Zephyr Services</a></li>
 <li class="toctree-l2"><a class="reference internal" href="test.html">Testing in Zephyr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="canopennode.html">CANopenNode</a></li>
@@ -87,9 +87,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Developer’s Note</a></li>
-      <li class="breadcrumb-item active">Zephyr Kernel</li>
+      <li class="breadcrumb-item active">Zephyr Device Emulation</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/notes/kernel.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/notes/emulation.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -97,12 +97,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="zephyr-kernel">
-<span id="notes-kernel"></span><h1>Zephyr Kernel<a class="headerlink" href="#zephyr-kernel" title="Link to this heading"></a></h1>
-<section id="boot-sequence">
-<h2>Boot Sequence<a class="headerlink" href="#boot-sequence" title="Link to this heading"></a></h2>
-<p>The boot sequence of Zephyr is not in the documentation, but can be referenced
-form <a class="reference external" href="https://www.youtube.com/watch?v=tAH5fy0rSo4">this conference recording</a>.</p>
+  <section id="zephyr-device-emulation">
+<span id="notes-emulation"></span><h1>Zephyr Device Emulation<a class="headerlink" href="#zephyr-device-emulation" title="Link to this heading"></a></h1>
+<section id="bus-emulation">
+<h2>Bus Emulation<a class="headerlink" href="#bus-emulation" title="Link to this heading"></a></h2>
 </section>
 </section>
 
@@ -110,8 +108,8 @@ form <a class="reference external" href="https://www.youtube.com/watch?v=tAH5fy0
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="config.html" class="btn btn-neutral float-left" title="Zephyr Configuration System" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="drivers.html" class="btn btn-neutral float-right" title="Zephyr Drivers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="drivers.html" class="btn btn-neutral float-left" title="Zephyr Drivers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="services.html" class="btn btn-neutral float-right" title="Zephyr Services" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
