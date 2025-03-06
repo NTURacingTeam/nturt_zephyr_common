@@ -34,11 +34,11 @@ html_theme_options = {
     "logo_only": True,
     "prev_next_buttons_location": "bottom",
 }
-# html_baseurl = ""
 html_title = "NTU Racing Team Zephyr Common Documentation"
 html_logo = "_static/images/logo.png"
-github_url = "https://github.com/NTURacingTeam/nturt_zephyr_common"
 html_static_path = ["_static"]
+
+github_url = "https://github.com/NTURacingTeam/nturt_zephyr_common"
 
 # -- Options for Breathe plugin -------------------------------------------
 

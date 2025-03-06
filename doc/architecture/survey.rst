@@ -4,13 +4,21 @@
 Survey
 ======
 
+Here are some embedded control system projects.
+
 Motor Controllers
 =================
 
 SimpleFOC
 ---------
 
-Very simple while loop where sensor data is acquired before motor control.
+Simple framework based on Arduino that emphasize on simplicity. Motor is
+controled in a while loop that;
+
+1. First acquires sensor data such as phase current from ADC or position/speed
+   sensor.
+2. Then caculates the PWM duty cycles.
+3. Finally, applies the PWM duty cycles to each phase.
 
 `SimpleFOC code <https://docs.simplefoc.com/code>`_
 
@@ -23,6 +31,35 @@ The hardware is optimized for motor control, so the software can be simple.
 
 `ST motor control course: FOC library about interrupt
 <https://www.youtube.com/watch?v=ctN6wYqE970&list=PLnMKNibPkDnFxzg5RExF_MNOxX6wfT95M&index=10>`_
+
+Spinner
+-------
+
+Motor controller based on Zephyr as a proof of concept project.
+
+For STM32 implementation (currently the only one available), it uses Zephyr's
+`Direct ISR
+<https://docs.zephyrproject.org/latest/kernel/services/interrupts.html#defining-a-direct-isr>`_
+for;
+
+* Phase current sampling using ADC [#]_.
+* Hall effect encoder using timer [#]_.
+
+PWM duty cycle is calcuated and set in the current sampling loop [#]_.
+
+References
+~~~~~~~~~~
+
+* `Spinner Documentation <https://teslabs.github.io/spinner/index.html>`_
+* `Spinner GitHub <https://github.com/teslabs/spinner>`_
+
+.. [#] `Spinner current sampling source code
+   <https://github.com/teslabs/spinner/blob/main/drivers/currsmp/currsmp_shunt_stm32.c#L48>`_
+.. [#] `Spinner hall effect sensor source code
+   <https://github.com/teslabs/spinner/blob/main/drivers/feedback/halls_stm32.c#L54>`_
+.. [#] `currsmp_configure() API reference
+   <https://teslabs.github.io/spinner/components/currsmp/index.html#c.currsmp_configure>`_
+   that sets current regulation callback.
 
 Vechicle Controllers
 ====================
@@ -69,3 +106,14 @@ Kilpper
 -------
 
 `Kilpper code overview <https://www.klipper3d.org/Code_Overview.html>`_
+
+Zephyr projects
+===============
+
+List of Zephyr applications and frameworks: `awesome Zephyr
+<https://github.com/golioth/awesome-zephyr-rtos>`_
+
+Popular Zephyr projects:
+
+* `ZMK Firmware <https://zmk.dev/>`_
+* `ZSWatch <https://github.com/jakkra/ZSWatch>`_
