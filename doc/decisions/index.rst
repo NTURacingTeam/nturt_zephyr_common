@@ -8,7 +8,8 @@ Architecture Decision Records
    :maxdepth: 1
    :hidden:
 
-   00-inter_thread_comm
+   00_file_structure
+   01_inter_thread_comm
 
 A template is provided at ``templates/decisions.tmpl`` for ADRs.
 
