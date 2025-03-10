@@ -51,6 +51,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#motor-controllers">Motor Controllers</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#simplefoc">SimpleFOC</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#st-motor-workbench">ST Motor Workbench</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spinner">Spinner</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#vechicle-controllers">Vechicle Controllers</a><ul>
@@ -67,6 +68,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#kilpper">Kilpper</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#zephyr-projects">Zephyr projects</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="message.html">Inter-Thread Communication</a></li>
@@ -113,11 +115,19 @@
              
   <section id="survey">
 <span id="architecture-survey"></span><h1>Survey<a class="headerlink" href="#survey" title="Link to this heading"></a></h1>
+<p>Here are some embedded control system projects.</p>
 <section id="motor-controllers">
 <h2>Motor Controllers<a class="headerlink" href="#motor-controllers" title="Link to this heading"></a></h2>
 <section id="simplefoc">
 <h3>SimpleFOC<a class="headerlink" href="#simplefoc" title="Link to this heading"></a></h3>
-<p>Very simple while loop where sensor data is acquired before motor control.</p>
+<p>Simple framework based on Arduino that emphasize on simplicity. Motor is
+controled in a while loop that;</p>
+<ol class="arabic simple">
+<li><p>First acquires sensor data such as phase current from ADC or position/speed
+sensor.</p></li>
+<li><p>Then caculates the PWM duty cycles.</p></li>
+<li><p>Finally, applies the PWM duty cycles to each phase.</p></li>
+</ol>
 <p><a class="reference external" href="https://docs.simplefoc.com/code">SimpleFOC code</a></p>
 </section>
 <section id="st-motor-workbench">
@@ -125,6 +135,40 @@
 <p>Interrupt-based loops with sensor data acquired in the control loop.</p>
 <p>The hardware is optimized for motor control, so the software can be simple.</p>
 <p><a class="reference external" href="https://www.youtube.com/watch?v=ctN6wYqE970&amp;list=PLnMKNibPkDnFxzg5RExF_MNOxX6wfT95M&amp;index=10">ST motor control course: FOC library about interrupt</a></p>
+</section>
+<section id="spinner">
+<h3>Spinner<a class="headerlink" href="#spinner" title="Link to this heading"></a></h3>
+<p>Motor controller based on Zephyr as a proof of concept project.</p>
+<p>For STM32 implementation (currently the only one available), it uses Zephyr’s
+<a class="reference external" href="https://docs.zephyrproject.org/latest/kernel/services/interrupts.html#defining-a-direct-isr">Direct ISR</a>
+for;</p>
+<ul class="simple">
+<li><p>Phase current sampling using ADC <a class="footnote-reference brackets" href="#id4" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p></li>
+<li><p>Hall effect encoder using timer <a class="footnote-reference brackets" href="#id5" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p></li>
+</ul>
+<p>PWM duty cycle is calcuated and set in the current sampling loop <a class="footnote-reference brackets" href="#id6" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
+<section id="references">
+<h4>References<a class="headerlink" href="#references" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://teslabs.github.io/spinner/index.html">Spinner Documentation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/teslabs/spinner">Spinner GitHub</a></p></li>
+</ul>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/teslabs/spinner/blob/main/drivers/currsmp/currsmp_shunt_stm32.c#L48">Spinner current sampling source code</a></p>
+</aside>
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/teslabs/spinner/blob/main/drivers/feedback/halls_stm32.c#L54">Spinner hall effect sensor source code</a></p>
+</aside>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://teslabs.github.io/spinner/components/currsmp/index.html#c.currsmp_configure">currsmp_configure() API reference</a>
+that sets current regulation callback.</p>
+</aside>
+</aside>
+</section>
 </section>
 </section>
 <section id="vechicle-controllers">
@@ -160,6 +204,15 @@
 <h3>Kilpper<a class="headerlink" href="#kilpper" title="Link to this heading"></a></h3>
 <p><a class="reference external" href="https://www.klipper3d.org/Code_Overview.html">Kilpper code overview</a></p>
 </section>
+</section>
+<section id="zephyr-projects">
+<h2>Zephyr projects<a class="headerlink" href="#zephyr-projects" title="Link to this heading"></a></h2>
+<p>List of Zephyr applications and frameworks: <a class="reference external" href="https://github.com/golioth/awesome-zephyr-rtos">awesome Zephyr</a></p>
+<p>Popular Zephyr projects:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://zmk.dev/">ZMK Firmware</a></p></li>
+<li><p><a class="reference external" href="https://github.com/jakkra/ZSWatch">ZSWatch</a></p></li>
+</ul>
 </section>
 </section>
 
