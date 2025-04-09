@@ -85,7 +85,7 @@
 
     speed_display: gpio-seg-display-speed {
         compatible = "gpio-seg-display";
-        pwms = <&pwm4 2 PWM_MSEC(1) PWM_POLARITY_NORMAL>;
+        pwms = <&pwm4 2 PWM_MSEC(1) PWM_POLARITY_INVERTED>;
         columns = <2>;
         rows = <1>;
         decimal-point;

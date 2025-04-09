@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changed: ${{ steps.changed.outputs.any_modified }}
-    
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
           .github/workflows/doc.yml
           doc/
           include/
-  
+
   doc-build:
     name: Build documentation
     needs:
@@ -44,10 +44,10 @@ jobs:
         wget --no-verbose "https://github.com/doxygen/doxygen/releases/download/Release_${DOXYGEN_VERSION//./_}/doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz"
         sudo tar xf doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz -C /opt
         echo "/opt/doxygen-${DOXYGEN_VERSION}/bin" >> $GITHUB_PATH
-    
+
     - name: Checkout
       uses: actions/checkout@v4
-    
+
     - name: Build documentation
       id: build
       uses: sphinx-notes/pages@v3
@@ -55,7 +55,7 @@ jobs:
         documentation_path: doc
         requirements_path: doc/requirements.txt
         publish: false
-    
+
     - name: Publish to github pages
       uses: peaceiris/actions-gh-pages@v4
       with:

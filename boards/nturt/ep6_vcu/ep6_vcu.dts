@@ -16,16 +16,19 @@
         zephyr,code-partition = &slot0_partition;
         zephyr,canbus = &fdcan1;
 
+        nturt,rtc = &rtc;
         nturt,buzzer = &buzzer;
         nturt,brake-light = &brake_light;
+        nturt,imu = &imu;
         nturt,pow-in-volt = &pow_in_volt;
         nturt,pow-5v-curr = &pow_5v_curr;
         nturt,pow-5v-rpi-curr = &pow_5v_rpi_curr;
         nturt,pow-low = &pow_low;
-        nturt,rtc = &rtc;
     };
 
     aliases {
+        led0 = &canopen_run_led;
+
         canopen-green-led = &canopen_run_led;
         canopen-red-led = &canopen_err_led;
     };
@@ -123,7 +126,7 @@
     };
 };
 
-// include here for the them to reference the added nodes above
+// include here for them to reference the added nodes above
 #include "dashboard.dtsi"
 #include "sensors.dtsi"
 
@@ -269,7 +272,7 @@
              <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
     pinctrl-0 = <&adc1_inp6_pf12 &adc1_inp14_pa2 &adc1_inp16_pa0 &adc1_inp17_pa1>;
     pinctrl-names = "default";
-    st,adc-clock-source = <SYNC>;
+    st,adc-clock-source = "SYNC";
     st,adc-prescaler = <4>;
     #address-cells = <1>;
     #size-cells = <0>;
@@ -318,7 +321,7 @@
              <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
     pinctrl-0 = <&adc2_inp2_pf13>;
     pinctrl-names = "default";
-    st,adc-clock-source = <SYNC>;
+    st,adc-clock-source = "SYNC";
     st,adc-prescaler = <4>;
     #address-cells = <1>;
     #size-cells = <0>;
@@ -341,7 +344,7 @@
     pinctrl-0 = <&adc3_inp2_pf9 &adc3_inp3_pf7 &adc3_inp4_pf5 &adc3_inp5_pf3
                  &adc3_inp7_pf8 &adc3_inp8_pf6 &adc3_inp9_pf4>;
     pinctrl-names = "default";
-    st,adc-clock-source = <SYNC>;
+    st,adc-clock-source = "SYNC";
     st,adc-prescaler = <4>;
     #address-cells = <1>;
     #size-cells = <0>;
