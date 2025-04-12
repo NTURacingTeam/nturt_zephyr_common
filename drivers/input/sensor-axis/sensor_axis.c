@@ -183,24 +183,15 @@ int sensor_axis_sensor_max_set_curr(const struct device* dev, int times,
 
 /* static function definition ------------------------------------------------*/
 static int sensor_get_raw(const struct device* dev, struct sensor_value* val) {
-  struct sensor_axis_sensor_data* data = dev->data;
   const struct sensor_axis_sensor_config* config = dev->config;
-
-  k_mutex_lock(&data->raw_cb.lock, K_FOREVER);
 
   int ret;
   ret = sensor_sample_fetch(config->sensor);
   if (ret < 0) {
-    goto out;
+    return ret;
   }
 
   ret = sensor_channel_get(config->sensor, config->channel, val);
-  if (ret < 0) {
-    goto out;
-  }
-
-out:
-  k_mutex_unlock(&data->raw_cb.lock);
   return ret;
 }
 
@@ -288,7 +279,7 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   }
 
   struct sensor_value sensor_val;
-  ret = sensor_get_raw(config->sensor, &sensor_val);
+  ret = sensor_get_raw(dev, &sensor_val);
   if (ret < 0) {
     k_mutex_unlock(&data->raw_cb.lock);
     return sensor_error_update(dev, INPUT_ERROR_IO, ret, NULL);

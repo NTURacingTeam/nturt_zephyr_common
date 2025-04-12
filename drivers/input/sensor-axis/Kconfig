@@ -9,7 +9,7 @@ if INPUT_SENSOR_AXIS
 
 config INPUT_SENSOR_AXIS_THREAD_STACK_SIZE
     int "Sensor axis processing thread stack size"
-    default 512
+    default 1024
     help
       Thread stack size for sensor axis processing thread
 
