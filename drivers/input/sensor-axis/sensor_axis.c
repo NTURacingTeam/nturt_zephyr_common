@@ -13,8 +13,8 @@
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/sensor.h>
-#include <zephyr/dt-bindings/input/sensor-axis.h>
 #include <zephyr/dt-bindings/input/input-error-codes.h>
+#include <zephyr/dt-bindings/input/sensor-axis.h>
 #include <zephyr/input/input.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
@@ -235,7 +235,8 @@ static int sensor_error_update(const struct device* dev, uint16_t error,
       break;
 
     case INPUT_ERROR_IO:
-      LOG_ERR("Sensor %s errors: %s", config->sensor->name, strerror(-ret));
+      LOG_ERR("Sensor %s: underlying %s errors: %s", dev->name,
+              config->sensor->name, strerror(-ret));
       break;
 
     case INPUT_ERROR_BUSY:
@@ -252,7 +253,7 @@ static int sensor_error_update(const struct device* dev, uint16_t error,
     case INPUT_ERROR_OVER: {
       const int64_t* val = info;
       LOG_ERR("Sensor %s value above range by %lld%%", dev->name,
-              DIV_ROUND_CLOSEST(*val, 10000));
+              DIV_ROUND_CLOSEST(*val, 10000) - 100);
       break;
     }
   }
@@ -301,10 +302,10 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
 
   if (config->range_tolerance >= 0) {
     if (val < -config->range_tolerance * 10000) {
-      return sensor_error_update(dev, INPUT_ERROR_UNDER, -EINVAL, &sensor_val);
+      return sensor_error_update(dev, INPUT_ERROR_UNDER, -EINVAL, &val);
 
     } else if (val > 1000000 + config->range_tolerance * 10000) {
-      return sensor_error_update(dev, INPUT_ERROR_OVER, -EINVAL, &sensor_val);
+      return sensor_error_update(dev, INPUT_ERROR_OVER, -EINVAL, &val);
     }
   }
 
@@ -384,7 +385,8 @@ static int channel_error_update(const struct device* dev, uint16_t error,
 
     case INPUT_ERROR_IO: {
       const char* sensor_name = info;
-      LOG_ERR("Sensor %s errors: %s", sensor_name, strerror(-ret));
+      LOG_ERR("Channel %s: underlying sensor %s errors: %s", dev->name,
+              sensor_name, strerror(-ret));
       break;
     }
 
@@ -395,7 +397,7 @@ static int channel_error_update(const struct device* dev, uint16_t error,
       break;
     }
 
-    case INPUT_ERROR_OVER: {
+    case INPUT_ERROR_DEV: {
       const int32_t* val = info;
       LOG_ERR("Channel %s deviates by %d%%", dev->name,
               DIV_ROUND_CLOSEST(*val, 10000));
@@ -491,6 +493,8 @@ static int channel_get(const struct device* dev, int32_t* _out) {
     return 0;
   }
 
+  data->prev_out = out;
+
   /* devide out first to prevent overflow */
   out = DIV_ROUND_CLOSEST(out, 1000);
   *_out = DIV_ROUND_CLOSEST(out * (config->out_max - config->out_min), 1000) +
@@ -558,7 +562,7 @@ static int sensor_axis_init(const struct device* dev) {
 
 #ifdef CONFIG_THREAD_NAME
   char thread_name[CONFIG_THREAD_MAX_NAME_LEN];
-  snprintf(thread_name, sizeof(thread_name), "input_sensor_axis_%s", dev->name);
+  snprintf(thread_name, sizeof(thread_name), "sensor_axis_%s", dev->name);
   k_thread_name_set(&data->thread, thread_name);
 #endif  // CONFIG_THREAD_NAME
 

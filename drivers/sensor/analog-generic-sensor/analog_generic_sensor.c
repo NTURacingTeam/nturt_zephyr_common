@@ -79,6 +79,7 @@ static int analog_generic_sample_fetch(const struct device* dev,
 
   int mv = raw;
   adc_raw_to_millivolts_dt(&config->adc, &mv);
+  LOG_DBG("Sensor %s raw %d mv", dev->name, mv);
 
   if (mv <
       config->min_voltage - config->voltage_range * config->tolerance / 100) {
@@ -122,37 +123,37 @@ static int analog_generic_channel_get(const struct device* dev,
   return 0;
 }
 
-static const struct sensor_driver_api analog_generic_api = {
+static DEVICE_API(sensor, analog_generic_api) = {
     .sample_fetch = analog_generic_sample_fetch,
     .channel_get = analog_generic_channel_get,
 };
 
-#define ANALOG_GENERIC_INIT(inst)                                            \
-  BUILD_ASSERT(                                                              \
-      DT_INST_PROP(inst, min_voltage) < DT_INST_PROP(inst, max_voltage),     \
-      "min-voltage should be less then max-voltage");                        \
-  BUILD_ASSERT(DT_INST_PROP_LEN(inst, min_value) == 2,                       \
-               "length of min-value should be two");                         \
-  BUILD_ASSERT(DT_INST_PROP_LEN(inst, max_value) == 2,                       \
-               "length of max-value should be two");                         \
-                                                                             \
-  static struct analog_generic_data analog_generic_data_##inst;              \
-                                                                             \
-  static const struct analog_generic_config analog_generic_config_##inst = { \
-      .adc = ADC_DT_SPEC_INST_GET_BY_IDX(inst, 0),                           \
-      .channel = DT_INST_PROP(inst, zephyr_channel),                         \
-      .min_voltage = DT_INST_PROP(inst, min_voltage),                        \
-      .max_voltage = DT_INST_PROP(inst, max_voltage),                        \
-      .voltage_range =                                                       \
-          DT_INST_PROP(inst, max_voltage) - DT_INST_PROP(inst, min_voltage), \
-      .min_value = DT_INST_PROP(inst, min_value),                            \
-      .max_value = DT_INST_PROP(inst, max_value),                            \
-      .tolerance = DT_INST_PROP(inst, tolerance),                            \
-  };                                                                         \
-                                                                             \
-  DEVICE_DT_INST_DEFINE(inst, analog_generic_init, NULL,                     \
-                        &analog_generic_data_##inst,                         \
-                        &analog_generic_config_##inst, POST_KERNEL,          \
-                        CONFIG_SENSOR_INIT_PRIORITY, &analog_generic_api);
+#define ANALOG_GENERIC_INIT(inst)                                              \
+  BUILD_ASSERT(                                                                \
+      DT_INST_PROP(inst, min_voltage) < DT_INST_PROP(inst, max_voltage),       \
+      "min-voltage should be less then max-voltage");                          \
+  BUILD_ASSERT(DT_INST_PROP_LEN(inst, min_value) == 2,                         \
+               "length of min-value should be two");                           \
+  BUILD_ASSERT(DT_INST_PROP_LEN(inst, max_value) == 2,                         \
+               "length of max-value should be two");                           \
+                                                                               \
+  static struct analog_generic_data analog_generic_data_##inst;                \
+                                                                               \
+  static const struct analog_generic_config analog_generic_config_##inst = {   \
+      .adc = ADC_DT_SPEC_INST_GET_BY_IDX(inst, 0),                             \
+      .channel = DT_INST_PROP(inst, zephyr_channel),                           \
+      .min_voltage = DT_INST_PROP(inst, min_voltage),                          \
+      .max_voltage = DT_INST_PROP(inst, max_voltage),                          \
+      .voltage_range =                                                         \
+          DT_INST_PROP(inst, max_voltage) - DT_INST_PROP(inst, min_voltage),   \
+      .min_value = DT_INST_PROP(inst, min_value),                              \
+      .max_value = DT_INST_PROP(inst, max_value),                              \
+      .tolerance = DT_INST_PROP(inst, tolerance),                              \
+  };                                                                           \
+                                                                               \
+  SENSOR_DEVICE_DT_INST_DEFINE(                                                \
+      inst, analog_generic_init, NULL, &analog_generic_data_##inst,            \
+      &analog_generic_config_##inst, POST_KERNEL, CONFIG_SENSOR_INIT_PRIORITY, \
+      &analog_generic_api);
 
 DT_INST_FOREACH_STATUS_OKAY(ANALOG_GENERIC_INIT)
