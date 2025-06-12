@@ -243,6 +243,61 @@ Reference
 
 .. _notes_services_sensing_subsystem:
 
+Storage Systems
+===============
+
+Aside from file systems, Zephyr also provides lower-level storage systems that
+are designed to store data on the limited internal flash, such as `Flash
+Circular Buffer (FCB)
+<https://docs.zephyrproject.org/4.1.0/services/storage/fcb/fcb.html>`_ that
+stores data in FIFO manner, as well as `Non-Volatile Storage (NVS)
+<https://docs.zephyrproject.org/4.1.0/services/storage/nvs/nvs.html>`_ and
+`Zephyr Memory Storage (ZMS)
+<https://docs.zephyrproject.org/latest/services/storage/zms/zms.html>`_ that
+store using key-value pairs (refer to the `documentation of ZMS
+<https://docs.zephyrproject.org/4.1.0/services/storage/zms/zms.html#zms-and-other-storage-systems-in-zephyr>`_
+for detailed comparison between them).
+
+.. note::
+
+   NVS stores the flash page size (the unit of an erase operation) in a
+   :c:type:`uint16_t` [#]_, so it can only support flash page size up to 32KB
+   (page size is typically in power of 2 and :c:type:`uint16_t` is at most 65535
+   so 32KB is the maximum). Though ZMS does not have such limit, since it have
+   to go through the entire all pages for every write operation [#]_, it is not
+   suitable for large total size. And since flash with large page sizes such as
+   STM32F4 and STM32H7 series will inevitably have large total size, both
+   technologies are not suitable for such use cases. Instead, external SPI flash
+   have to be used.
+
+Settings
+-------
+
+Zephyr provides a `settings system
+<https://docs.zephyrproject.org/4.1.0/services/storage/settings/index.html>`_
+that built on top of the storage or file systems to store and load settings and
+its backend can be selected by Kconfig option ``CONFIG_SETTINGS_BACKEND``.
+
+.. note::
+
+   For FCB, NVS, and ZMS backends, the settings system will automatically chose
+   ``storage_partition`` if ``zephyr,settings_partition`` is not chosen in the
+   device tree [#]_ [#]_ [#]_.
+
+
+References
+----------
+
+.. [#] `:c:struct:`nvs_fs` source code <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/include/zephyr/fs/nvs.h#L51>`_
+.. [#] `ZMS documentation
+   <https://docs.zephyrproject.org/4.1.0/services/storage/zms/zms.html#zms-id-data-write>`_
+.. [#] `Settings FCB backend source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/subsys/settings/src/settings_fcb.c#L23>`_
+.. [#] `Settings NVM backend source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/subsys/settings/src/settings_nvs.c#L23>`_
+.. [#] `Settings ZMS backend source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/main/subsys/settings/src/settings_zms.c#L24>`_
+
 Sensing Subsystem
 =================
 
