@@ -84,12 +84,17 @@
 <li class="toctree-l4"><a class="reference internal" href="#id12">Reference</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#storage-systems">Storage Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#settings">Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id21">References</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#sensing-subsystem">Sensing Subsystem</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#duplicated-sensor-data-types">Duplicated Sensor Data Types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#use-of-hid-sensor-type-instead-of-existing-sensor-channel">Use of HID Sensor Type (instead of existing <code class="xref c c-enum docutils literal notranslate"><span class="pre">sensor_channel</span></code>)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#confusing-device-api">Confusing Device API</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sensor-scheduling">Sensor Scheduling</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id26">References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id37">References</a></li>
 </ul>
 </li>
 </ul>
@@ -420,17 +425,76 @@ that allocate file cache</p>
 </aside>
 </section>
 </section>
+<section id="storage-systems">
+<span id="notes-services-sensing-subsystem"></span><h2>Storage Systems<a class="headerlink" href="#storage-systems" title="Link to this heading"></a></h2>
+<p>Aside from file systems, Zephyr also provides lower-level storage systems that
+are designed to store data on the limited internal flash, such as <a class="reference external" href="https://docs.zephyrproject.org/4.1.0/services/storage/fcb/fcb.html">Flash
+Circular Buffer (FCB)</a> that
+stores data in FIFO manner, as well as <a class="reference external" href="https://docs.zephyrproject.org/4.1.0/services/storage/nvs/nvs.html">Non-Volatile Storage (NVS)</a> and
+<a class="reference external" href="https://docs.zephyrproject.org/latest/services/storage/zms/zms.html">Zephyr Memory Storage (ZMS)</a> that
+store using key-value pairs (refer to the <a class="reference external" href="https://docs.zephyrproject.org/4.1.0/services/storage/zms/zms.html#zms-and-other-storage-systems-in-zephyr">documentation of ZMS</a>
+for detailed comparison between them).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>NVS stores the flash page size (the unit of an erase operation) in a
+<code class="xref c c-type docutils literal notranslate"><span class="pre">uint16_t</span></code> <a class="footnote-reference brackets" href="#id22" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>, so it can only support flash page size up to 32KB
+(page size is typically in power of 2 and <code class="xref c c-type docutils literal notranslate"><span class="pre">uint16_t</span></code> is at most 65535
+so 32KB is the maximum). Though ZMS does not have such limit, since it have
+to go through the entire all pages for every write operation <a class="footnote-reference brackets" href="#id23" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>, it is not
+suitable for large total size. And since flash with large page sizes such as
+STM32F4 and STM32H7 series will inevitably have large total size, both
+technologies are not suitable for such use cases. Instead, external SPI flash
+have to be used.</p>
+</div>
+<section id="settings">
+<h3>Settings<a class="headerlink" href="#settings" title="Link to this heading"></a></h3>
+<p>Zephyr provides a <a class="reference external" href="https://docs.zephyrproject.org/4.1.0/services/storage/settings/index.html">settings system</a>
+that built on top of the storage or file systems to store and load settings and
+its backend can be selected by Kconfig option <code class="docutils literal notranslate"><span class="pre">CONFIG_SETTINGS_BACKEND</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For FCB, NVS, and ZMS backends, the settings system will automatically chose
+<code class="docutils literal notranslate"><span class="pre">storage_partition</span></code> if <code class="docutils literal notranslate"><span class="pre">zephyr,settings_partition</span></code> is not chosen in the
+device tree <a class="footnote-reference brackets" href="#id24" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id25" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id26" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>.</p>
+</div>
+</section>
+<section id="id21">
+<h3>References<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id22" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">8</a><span class="fn-bracket">]</span></span>
+<p><cite>:c:struct:`nvs_fs</cite> source code &lt;<a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/include/zephyr/fs/nvs.h#L51">https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/include/zephyr/fs/nvs.h#L51</a>&gt;`_</p>
+</aside>
+<aside class="footnote brackets" id="id23" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">9</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://docs.zephyrproject.org/4.1.0/services/storage/zms/zms.html#zms-id-data-write">ZMS documentation</a></p>
+</aside>
+<aside class="footnote brackets" id="id24" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">10</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/subsys/settings/src/settings_fcb.c#L23">Settings FCB backend source code</a></p>
+</aside>
+<aside class="footnote brackets" id="id25" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">11</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/subsys/settings/src/settings_nvs.c#L23">Settings NVM backend source code</a></p>
+</aside>
+<aside class="footnote brackets" id="id26" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">12</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/main/subsys/settings/src/settings_zms.c#L24">Settings ZMS backend source code</a></p>
+</aside>
+</aside>
+</section>
+</section>
 <section id="sensing-subsystem">
-<span id="notes-services-sensing-subsystem"></span><h2>Sensing Subsystem<a class="headerlink" href="#sensing-subsystem" title="Link to this heading"></a></h2>
+<h2>Sensing Subsystem<a class="headerlink" href="#sensing-subsystem" title="Link to this heading"></a></h2>
 <p>The <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/services/sensing/index.html">sensing subsystem</a> provides a
 high level of accessing sensors, such as scheduling sampling for multiple
 clients that requests data at different rates and resoultons (since currently
-most sensor drivers are designed for single client only <a class="footnote-reference brackets" href="#id27" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>), and fusing
+most sensor drivers are designed for single client only <a class="footnote-reference brackets" href="#id38" id="id28" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a>), and fusing
 multiple sensors to provide a new kind of data (e.g. fusing two IMUs on the lid
 and the base of a foldable phone to calculate the hinge angle).</p>
 <p>However, dispite <a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/pull/64478">being merged to the mainline in October 2023</a>, the sensing
 subsystem is still only a minimum viable product as of Zephyr 4.0.0 lacking some
-important features such as batch reading and error reporting <a class="footnote-reference brackets" href="#id28" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>. And currently
+important features such as batch reading and error reporting <a class="footnote-reference brackets" href="#id39" id="id29" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a>. And currently
 seemed to be not in active development anymore.</p>
 <p>Yet it is still a good starting point for managing multiple sensors with a
 single interface.</p>
@@ -442,7 +506,7 @@ being adopted:</p>
 <code class="xref c c-struct docutils literal notranslate"><span class="pre">sensing_sensor_value_q31</span></code> is the data type for sensor data, which is
 almost the same as <code class="xref c c-struct docutils literal notranslate"><span class="pre">sensor_q31_data</span></code> used for the sensor driver. The
 only difference is that the timestamp is in micro seconds for the former and in
-nano seconds for the latter <a class="footnote-reference brackets" href="#id29" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id30" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>.</p>
+nano seconds for the latter <a class="footnote-reference brackets" href="#id40" id="id30" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id41" id="id31" role="doc-noteref"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></a>.</p>
 <p>This is probably due to <code class="xref c c-struct docutils literal notranslate"><span class="pre">sensor_q31_data</span></code> being introduced later than
 the initial proposal of the sensing subsystem. However, since
 <code class="xref c c-struct docutils literal notranslate"><span class="pre">sensor_q31_data</span></code> is widely adopted by the sensor driver, it should be
@@ -454,7 +518,7 @@ used as the sensor data type in the sensing subsystem instead of
 <p>Intel (the author of the sensor subsystem) uses HID sensor types instead of the
 existing <code class="xref c c-enum docutils literal notranslate"><span class="pre">sensor_channel</span></code> of sensor types from CHRE (context hub runtime
 environmrnt) since they claimed that it is the only cross-OS standard for sensor
-types <a class="footnote-reference brackets" href="#id31" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>. However, they did not implement any other part of the HID standard,
+types <a class="footnote-reference brackets" href="#id42" id="id32" role="doc-noteref"><span class="fn-bracket">[</span>17<span class="fn-bracket">]</span></a>. However, they did not implement any other part of the HID standard,
 making the choice of using HID sensor type that’s incompatible with the existing
 <code class="xref c c-enum docutils literal notranslate"><span class="pre">sensor_channel</span></code> existing sensor drivers depends on some what abrubtly.
 Additionally, the sensing subsystem configures the sensor using
@@ -472,7 +536,7 @@ result, when setting required interval and senstivity using
 <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__sensing__api.html#ga46591a2d29f5b5e160a72bbe289884ab">sensing_set_config()</a>,
 it sets <code class="docutils literal notranslate"><span class="pre">SENSOR_ATTR_SAMPLING_FREQUENCY</span></code> and <code class="docutils literal notranslate"><span class="pre">SENSOR_ATTR_HYSTERESIS</span></code>
 attributes, respectively, of the channel corresponding to that HID sensor type
-via <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__sensor__interface.html#gafbf65226a227e9f8824908bc38e336f5">sensor_attr_set()</a> <a class="footnote-reference brackets" href="#id32" id="id23" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id33" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a>,
+via <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__sensor__interface.html#gafbf65226a227e9f8824908bc38e336f5">sensor_attr_set()</a> <a class="footnote-reference brackets" href="#id43" id="id34" role="doc-noteref"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id44" id="id35" role="doc-noteref"><span class="fn-bracket">[</span>19<span class="fn-bracket">]</span></a>,
 which is somewhat confusing, but have to bare in mind when developing sensor
 subsystem drivers.</p>
 </section>
@@ -482,50 +546,50 @@ subsystem drivers.</p>
 <code class="docutils literal notranslate"><span class="pre">SENSOR_ATTR_SAMPLING_FREQUENCY</span></code> sensor attribute based on the minimum
 requested sampling intervals of all clients, and then downsample the data via a
 timer that only passes the data to the clients when the time elapsed from the
-last sample is greater than the period <a class="footnote-reference brackets" href="#id34" id="id25" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a>. Which means that the actual
+last sample is greater than the period <a class="footnote-reference brackets" href="#id45" id="id36" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a>. Which means that the actual
 sampling interval will be longer and unpredictable if the underlying sensor
 driver sampling jitters. Both of which are not ideal for real-time applications.</p>
 <p>A better approach would be to set the sensor driver sampling rate based on the
 greatest common factor of all clients’ requested sampling intervals with some
 kind of tolerence for the jitter.</p>
 </section>
-<section id="id26">
-<h3>References<a class="headerlink" href="#id26" title="Link to this heading"></a></h3>
+<section id="id37">
+<h3>References<a class="headerlink" href="#id37" title="Link to this heading"></a></h3>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id27" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">8</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id38" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id28">13</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sensor/fetch_and_get.html">Sensor fetch and get</a>
 warning</p>
 </aside>
-<aside class="footnote brackets" id="id28" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">9</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id39" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id29">14</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/dispatch.c#L102">Sensing subsystem dispatch_task() source code</a>
 that ignores cqe result codes</p>
 </aside>
-<aside class="footnote brackets" id="id29" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">10</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id40" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id30">15</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/sensing/sensing_datatypes.h#L116">Definition of sensing_sensor_value_q31</a></p>
 </aside>
-<aside class="footnote brackets" id="id30" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">11</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id41" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id31">16</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/include/zephyr/drivers/sensor_data_types.h#L92">Definition of sensor_q31_data</a></p>
 </aside>
-<aside class="footnote brackets" id="id31" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">12</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id42" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id32">17</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/files/12561847/Sensing.Subsystem.Design.-.Zephyr.pdf">Sensing Subsystem Design Discussion</a>,
 slide 13</p>
 </aside>
-<aside class="footnote brackets" id="id32" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">13</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id43" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id34">18</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/dispatch.c#L38">Sensing subsystem send_data_to_clients() source code</a>
 that dispatches sensor data to clients</p>
 </aside>
-<aside class="footnote brackets" id="id33" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">14</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id44" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id35">19</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/sensor_mgmt.c#L92">Sensing subsystem set_arbitrate_interval() source code</a></p>
 </aside>
-<aside class="footnote brackets" id="id34" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id25">15</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id45" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id36">20</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/subsys/sensing/sensor_mgmt.c#L170">Sensing subsystem set_arbitrate_sensitivity() source code</a></p>
 </aside>
 </aside>

@@ -47,14 +47,14 @@ The structure of source file (.c) should be as follows:
      .. note::
      
         Since Clang-Format will remove blink lines between includes, use
-        comments to separate different includes.
+        comments to separate includes form different categories.
 
    * Avoid transitive includes as mentioned in the `Google Guide
      <https://google.github.io/styleguide/cppguide.html#Include_What_You_Use>`__
 
 2. ``#define`` directives for macros and constants
 3. Type fordward declarations only for types that will be defined later in the
-   file if necesary
+   same file
 4. Typedefs
 5. Type declarations in the following order;
 
@@ -73,7 +73,7 @@ for readability, refer to the `Linux Guide
 <https://kernel.org/doc/html/latest/process/coding-style.html#conditional-compilation>`__
 to write code with conditional compilation better.
 
-Within a module, group global variables into a single context structure
+Within a module, group global variables into a single context struct
 :c:struct:`MODULE_NAME_ctx`. Initialize its member in a static initializer if
 possible and define a :c:func:`MODULE_NAME_init` function to initialize other
 members unable to be initialized in the static initializer.
