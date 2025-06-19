@@ -15,31 +15,36 @@
 
 LOG_MODULE_REGISTER(nturt_err, CONFIG_NTURT_LOG_LEVEL);
 
-/* types ---------------------------------------------------------------------*/
-struct context {
+/* type ----------------------------------------------------------------------*/
+struct err_ctx {
   struct k_spinlock lock;
 
+  /** List of current errors. */
   struct err_list errors;
 };
 
 /* static function declaration -----------------------------------------------*/
-/// @brief Initialization function for error module.
-static int init();
-
 static struct err *err_get(uint32_t errcode);
 
 static void err_notify(struct err *err);
 
 static void err_log(struct err *err);
 
-/* static varaibles ----------------------------------------------------------*/
-static struct context context = {
-    .errors = TAILQ_HEAD_INITIALIZER(context.errors),
+/// @brief Initialization function for error module.
+static int init();
+
+/* static variable ----------------------------------------------------------*/
+/// @brief State module context.
+static struct err_ctx g_ctx = {
+    .errors = TAILQ_HEAD_INITIALIZER(g_ctx.errors),
 };
+
+SYS_HASHMAP_DEFINE_STATIC(g_err_map);
 
 SYS_INIT(init, APPLICATION, CONFIG_NTURT_ERR_INIT_PRIORITY);
 
-SYS_HASHMAP_DEFINE_STATIC(err_map);
+/* exported variable ---------------------------------------------------------*/
+const struct err_list *__err_errors = &g_ctx.errors;
 
 /* function definition -------------------------------------------------------*/
 int err_report(uint32_t errcode, bool set) {
@@ -54,28 +59,28 @@ int err_report(uint32_t errcode, bool set) {
 
   struct err err_copy;
 
-  k_spinlock_key_t key = k_spin_lock(&context.lock);
+  k_spinlock_key_t key = k_spin_lock(&g_ctx.lock);
 
   bool already_set = err->flags & ERR_FLAG_SET;
 
   if (!XOR(set, already_set)) {
-    k_spin_unlock(&context.lock, key);
+    k_spin_unlock(&g_ctx.lock, key);
     return 0;
   }
 
   if (set) {
-    TAILQ_INSERT_HEAD(&context.errors, err, next);
+    TAILQ_INSERT_HEAD(&g_ctx.errors, err, next);
     err->flags |= ERR_FLAG_SET;
 
   } else {
-    TAILQ_REMOVE(&context.errors, err, next);
+    TAILQ_REMOVE(&g_ctx.errors, err, next);
     err->flags &= ~ERR_FLAG_SET;
   }
 
   // copy to prevent race conditions
   err_copy = *err;
 
-  k_spin_unlock(&context.lock, key);
+  k_spin_unlock(&g_ctx.lock, key);
 
   err_notify(&err_copy);
   err_log(&err_copy);
@@ -84,27 +89,9 @@ int err_report(uint32_t errcode, bool set) {
 }
 
 /* static function definition ------------------------------------------------*/
-static int init() {
-  int ret;
-
-  STRUCT_SECTION_FOREACH(err, err) {
-    ret = sys_hashmap_insert(&err_map, err->errcode, (uintptr_t)err, NULL);
-    if (ret < 0) {
-      LOG_ERR("err_map insert failed: %s", strerror(-ret));
-      return ret;
-
-    } else if (ret == 0) {
-      LOG_ERR("Error code 0x%x already exists", err->errcode);
-      return -EEXIST;
-    }
-  }
-
-  return 0;
-}
-
 static struct err *err_get(uint32_t errcode) {
   uint64_t value;
-  if (!sys_hashmap_get(&err_map, errcode, &value)) {
+  if (!sys_hashmap_get(&g_err_map, errcode, &value)) {
     return NULL;
   }
 
@@ -170,4 +157,22 @@ static void err_log(struct err *err) {
   } else {
     LOG_INF("Error 0x%x cleared", err->errcode);
   }
+}
+
+static int init() {
+  int ret;
+
+  STRUCT_SECTION_FOREACH(err, err) {
+    ret = sys_hashmap_insert(&g_err_map, err->errcode, (uintptr_t)err, NULL);
+    if (ret < 0) {
+      LOG_ERR("g_err_map insert failed: %s", strerror(-ret));
+      return ret;
+
+    } else if (ret == 0) {
+      LOG_ERR("Error code 0x%x already exists", err->errcode);
+      return -EEXIST;
+    }
+  }
+
+  return 0;
 }

@@ -57,7 +57,7 @@
 
 /**
  * @brief Error filter for error codes.
- * 
+ *
  * @param[in] ... Error codes to filter.
  */
 #define ERR_FILTER_CODE(...)                 \
@@ -69,7 +69,7 @@
 
 /**
  * @brief Error filter for severities.
- * 
+ *
  * @param[in] ... Severities to filter.
  */
 #define ERR_FILTER_SEV(...)                     \
@@ -79,27 +79,45 @@
       .serverities = (uint32_t[]){__VA_ARGS__}, \
   }
 
-#define _ERR_CALLBACK_DEFINE(_name, _handler, _user_data, ...) \
-  STRUCT_SECTION_ITERABLE(err_callback, _name) = {             \
-      .handler = _handler,                                     \
-      .user_data = _user_data,                                 \
-      .filters = (struct err_filter[]){COND_CODE_1(            \
-          __VA_OPT__(1), (__VA_ARGS__, _ERR_FILTER_LAST),      \
-          (_ERR_FILTER_LAST))},                                \
+/**
+ * @brief Same as @ref ERR_CALLBACK_DEFINE, but with a custom name for the
+ * callback.
+ */
+#define ERR_CALLBACK_DEFINE_NAMED(_name, _handler, _user_data, ...) \
+  STRUCT_SECTION_ITERABLE(err_callback, _name) = {                  \
+      .handler = _handler,                                          \
+      .user_data = _user_data,                                      \
+      .filters = (struct err_filter[]){COND_CODE_1(                 \
+          __VA_OPT__(1), (__VA_ARGS__, _ERR_FILTER_LAST),           \
+          (_ERR_FILTER_LAST))},                                     \
   }
 
 /**
  * @brief Define an error callback.
- * 
+ *
  * @param[in] handler Handler of the error.
  * @param[in] user_data Pointer to custom data for the callback.
- * @param[in] ... Filters for the error callback.
+ * @param[in] ... Optional filters for the error callback, which is applied in
+ * "and" manner.
+ *
+ * @note Since the name of the callback is derived from the name of @p handler ,
+ * if handlers with the same name are used for multiple callbacks,
+ * @ref STATES_CALLBACK_DEFINE_NAMED can be used instead to prevent linker
+ * errors.
  */
-#define ERR_CALLBACK_DEFINE(handler, user_data, ...)                        \
-  _ERR_CALLBACK_DEFINE(CONCAT(__err_handler_, handler), handler, user_data, \
-                       __VA_ARGS__)
+#define ERR_CALLBACK_DEFINE(handler, user_data, ...)                  \
+  ERR_CALLBACK_DEFINE_NAMED(CONCAT(__err_handler_, handler), handler, \
+                            user_data, __VA_ARGS__)
 
-/* types ---------------------------------------------------------------------*/
+/**
+ * @brief Iterate over all set errors.
+ *
+ * @param[out] item @ref err pointer to the set errors, NULL if the loop exits
+ * normally or no errors are set.
+ */
+#define ERR_FOREACH_SET(item) TAILQ_FOREACH(item, __err_errors, next)
+
+/* type ----------------------------------------------------------------------*/
 /**
  * @brief Error handler type.
  *
@@ -109,10 +127,7 @@
  */
 typedef void (*err_handler_t)(uint32_t errcode, bool set, void* user_data);
 
-/**
- * @brief Error severity.
- *
- */
+/// @brief Error severity.
 enum err_sev {
   /** Error disabled, indicating this error is not used. */
   ERR_SEV_DISABLED = 0,
@@ -123,14 +138,11 @@ enum err_sev {
   /** Warning serverity, the system may continue running. */
   ERR_SEV_WARN = BIT(1),
 
-  /** Fatal serverity, the system must be stopped. */
+  /** Fatal serverity, the system must stop. */
   ERR_SEV_FATAL = BIT(2),
 };
 
-/**
- * @brief Error filter type.
- *
- */
+/// @brief Error filter type.
 enum err_filter_type {
   /** Invalid filter. */
   ERR_FILTER_INVALID = 0,
@@ -142,10 +154,7 @@ enum err_filter_type {
   ERR_FILTER_SEV = 2,
 };
 
-/**
- * @brief Error.
- *
- */
+/// @brief Error.
 struct err {
   /** Code of the error. */
   uint32_t errcode;
@@ -160,10 +169,7 @@ struct err {
   TAILQ_ENTRY(err) next;
 };
 
-/**
- * @brief Error filter for error callbacks.
- *
- */
+/// @brief Error filter for error callbacks.
 struct err_filter {
   /** Type of the filter. */
   enum err_filter_type type;
@@ -180,12 +186,9 @@ struct err_filter {
   };
 };
 
-/**
- * @brief Error callback.
- *
- */
+/// @brief Error callback.
 struct err_callback {
-  /** Error handler */
+  /** Error handler. */
   err_handler_t handler;
 
   /** User data for the callback functions. */
@@ -204,6 +207,9 @@ TAILQ_HEAD(err_list, err);
 
 /// @endcond
 
+/* exported variable ---------------------------------------------------------*/
+extern const struct err_list* __err_errors;
+
 /* function declaration ------------------------------------------------------*/
 /**
  * @brief Set or clear error.
@@ -212,13 +218,6 @@ TAILQ_HEAD(err_list, err);
  * @param set True to set error, false to clear error.
  */
 int err_report(uint32_t errcode, bool set);
-
-/**
- * @brief Get the current errors.
- *
- * @return Current errors.
- */
-// err_t err_get_errors();
 
 /**
  * @} // Err

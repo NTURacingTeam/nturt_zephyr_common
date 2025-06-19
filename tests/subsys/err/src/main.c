@@ -1,4 +1,5 @@
 // glibc include
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -97,12 +98,6 @@ static void err_cb(uint32_t errcode, bool set, void *user_data) {
   ztest_check_expected_value(set);
 }
 
-static void err_before(void *_fixture) {
-  (void)_fixture;
-
-  ERR_FILTER_SET(no, err_cb);
-}
-
 static void err_after(void *_fixture) {
   (void)_fixture;
 
@@ -111,7 +106,7 @@ static void err_after(void *_fixture) {
   clear_errors();
 }
 
-ZTEST_SUITE(err, NULL, NULL, err_before, err_after, NULL);
+ZTEST_SUITE(err, NULL, NULL, NULL, err_after, NULL);
 
 /**
  * @brief Test setting errors.
@@ -120,6 +115,8 @@ ZTEST_SUITE(err, NULL, NULL, err_before, err_after, NULL);
 ZTEST(err, test_set) {
   uint32_t errcodes[] = {ERR_LIST(INFO, LEN), ERR_LIST(WARN, LEN),
                          ERR_LIST(FATAL, LEN)};
+
+  ERR_FILTER_SET(no, err_cb);
 
   for (int i = 0; i < ARRAY_SIZE(errcodes); i++) {
     ztest_expect_value(err_cb, errcode, errcodes[i]);
@@ -137,6 +134,8 @@ ZTEST(err, test_clear) {
   uint32_t errcodes[] = {ERR_LIST(INFO, LEN), ERR_LIST(WARN, LEN),
                          ERR_LIST(FATAL, LEN)};
 
+  ERR_FILTER_SET(no, err_cb);
+
   for (int i = 0; i < ARRAY_SIZE(errcodes); i++) {
     ztest_expect_value(err_cb, errcode, errcodes[i]);
     ztest_expect_value(err_cb, set, true);
@@ -147,6 +146,37 @@ ZTEST(err, test_clear) {
     ztest_expect_value(err_cb, set, false);
 
     err_report(errcodes[i], false);
+  }
+}
+
+/**
+ * @brief Test @ref ERR_FOREACH_ERR.
+ *
+ */
+ZTEST(err, test_foreach) {
+  uint32_t errcodes[] = {ERR_LIST(INFO, LEN), ERR_LIST(WARN, LEN),
+                         ERR_LIST(FATAL, LEN)};
+
+  for (int i = 0; i < ARRAY_SIZE(errcodes); i++) {
+    err_report(errcodes[i], true);
+  }
+
+  bool set[ARRAY_SIZE(errcodes)] = {false};
+
+  struct err *err;
+  ERR_FOREACH_SET(err) {
+    for (int i = 0; i < ARRAY_SIZE(errcodes); i++) {
+      if (err->errcode == errcodes[i]) {
+        zassert_false(set[i]);
+
+        set[i] = true;
+        break;
+      }
+    }
+  }
+
+  for (int i = 0; i < ARRAY_SIZE(errcodes); i++) {
+    zassert_true(set[i]);
   }
 }
 
@@ -161,6 +191,9 @@ static void err_filters_cb(uint32_t errcode, bool set, void *user_data) {
 
 static void err_filters_after(void *_fixture) {
   (void)_fixture;
+
+  ERR_FILTER_UNSET(half_info);
+  ERR_FILTER_UNSET(info);
 
   clear_errors();
 }
@@ -184,8 +217,6 @@ ZTEST(err_filters, test_code) {
 
     err_report(errcodes[i], true);
   }
-
-  ERR_FILTER_UNSET(half_info);
 }
 
 /**
@@ -208,6 +239,4 @@ ZTEST(err_filters, test_severity) {
   for (int i = 0; i < ARRAY_SIZE(others); i++) {
     err_report(others[i], true);
   }
-
-  ERR_FILTER_UNSET(info);
 }
