@@ -12,9 +12,9 @@
 #include <zephyr/posix/time.h>
 
 // project includes
-#include "nturt/sys.h"
+#include "nturt/sys/sys.h"
 
-LOG_MODULE_REGISTER(nturt_sys_rtc, CONFIG_NTURT_LOG_LEVEL);
+LOG_MODULE_REGISTER(nturt_rtc, CONFIG_NTURT_LOG_LEVEL);
 
 /* static function declaration -----------------------------------------------*/
 /// @brief Initialization function for NTURT RTC system module.
@@ -61,7 +61,7 @@ static int init() {
   if (ret == -ENODATA) {
     LOG_WRN("RTC time not set, initializing to dummy value");
     struct rtc_time dummy_time = {
-        .tm_year = 2024 - 1900,
+        .tm_year = 2025 - 1900,
         .tm_mon = 0,
         .tm_mday = 1,
         .tm_wday = 0,

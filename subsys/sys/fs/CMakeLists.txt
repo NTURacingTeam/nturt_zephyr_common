@@ -1,4 +1,4 @@
-if(CONFIG_NTURT_SYS_FS)
+if(CONFIG_NTURT_FS)
 
 zephyr_library()
 zephyr_library_link_libraries(FS)
