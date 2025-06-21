@@ -52,10 +52,10 @@
 #define TYPEOF_FIELD(type, member) __typeof__(((type*)0)->member)
 
 /**
- * @brief Macro that discards all arguments and expend to zephyr EMPTY.
+ * @brief Discards all arguments and expend to Zephyr `EMPTY`.
  *
  * @param ... Variable list of arguments to discard.
- * @return zephyr EMPTY.
+ * @return Zephyr `EMPTY`.
  */
 #define DISCARD(...) EMPTY
 

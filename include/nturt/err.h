@@ -25,30 +25,35 @@
  * @{
  */
 
-/* macros --------------------------------------------------------------------*/
-/// @brief Flag indicating the error is set.
+/* macro ---------------------------------------------------------------------*/
+/// @brief Flag indicating the error is disabled, meaning setting or clearing
+/// the error will not have any effect.
+#define ERR_FLAG_DISABLED BIT(3)
+
+/// @brief Flag indicating the error is set. Can also be used in @ref ERR_DEFINE
+/// to define an error that will be set after initialization.
 #define ERR_FLAG_SET BIT(4)
 
 /// @brief Flag mask indicating the severity of the error.
 #define ERR_FLAG_SEV_MASK (ERR_SEV_INFO | ERR_SEV_WARN | ERR_SEV_FATAL)
 
-#define _ERR_DEFINE(_name, _errcode, _serverity, _desc, ...)                \
-  STRUCT_SECTION_ITERABLE(err, _name) = {                                   \
-      .errcode = _errcode,                                                  \
-      .flags = _serverity | COND_CODE_1(__VA_OPT__(1), (__VA_ARGS__), (0)), \
-      .desc = _desc,                                                        \
-  }
-
 /**
  * @brief Define an error.
  *
- * @param[in] errcode Code of the error.
- * @param[in] serverity Serverity of the error.
- * @param[in] desc Description of the error.
- * @param[in] ... Flags of the error.
+ * @param[in] _name Name of the error.
+ * @param[in] _errcode Code of the error.
+ * @param[in] _serverity Serverity of the error, must be one of @ref err_sev.
+ * @param[in] _desc Description of the error.
+ * @param[in] ... Optional flags of the error, multiple flags can be specified
+ * by using the bitwise OR operator (|).
  */
-#define ERR_DEFINE(errcode, serverity, desc, ...) \
-  _ERR_DEFINE(CONCAT(__err_, errcode), errcode, serverity, desc, __VA_ARGS__)
+#define ERR_DEFINE(_name, _errcode, _serverity, _desc, ...)                 \
+  STRUCT_SECTION_ITERABLE(err, CONCAT(__err_, _name)) = {                   \
+      .errcode = _errcode,                                                  \
+      .flags = _serverity | COND_CODE_1(__VA_OPT__(1), (__VA_ARGS__), (0)), \
+      .name = STRINGIFY(_name),                                             \
+      .desc = _desc,                                                        \
+  }
 
 #define _ERR_FILTER_LAST          \
   {                               \
@@ -97,8 +102,8 @@
  *
  * @param[in] handler Handler of the error.
  * @param[in] user_data Pointer to custom data for the callback.
- * @param[in] ... Optional filters for the error callback, which is applied in
- * "and" manner.
+ * @param[in] ... Optional filters for the error callback. If multiple filters
+ * are specified, they are applied in the "and" manner.
  *
  * @note Since the name of the callback is derived from the name of @p handler ,
  * if handlers with the same name are used for multiple callbacks,
@@ -123,15 +128,13 @@
  *
  * @param errcode Code of the error.
  * @param set True if the error is set, false if the error is cleared.
- * @param user_data Pointer to custom user data for the callback.
+ * @param user_data Pointer to custom user data for the callback provided by
+ * @ref ERR_CALLBACK_DEFINE.
  */
 typedef void (*err_handler_t)(uint32_t errcode, bool set, void* user_data);
 
 /// @brief Error severity.
 enum err_sev {
-  /** Error disabled, indicating this error is not used. */
-  ERR_SEV_DISABLED = 0,
-
   /** Info serverity, the system operates normally. */
   ERR_SEV_INFO = BIT(0),
 
@@ -159,11 +162,14 @@ struct err {
   /** Code of the error. */
   uint32_t errcode;
 
-  /** Description of the error. */
-  const char* desc;
-
   /* Flags of the error. */
   uint32_t flags;
+
+  /** String representation of the error. */
+  const char* name;
+
+  /** Description of the error. */
+  const char* desc;
 
   /** List entry of the error. */
   TAILQ_ENTRY(err) next;
@@ -214,10 +220,21 @@ extern const struct err_list* __err_errors;
 /**
  * @brief Set or clear error.
  *
- * @param errcode Error code to set or clear.
- * @param set True to set error, false to clear error.
+ * @param[in] errcode Error code to set or clear.
+ * @param[in] set True to set error, false to clear error.
+ *
+ * @retval
  */
 int err_report(uint32_t errcode, bool set);
+
+/**
+ * @brief Get the error with its code.
+ *
+ * @param[in] errcode Error code.
+ * @return const struct err* Pointer to the error, NULL if the error code does
+ * not exist.
+ */
+const struct err* err_get(uint32_t errcode);
 
 /**
  * @} // Err

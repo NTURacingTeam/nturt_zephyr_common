@@ -8,7 +8,10 @@
 // zephyr includes
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+#include <zephyr/sys/__assert.h>
 #include <zephyr/sys/hash_map.h>
+#include <zephyr/sys/iterable_sections.h>
+#include <zephyr/sys/util.h>
 
 // project includes
 #include "nturt/sys/util.h"
@@ -24,10 +27,8 @@ struct err_ctx {
 };
 
 /* static function declaration -----------------------------------------------*/
-static struct err *err_get(uint32_t errcode);
-
+static struct err *err_get_impl(uint32_t errcode);
 static void err_notify(struct err *err);
-
 static void err_log(struct err *err);
 
 /// @brief Initialization function for error module.
@@ -48,12 +49,12 @@ const struct err_list *__err_errors = &g_ctx.errors;
 
 /* function definition -------------------------------------------------------*/
 int err_report(uint32_t errcode, bool set) {
-  struct err *err = err_get(errcode);
+  struct err *err = err_get_impl(errcode);
   if (err == NULL) {
     return -ENOENT;
   }
 
-  if (!(err->flags | ERR_FLAG_SEV_MASK)) {
+  if (err->flags & ERR_FLAG_DISABLED) {
     return 0;
   }
 
@@ -88,8 +89,17 @@ int err_report(uint32_t errcode, bool set) {
   return 0;
 }
 
+const struct err *err_get(uint32_t errcode) {
+  struct err *err = err_get_impl(errcode);
+  if (err == NULL) {
+    LOG_ERR("Error code 0x%x does not exist", errcode);
+  }
+
+  return err;
+}
+
 /* static function definition ------------------------------------------------*/
-static struct err *err_get(uint32_t errcode) {
+static struct err *err_get_impl(uint32_t errcode) {
   uint64_t value;
   if (!sys_hashmap_get(&g_err_map, errcode, &value)) {
     return NULL;
@@ -163,6 +173,9 @@ static int init() {
   int ret;
 
   STRUCT_SECTION_FOREACH(err, err) {
+    __ASSERT(IS_POWER_OF_TWO(err->flags & ERR_FLAG_SEV_MASK),
+             "Error must have one and only one severity.");
+
     ret = sys_hashmap_insert(&g_err_map, err->errcode, (uintptr_t)err, NULL);
     if (ret < 0) {
       LOG_ERR("g_err_map insert failed: %s", strerror(-ret));
@@ -171,6 +184,21 @@ static int init() {
     } else if (ret == 0) {
       LOG_ERR("Error code 0x%x already exists", err->errcode);
       return -EEXIST;
+    }
+  }
+
+  // process default errors after all errors are registered to prevent ENOENT
+  // when setting errors within an error handler
+  STRUCT_SECTION_FOREACH(err, err) {
+    if (!(err->flags & ERR_FLAG_DISABLED) && err->flags & ERR_FLAG_SET) {
+      err->flags &= ~ERR_FLAG_SET;
+
+      ret = err_report(err->errcode, true);
+      if (ret < 0) {
+        LOG_ERR("Failed to report error 0x%x: %s", err->errcode,
+                strerror(-ret));
+        return ret;
+      }
     }
   }
 

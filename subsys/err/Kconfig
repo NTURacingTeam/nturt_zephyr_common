@@ -14,4 +14,9 @@ config NTURT_ERR_INIT_PRIORITY
     help
       NTURT common library error module initialization priority.
 
+config NTURT_ERR_SHELL
+    bool "NTURT error module shell support"
+    default y
+    depends on NTURT_SHELL
+
 endif # NTURT_ERR

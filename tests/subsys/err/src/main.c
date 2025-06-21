@@ -16,8 +16,9 @@
 
 #define _ERR_ENUM_ELM(idx, sev, offset) _ERR_NAME(idx, sev) = offset + idx
 
-#define _ERR_LISTIFY(idx, sev) \
-  ERR_DEFINE(_ERR_NAME(idx, sev), ERR_SEV_##sev, "ERR_" #sev "_" #idx)
+#define _ERR_LISTIFY(idx, sev)                                        \
+  ERR_DEFINE(_ERR_NAME(idx, sev), _ERR_NAME(idx, sev), ERR_SEV_##sev, \
+             "ERR_" #sev "_" #idx)
 
 /**
  * @brief Define an array of error codes.
@@ -79,11 +80,10 @@
 ERR_ARRAY_DEFINE(INFO, 0x100, LEN);
 ERR_ARRAY_DEFINE(WARN, 0x200, LEN);
 ERR_ARRAY_DEFINE(FATAL, 0x300, LEN);
-ERR_ARRAY_DEFINE(DISABLED, 0x400, LEN);
 
 static void clear_errors() {
   uint32_t errcodes[] = {ERR_LIST(INFO, LEN), ERR_LIST(WARN, LEN),
-                         ERR_LIST(FATAL, LEN), ERR_LIST(DISABLED, LEN)};
+                         ERR_LIST(FATAL, LEN)};
 
   for (int i = 0; i < ARRAY_SIZE(errcodes); i++) {
     err_report(errcodes[i], false);
