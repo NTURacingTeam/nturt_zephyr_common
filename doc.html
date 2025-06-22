@@ -108,6 +108,12 @@ Zephyr Common and how to build it from the source.</p>
 <h2>Building the Documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading"></a></h2>
 <section id="requirements">
 <h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using the Docker image provided by the <a class="reference external" href="https://github.com/NTURacingTeam/zephyr_workspace">NTU Racing Team’s Zephyr
+workspace</a>, the
+requirements are already installed and you can skip this section.</p>
+</div>
 <p>This documentation requires the following packages:</p>
 <section id="apt-packages">
 <h4>APT packages<a class="headerlink" href="#apt-packages" title="Link to this heading"></a></h4>
@@ -125,7 +131,7 @@ that version. Since currently the latest version of doxygen in ubuntu is
 </section>
 <section id="pip-modules">
 <h4>pip modules<a class="headerlink" href="#pip-modules" title="Link to this heading"></a></h4>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>breathe    
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>breathe
 sphinx
 sphinx-rtd-theme
 </pre></div>
@@ -135,7 +141,7 @@ sphinx-rtd-theme
 <section id="id1">
 <h3>Building the Documentation<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <p>To build the documentation, run the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># in &lt;nturt_zephyr_common_root&gt;/doc</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># in &lt;nturt_zephyr_common&gt;/doc</span>
 make<span class="w"> </span>html
 </pre></div>
 </div>
