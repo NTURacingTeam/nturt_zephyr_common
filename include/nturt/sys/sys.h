@@ -13,8 +13,10 @@ void sys_reset();
 /**
  * @brief Set system time.
  * 
- * @param time Time to set.
- * @return int 0 if success, negative error code otherwise.
+ * @param[in] time Time to set.
+ * 
+ * @retval 0 For success.
+ * @retval others Negative error number.
  */
 int sys_set_time(time_t time);
 

@@ -20,16 +20,17 @@
  */
 
 /* macro ---------------------------------------------------------------------*/
+/**
+ * @brief Designated initializer for @ref msg_header.
+ *
+ */
 #define MSG_HEADER_INITIALIZER()                               \
   {                                                            \
       .timestamp_ns = k_ticks_to_ns_floor64(k_uptime_ticks()), \
   }
 
 /* type ----------------------------------------------------------------------*/
-/**
- * @brief Message header.
- *
- */
+/// @brief Message header.
 struct msg_header {
   /**
    * Timestamp when the msg is generated as attained by
@@ -39,10 +40,7 @@ struct msg_header {
   uint64_t timestamp_ns;
 };
 
-/**
- * @brief 3D data.
- *
- */
+/// @brief 3D data.
 union msg_3d_data {
   /** 3D data in an array. */
   float values[3];
@@ -59,10 +57,7 @@ union msg_3d_data {
   };
 };
 
-/**
- * @brief 4-wheel data.
- *
- */
+/// @brief 4-wheel data.
 union msg_4wheel_data {
   /** 4-wheel data in an array. */
   float values[4];

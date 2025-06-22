@@ -22,14 +22,11 @@
  */
 
 /* macro ---------------------------------------------------------------------*/
-/// @brief List of sensor messages without msg_ prefix.
-#define MSG_SENSOR_LIST imu_data, gps_data, wheel_data, susp_data
+/// @brief List of sensor messages.
+#define MSG_SENSOR_LIST msg_imu_data, msg_gps_data, msg_wheel_data, msg_susp_data
 
 /* type ----------------------------------------------------------------------*/
-/**
- * @brief IMU data message.
- *
- */
+/// @brief IMU data message.
 struct msg_imu_data {
   /** Message header. */
   struct msg_header header;
@@ -54,10 +51,7 @@ struct msg_gps_data {
   struct msg_header header;
 };
 
-/**
- * @brief Wheel data message.
- *
- */
+/// @brief Wheel data message.
 struct msg_wheel_data {
   /** Message header. */
   struct msg_header header;
@@ -72,10 +66,7 @@ struct msg_wheel_data {
   union msg_4wheel_data torque;
 };
 
-/**
- * @brief Suspension data message.
- *
- */
+/// @brief Suspension data message.
 struct msg_susp_data {
   /** Message header. */
   struct msg_header header;

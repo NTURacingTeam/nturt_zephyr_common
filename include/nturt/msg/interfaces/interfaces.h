@@ -14,9 +14,15 @@
 // glibc includes
 #include <stdint.h>
 
+// zephyr includes
+#include <zephyr/sys/util.h>
+
 // project includes
 #include "nturt/msg/interfaces/sensor.h"
-#include "nturt/msg/interfaces/stat.h"
+
+#ifdef CONFIG_NTURT_MSG_CHAN_STATES
+#include "nturt/msg/interfaces/states.h"
+#endif
 
 /**
  * @defgroup msg_interface Message Interface
@@ -26,8 +32,10 @@
  */
 
 /* macro ---------------------------------------------------------------------*/
-/// @brief List of all messages without msg_ prefix.
-#define MSG_LIST MSG_SENSOR_LIST, MSG_STAT_LIST
+/// @brief List of all messages.
+#define MSG_LIST                                                             \
+  LIST_DROP_EMPTY(MSG_SENSOR_LIST, COND_CODE_1(CONFIG_NTURT_MSG_CHAN_STATES, \
+                                               (MSG_STATES_LIST), ()))
 
 /**
  * @} // msg_interface

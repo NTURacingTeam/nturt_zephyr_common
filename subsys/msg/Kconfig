@@ -8,7 +8,10 @@ if NTURT_MSG
 config NTURT_MSG_INIT_PRIORITY
     int "NTURT message module init priority"
     default 10
-    help
-      Message module initialization priority.
+
+config NTURT_MSG_CHAN_STATES
+    bool "Channel for VCU control system state machine"
+    depends on VCU_STATES
+    default y
 
 endif # NTURT_MSG

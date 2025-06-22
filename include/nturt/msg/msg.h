@@ -11,6 +11,9 @@
 #ifndef NTURT_MSG_MSG_H_
 #define NTURT_MSG_MSG_H_
 
+// glibc includes
+#include <stddef.h>
+
 // zerphyr includes
 #include <zephyr/sys/util.h>
 #include <zephyr/zbus/zbus.h>
@@ -26,12 +29,11 @@
  */
 
 /* macro ---------------------------------------------------------------------*/
-#define _MSG_TYPE_NAME(msg) CONCAT(msg_, msg)
 #define _MSG_CHAN_NAME(msg) CONCAT(msg, _chan)
 
-#define _MSG_ZBUS_CHAN_DEFINE(msg)                                        \
-  ZBUS_CHAN_DEFINE(_MSG_CHAN_NAME(msg), struct _MSG_TYPE_NAME(msg), NULL, \
-                   NULL, ZBUS_OBSERVERS_EMPTY, ZBUS_MSG_INIT(0))
+#define _MSG_ZBUS_CHAN_DEFINE(msg)                              \
+  ZBUS_CHAN_DEFINE(_MSG_CHAN_NAME(msg), struct msg, NULL, NULL, \
+                   ZBUS_OBSERVERS_EMPTY, ZBUS_MSG_INIT(0))
 
 /**
  * @brief Define one message channel for every message in @p list .
@@ -41,7 +43,7 @@
  */
 #define MSG_ZBUS_CHAN_DEFINE(list) FOR_EACH(_MSG_ZBUS_CHAN_DEFINE, (;), list)
 
-/* external variable ---------------------------------------------------------*/
+/* exported variable ---------------------------------------------------------*/
 ZBUS_CHAN_DECLARE(FOR_EACH(_MSG_CHAN_NAME, (, ), MSG_LIST));
 
 /**
