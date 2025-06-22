@@ -288,7 +288,7 @@ its backend can be selected by Kconfig option ``CONFIG_SETTINGS_BACKEND``.
 References
 ----------
 
-.. [#] `:c:struct:`nvs_fs` source code <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/include/zephyr/fs/nvs.h#L51>`_
+.. [#] :c:struct:`nvs_fs` `source code <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/include/zephyr/fs/nvs.h#L51>`_
 .. [#] `ZMS documentation
    <https://docs.zephyrproject.org/4.1.0/services/storage/zms/zms.html#zms-id-data-write>`_
 .. [#] `Settings FCB backend source code

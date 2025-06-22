@@ -107,7 +107,7 @@
  *
  * @note Since the name of the callback is derived from the name of @p handler ,
  * if handlers with the same name are used for multiple callbacks,
- * @ref STATES_CALLBACK_DEFINE_NAMED can be used instead to prevent linker
+ * @ref ERR_CALLBACK_DEFINE_NAMED can be used instead to prevent linker
  * errors.
  */
 #define ERR_CALLBACK_DEFINE(handler, user_data, ...)                  \
@@ -147,7 +147,7 @@ enum err_sev {
 
 /// @brief Error filter type.
 enum err_filter_type {
-  /** Invalid filter. */
+  /** Invalid filter, internal use only. */
   ERR_FILTER_INVALID = 0,
 
   /** Filter for error codes. */
@@ -223,7 +223,8 @@ extern const struct err_list* __err_errors;
  * @param[in] errcode Error code to set or clear.
  * @param[in] set True to set error, false to clear error.
  *
- * @retval
+ * @retval 0 For success.
+ * @retval -ENOENT If the error code does not exist.
  */
 int err_report(uint32_t errcode, bool set);
 

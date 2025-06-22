@@ -13,6 +13,12 @@ Building the Documentation
 Requirements
 ------------
 
+.. note::
+
+   If you are using the Docker image provided by the `NTU Racing Team's Zephyr
+   workspace <https://github.com/NTURacingTeam/zephyr_workspace>`_, the
+   requirements are already installed and you can skip this section.
+
 This documentation requires the following packages:
 
 APT packages
@@ -44,7 +50,7 @@ To build the documentation, run the following command:
 
 .. code-block:: bash
 
-   # in <nturt_zephyr_common_root>/doc
+   # in <nturt_zephyr_common>/doc
    make html
 
 then the main documentation and API reference will be built in the
