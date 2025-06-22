@@ -5,6 +5,7 @@
 #include <zephyr/fs/fs.h>
 #include <zephyr/init.h>
 #include <zephyr/logging/log.h>
+#include <zephyr/settings/settings.h>
 
 #ifdef CONFIG_NTURT_FS_FAT_FS
 #include <ff.h>
@@ -69,10 +70,25 @@ static int init() {
   if (ret < 0) {
     LOG_ERR("Fail to mount %s: %s", CONFIG_NTURT_FS_SD_DISK_NAME,
             strerror(-ret));
+    return ret;
+
   } else {
     LOG_INF("Mounted %s at %s", CONFIG_NTURT_FS_SD_DISK_NAME,
             CONFIG_NTURT_FS_MOUNT_POINT);
   }
+
+#ifdef CONFIG_SETTINGS
+
+  settings_subsys_init();
+  ret = settings_load();
+  if (ret < 0) {
+    LOG_ERR("Failed to load settings: %s", strerror(-ret));
+    return ret;
+
+  } else {
+    LOG_INF("Loaded settings from %s", CONFIG_SETTINGS_FILE_PATH);
+  }
+#endif  // CONFIG_SETTINGS
 
   return 0;
 }

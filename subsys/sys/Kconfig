@@ -26,34 +26,4 @@ config NTURT_SHELL
     bool "Shell support"
     select SHELL
 
-if LOG && NTURT_FS
-
-config LOG_BACKEND_FS
-    default y
-
-config LOG_BACKEND_FS_DIR
-    default "/SD:/logs"
-
-config LOG_BACKEND_FS_FILE_PREFIX
-    default ""
-
-config LOG_BACKEND_FS_FILES_LIMIT
-    default 5
-
-config LOG_BACKEND_FS_FILE_SIZE
-    default 262144
-
-endif # LOG && NTURT_FS
-
-if SETTINGS && NTURT_FS
-
-choice SETTINGS_BACKEND
-    default SETTINGS_FILE
-endchoice
-
-config SETTINGS_FILE_PATH
-    default "/SD:/settings"
-
-endif # SETTINGS && NTURT_FS
-
 endif # NTURT_SYS

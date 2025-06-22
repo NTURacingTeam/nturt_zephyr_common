@@ -1,10 +1,10 @@
 #include "nturt/sys/sys.h"
 
 // glibc includes
+#include <stdbool.h>
 #include <string.h>
 
 // zephyr includes
-#include <zephyr/device.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/init.h>
@@ -12,7 +12,7 @@
 #include <zephyr/logging/log_ctrl.h>
 #include <zephyr/sys/reboot.h>
 
-LOG_MODULE_REGISTER(sys);
+LOG_MODULE_REGISTER(nturt_sys);
 
 /* static function declaration -----------------------------------------------*/
 static int init();
@@ -33,17 +33,17 @@ void sys_reset() {
   log_panic();
 
 #ifdef CONFIG_NTURT_SYS_REBOOT_SOUND
-  gpio_pin_set_dt(&buzzer, 1);
+  gpio_pin_set_dt(&buzzer, true);
   k_busy_wait(300 * 1000);
-  gpio_pin_set_dt(&buzzer, 0);
+  gpio_pin_set_dt(&buzzer, false);
   k_busy_wait(100 * 1000);
-  gpio_pin_set_dt(&buzzer, 1);
+  gpio_pin_set_dt(&buzzer, true);
   k_busy_wait(100 * 1000);
-  gpio_pin_set_dt(&buzzer, 0);
+  gpio_pin_set_dt(&buzzer, false);
   k_busy_wait(100 * 1000);
-  gpio_pin_set_dt(&buzzer, 1);
+  gpio_pin_set_dt(&buzzer, true);
   k_busy_wait(100 * 1000);
-  gpio_pin_set_dt(&buzzer, 0);
+  gpio_pin_set_dt(&buzzer, false);
 #endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
 
   sys_reboot(SYS_REBOOT_COLD);
