@@ -4,7 +4,6 @@
 #include <string.h>
 
 // zephyr include
-#include <zephyr/zbus/zbus.h>
 #include <zephyr/ztest.h>
 #include <zephyr/ztest_mock.h>
 
@@ -17,17 +16,21 @@
 
 // in ticks
 #define PERIOD (20 * MULTI)
-#define WATERMARK (8 * MULTI)
+#define MIN_SEPARATION (10 * MULTI)
+#define WATERMARK (10 * MULTI)
 #define TOLERANCE (2 * MULTI)
 
+#define EARLY (MIN_SEPARATION + WATERMARK / 2)
 #define LATE (PERIOD + WATERMARK / 2)
 #define SLEEP (PERIOD + WATERMARK + 3 * TOLERANCE)
 
 #define INVALID (-1)
 
 /* type ----------------------------------------------------------------------*/
-MSG_AGG_TYPE_DECLARE(agg_susp, struct msg_susp_data, travel.fl, travel.fr,
-                     travel.rl, travel.rr);
+AGG_TYPE_DECLARE(agg_susp, struct msg_susp_data,
+                 AGG_MEMBER(header, AGG_FLAG_OPTIONAL), AGG_MEMBER(travel.fl),
+                 AGG_MEMBER(travel.fr), AGG_MEMBER(travel.rl),
+                 AGG_MEMBER(travel.rr));
 
 struct agg_fixture {
   struct agg_susp *agg_susp;
@@ -57,12 +60,13 @@ void susp_publish(void *data, void *user_data) {
 /* static variable -----------------------------------------------------------*/
 static struct agg_fixture agg_fixture;
 
-MSG_AGG_DEFINE(agg_susp, agg_susp, susp_publish, &agg_fixture,
-               MSG_AGG_DATA_INIT(0));
+AGG_DEFINE(agg_susp, agg_susp, AGG_DATA_INIT(0), K_TICKS(PERIOD),
+           K_TICKS(MIN_SEPARATION), K_TICKS(WATERMARK), susp_publish,
+           &agg_fixture);
 
 /* suite: agg ----------------------------------------------------------------*/
 static void *agg_setup() {
-  MSG_AGG_INIT(&agg_susp);
+  k_sleep(K_TICKS(SLEEP));
 
   agg_fixture.agg_susp = &agg_susp;
 
@@ -70,106 +74,112 @@ static void *agg_setup() {
 }
 
 static void agg_before(void *_fixture) {
+  static const struct msg_susp_data data = {0};
+
   struct agg_fixture *fixture = _fixture;
 
-  memset(fixture->agg_susp->ctrl.data, 0, fixture->agg_susp->ctrl.data_size);
+  // reset data and cold start
+  AGG_UPDATE(fixture->agg_susp, header, data.header);
+  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
+  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
+  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
+  AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
 
-  MSG_AGG_START(fixture->agg_susp, K_TICKS(PERIOD), K_TICKS(WATERMARK));
+  ztest_expect_data(susp_publish, data, &data);
+
+  k_sleep(K_TICKS(MULTI));
+
   fixture->start_time = k_uptime_ticks();
 }
 
 static void agg_after(void *_fixture) {
-  struct agg_fixture *fixture = _fixture;
+  (void)_fixture;
 
-  MSG_AGG_STOP(fixture->agg_susp);
+  // force to cold start everytime
+  k_sleep(K_TICKS(SLEEP));
 }
 
 ZTEST_SUITE(agg, NULL, agg_setup, agg_before, agg_after, NULL);
 
 /**
- * @brief Test publish after period with all members updated.
+ * @brief Test publish after minimum separation time with all members updated.
  *
  */
-ZTEST_F(agg, test_period_publish) {
+ZTEST_F(agg, test_early_publish) {
   struct msg_susp_data data = {.travel = {.fl = 1, .fr = 2, .rl = 3, .rr = 4}};
 
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
+  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
+  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
+  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
+  AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
 
   ztest_expect_data(susp_publish, data, &data);
 
   k_sleep(K_TICKS(SLEEP));
 
-  check_time(fixture, PERIOD);
+  check_time(fixture, MIN_SEPARATION);
 }
 
 /**
- * @brief Test publish after period + water with some members updated.
+ * @brief Test publish between minimum separartion and period immediately after
+ * all members updated.
  *
  */
-ZTEST_F(agg, test_watermark_publish) {
+ZTEST_F(agg, test_before_period_publish) {
+  struct msg_susp_data data = {.travel = {.fl = 1, .fr = 2, .rl = 3, .rr = 4}};
+
+  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
+  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
+  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
+
+  ztest_expect_data(susp_publish, data, &data);
+
+  k_sleep(K_TICKS(EARLY));
+
+  AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
+
+  k_sleep(K_TICKS(SLEEP));
+
+  check_time(fixture, EARLY);
+}
+
+/**
+ * @brief Test publish between period and watermark immediately after
+ * late-arrival members updated.
+ *
+ */
+ZTEST_F(agg, test_after_period_publish) {
+  struct msg_susp_data data = {.travel = {.fl = 1, .fr = 2, .rl = 3, .rr = 4}};
+
+  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
+  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
+  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
+
+  ztest_expect_data(susp_publish, data, &data);
+
+  k_sleep(K_TICKS(LATE));
+
+  AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
+
+  k_sleep(K_TICKS(SLEEP));
+
+  check_time(fixture, LATE);
+}
+
+/**
+ * @brief Test publish after period + water with not all members updated.
+ *
+ */
+ZTEST_F(agg, test_late_publish) {
   struct msg_susp_data data = {.travel = {.fl = 1, .fr = 2, .rl = 3}};
 
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
+  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
+  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
+  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
 
   ztest_expect_data(susp_publish, data, &data);
 
   k_sleep(K_TICKS(SLEEP));
 
   check_time(fixture, PERIOD + WATERMARK);
-}
-
-/**
- * @brief Test publish after period within watermark immediately after
- * late-arrival members updated.
- *
- */
-ZTEST_F(agg, test_late_publish) {
-  struct msg_susp_data data = {.travel = {.fl = 1, .fr = 2, .rl = 3, .rr = 4}};
-
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
-
-  ztest_expect_data(susp_publish, data, &data);
-
-  k_sleep(K_TICKS(LATE));
-
-  MSG_AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
-
-  k_sleep(K_TICKS(SLEEP - LATE));
-
-  check_time(fixture, LATE);
-}
-
-/**
- * @brief Test periodical publish with all members updated.
- *
- */
-ZTEST_F(agg, test_periodical_publish) {
-  struct msg_susp_data data = {0};
-
-  k_sleep(K_TICKS(PERIOD / 2));
-
-  for (int i = 0; i < 10; i++) {
-    data.travel.fl = i;
-    data.travel.fr = i + 1;
-    data.travel.rl = i + 2;
-    data.travel.rr = i + 3;
-
-    MSG_AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
-    MSG_AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
-    MSG_AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
-    MSG_AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
-
-    ztest_expect_data(susp_publish, data, &data);
-
-    k_sleep(K_TICKS(PERIOD));
-
-    check_time(fixture, PERIOD * (i + 1));
-  }
 }
