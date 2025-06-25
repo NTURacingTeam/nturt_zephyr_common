@@ -27,13 +27,8 @@
 #define INVALID (-1)
 
 /* type ----------------------------------------------------------------------*/
-AGG_TYPE_DECLARE(agg_susp, struct msg_susp_data,
-                 AGG_MEMBER(header, AGG_FLAG_OPTIONAL), AGG_MEMBER(travel.fl),
-                 AGG_MEMBER(travel.fr), AGG_MEMBER(travel.rl),
-                 AGG_MEMBER(travel.rr));
-
 struct agg_fixture {
-  struct agg_susp *agg_susp;
+  struct agg_typed *agg_susp;
   int64_t start_time;
   int64_t end_time;
 };
@@ -41,7 +36,7 @@ struct agg_fixture {
 /* static function declaration -----------------------------------------------*/
 void check_time(struct agg_fixture *fixture, int64_t expected);
 
-void susp_publish(void *data, void *user_data);
+void susp_publish(const void *data, void *user_data);
 
 /* static function definition ------------------------------------------------*/
 void check_time(struct agg_fixture *fixture, int64_t expected) {
@@ -49,7 +44,7 @@ void check_time(struct agg_fixture *fixture, int64_t expected) {
   zassert_within(fixture->end_time, fixture->start_time + expected, TOLERANCE);
 }
 
-void susp_publish(void *data, void *user_data) {
+void susp_publish(const void *data, void *user_data) {
   struct agg_fixture *fixture = user_data;
 
   fixture->end_time = k_uptime_ticks();
@@ -60,9 +55,12 @@ void susp_publish(void *data, void *user_data) {
 /* static variable -----------------------------------------------------------*/
 static struct agg_fixture agg_fixture;
 
-AGG_DEFINE(agg_susp, agg_susp, AGG_DATA_INIT(0), K_TICKS(PERIOD),
-           K_TICKS(MIN_SEPARATION), K_TICKS(WATERMARK), susp_publish,
-           &agg_fixture);
+AGG_TYPED_DEFINE(agg_susp, struct msg_susp_data, AGG_DATA_INIT(0),
+                 K_TICKS(PERIOD), K_TICKS(MIN_SEPARATION), K_TICKS(WATERMARK),
+                 susp_publish, &agg_fixture,
+                 AGG_MEMBER(header, AGG_FLAG_OPTIONAL), AGG_MEMBER(travel.fl),
+                 AGG_MEMBER(travel.fr), AGG_MEMBER(travel.rl),
+                 AGG_MEMBER(travel.rr));
 
 /* suite: agg ----------------------------------------------------------------*/
 static void *agg_setup() {
@@ -79,11 +77,16 @@ static void agg_before(void *_fixture) {
   struct agg_fixture *fixture = _fixture;
 
   // reset data and cold start
-  AGG_UPDATE(fixture->agg_susp, header, data.header);
-  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
-  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
-  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
-  AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, header,
+                   data.header);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fl,
+                   data.travel.fl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fr,
+                   data.travel.fr);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.rl,
+                   data.travel.rl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.rr,
+                   data.travel.rr);
 
   ztest_expect_data(susp_publish, data, &data);
 
@@ -108,10 +111,14 @@ ZTEST_SUITE(agg, NULL, agg_setup, agg_before, agg_after, NULL);
 ZTEST_F(agg, test_early_publish) {
   struct msg_susp_data data = {.travel = {.fl = 1, .fr = 2, .rl = 3, .rr = 4}};
 
-  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
-  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
-  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
-  AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fl,
+                   data.travel.fl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fr,
+                   data.travel.fr);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.rl,
+                   data.travel.rl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.rr,
+                   data.travel.rr);
 
   ztest_expect_data(susp_publish, data, &data);
 
@@ -128,15 +135,19 @@ ZTEST_F(agg, test_early_publish) {
 ZTEST_F(agg, test_before_period_publish) {
   struct msg_susp_data data = {.travel = {.fl = 1, .fr = 2, .rl = 3, .rr = 4}};
 
-  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
-  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
-  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fl,
+                   data.travel.fl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fr,
+                   data.travel.fr);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.rl,
+                   data.travel.rl);
 
   ztest_expect_data(susp_publish, data, &data);
 
   k_sleep(K_TICKS(EARLY));
 
-  AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.rr,
+                   data.travel.rr);
 
   k_sleep(K_TICKS(SLEEP));
 
@@ -151,15 +162,19 @@ ZTEST_F(agg, test_before_period_publish) {
 ZTEST_F(agg, test_after_period_publish) {
   struct msg_susp_data data = {.travel = {.fl = 1, .fr = 2, .rl = 3, .rr = 4}};
 
-  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
-  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
-  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fl,
+                   data.travel.fl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fr,
+                   data.travel.fr);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.rl,
+                   data.travel.rl);
 
   ztest_expect_data(susp_publish, data, &data);
 
   k_sleep(K_TICKS(LATE));
 
-  AGG_UPDATE(fixture->agg_susp, travel.rr, data.travel.rr);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.rr,
+                   data.travel.rr);
 
   k_sleep(K_TICKS(SLEEP));
 
@@ -173,9 +188,12 @@ ZTEST_F(agg, test_after_period_publish) {
 ZTEST_F(agg, test_late_publish) {
   struct msg_susp_data data = {.travel = {.fl = 1, .fr = 2, .rl = 3}};
 
-  AGG_UPDATE(fixture->agg_susp, travel.fl, data.travel.fl);
-  AGG_UPDATE(fixture->agg_susp, travel.fr, data.travel.fr);
-  AGG_UPDATE(fixture->agg_susp, travel.rl, data.travel.rl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fl,
+                   data.travel.fl);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.fr,
+                   data.travel.fr);
+  AGG_TYPED_UPDATE(fixture->agg_susp, struct msg_susp_data, travel.rl,
+                   data.travel.rl);
 
   ztest_expect_data(susp_publish, data, &data);
 

@@ -31,15 +31,63 @@
  */
 
 /* macro ---------------------------------------------------------------------*/
-/// @brief Flag indicating the member is registered to the aggregation.
-#define AGG_FLAG_VALID BIT(4)
-
 /// @brief Flag indicating the aggregation will not wait for the member to be
 /// updated before publishing.
-#define AGG_FLAG_OPTIONAL BIT(5)
+#define AGG_FLAG_OPTIONAL BIT(0)
 
-/// @brief Flag mask indicating the index of the member in the aggregation.
-#define AGG_FLAG_IDX_MASK BIT_MASK(4)
+#define _ARG_FULLY_UPDATED(idx, flags) \
+  (flags & AGG_FLAG_OPTIONAL ? 0 : BIT(idx))
+
+/**
+ * @brief Static initializer for a dataa aggregation. Refer to @ref AGG_DEFINE
+ * for detailed parameter descriptions.
+ *
+ * @param[in] _obj Object to be initialized.
+ *
+ */
+#define AGG_INITIALIZER(_obj, _name, _period, _min_separation, _watermark,   \
+                        _publish, _user_data, ...)                           \
+  {                                                                          \
+      .name = STRINGIFY(_name),                                              \
+      .num_data = NUM_VA_ARGS(__VA_ARGS__) +                                 \
+                  ZERO_OR_COMPILE_ERROR(NUM_VA_ARGS(__VA_ARGS__) < 32),      \
+      .flags = (uint8_t[]){__VA_ARGS__},                                     \
+      .fully_updated = FOR_EACH_IDX(_ARG_FULLY_UPDATED, (|), __VA_ARGS__),   \
+                                                                             \
+      .period = _period,                                                     \
+      .min_separation = _min_separation,                                     \
+      .watermark = _watermark,                                               \
+      .publish = _publish,                                                   \
+      .user_data = _user_data,                                               \
+                                                                             \
+      .early_timer =                                                         \
+          Z_TIMER_INITIALIZER(_obj.early_timer, agg_early_timer_cb, NULL),   \
+      .period_timer =                                                        \
+          Z_TIMER_INITIALIZER(_obj.period_timer, agg_period_timer_cb, NULL), \
+      .work = Z_WORK_DELAYABLE_INITIALIZER(agg_work_cb),                     \
+      .updated = 0,                                                          \
+  }
+
+/**
+ * @brief Define a data aggregation named @p _name to monitor the update of
+ * data.
+ *
+ * @param[in] _name Name of the data aggregation.
+ * @param[in] _period Period of data publishing.
+ * @param[in] _min_separation Minimum separation time between two data
+ * publishing.
+ * @param[in] _watermark Watermark to wait for late-arriving members.
+ * @param[in] _publish Function to publish the data.
+ * @param[in] _user_data Pointer to custom data for the callback.
+ * @param[in] ... Flags of the data to be monitored, where each flag represents
+ * a data to be monitored. If the data does not require flag, 0 should be
+ * specified. The flags can be combined by using the bitwise OR operator (|).
+ */
+#define AGG_DEFINE(_name, _period, _min_separation, _watermark, _publish, \
+                   _user_data, ...)                                       \
+  struct agg _name =                                                      \
+      AGG_INITIALIZER(_name, _name, _period, _min_separation, _watermark, \
+                      _publish, _user_data, __VA_ARGS__)
 
 /**
  * @brief Declare a member of a struct to be monitored for aggregation.
@@ -49,39 +97,10 @@
  * by using the bitwise OR operator (|).
  */
 #define AGG_MEMBER(member, ...) \
-  (member, (COND_CODE_1(__VA_OPT__(1), (AGG_FLAG_VALID | __VA_ARGS__), (AGG_FLAG_VALID))))
+  (member, (COND_CODE_1(__VA_OPT__(1), (__VA_ARGS__), (0))))
 
-#define __AGG_FLAGS(idx, member, flags, type) [offsetof(type, member)] = flags | idx
-
-#define _AGG_FLAGS(idx, args, type) \
-  __AGG_FLAGS(idx, GET_ARG_N(1, __DEBRACKET args), GET_ARG_N(2, __DEBRACKET args), type)
-
-#define _ARG_FULLY_UPDATED(idx, args) \
-  (GET_ARG_N(2, __DEBRACKET args) & AGG_FLAG_OPTIONAL ? 0 : BIT(idx))
-
-/**
- * @brief Declare a struct type for data aggregation named @p _name for a
- * underlying @p _type with members @p __VA_ARGS__ monitored to be aggregated.
- *
- * @param[in] _name Name of the aggregation struct type.
- * @param[in] _type Underlying data type to be aggregated.
- * @param[in] ... Members of @p _type to be monitored, must be declared by
- * @ref AGG_MEMBER.
- */
-#define AGG_TYPE_DECLARE(_name, _type, ...)                              \
-  BUILD_ASSERT(NUM_VA_ARGS(__VA_ARGS__) < 32,                            \
-               "Number of fields to be monitored must be less than 32"); \
-                                                                         \
-  static const uint8_t __agg_flags_map_##_name[sizeof(_type)] = {        \
-      FOR_EACH_IDX_FIXED_ARG(_AGG_FLAGS, (, ), _type, __VA_ARGS__),      \
-  };                                                                     \
-  static const uint32_t __agg_fully_updated_##_name =                    \
-      FOR_EACH_IDX(_ARG_FULLY_UPDATED, (|), __VA_ARGS__);                \
-                                                                         \
-  struct _name {                                                         \
-    struct agg_ctrl ctrl;                                                \
-    _type *type;                                                         \
-  }
+#define _AGG_MEMBER_MEMBER(member) GET_ARG_N(1, __DEBRACKET member)
+#define _AGG_MEMBER_FLAGS(member) GET_ARG_N(2, __DEBRACKET member)
 
 /**
  * @brief Intial value of the data.
@@ -91,13 +110,17 @@
  */
 #define AGG_DATA_INIT(val, ...) {val, __VA_ARGS__}
 
+#define __AGG_MAP(idx, offset, type) [offset] = idx + 1
+#define _AGG_MAP(idx, member, type) \
+  __AGG_MAP(idx, offsetof(type, _AGG_MEMBER_MEMBER(member)), type)
+
 /**
- * @brief Define a message aggregation struct of type @p _type named @p _name .
+ * @brief Define a data aggregation named @p _name to monitor the update of
+ * members within a data type.
  *
  * @param[in] _name Name of the data aggregation.
- * @param[in] _struct_type Struct type of the data aggregation defined by
- * @ref AGG_TYPE_DECLARE.
- * @param[in] _init_val Initial value of the data, must be defined by
+ * @param[in] _type Data type to be monitored.
+ * @param[in] _init_val Initial value of the data, must be a specified by
  * @ref AGG_DATA_INIT.
  * @param[in] _period Period of data publishing.
  * @param[in] _min_separation Minimum separation time between two data
@@ -105,83 +128,80 @@
  * @param[in] _watermark Watermark to wait for late-arriving members.
  * @param[in] _publish Function to publish the data.
  * @param[in] _user_data Pointer to custom data for the callback.
+ * @param[in] ... Members of @p _type to be monitored, must be declared by
+ * @ref AGG_MEMBER.
  */
-#define AGG_DEFINE(_name, _struct_type, _init_val, _period, _min_separation, _watermark, _publish, \
-                   _user_data)                                                                     \
-  struct _struct_type _name = {                                                                    \
-      .ctrl =                                                                                      \
-          {                                                                                        \
-              .name = #_name,                                                                      \
-              .data_size = sizeof(DEREF_TYPE(TYPEOF_FIELD(struct _struct_type, type))),            \
-              .data = &(DEREF_TYPE(TYPEOF_FIELD(struct _struct_type, type)))_init_val,             \
-              .pub_data = &(DEREF_TYPE(TYPEOF_FIELD(struct _struct_type, type))){},                \
-              .flags_map = __agg_flags_map_##_struct_type,                                         \
-              .fully_updated = __agg_fully_updated_##_struct_type,                                 \
-                                                                                                   \
-              .period = _period,                                                                   \
-              .min_separation = _min_separation,                                                   \
-              .watermark = _watermark,                                                             \
-              .publish = _publish,                                                                 \
-              .user_data = _user_data,                                                             \
-                                                                                                   \
-              .early_timer =                                                                       \
-                  Z_TIMER_INITIALIZER(_name.ctrl.early_timer, agg_early_timer_cb, NULL),           \
-              .period_timer =                                                                      \
-                  Z_TIMER_INITIALIZER(_name.ctrl.period_timer, agg_period_timer_cb, NULL),         \
-              .work = Z_WORK_DELAYABLE_INITIALIZER(agg_work_cb),                                   \
-              .updated = 0,                                                                        \
-          },                                                                                       \
+#define AGG_TYPED_DEFINE(_name, _type, _init_val, _period, _min_separation,   \
+                         _watermark, _publish, _user_data, ...)               \
+  struct agg_typed _name = {                                                  \
+      .agg = AGG_INITIALIZER(_name.agg, _name, _period, _min_separation,      \
+                             _watermark, agg_typed_publish, _user_data,       \
+                             FOR_EACH(_AGG_MEMBER_FLAGS, (, ), __VA_ARGS__)), \
+      .data_size = sizeof(_type),                                             \
+      .map =                                                                  \
+          (uint8_t[sizeof(_type)]){                                           \
+              FOR_EACH_IDX_FIXED_ARG(_AGG_MAP, (, ), _type, __VA_ARGS__),     \
+          },                                                                  \
+                                                                              \
+      .publish = _publish,                                                    \
+                                                                              \
+      .data = &(_type)_init_val,                                              \
+      .pub_data = &(_type){},                                                 \
   }
 
-#define _AGG_CTRL_UPDATE(ctrl, type, member, val)           \
-  do {                                                      \
-    K_SPINLOCK(&(ctrl)->lock) {                             \
-      ((type *)(ctrl)->data)->member = (val);               \
-                                                            \
-      agg_ctrl_update_lock((ctrl), offsetof(type, member)); \
-    }                                                       \
+/**
+ * @brief Update a member of data.
+ *
+ * @param[in,out] agg_typed Pointer to the data aggregation.
+ * @param[in] type Type of the data, must be the same as the type specified in
+ * @ref AGG_TYPED_DEFINE.
+ * @param[in] member Member of the data to be updated, must be listed in
+ * @ref AGG_TYPE_DEFINE.
+ * @param[in] value New value of the member.
+ */
+#define AGG_TYPED_UPDATE(agg_typed, type, member, value)                   \
+  do {                                                                     \
+    K_SPINLOCK(&(agg_typed)->lock) {                                       \
+      int idx = (agg_typed)->map[offsetof(type, member)];                  \
+      __ASSERT(idx > 0,                                                    \
+               "Members must declared in AGG_TYPED_DEFINE to be updated"); \
+      ((type *)(agg_typed)->data)->member = (value);                       \
+                                                                           \
+      agg_update(&(agg_typed)->agg, idx - 1);                              \
+    }                                                                      \
   } while (0)
 
-/**
- * @brief Update a member of a message aggregation data.
- *
- * @param[in,out] agg Pointer to the message aggregation.
- * @param[in] member Member of the data to be updated, must be listed in
- * @ref AGG_TYPE_DECLARE.
- * @param[in] val New value of the member.
- */
-#define AGG_UPDATE(agg, member, val) \
-  _AGG_CTRL_UPDATE(&(agg)->ctrl, DEREF_TYPE(__typeof__((agg)->type)), member, val)
-
 /* type ----------------------------------------------------------------------*/
+struct agg;
+
 /**
  * @brief Function to publish the data.
  *
  * @param[in] data Pointer to the data to be published.
  * @param[in] user_data  Pointer to custom data for callback functions.
  */
-typedef void (*msg_agg_publish_t)(void *data, void *user_data);
+typedef void (*msg_agg_publish_t)(struct agg *agg, void *user_data);
 
 /**
- * @brief Message aggregation control.
+ * @brief Function to publish the data.
+ *
+ * @param[in] data Pointer to the data to be published.
+ * @param[in] user_data  Pointer to custom data for callback functions.
  */
-struct agg_ctrl {
+typedef void (*msg_agg_typed_publish_t)(const void *data, void *user_data);
+
+/// @brief Message aggregation control.
+struct agg {
   /** Name of the aggregation. */
   const char *name;
 
-  /** Size of the data. */
-  const size_t data_size;
+  /** Number of data to be monitored for updating. */
+  const size_t num_data;
 
-  /** Pointer to the buffer for updating. */
-  struct msg_susp_data *const data;
+  /** Flags of the data. */
+  const uint8_t *const flags;
 
-  /** Pointer to the buffer for publishing. */
-  struct msg_susp_data *const pub_data;
-
-  /** Map from the byte offset of the member to its flags. */
-  const uint8_t *const flags_map;
-
-  /** Number of members of the data type to be monitored for updating. */
+  /** What @ref agg::updated should when every data is updated. */
   const uint32_t fully_updated;
 
   /** Period of data publishing. */
@@ -215,17 +235,40 @@ struct agg_ctrl {
   uint32_t updated;
 };
 
+struct agg_typed {
+  /** Size of the data. */
+  const size_t data_size;
+
+  /**
+   * Map from the offset of member in the type to the index of data in
+   * @ref agg::agg.
+   */
+  const uint8_t *const map;
+
+  /** Function to publish the data. */
+  const msg_agg_typed_publish_t publish;
+
+  /** Spinlock to protect the following members. */
+  struct k_spinlock lock;
+
+  /** Data aggregation. */
+  struct agg agg;
+
+  /** Pointer to the buffer for updating. */
+  void *const data;
+
+  /** Pointer to the buffer for publishing. */
+  void *const pub_data;
+};
+
 /* function declaration ------------------------------------------------------*/
 /**
- * @brief Signal the update of a member, must be called while holding
- * @ref agg_ctrl::lock.
+ * @brief Signal the update of a data in aggregation.
  *
- * @param[in,out] ctrl Pointer to @ref agg_ctrl.
- * @param[in] offset Byte offset of the member.
- *
- * @warning Internal use only.
+ * @param[in,out] agg Pointer to @ref agg.
+ * @param[in] idx Index of the data that is updated.
  */
-void agg_ctrl_update_lock(struct agg_ctrl *ctrl, size_t offset);
+void agg_update(struct agg *agg, int idx);
 
 /**
  * @brief Timer callback function for periodic publishing.
@@ -254,6 +297,16 @@ void agg_early_timer_cb(struct k_timer *timer);
  * @warning Internal use only.
  */
 void agg_work_cb(struct k_work *work);
+
+/**
+ * @brief Publish function for data aggregation.
+ *
+ * @param[in,out] agg Pointer to @ref agg.
+ * @param[in] user_data Pointer to custom data for callback functions.
+ *
+ * @warning Internal use only.
+ */
+void agg_typed_publish(struct agg *agg, void *user_data);
 
 /**
  * @} // msg_agg
