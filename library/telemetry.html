@@ -271,7 +271,22 @@ transmission of data.</p></li>
 <dl class="c type">
 <dt class="sig sig-object c" id="c.tm_publish_t">
 <span class="target" id="group__tm_1ga3ae02eab3d38e1ad87ad3a5e206cc5e8"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">tm_publish_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.tm_publish_t" title="Link to this definition"></a><br /></dt>
-<dd></dd></dl>
+<dd><p>Function to publish the data. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param addr<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Address of the data. </p>
+</dd>
+<dt class="field-even">Param data<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Pointer to the data to be published. </p>
+</dd>
+<dt class="field-odd">Param size<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Size of the data to be published. </p>
+</dd>
+<dt class="field-even">Param user_data<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Pointer to custom data for callback functions. </p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
