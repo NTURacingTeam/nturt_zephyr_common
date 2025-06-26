@@ -13,6 +13,11 @@
 // project includes
 #include "nturt/msg/aggregation.h"
 
+/**
+ * @addtogroup tm Telemetry
+ * @{
+ */
+
 /* macro ---------------------------------------------------------------------*/
 #define _TM_DATA_TYPE(name) CONCAT(__tm_data_, name, _t)
 
@@ -307,5 +312,9 @@ void tm_data_notify_lock(const struct tm_data *data);
  * @warning Internal use only.
  */
 void tm_group_copy(struct tm_group *group);
+
+/**
+ * @} // Telemetry
+ */
 
 #endif  // NTURT_TM_H_

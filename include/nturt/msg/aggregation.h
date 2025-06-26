@@ -158,7 +158,7 @@
  * @param[in] type Type of the data, must be the same as the type specified in
  * @ref AGG_TYPED_DEFINE.
  * @param[in] member Member of the data to be updated, must be listed in
- * @ref AGG_TYPE_DEFINE.
+ * @ref AGG_TYPED_DEFINE.
  * @param[in] value New value of the member.
  */
 #define AGG_TYPED_UPDATE(agg_typed, type, member, value)                   \
@@ -179,7 +179,7 @@ struct agg;
 /**
  * @brief Function to publish the data.
  *
- * @param[in] data Pointer to the data to be published.
+ * @param[in] agg Pointer to the data aggregation.
  * @param[in] user_data  Pointer to custom data for callback functions.
  */
 typedef void (*msg_agg_publish_t)(struct agg *agg, void *user_data);
@@ -242,8 +242,7 @@ struct agg_typed {
   const size_t data_size;
 
   /**
-   * Map from the offset of member in the type to the index of data in
-   * @ref agg::agg.
+   * Map from the offset of member in the type to the index of data in @ref agg.
    */
   const uint8_t *const map;
 
