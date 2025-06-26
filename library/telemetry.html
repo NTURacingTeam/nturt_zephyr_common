@@ -59,7 +59,26 @@
 <li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_DATA_DECLARE"><code class="docutils literal notranslate"><span class="pre">TM_DATA_DECLARE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_DATA_DEFINE"><code class="docutils literal notranslate"><span class="pre">TM_DATA_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_ALIAS_DECLARE"><code class="docutils literal notranslate"><span class="pre">TM_ALIAS_DECLARE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_ALIAS_DEFINE"><code class="docutils literal notranslate"><span class="pre">TM_ALIAS_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_GROUP_DATA"><code class="docutils literal notranslate"><span class="pre">TM_GROUP_DATA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_GROUP_DEFINE"><code class="docutils literal notranslate"><span class="pre">TM_GROUP_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_DATA_GET"><code class="docutils literal notranslate"><span class="pre">TM_DATA_GET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.TM_DATA_UPDATE"><code class="docutils literal notranslate"><span class="pre">TM_DATA_UPDATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_publish_t"><code class="docutils literal notranslate"><span class="pre">tm_publish_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_data_type"><code class="docutils literal notranslate"><span class="pre">tm_data_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_data_get"><code class="docutils literal notranslate"><span class="pre">tm_data_get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_data_update"><code class="docutils literal notranslate"><span class="pre">tm_data_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_data_notify_lock"><code class="docutils literal notranslate"><span class="pre">tm_data_notify_lock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_group_copy"><code class="docutils literal notranslate"><span class="pre">tm_group_copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_group_data"><code class="docutils literal notranslate"><span class="pre">tm_group_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_data"><code class="docutils literal notranslate"><span class="pre">tm_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.tm_group"><code class="docutils literal notranslate"><span class="pre">tm_group</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -131,10 +150,367 @@ transmission of data.</p></li>
 </section>
 <section id="api-reference">
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__tm"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">Telemetry</span></span></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.TM_DATA_DECLARE">
+<span class="target" id="group__tm_1ga22d652b7cb9f15b56b505f43c9e4ab5c"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_DATA_DECLARE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_DATA_DECLARE" title="Link to this definition"></a><br /></dt>
+<dd><p>Declare a telemetry data, useful for header files. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – <strong>[in]</strong> Name of the data. </p></li>
+<li><p><strong>type</strong> – <strong>[in]</strong> Type of the data. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.TM_DATA_DEFINE">
+<span class="target" id="group__tm_1ga7f16d6e04a412ff27d18bd16f4e36650"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_DATA_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_type</span></span>, <span class="n"><span class="pre">_addr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_DATA_DEFINE" title="Link to this definition"></a><br /></dt>
+<dd><p>Define a telemetry data. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_name</strong> – <strong>[in]</strong> Name of the data. </p></li>
+<li><p><strong>_type</strong> – <strong>[in]</strong> Type of the data. </p></li>
+<li><p><strong>_addr</strong> – <strong>[in]</strong> Address of the data. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.TM_ALIAS_DECLARE">
+<span class="target" id="group__tm_1ga0082df7d3496a658557c224eee4ab487"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_ALIAS_DECLARE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">alias</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_ALIAS_DECLARE" title="Link to this definition"></a><br /></dt>
+<dd><p>Declare a telemetry data alias, useful for header files. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – <strong>[in]</strong> Name of the alias. </p></li>
+<li><p><strong>alias</strong> – <strong>[in]</strong> Telemetry data that this alias refers to. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.TM_ALIAS_DEFINE">
+<span class="target" id="group__tm_1gab7c7775406ad7900c857a29f9ab45fa9"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_ALIAS_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_alias</span></span>, <span class="n"><span class="pre">_addr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_ALIAS_DEFINE" title="Link to this definition"></a><br /></dt>
+<dd><p>Define a telemetry data alias. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_name</strong> – <strong>[in]</strong> Name of the alias. </p></li>
+<li><p><strong>_alias</strong> – <strong>[in]</strong> Telemetry data that this alias refers to. </p></li>
+<li><p><strong>_addr</strong> – <strong>[in]</strong> Address of the alias. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.TM_GROUP_DATA">
+<span class="target" id="group__tm_1ga7418493b34158e1c4af33d39ca61edf9"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_GROUP_DATA</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_GROUP_DATA" title="Link to this definition"></a><br /></dt>
+<dd><p>Specify a telemetry data to be aggregated and published by a telemetry group. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – <strong>[in]</strong> Telemetry data to be aggregated and published. </p></li>
+<li><p><strong>...</strong> – <strong>[in]</strong> Optional flags of the data, the same ones and rules as AGG_MEMBER. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.TM_GROUP_DEFINE">
+<span class="target" id="group__tm_1ga919115fbcf4ff4f39d6358a78fd044f7"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_GROUP_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_period</span></span>, <span class="n"><span class="pre">_min_separation</span></span>, <span class="n"><span class="pre">_watermark</span></span>, <span class="n"><span class="pre">_publish</span></span>, <span class="n"><span class="pre">_user_data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_GROUP_DEFINE" title="Link to this definition"></a><br /></dt>
+<dd><p>Define a telemetry group to aggregrate and publish telementry data. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_name</strong> – <strong>[in]</strong> Name of the telemetry group. </p></li>
+<li><p><strong>_period</strong> – <strong>[in]</strong> Period of data publishing. </p></li>
+<li><p><strong>_min_separation</strong> – <strong>[in]</strong> Minimum separation time between two data publishing. </p></li>
+<li><p><strong>_watermark</strong> – <strong>[in]</strong> Watermark to wait for late-arriving members. </p></li>
+<li><p><strong>_publish</strong> – <strong>[in]</strong> Function to publish the data, must be of type <a class="reference internal" href="#group__tm_1ga3ae02eab3d38e1ad87ad3a5e206cc5e8"><span class="std std-ref">tm_publish_t</span></a>. </p></li>
+<li><p><strong>_user_data</strong> – <strong>[in]</strong> Pointer to custom data for the callback. </p></li>
+<li><p><strong>...</strong> – <strong>[in]</strong> Data to be aggregated and published, must be specified by <a class="reference internal" href="#group__tm_1ga7418493b34158e1c4af33d39ca61edf9"><span class="std std-ref">TM_GROUP_DATA</span></a>. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.TM_DATA_GET">
+<span class="target" id="group__tm_1ga658006707873d07fbe9900ee9b17cf89"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_DATA_GET</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_DATA_GET" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.TM_DATA_UPDATE">
+<span class="target" id="group__tm_1ga5dd61ec4d01789c57299694538bdaec8"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_DATA_UPDATE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_DATA_UPDATE" title="Link to this definition"></a><br /></dt>
+<dd><p>Update telemetry data using its name and value. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – <strong>[in]</strong> Name of the telemetry data. </p></li>
+<li><p><strong>value</strong> – <strong>[in]</strong> New value of the telemetry data. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.tm_publish_t">
+<span class="target" id="group__tm_1ga3ae02eab3d38e1ad87ad3a5e206cc5e8"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">tm_publish_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.tm_publish_t" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.tm_data_type">
+<span class="target" id="group__tm_1ga4aec1e6524cbaecbbb4bf39cc49ca50f"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tm_data_type</span></span></span><a class="headerlink" href="#c.tm_data_type" title="Link to this definition"></a><br /></dt>
+<dd><p>Telemetry data type. </p>
+<p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.tm_data_type.TM_DATA_TYPE_NORMAL">
+<span class="target" id="group__tm_1gga4aec1e6524cbaecbbb4bf39cc49ca50fa8193c8f627fb19cb7324b4ef1874d4f5"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TM_DATA_TYPE_NORMAL</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.tm_data_type.TM_DATA_TYPE_NORMAL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.tm_data_type.TM_DATA_TYPE_ALIAS">
+<span class="target" id="group__tm_1gga4aec1e6524cbaecbbb4bf39cc49ca50faf82d8ea13aa8785f6494f561f4b4a5cc"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TM_DATA_TYPE_ALIAS</span></span></span><a class="headerlink" href="#c.tm_data_type.TM_DATA_TYPE_ALIAS" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.tm_data_get">
+<span class="target" id="group__tm_1ga230920039467709346f905b8b9d483d6"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tm_data_get</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">addr</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.tm_data_get" title="Link to this definition"></a><br /></dt>
+<dd><p>Get telemetry data using its address and pointer to value. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr</strong> – <strong>[in]</strong> Address of the telemetry data. </p></li>
+<li><p><strong>value</strong> – <strong>[out]</strong> Pointer to store the retrieved value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return values<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>0</strong> – For success. </p></li>
+<li><p><strong>-ENOENT</strong> – If the data does not exist. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.tm_data_update">
+<span class="target" id="group__tm_1gad83605825e3d89c5522b668cb7ae0db0"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tm_data_update</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">addr</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.tm_data_update" title="Link to this definition"></a><br /></dt>
+<dd><p>Update telemetry data using its address and pointer to value. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr</strong> – <strong>[in]</strong> Address of the telemetry data. </p></li>
+<li><p><strong>value</strong> – <strong>[in]</strong> Pointer to the new value of the telemetry data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return values<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>0</strong> – For success. </p></li>
+<li><p><strong>-ENOENT</strong> – If the data does not exist. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.tm_data_notify_lock">
+<span class="target" id="group__tm_1ga65eb8e7d497072039ed2c1e6772fc45a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tm_data_notify_lock</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.tm_data" title="tm_data"><span class="n"><span class="pre">tm_data</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.tm_data_notify_lock" title="Link to this definition"></a><br /></dt>
+<dd><p>Notify the telemetry groups that this data has been updated. Must be called while holding the lock. </p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>doxygengroup: Cannot find group “tm” in doxygen xml output for project “NTURT Zephyr Common Library” from directory: _build_doxygen/xml/</p>
+<p>Internal use only. </p>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – <strong>[in]</strong> Pointer to <a class="reference internal" href="#structtm__data"><span class="std std-ref">tm_data</span></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.tm_group_copy">
+<span class="target" id="group__tm_1ga7826bbfd20f80d5d0cc7d708b0ef3f24"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tm_group_copy</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.tm_group" title="tm_group"><span class="n"><span class="pre">tm_group</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">group</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.tm_group_copy" title="Link to this definition"></a><br /></dt>
+<dd><p>Copy the data in the telemetry data to the group’s publishing buffer. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Internal use only. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> – <strong>[in]</strong> Pointer to <a class="reference internal" href="#structtm__group"><span class="std std-ref">tm_group</span></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.tm_group_data">
+<span class="target" id="structtm__group__data"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tm_group_data</span></span></span><a class="headerlink" href="#c.tm_group_data" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;nturt/telemetry.h&gt;</em></div>
+<p>Telemetry group data. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c">
+<span class="target" id="structtm__group__data_1a50bd7b1e2baf8774b08c6ed60adef50b"></span><span class="sig-name descname"><span class="pre">STAILQ_ENTRY</span> <span class="pre">(tm_group_data)</span> <span class="pre">next</span></span></dt>
+<dd><p>List entry of the element. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_group_data.group">
+<span class="target" id="structtm__group__data_1abe051a3fc8ba2fb9704f59541b4eebd3"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.tm_group" title="tm_group"><span class="n"><span class="pre">tm_group</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">group</span></span></span><a class="headerlink" href="#c.tm_group_data.group" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to the telemetry group. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_group_data.data">
+<span class="target" id="structtm__group__data_1a914c975a77d5dc46949391156972d050"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.tm_data" title="tm_data"><span class="n"><span class="pre">tm_data</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">data</span></span></span><a class="headerlink" href="#c.tm_group_data.data" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to the telemetry data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_group_data.pub_data">
+<span class="target" id="structtm__group__data_1ad32781c33f072c9e8ce89a696d231660"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pub_data</span></span></span><a class="headerlink" href="#c.tm_group_data.pub_data" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to the buffer for publishing. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.tm_data">
+<span class="target" id="structtm__data"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tm_data</span></span></span><a class="headerlink" href="#c.tm_data" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;nturt/telemetry.h&gt;</em></div>
+<p>Telemetry data. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_data.type">
+<span class="target" id="structtm__data_1abd24d8501d0ac47c14ea74df1c6cf176"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.tm_data_type" title="tm_data_type"><span class="n"><span class="pre">tm_data_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><a class="headerlink" href="#c.tm_data.type" title="Link to this definition"></a><br /></dt>
+<dd><p>Type of the telemetry data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_data.addr">
+<span class="target" id="structtm__data_1a7c98ebe02b8cfd6984aad6d55bf17dbb"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addr</span></span></span><a class="headerlink" href="#c.tm_data.addr" title="Link to this definition"></a><br /></dt>
+<dd><p>Address of the telemetry data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_data.name">
+<span class="target" id="structtm__data_1a2ed9232a99f3b0417490e1ad6a681c53"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><a class="headerlink" href="#c.tm_data.name" title="Link to this definition"></a><br /></dt>
+<dd><p>Name of the telementry data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_data.size">
+<span class="target" id="structtm__data_1a08c3c9ac9b2f92ef98502b7c9e431005"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size</span></span></span><a class="headerlink" href="#c.tm_data.size" title="Link to this definition"></a><br /></dt>
+<dd><p>Size of the telemetry data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_data.groups">
+<span class="target" id="structtm__data_1a7cddffbf3c6daf80521ffa48278d3561"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">tm_group_list</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">groups</span></span></span><a class="headerlink" href="#c.tm_data.groups" title="Link to this definition"></a><br /></dt>
+<dd><p>List of groups that publish the telemetry data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_data.lock">
+<span class="target" id="structtm__data_1a5a5d230ab7527aaf04e0297d625567c9"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_spinlock</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">lock</span></span></span><a class="headerlink" href="#c.tm_data.lock" title="Link to this definition"></a><br /></dt>
+<dd><p>Spinlock to protect the following members. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_data.data">
+<span class="target" id="structtm__data_1adffe86d2f2624ef96a024e867075e2a8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">data</span></span></span><a class="headerlink" href="#c.tm_data.data" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to the buffer of the telementry data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_data.alias">
+<span class="target" id="structtm__data_1acaeaa2118f5cdf5a0b55b73094da0453"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.tm_data" title="tm_data"><span class="n"><span class="pre">tm_data</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">alias</span></span></span><a class="headerlink" href="#c.tm_data.alias" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to the telemetry data that this alias refers to. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.tm_group">
+<span class="target" id="structtm__group"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tm_group</span></span></span><a class="headerlink" href="#c.tm_group" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;nturt/telemetry.h&gt;</em></div>
+<p>Telemetry publishing group. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_group.publish">
+<span class="target" id="structtm__group_1a908afc760945c2e5699c3e45e8218b1d"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.tm_publish_t" title="tm_publish_t"><span class="n"><span class="pre">tm_publish_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publish</span></span></span><a class="headerlink" href="#c.tm_group.publish" title="Link to this definition"></a><br /></dt>
+<dd><p>Function to publish the data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_group.num_data">
+<span class="target" id="structtm__group_1afa2e83d8d28d5d822f652f3657885df0"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">num_data</span></span></span><a class="headerlink" href="#c.tm_group.num_data" title="Link to this definition"></a><br /></dt>
+<dd><p>Number of data in the group. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_group.lock">
+<span class="target" id="structtm__group_1ae14ac913c56ff56bd2fc0fc8eb073a77"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_spinlock</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">lock</span></span></span><a class="headerlink" href="#c.tm_group.lock" title="Link to this definition"></a><br /></dt>
+<dd><p>Spinlock to protect the following members. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_group.agg">
+<span class="target" id="structtm__group_1aaa6b9aad047956d380501fdf3504b6b6"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.tm_group.agg" title="agg"><span class="n"><span class="pre">agg</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">agg</span></span></span><a class="headerlink" href="#c.tm_group.agg" title="Link to this definition"></a><br /></dt>
+<dd><p>Aggregation of the data in the group. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.tm_group.datas">
+<span class="target" id="structtm__group_1adb7f5b0a8df9c93c0bc65220f8b4a077"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.tm_group_data" title="tm_group_data"><span class="n"><span class="pre">tm_group_data</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">datas</span></span></span><a class="headerlink" href="#c.tm_group.datas" title="Link to this definition"></a><br /></dt>
+<dd><p>Array of data in the group. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
