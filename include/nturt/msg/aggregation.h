@@ -192,7 +192,7 @@ typedef void (*msg_agg_publish_t)(struct agg *agg, void *user_data);
  */
 typedef void (*msg_agg_typed_publish_t)(const void *data, void *user_data);
 
-/// @brief Message aggregation control.
+/// @brief Data aggregation.
 struct agg {
   /** Name of the aggregation. */
   const char *name;
@@ -237,6 +237,7 @@ struct agg {
   uint32_t updated;
 };
 
+/// @brief Data aggregation for a specific type.
 struct agg_typed {
   /** Size of the data. */
   const size_t data_size;

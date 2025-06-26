@@ -187,6 +187,14 @@
 struct tm_data;
 struct tm_group;
 
+/**
+ * @brief Function to publish the data.
+ *
+ * @param[in] addr Address of the data.
+ * @param[in] data Pointer to the data to be published.
+ * @param[in] size Size of the data to be published.
+ * @param[in] user_data  Pointer to custom data for callback functions.
+ */
 typedef void (*tm_publish_t)(uint32_t addr, const void *data, size_t size,
                              void *user_data);
 
