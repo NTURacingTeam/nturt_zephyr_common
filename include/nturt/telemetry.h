@@ -1,20 +1,8 @@
-/**
- * @file
- * @brief Telemetry module.
- *
- * @author quantumspawner
- * @version 0.0.1
- * @date 2024-12-27
- * @copyright Copyright (c) 2024 NTU Racing Team
- */
+#ifndef NTURT_TM_H_
+#define NTURT_TM_H_
 
-#ifndef NTURT_TELEMETRY_H_
-#define NTURT_TELEMETRY_H_
-
-// glibc include
-#include <stdbool.h>
+// glibc includes
 #include <stddef.h>
-#include <stdint.h>
 #include <sys/queue.h>
 
 // zephyr include
@@ -22,282 +10,302 @@
 #include <zephyr/sys/iterable_sections.h>
 #include <zephyr/sys/util.h>
 
-/**
- * @addtogroup tm Telemetry
- *
- * @{
- */
+// project includes
+#include "nturt/msg/aggregation.h"
 
 /* macro ---------------------------------------------------------------------*/
-#define _TM_DATA_BUF_NAME(name, i) CONCAT(name, _buf, i)
+#define _TM_DATA_TYPE(name) CONCAT(__tm_data_, name, _t)
 
-#define _TM_DATA_BUF_DEFINE(name, size)                         \
-  static uint8_t __aligned(8) _TM_DATA_BUF_NAME(name, 0)[size], \
-      _TM_DATA_BUF_NAME(name, 1)[size]
+/**
+ * @brief Declare a telemetry data, useful for header files.
+ *
+ * @param[in] name Name of the data.
+ * @param[in] type Type of the data.
+ *
+ */
+#define TM_DATA_DECLARE(name, type) \
+  typedef type _TM_DATA_TYPE(name); \
+  extern struct tm_data name
 
-#define _TM_DATA_DEFINE(_name, _addr, _size)                              \
-  _TM_DATA_BUF_DEFINE(_name, _size);                                      \
-  STRUCT_SECTION_ITERABLE(tm_data, _name) = {                             \
-      .addr = _addr,                                                      \
-      .size = _size,                                                      \
-      .data = {_TM_DATA_BUF_NAME(_name, 0), _TM_DATA_BUF_NAME(_name, 1)}, \
+/**
+ * @brief Define a telemetry data.
+ *
+ * @param[in] _name Name of the data.
+ * @param[in] _type Type of the data.
+ * @param[in] _addr Address of the data.
+ *
+ */
+#define TM_DATA_DEFINE(_name, _type, _addr)   \
+  TM_DATA_DECLARE(_name, _type);              \
+                                              \
+  STRUCT_SECTION_ITERABLE(tm_data, _name) = { \
+      .type = TM_DATA_TYPE_NORMAL,            \
+      .addr = _addr,                          \
+      .name = STRINGIFY(_name),               \
+      .size = sizeof(_type),                  \
+      .data = &(_type){0},                    \
+  };
+
+/**
+ * @brief Declare a telemetry data alias, useful for header files.
+ *
+ * @param[in] name Name of the alias.
+ * @param[in] alias Telemetry data that this alias refers to.
+ *
+ */
+#define TM_ALIAS_DECLARE(name, alias)               \
+  typedef _TM_DATA_TYPE(alias) _TM_DATA_TYPE(name); \
+  extern struct tm_data name
+
+/**
+ * @brief Define a telemetry data alias.
+ *
+ * @param[in] _name Name of the alias.
+ * @param[in] _alias Telemetry data that this alias refers to.
+ * @param[in] _addr Address of the alias.
+ *
+ */
+#define TM_ALIAS_DEFINE(_name, _alias, _addr) \
+  TM_ALIAS_DECLARE(_name, _alias);            \
+                                              \
+  STRUCT_SECTION_ITERABLE(tm_data, _name) = { \
+      .type = TM_DATA_TYPE_ALIAS,             \
+      .addr = _addr,                          \
+      .alias = &_alias,                       \
+  };
+
+#define _TM_AGG_PUBLISH(name) CONCAT(__tm_agg_publish_, name)
+
+#define __TM_AGG_PUBLISH_DEFINE(_idx, _data)                                 \
+  group->publish(group->datas[_idx].data->addr, group->datas[_idx].pub_data, \
+                 sizeof(_TM_DATA_TYPE(_data)), user_data)
+
+#define _TM_AGG_PUBLISH_DEFINE(name, ...)                                \
+  static void _TM_AGG_PUBLISH(name)(struct agg * agg, void *user_data) { \
+    struct tm_group *group = CONTAINER_OF(agg, struct tm_group, agg);    \
+                                                                         \
+    tm_group_copy(group);                                                \
+                                                                         \
+    FOR_EACH_IDX(__TM_AGG_PUBLISH_DEFINE, (;), __VA_ARGS__);             \
+  }
+
+#define _TM_GROUP_DATA(_data, _group)         \
+  {                                           \
+      .group = &_group,                       \
+      .data = &_data,                         \
+      .pub_data = &(_TM_DATA_TYPE(_data)){0}, \
   }
 
 /**
- * @brief Instantiate telemetry data.
+ * @brief Specify a telemetry data to be aggregated and published by a telemetry
+ * group.
  *
- * @param[in] addr Address of the data.
- * @param[in] size Size of the data.
- *
- * @note Since the name of the data is automatically generated using @p addr ,
- * the name would be illegal if @p addr contains characters other than
- * alphanumericals or underscores. To avoid this, _TM_DATA_DEFINE can be used
- * directly by providing a unique name.
+ * @param[in] data Telemetry data to be aggregated and published.
+ * @param[in] ... Optional flags of the data, the same ones and rules as
+ * @ref AGG_MEMBER.
  */
-#define TM_DATA_DEFINE(addr, size) _TM_DATA_DEFINE(__tm_data_##addr, addr, size)
+#define TM_GROUP_DATA(data, ...) \
+  (data, (COND_CODE_1(__VA_OPT__(1), (__VA_ARGS__), (0))))
 
-#define _TM_GROUP_DEFINE(_name, _id, ...)                                     \
-  BUILD_ASSERT(                                                               \
-      NUM_VA_ARGS(__VA_ARGS__) < sizeof(((struct tm_group *)0)->updated) * 8, \
-      "number of data in telemetry group of id " #_id                         \
-      " is greater then the number of bits of tm_group::updated");            \
-  static const uint32_t CONCAT(_name, _data_addrs)[] = {__VA_ARGS__};         \
-  STRUCT_SECTION_ITERABLE(tm_group, _name) = {                                \
-      .id = _id,                                                              \
-      .num_data = NUM_VA_ARGS(__VA_ARGS__),                                   \
-      .data_addrs = CONCAT(_name, _data_addrs),                               \
-  }
+#define _TM_GROUP_DATA_DATA(data) GET_ARG_N(1, __DEBRACKET data)
+#define _TM_GROUP_DATA_FLAGS(data) GET_ARG_N(2, __DEBRACKET data)
 
 /**
- * @brief Instantiate a telemetry group.
+ * @brief Define a telemetry group to aggregrate and publish telementry data.
  *
- * @param[in] id ID of the group.
- * @param[in] ... Addresses of the data in the group.
- *
- * @note Since the name of the data is automatically generated using @p id ,
- * the name would be illegal if @p id contains characters other than
- * alphanumericals or underscores. To avoid this, _TM_GROUP_DEFINE can be used
- * directly by providing a unique name.
+ * @param[in] _name Name of the telemetry group.
+ * @param[in] _period Period of data publishing.
+ * @param[in] _min_separation Minimum separation time between two data
+ * publishing.
+ * @param[in] _watermark Watermark to wait for late-arriving members.
+ * @param[in] _publish Function to publish the data, must be of type
+ * @ref tm_publish_t.
+ * @param[in] _user_data Pointer to custom data for the callback.
+ * @param[in] ... Data to be aggregated and published, must be specified by
+ * @ref TM_GROUP_DATA.
  */
-#define TM_GROUP_DEFINE(id, ...) \
-  _TM_GROUP_DEFINE(CONCAT(__tm_group, id), id, __VA_ARGS__)
+#define TM_GROUP_DEFINE(_name, _period, _min_separation, _watermark, _publish, \
+                        _user_data, ...)                                       \
+  _TM_AGG_PUBLISH_DEFINE(_name,                                                \
+                         FOR_EACH(_TM_GROUP_DATA_DATA, (, ), __VA_ARGS__));    \
+                                                                               \
+  STRUCT_SECTION_ITERABLE(tm_group, _name) = {                                 \
+      .agg =                                                                   \
+          AGG_INITIALIZER(_name.agg, _name, _period, _min_separation,          \
+                          _watermark, _TM_AGG_PUBLISH(_name), _user_data,      \
+                          FOR_EACH(_TM_GROUP_DATA_FLAGS, (, ), __VA_ARGS__)),  \
+      .publish = _publish,                                                     \
+      .num_data = NUM_VA_ARGS(__VA_ARGS__),                                    \
+      .datas =                                                                 \
+          (struct tm_group_data[]){                                            \
+              FOR_EACH_FIXED_ARG(                                              \
+                  _TM_GROUP_DATA, (, ), _name,                                 \
+                  FOR_EACH(_TM_GROUP_DATA_DATA, (, ), __VA_ARGS__)),           \
+          },                                                                   \
+  }
+
+#define TM_DATA_GET(name, value)                      \
+  do {                                                \
+    struct tm_data *__data = &name;                   \
+    if (__data->type == TM_DATA_TYPE_ALIAS) {         \
+      __data = __data->alias;                         \
+    }                                                 \
+                                                      \
+    K_SPINLOCK(&__data->lock) {                       \
+      value = *((_TM_DATA_TYPE(name) *)__data->data); \
+    }                                                 \
+                                                      \
+  } while (0)
 
 /**
- * @brief Instantiate a telemetry backend.
+ * @brief Update telemetry data using its name and value.
  *
- * @param[in] _name Name of the backend.
- * @param[in] _api Pointer to telemetry backend API.
- * @param[in] _user_data Pointer to custom data of the backend.
- * @param[in] ... Group IDs associated with the backend.
+ * @param[in] name Name of the telemetry data.
+ * @param[in] value New value of the telemetry data.
+ *
  */
-#define TM_BACKEND_DEFINE(_name, _api, _user_data, ...)                        \
-  static const uint32_t _name##_group_ids[] = {__VA_ARGS__};                   \
-  static struct tm_backend_list_elm _name##_entries[NUM_VA_ARGS(__VA_ARGS__)]; \
-  STRUCT_SECTION_ITERABLE(tm_backend, _name) = {                               \
-      .num_group = NUM_VA_ARGS(__VA_ARGS__),                                   \
-      .group_ids = _name##_group_ids,                                          \
-      .api = _api,                                                             \
-      .elements = _name##_entries,                                             \
-      .user_data = _user_data,                                                 \
-  }
+#define TM_DATA_UPDATE(name, value)                   \
+  do {                                                \
+    struct tm_data *__data = &name;                   \
+    if (__data->type == TM_DATA_TYPE_ALIAS) {         \
+      __data = __data->alias;                         \
+    }                                                 \
+                                                      \
+    K_SPINLOCK(&__data->lock) {                       \
+      *((_TM_DATA_TYPE(name) *)__data->data) = value; \
+      tm_data_notify_lock(__data);                    \
+    }                                                 \
+                                                      \
+  } while (0)
 
 /* type ----------------------------------------------------------------------*/
-typedef void (*tm_backend_init_t)(void *user_data);
-typedef void (*tm_backend_publish_t)(uint32_t group_id, void *user_data);
+struct tm_data;
+struct tm_group;
 
-/**
- * @brief List element for telemetry backend.
- *
- */
-struct tm_backend_list_elm {
-  /// @brief Pointer to the backend.
-  struct tm_backend *backend;
+typedef void (*tm_publish_t)(uint32_t addr, const void *data, size_t size,
+                             void *user_data);
 
-  /// @brief List entry of the element.
-  STAILQ_ENTRY(tm_backend_list_elm) next;
+/// @brief Telemetry data type.
+enum tm_data_type {
+  TM_DATA_TYPE_NORMAL = 0,
+
+  TM_DATA_TYPE_ALIAS,
+};
+
+/// @brief Telemetry group data.
+struct tm_group_data {
+  /** Pointer to the telemetry group. */
+  struct tm_group *const group;
+
+  /** Pointer to the telemetry data. */
+  struct tm_data *const data;
+
+  /** Pointer to the buffer for publishing. */
+  void *const pub_data;
+
+  /** List entry of the element. */
+  STAILQ_ENTRY(tm_group_data) next;
 };
 
 /// @cond
 
-STAILQ_HEAD(tm_backend_list, tm_backend_list_elm);
+STAILQ_HEAD(tm_group_list, tm_group_data);
 
 /// @endcond
 
-/**
- * @brief Telemetry data.
- *
- */
+/// @brief Telemetry data.
 struct tm_data {
-  /// @brief Address of the data.
+  /** Type of the telemetry data. */
+  const enum tm_data_type type;
+
+  /** Address of the telemetry data. */
   const uint32_t addr;
 
-  /// @brief Size of the data.
-  const size_t size;
-
-  /// @brief Buffer for the data.
-  void *const data[2];
-
-  /// @brief Indicates if the data belongs to a group.
-  bool has_group;
-
   union {
+    // normal
     struct {
-      /// @brief Pointer to the group the data belongs to.
-      struct tm_group *group;
+      /** Name of the telementry data. */
+      const char *name;
 
-      /// @brief Index of the data in the group.
-      uint8_t data_idx;
-    };
+      /** Size of the telemetry data. */
+      const size_t size;
 
-    struct {
-      /// @brief Spinlock.
+      /** List of groups that publish the telemetry data. */
+      struct tm_group_list groups;
+
+      /** Spinlock to protect the following members. */
       struct k_spinlock lock;
 
-      /// @brief Index of the buffer to get data from.
-      uint8_t get_buf_idx;
+      /** Pointer to the buffer of the telementry data. */
+      void *const data;
+    };
+
+    // alias
+    struct {
+      /** Pointer to the telemetry data that this alias refers to. */
+      struct tm_data *const alias;
     };
   };
 };
 
-/**
- * @brief Telemetry group.
- *
- */
+/// @brief Telemetry publishing group.
 struct tm_group {
-  /// @brief ID of the group.
-  const uint32_t id;
+  /** Function to publish the data. */
+  const tm_publish_t publish;
 
-  /// @brief Number of data in the group.
+  /** Number of data in the group. */
   const size_t num_data;
 
-  /// @brief Array of addresses of the data in the group.
-  const uint32_t *const data_addrs;
-
-  /// @brief List of backends associated with the group.
-  struct tm_backend_list backends;
-
-  /// @brief Spinlock.
+  /** Spinlock to protect the following members. */
   struct k_spinlock lock;
 
-  /// @brief Which data in the group has been updated, each bit represents one
-  /// data.
-  uint32_t updated;
+  /** Aggregation of the  data in the group. */
+  struct agg agg;
 
-  /// @brief Number of times the group is currently being accessed.
-  uint8_t accessing;
-
-  /// @brief Index of the buffer to get data from.
-  uint8_t get_buf_idx;
+  /** Array of data in the group. */
+  struct tm_group_data *const datas;
 };
 
+/* function declaration ------------------------------------------------------*/
 /**
- * @brief Telemetry backend API.
+ * @brief Get telemetry data using its address and pointer to value.
  *
- */
-struct tm_backend_api {
-  /// @brief Initialization function.
-  tm_backend_init_t init;
-
-  /// @brief Publish function.
-  tm_backend_publish_t publish;
-};
-
-/**
- * @brief Telemetry backend.
- *
- */
-struct tm_backend {
-  /// @brief Number of groups associated with the backend.
-  const size_t num_group;
-
-  /// @brief Array of group IDs associated with the backend.
-  const uint32_t *const group_ids;
-
-  /// @brief Backend API.
-  const struct tm_backend_api *const api;
-
-  /// @brief List elements for @ref tm_group::backends.
-  struct tm_backend_list_elm *const elements;
-
-  /// @brief Custom data of the backend.
-  void *const user_data;
-};
-
-/* function definition -------------------------------------------------------*/
-/**
- * @brief Get telemetry data.
- *
- * @param[in] addr Address of the data.
+ * @param[in] addr Address of the telemetry data.
  * @param[out] value Pointer to store the retrieved value.
- *
+
  * @retval 0 For success.
  * @retval -ENOENT If the data does not exist.
  */
 int tm_data_get(uint32_t addr, void *value);
 
 /**
- * @brief Update telemetry data.
+ * @brief Update telemetry data using its address and pointer to value.
  *
- * @param[in] addr Address of the data.
- * @param[in] value Pointer to the new value.
- *
+ * @param[in] addr Address of the telemetry data.
+ * @param[in] value Pointer to the new value of the telemetry data.
+
  * @retval 0 For success.
  * @retval -ENOENT If the data does not exist.
  */
 int tm_data_update(uint32_t addr, const void *value);
 
 /**
- * @brief Begin access to a telemetry group.
+ * @brief Notify the telemetry groups that this data has been updated. Must be
+ * called while holding the lock.
  *
- * @param[in] id ID of the group.
+ * @param[in] data Pointer to @ref tm_data.
  *
- * @retval 0 For success.
- * @retval -ENOENT If the group does not exist.
+ * @warning Internal use only.
  */
-int tm_group_access_begin(uint32_t id);
+void tm_data_notify_lock(const struct tm_data *data);
 
 /**
- * @brief End access to a telemetry group.
+ * @brief Copy the data in the telemetry data to the group's publishing buffer.
  *
- * @param[in] id ID of the group.
+ * @param[in] group Pointer to @ref tm_group.
  *
- * @retval 0 For success.
- * @retval -ENOENT If the group does not exist.
+ * @warning Internal use only.
  */
-int tm_group_access_end(uint32_t id);
+void tm_group_copy(struct tm_group *group);
 
-/**
- * @brief Commit telemetry data for a group.
- *
- * @param[in] id ID of the group.
- *
- * @retval 0 For success.
- * @retval -ENOENT If the group does not exist.
- */
-int tm_group_commit(uint32_t id);
-
-/**
- * @brief Initialize a telemetry backend.
- *
- * @param[in] backend Pointer to the backend.
- */
-static inline void tm_backend_init(struct tm_backend *backend) {
-  backend->api->init(backend->user_data);
-}
-
-/**
- * @brief Publish telemetry data.
- *
- * @param[in] backend Pointer to the backend.
- * @param[in] group_id ID of the group to publish.
- */
-static inline void tm_backend_publish(struct tm_backend *backend,
-                                      uint32_t group_id) {
-  backend->api->publish(group_id, backend->user_data);
-}
-
-/**
- * @} // Telemetry
- */
-
-#endif  // NTURT_TELEMETRY_H_
+#endif  // NTURT_TM_H_

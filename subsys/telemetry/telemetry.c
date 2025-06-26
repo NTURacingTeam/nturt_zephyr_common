@@ -16,21 +16,16 @@
 #include <zephyr/sys/hash_map.h>
 #include <zephyr/sys/iterable_sections.h>
 
-LOG_MODULE_REGISTER(nturt_tm, CONFIG_NTURT_LOG_LEVEL);
+LOG_MODULE_REGISTER(nturt_tm2, CONFIG_NTURT_LOG_LEVEL);
 
 /* static function declaration -----------------------------------------------*/
-static int init();
-
 static struct tm_data *data_get(uint32_t addr);
 
-static struct tm_group *group_get(uint32_t id);
-
-static void group_access_end_impl(struct tm_group *group);
+static int init();
 
 /* static variable -----------------------------------------------------------*/
 SYS_INIT(init, APPLICATION, CONFIG_NTURT_TM_INIT_PRIORITY);
 
-SYS_HASHMAP_DEFINE_STATIC(group_map);
 SYS_HASHMAP_DEFINE_STATIC(data_map);
 
 /* function definition -------------------------------------------------------*/
@@ -40,15 +35,11 @@ int tm_data_get(uint32_t addr, void *value) {
     return -ENOENT;
   }
 
-  if (data->has_group) {
-    K_SPINLOCK(&data->group->lock) {
-      memcpy(value, data->data[data->group->get_buf_idx], data->size);
-    }
-  } else {
-    K_SPINLOCK(&data->lock) {
-      memcpy(value, data->data[data->get_buf_idx], data->size);
-    }
+  if (data->type != TM_DATA_TYPE_NORMAL) {
+    data = data->alias;
   }
+
+  K_SPINLOCK(&data->lock) { memcpy(value, data->data, data->size); }
 
   return 0;
 }
@@ -59,136 +50,43 @@ int tm_data_update(uint32_t addr, const void *value) {
     return -ENOENT;
   }
 
-  if (data->has_group) {
-    K_SPINLOCK(&data->group->lock) {
-      memcpy(data->data[data->group->get_buf_idx ^ 1], value, data->size);
+  if (data->type != TM_DATA_TYPE_NORMAL) {
+    data = data->alias;
+  }
 
-      data->group->updated |= BIT(data->data_idx);
-
-      data->group->accessing++;
-    }
-
-    group_access_end_impl(data->group);
-  } else {
-    K_SPINLOCK(&data->lock) {
-      memcpy(data->data[data->get_buf_idx ^ 1], value, data->size);
-
-      data->get_buf_idx ^= 1;
-    }
+  K_SPINLOCK(&data->lock) {
+    memcpy(data->data, value, data->size);
+    tm_data_notify_lock(data);
   }
 
   return 0;
 }
 
-int tm_group_access_begin(uint32_t id) {
-  struct tm_group *group = group_get(id);
-  if (group == NULL) {
-    return -ENOENT;
+void tm_data_notify_lock(const struct tm_data *data) {
+  struct tm_group_data *group_data;
+  STAILQ_FOREACH(group_data, &data->groups, next) {
+    agg_update(&group_data->group->agg, group_data - group_data->group->datas);
   }
-
-  K_SPINLOCK(&group->lock) { group->accessing++; }
-
-  return 0;
 }
 
-int tm_group_access_end(uint32_t id) {
-  struct tm_group *group = group_get(id);
-  if (group == NULL) {
-    return -ENOENT;
-  }
-
-  group_access_end_impl(group);
-
-  return 0;
-}
-
-int tm_group_commit(uint32_t id) {
-  struct tm_group *group = group_get(id);
-  if (group == NULL) {
-    return -ENOENT;
-  }
-
+void tm_group_copy(struct tm_group *group) {
   K_SPINLOCK(&group->lock) {
-    int i;
-    while ((i = __builtin_ffs(~group->updated & BIT_MASK(group->num_data)) -
-                1) >= 0) {
-      struct tm_data *data = data_get(group->data_addrs[i]);
-      __ASSERT_NO_MSG(data != NULL);
+    for (size_t i = 0; i < group->num_data; i++) {
+      const struct tm_group_data *group_data = &group->datas[i];
 
-      memcpy(data->data[group->get_buf_idx ^ 1], data->data[group->get_buf_idx],
-             data->size);
+      struct tm_data *data = group_data->data;
+      if (data->type == TM_DATA_TYPE_ALIAS) {
+        data = data->alias;
+      }
 
-      group->updated |= BIT(i);
+      K_SPINLOCK(&data->lock) {
+        memcpy(group_data->pub_data, data->data, data->size);
+      }
     }
-
-    group->accessing++;
   }
-
-  group_access_end_impl(group);
-
-  return 0;
 }
 
 /* static function definition ------------------------------------------------*/
-static int init() {
-  int ret;
-
-  STRUCT_SECTION_FOREACH(tm_data, data) {
-    ret = sys_hashmap_insert(&data_map, data->addr, (uintptr_t)data, NULL);
-    if (ret < 0) {
-      LOG_ERR("data_map insert failed: %s", strerror(-ret));
-      return ret;
-
-    } else if (ret == 0) {
-      LOG_ERR("data with address 0x%x already exists", data->addr);
-      return -EEXIST;
-    }
-  }
-
-  STRUCT_SECTION_FOREACH(tm_group, group) {
-    ret = sys_hashmap_insert(&group_map, group->id, (uintptr_t)group, NULL);
-    if (ret < 0) {
-      LOG_ERR("group_map insert failed: %s", strerror(-ret));
-      return ret;
-
-    } else if (ret == 0) {
-      LOG_ERR("group with id %d already exists", group->id);
-      return -EEXIST;
-    }
-
-    STAILQ_INIT(&group->backends);
-
-    for (size_t i = 0; i < group->num_data; i++) {
-      struct tm_data *data = data_get(group->data_addrs[i]);
-      if (data == NULL) {
-        LOG_ERR("data with address 0x%x does not exist", group->data_addrs[i]);
-        return -ENOENT;
-      }
-
-      data->has_group = true;
-      data->group = group;
-      data->data_idx = i;
-    }
-  }
-
-  STRUCT_SECTION_FOREACH(tm_backend, backend) {
-    tm_backend_init(backend);
-
-    for (size_t i = 0; i < backend->num_group; i++) {
-      struct tm_group *group = group_get(backend->group_ids[i]);
-      if (group == NULL) {
-        LOG_ERR("group with id %d does not exist", backend->group_ids[i]);
-        return -ENOENT;
-      }
-
-      backend->elements[i].backend = backend;
-      STAILQ_INSERT_TAIL(&group->backends, &backend->elements[i], next);
-    }
-  }
-
-  return 0;
-}
-
 static struct tm_data *data_get(uint32_t addr) {
   uint64_t value;
   if (!sys_hashmap_get(&data_map, addr, &value)) {
@@ -198,38 +96,39 @@ static struct tm_data *data_get(uint32_t addr) {
   return (struct tm_data *)(uintptr_t)value;
 }
 
-static struct tm_group *group_get(uint32_t id) {
-  uint64_t value;
-  if (!sys_hashmap_get(&group_map, id, &value)) {
-    return NULL;
+static int init() {
+  int ret;
+
+  STRUCT_SECTION_FOREACH(tm_data, data) {
+    ret = sys_hashmap_insert(&data_map, data->addr, (uintptr_t)data, NULL);
+
+    __ASSERT(ret != 0, "Data must not have same address: 0x%x", data->addr);
+
+    if (ret < 0) {
+      LOG_ERR("data_map insert failed: %s", strerror(-ret));
+      return ret;
+    }
+
+    if (data->type == TM_DATA_TYPE_NORMAL) {
+      STAILQ_INIT(&data->groups);
+
+    } else if (data->type == TM_DATA_TYPE_ALIAS) {
+      __ASSERT(data->alias->type == TM_DATA_TYPE_NORMAL,
+               "Alias must point to normal data");
+    }
   }
 
-  return (struct tm_group *)(uintptr_t)value;
-}
+  STRUCT_SECTION_FOREACH(tm_group, group) {
+    for (size_t i = 0; i < group->num_data; i++) {
+      struct tm_data *data = group->datas[i].data;
 
-static void group_access_end_impl(struct tm_group *group) {
-  bool to_publish = false;
-
-  do {
-    K_SPINLOCK(&group->lock) {
-      if (group->accessing == 1 &&
-          group->updated == BIT_MASK(group->num_data)) {
-        group->updated = 0;
-        group->get_buf_idx ^= 1;
-
-        to_publish = true;
-      } else {
-        group->accessing--;
-
-        to_publish = false;
+      if (data->type == TM_DATA_TYPE_ALIAS) {
+        data = data->alias;
       }
-    }
 
-    if (to_publish) {
-      struct tm_backend_list_elm *entry;
-      STAILQ_FOREACH(entry, &group->backends, next) {
-        tm_backend_publish(entry->backend, group->id);
-      }
+      STAILQ_INSERT_TAIL(&data->groups, &group->datas[i], next);
     }
-  } while (to_publish);
+  }
+
+  return 0;
 }

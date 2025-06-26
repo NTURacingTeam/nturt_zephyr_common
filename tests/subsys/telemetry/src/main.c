@@ -10,266 +10,290 @@
 #include "nturt/telemetry.h"
 
 /* macro ---------------------------------------------------------------------*/
-#define SINGLE_DATA 0x10
+#define SINGLE_DATA_NAME single_data
+#define SINGLE_DATA_ADDR 0x10
 
-#define GROUP_DATA_START 0x1000
+#define ALIAS_DATA_NAME alias_data
+#define ALIAS_DATA_ADDR 0x100
+
 #define GROUP_DATA_SIZE 10
+#define GROUP_DATA_NAME(i) CONCAT(group_data, i)
+#define GROUP_DATA_ADDR_START 0x1000
+#define GROUP_DATA_ADDR(i) (GROUP_DATA_ADDR_START + i)
 
-#define GROUP_DATA_ADDR(i, ...) (GROUP_DATA_START + i)
+#define SINGLE_GROUP_NAME single_group
+#define ALIAS_GROUP_NAME alias_group
+#define GROUP_GROUP_NAME group_group
 
-#define GROUP_ID 0x20
+// time granularity of 10 ms
+#define MULTI (CONFIG_SYS_CLOCK_TICKS_PER_SEC / 100)
 
-#define _GROUP_DATA_LISTIFY(i, ...) \
-  _TM_DATA_DEFINE(CONCAT(__tm_group, i), GROUP_DATA_START + i, sizeof(int))
+// in ticks
+#define PERIOD (20 * MULTI)
+#define MIN_SEPARATION (10 * MULTI)
+#define WATERMARK (10 * MULTI)
+#define TOLERANCE (2 * MULTI)
+
+#define EARLY (MIN_SEPARATION + WATERMARK / 2)
+#define LATE (PERIOD + WATERMARK / 2)
+#define SLEEP (PERIOD + WATERMARK + TOLERANCE)
+
+#define _DATA_LISTIFY(i, ...) \
+  TM_DATA_DEFINE(GROUP_DATA_NAME(i), int, GROUP_DATA_ADDR(i))
+
+#define _GROUP_DATA_LISTIFY(i, ...) TM_GROUP_DATA(GROUP_DATA_NAME(i))
 
 /* type ----------------------------------------------------------------------*/
-struct tm_backend_fixture {
-  int init_times;
+struct tm_fixture {
+  tm_publish_t single_publish;
 
-  struct tm_backend_api api;
+  tm_publish_t alias_publish;
+
+  tm_publish_t group_publish;
+
+  int group_publish_called;
 };
 
 /* static function declaration -----------------------------------------------*/
-static void backend_init(void *user_data);
-static void backend_publish_dummy(uint32_t group_id, void *user_data);
-static void backend_publish(uint32_t group_id, void *user_data);
+static void publish(uint32_t addr, const void *data, size_t size,
+                    void *user_data);
+static void group_publish(uint32_t addr, const void *data, size_t size,
+                          void *user_data);
+static void __single_publish(uint32_t addr, const void *data, size_t size,
+                             void *user_data);
+static void __alias_publish(uint32_t addr, const void *data, size_t size,
+                            void *user_data);
+static void __group_publish(uint32_t addr, const void *data, size_t size,
+                            void *user_data);
 
 /* static variables ----------------------------------------------------------*/
-static struct tm_backend_fixture tm_backend_fixture = {
-    .api =
-        {
-            .init = backend_init,
-            .publish = backend_publish_dummy,
-        },
+static struct tm_fixture tm_fixture = {
+    .single_publish = NULL,
+    .alias_publish = NULL,
+    .group_publish = NULL,
+    .group_publish_called = 0,
 };
 
-TM_DATA_DEFINE(SINGLE_DATA, sizeof(int));
+TM_DATA_DEFINE(SINGLE_DATA_NAME, int, SINGLE_DATA_ADDR);
+TM_GROUP_DEFINE(SINGLE_GROUP_NAME, K_TICKS(PERIOD), K_TICKS(MIN_SEPARATION),
+                K_TICKS(WATERMARK), __single_publish, &tm_fixture,
+                TM_GROUP_DATA(SINGLE_DATA_NAME));
 
-LISTIFY(GROUP_DATA_SIZE, _GROUP_DATA_LISTIFY, (;));
-TM_GROUP_DEFINE(GROUP_ID, LISTIFY(GROUP_DATA_SIZE, GROUP_DATA_ADDR, (, )));
+TM_ALIAS_DEFINE(ALIAS_DATA_NAME, SINGLE_DATA_NAME, ALIAS_DATA_ADDR);
+TM_GROUP_DEFINE(ALIAS_GROUP_NAME, K_TICKS(PERIOD), K_TICKS(MIN_SEPARATION),
+                K_TICKS(WATERMARK), __alias_publish, &tm_fixture,
+                TM_GROUP_DATA(ALIAS_DATA_NAME));
 
-TM_BACKEND_DEFINE(tm_backend, &tm_backend_fixture.api, &tm_backend_fixture,
-                  GROUP_ID);
+LISTIFY(GROUP_DATA_SIZE, _DATA_LISTIFY, (;));
+TM_GROUP_DEFINE(GROUP_GROUP_NAME, K_TICKS(PERIOD), K_TICKS(MIN_SEPARATION),
+                K_TICKS(WATERMARK), __group_publish, &tm_fixture,
+                LISTIFY(GROUP_DATA_SIZE, _GROUP_DATA_LISTIFY, (, )));
 
 /* static function definition ------------------------------------------------*/
-static void backend_publish_dummy(uint32_t group_id, void *user_data) {
-  (void)group_id;
-  (void)user_data;
-}
-
-static void backend_init(void *user_data) {
-  struct tm_backend_fixture *fixture = user_data;
-  fixture->init_times++;
-}
-
-static void backend_publish(uint32_t group_id, void *user_data) {
+static void publish(uint32_t addr, const void *data, size_t size,
+                    void *user_data) {
   (void)user_data;
 
-  ztest_check_expected_value(group_id);
+  ztest_check_expected_value(addr);
+  ztest_check_expected_value(size);
+  ztest_check_expected_data(data, size);
+}
+
+static void group_publish(uint32_t addr, const void *data, size_t size,
+                          void *user_data) {
+  struct tm_fixture *fixture = user_data;
+
+  zassert_equal(GROUP_DATA_ADDR(fixture->group_publish_called), addr);
+  zassert_equal(size, sizeof(int));
+
+  int value = 100 + fixture->group_publish_called;
+  zassert_mem_equal(data, &value, sizeof(int));
+
+  fixture->group_publish_called++;
+}
+
+static void __single_publish(uint32_t addr, const void *data, size_t size,
+                             void *user_data) {
+  struct tm_fixture *fixture = user_data;
+
+  if (fixture->single_publish) {
+    fixture->single_publish(addr, data, size, user_data);
+  }
+}
+
+static void __alias_publish(uint32_t addr, const void *data, size_t size,
+                            void *user_data) {
+  struct tm_fixture *fixture = user_data;
+
+  if (fixture->alias_publish) {
+    fixture->alias_publish(addr, data, size, user_data);
+  }
+}
+
+static void __group_publish(uint32_t addr, const void *data, size_t size,
+                            void *user_data) {
+  struct tm_fixture *fixture = user_data;
+
+  if (fixture->group_publish) {
+    fixture->group_publish(addr, data, size, user_data);
+  }
 }
 
 /* tm ------------------------------------------------------------------------*/
-static void tm_before(void *fixture) {
-  (void)fixture;
+static void *tm_setup() {
+  // ensure to cold start aggregation
+  k_sleep(K_TICKS(SLEEP));
+
+  return &tm_fixture;
+}
+
+static void tm_before(void *_fixture) {
+  (void)_fixture;
 
   int value = 0;
 
-  tm_data_update(SINGLE_DATA, &value);
+  tm_data_update(SINGLE_DATA_ADDR, &value);
 
   for (int i = 0; i < GROUP_DATA_SIZE; i++) {
     tm_data_update(GROUP_DATA_ADDR(i), &value);
   }
+
+  // sleep to wait for publishing
+  k_sleep(K_TICKS(MULTI));
 }
 
-ZTEST_SUITE(tm, NULL, NULL, tm_before, NULL, NULL);
+static void tm_after(void *_fixture) {
+  struct tm_fixture *fixture = _fixture;
+
+  fixture->single_publish = NULL;
+  fixture->alias_publish = NULL;
+  fixture->group_publish = NULL;
+  fixture->group_publish_called = 0;
+
+  // force to cold start aggregration everytime
+  k_sleep(K_TICKS(SLEEP));
+}
+
+ZTEST_SUITE(tm, NULL, tm_setup, tm_before, tm_after, NULL);
 
 /**
  * @brief Test if tm_data_update() updates the data.
  *
  */
-ZTEST(tm, test_data_update) {
+ZTEST(tm, test_update) {
   int value = 100;
-  zassert_ok(tm_data_update(SINGLE_DATA, &value));
+  zassert_ok(tm_data_update(SINGLE_DATA_ADDR, &value));
 
-  zassert_ok(tm_data_get(SINGLE_DATA, &value));
+  zassert_ok(tm_data_get(SINGLE_DATA_ADDR, &value));
   zassert_equal(value, 100);
 }
 
 /**
- * @brief Test if data updates only after the whole group is updated.
+ * @brief Test if TM_DATA_UPDATE() updates the data.
  *
  */
-ZTEST(tm, test_group_update) {
-  for (int i = 0; i < GROUP_DATA_SIZE; i++) {
-    int value = i + 100;
-    zassert_ok(tm_data_update(GROUP_DATA_ADDR(i), &value));
+ZTEST(tm, test_UPDATE) {
+  int value = 100;
+  TM_DATA_UPDATE(SINGLE_DATA_NAME, value);
 
-    zassert_ok(tm_data_get(GROUP_DATA_ADDR(i), &value));
-    if (i < GROUP_DATA_SIZE - 1) {
-      zassert_equal(value, 0);
-    }
-  }
-
-  for (int i = 0; i < GROUP_DATA_SIZE; i++) {
-    int value = 0;
-    zassert_ok(tm_data_get(GROUP_DATA_ADDR(i), &value));
-    zassert_equal(value, i + 100);
-  }
+  value = 0;
+  TM_DATA_GET(SINGLE_DATA_NAME, value);
+  zassert_equal(value, 100);
 }
 
 /**
- * @brief Test if tm_group_commit() updates the data even if the group is not
- * fully updated.
+ * @brief Test if updating alias updates itself and the original data and vice
+ * versa.
  *
  */
-ZTEST(tm, test_group_commit) {
-  for (int i = 0; i < GROUP_DATA_SIZE / 2; i++) {
-    int value = i + 100;
-    zassert_ok(tm_data_update(GROUP_DATA_ADDR(i), &value));
-  }
+ZTEST(tm, test_alias_update) {
+  int value = 100;
+  zassert_ok(tm_data_update(ALIAS_DATA_ADDR, &value));
 
-  zassert_ok(tm_group_commit(GROUP_ID));
+  value = 0;
+  zassert_ok(tm_data_get(ALIAS_DATA_ADDR, &value));
+  zassert_equal(value, 100);
 
-  for (int i = 0; i < GROUP_DATA_SIZE / 2; i++) {
-    int value = 0;
-    zassert_ok(tm_data_get(GROUP_DATA_ADDR(i), &value));
-    zassert_equal(value, i + 100);
-  }
+  value = 0;
+  zassert_ok(tm_data_get(SINGLE_DATA_ADDR, &value));
+  zassert_equal(value, 100);
+
+  value = 200;
+  zassert_ok(tm_data_update(SINGLE_DATA_ADDR, &value));
+
+  value = 0;
+  zassert_ok(tm_data_get(ALIAS_DATA_ADDR, &value));
+  zassert_equal(value, 200);
 }
 
 /**
- * @brief Test if tm_group_commit() preserves the last updated data for data not
- * updated in the last commit.
+ * @brief Test if publish() is called after update.
  *
  */
-ZTEST(tm, test_group_commit_preserve_last_data) {
-  for (int i = 0; i < GROUP_DATA_SIZE; i++) {
-    int value = i + 100;
-    zassert_ok(tm_data_update(GROUP_DATA_ADDR(i), &value));
-  }
+ZTEST_F(tm, test_publish) {
+  fixture->single_publish = publish;
 
-  for (int i = 0; i < GROUP_DATA_SIZE; i++) {
-    int value = i + 200;
-    zassert_ok(tm_data_update(GROUP_DATA_ADDR(i), &value));
-  }
+  int value = 100;
+  ztest_expect_value(publish, addr, SINGLE_DATA_ADDR);
+  ztest_expect_value(publish, size, sizeof(value));
+  ztest_expect_data(publish, data, &value);
 
-  for (int i = 0; i < GROUP_DATA_SIZE / 2; i++) {
-    int value = i + 300;
-    zassert_ok(tm_data_update(GROUP_DATA_ADDR(i), &value));
-  }
+  zassert_ok(tm_data_update(SINGLE_DATA_ADDR, &value));
 
-  zassert_ok(tm_group_commit(GROUP_ID));
-
-  for (int i = 0; i < GROUP_DATA_SIZE / 2; i++) {
-    int value = 0;
-    zassert_ok(tm_data_get(GROUP_DATA_ADDR(i), &value));
-    zassert_equal(value, i + 300);
-  }
-
-  for (int i = GROUP_DATA_SIZE / 2; i < GROUP_DATA_SIZE; i++) {
-    int value = 0;
-    zassert_ok(tm_data_get(GROUP_DATA_ADDR(i), &value));
-    zassert_equal(value, i + 200);
-  }
+  k_sleep(K_TICKS(SLEEP));
 }
 
 /**
- * @brief Test if tm_group_access_begin() prevents data being updated and
- * tm_group_access_end() allows data to be updated.
+ * @brief Test if publish() is called after alias update for itself and the
+ * original data and vice versa.
  *
  */
-ZTEST(tm, test_group_access) {
-  zassert_ok(tm_group_access_begin(GROUP_ID));
+ZTEST_F(tm, test_alias_publish) {
+  fixture->alias_publish = publish;
+
+  int value = 100;
+  ztest_expect_value(publish, addr, ALIAS_DATA_ADDR);
+  ztest_expect_value(publish, size, sizeof(value));
+  ztest_expect_data(publish, data, &value);
+
+  zassert_ok(tm_data_update(ALIAS_DATA_ADDR, &value));
+
+  k_sleep(K_TICKS(2 * SLEEP));
+
+  fixture->alias_publish = NULL;
+  fixture->single_publish = publish;
+
+  value = 200;
+  ztest_expect_value(publish, addr, SINGLE_DATA_ADDR);
+  ztest_expect_value(publish, size, sizeof(value));
+  ztest_expect_data(publish, data, &value);
+
+  zassert_ok(tm_data_update(ALIAS_DATA_ADDR, &value));
+
+  k_sleep(K_TICKS(2 * SLEEP));
+
+  fixture->single_publish = NULL;
+  fixture->alias_publish = publish;
+
+  value = 300;
+  ztest_expect_value(publish, addr, ALIAS_DATA_ADDR);
+  ztest_expect_value(publish, size, sizeof(value));
+  ztest_expect_data(publish, data, &value);
+
+  zassert_ok(tm_data_update(SINGLE_DATA_ADDR, &value));
+
+  k_sleep(K_TICKS(SLEEP));
+}
+
+ZTEST_F(tm, test_group_publish) {
+  fixture->group_publish = group_publish;
 
   for (int i = 0; i < GROUP_DATA_SIZE; i++) {
-    int value = i + 100;
+    int value = 100 + i;
     zassert_ok(tm_data_update(GROUP_DATA_ADDR(i), &value));
   }
 
-  for (int i = 0; i < GROUP_DATA_SIZE; i++) {
-    int value = 100;
-    zassert_ok(tm_data_get(GROUP_DATA_ADDR(i), &value));
-    zassert_equal(value, 0);
-  }
+  k_sleep(K_TICKS(SLEEP));
 
-  zassert_ok(tm_group_access_end(GROUP_ID));
-
-  for (int i = 0; i < GROUP_DATA_SIZE; i++) {
-    int value = 0;
-    zassert_ok(tm_data_get(GROUP_DATA_ADDR(i), &value));
-    zassert_equal(value, i + 100);
-  }
-}
-
-/**
- * @brief Test if tm_group_access_begin() prevents data being updated even with
- * and tm_group_commit() and tm_group_access_end() updates it after the commit.
- *
- */
-ZTEST(tm, test_group_access_commit) {
-  zassert_ok(tm_group_access_begin(GROUP_ID));
-
-  for (int i = 0; i < GROUP_DATA_SIZE / 2; i++) {
-    int value = i + 100;
-    zassert_ok(tm_data_update(GROUP_DATA_ADDR(i), &value));
-  }
-
-  zassert_ok(tm_group_commit(GROUP_ID));
-
-  for (int i = 0; i < GROUP_DATA_SIZE / 2; i++) {
-    int value = 100;
-    zassert_ok(tm_data_get(GROUP_DATA_ADDR(i), &value));
-    zassert_equal(value, 0);
-  }
-
-  zassert_ok(tm_group_access_end(GROUP_ID));
-
-  for (int i = 0; i < GROUP_DATA_SIZE / 2; i++) {
-    int value = 0;
-    zassert_ok(tm_data_get(GROUP_DATA_ADDR(i), &value));
-    zassert_equal(value, i + 100);
-  }
-}
-
-/* tm_backend ----------------------------------------------------------------*/
-static void *tm_backend_setup() { return &tm_backend_fixture; }
-
-static void tm_backend_before(void *_fixture) {
-  struct tm_backend_fixture *fixture = (struct tm_backend_fixture *)_fixture;
-
-  tm_before(NULL);
-
-  fixture->api.publish = backend_publish;
-}
-
-static void tm_backend_after(void *_fixture) {
-  struct tm_backend_fixture *fixture = (struct tm_backend_fixture *)_fixture;
-
-  fixture->api.publish = backend_publish_dummy;
-}
-
-ZTEST_SUITE(tm_backend, NULL, tm_backend_setup, tm_backend_before,
-            tm_backend_after, NULL);
-
-/**
- * @brief Test if tm_backend_init() is called once and only once.
- *
- */
-ZTEST_F(tm_backend, test_backend_init) {
-  zassert_equal(fixture->init_times, 1);
-}
-
-/**
- * @brief Test if backend_publish() is called every data update.
- *
- */
-ZTEST_F(tm_backend, test_backend_publish) {
-  ztest_expect_value(backend_publish, group_id, GROUP_ID);
-  for (int i = 0; i < GROUP_DATA_SIZE; i++) {
-    int value = i + 100;
-    zassert_ok(tm_data_update(GROUP_DATA_ADDR(i), &value));
-  }
-
-  ztest_expect_value(backend_publish, group_id, GROUP_ID);
-  zassert_ok(tm_group_commit(GROUP_ID));
+  zassert_equal(fixture->group_publish_called, GROUP_DATA_SIZE);
 }

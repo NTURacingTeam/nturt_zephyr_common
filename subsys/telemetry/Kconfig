@@ -3,6 +3,7 @@ menuconfig NTURT_TM
     bool "Telemetry module"
     depends on SYS_HASH_FUNC32
     depends on SYS_HASH_MAP
+    select NTURT_MSG
     help
       ""
 
