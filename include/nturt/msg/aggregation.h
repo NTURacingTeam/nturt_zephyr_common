@@ -77,7 +77,8 @@
  * @param[in] _min_separation Minimum separation time between two data
  * publishing.
  * @param[in] _watermark Watermark to wait for late-arriving members.
- * @param[in] _publish Function to publish the data.
+ * @param[in] _publish Function to publish the data, must be of type
+ * @ref msg_agg_publish_t.
  * @param[in] _user_data Pointer to custom data for the callback.
  * @param[in] ... Flags of the data to be monitored, where each flag represents
  * a data to be monitored. If the data does not require flag, 0 should be
@@ -90,7 +91,7 @@
                       _publish, _user_data, __VA_ARGS__)
 
 /**
- * @brief Declare a member of a struct to be monitored for aggregation.
+ * @brief Specify a member of a struct to be monitored for aggregation.
  *
  * @param[in] member Member of the struct to be monitored.
  * @param[in] ... Optional flags of the member, multiple flags can be specified
@@ -126,9 +127,10 @@
  * @param[in] _min_separation Minimum separation time between two data
  * publishing.
  * @param[in] _watermark Watermark to wait for late-arriving members.
- * @param[in] _publish Function to publish the data.
+ * @param[in] _publish Function to publish the data, must be of type
+ * @ref msg_agg_typed_publish_t.
  * @param[in] _user_data Pointer to custom data for the callback.
- * @param[in] ... Members of @p _type to be monitored, must be declared by
+ * @param[in] ... Members of @p _type to be monitored, must be specified by
  * @ref AGG_MEMBER.
  */
 #define AGG_TYPED_DEFINE(_name, _type, _init_val, _period, _min_separation,   \

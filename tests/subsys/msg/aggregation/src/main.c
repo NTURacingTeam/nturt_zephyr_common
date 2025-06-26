@@ -22,7 +22,7 @@
 
 #define EARLY (MIN_SEPARATION + WATERMARK / 2)
 #define LATE (PERIOD + WATERMARK / 2)
-#define SLEEP (PERIOD + WATERMARK + 3 * TOLERANCE)
+#define SLEEP (PERIOD + WATERMARK + TOLERANCE)
 
 #define INVALID (-1)
 
@@ -64,6 +64,7 @@ AGG_TYPED_DEFINE(agg_susp, struct msg_susp_data, AGG_DATA_INIT(0),
 
 /* suite: agg ----------------------------------------------------------------*/
 static void *agg_setup() {
+  // ensure to cold start
   k_sleep(K_TICKS(SLEEP));
 
   agg_fixture.agg_susp = &agg_susp;
@@ -90,6 +91,7 @@ static void agg_before(void *_fixture) {
 
   ztest_expect_data(susp_publish, data, &data);
 
+  // sleep to wait for publishing
   k_sleep(K_TICKS(MULTI));
 
   fixture->start_time = k_uptime_ticks();
