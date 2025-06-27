@@ -196,8 +196,7 @@ ZTEST(tm, test_UPDATE) {
   int value = 100;
   TM_DATA_UPDATE(SINGLE_DATA_NAME, value);
 
-  value = 0;
-  TM_DATA_GET(SINGLE_DATA_NAME, value);
+  value = TM_DATA_GET(SINGLE_DATA_NAME);
   zassert_equal(value, 100);
 }
 

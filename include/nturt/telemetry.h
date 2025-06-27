@@ -149,18 +149,26 @@
           },                                                                   \
   }
 
-#define TM_DATA_GET(name, value)                      \
-  do {                                                \
-    struct tm_data *__data = &name;                   \
-    if (__data->type == TM_DATA_TYPE_ALIAS) {         \
-      __data = __data->alias;                         \
-    }                                                 \
-                                                      \
-    K_SPINLOCK(&__data->lock) {                       \
-      value = *((_TM_DATA_TYPE(name) *)__data->data); \
-    }                                                 \
-                                                      \
-  } while (0)
+/**
+ * @brief Get the value of telemetry data using its name.
+ *
+ * @param[in] name Name of the telemetry data.
+ *
+ * @return Value of the telemetry data.
+ */
+#define TM_DATA_GET(name)                                                 \
+  ({                                                                      \
+    struct tm_data *__data = &name;                                       \
+    if (__data->type == TM_DATA_TYPE_ALIAS) {                             \
+      __data = __data->alias;                                             \
+    }                                                                     \
+                                                                          \
+    k_spinlock_key_t key = k_spin_lock(&__data->lock);                    \
+    _TM_DATA_TYPE(name) __value = *((_TM_DATA_TYPE(name) *)__data->data); \
+    k_spin_unlock(&__data->lock, key);                                    \
+                                                                          \
+    __value;                                                              \
+  })
 
 /**
  * @brief Update telemetry data using its name and value.
