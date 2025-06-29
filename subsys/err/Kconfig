@@ -1,22 +1,20 @@
 menuconfig NTURT_ERR
-    bool "Error passing and handling module"
-    depends on NTURT
-    select SYS_HASH_FUNC32
-    select SYS_HASH_MAP
-    help
-      ""
+	bool "Error passing and handling support"
+	depends on NTURT
+	select SYS_HASH_FUNC32
+	select SYS_HASH_MAP
 
 if NTURT_ERR
 
 config NTURT_ERR_INIT_PRIORITY
-    int "NTURT error module init priority"
-    default 90
-    help
-      NTURT common library error module initialization priority.
+	int "Init priority"
+	default 90
+	help
+	  Error initialization priority.
 
 config NTURT_ERR_SHELL
-    bool "NTURT error module shell support"
-    default y
-    depends on NTURT_SHELL
+	bool "Error shell support"
+	default y
+	depends on NTURT_SHELL
 
 endif # NTURT_ERR

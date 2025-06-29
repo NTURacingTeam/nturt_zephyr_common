@@ -1,29 +1,29 @@
 DT_CHOSEN_NTURT_RTC := nturt,rtc
 
 menuconfig NTURT_RTC
-    bool "Real-time clock system"
-    depends on $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_RTC))
-    default y
-    select RTC
-    select POSIX_TIMERS
-    help
-      Initialize RTC time to dummy time if power had lost and set posix realtime
-      clock time to RTC time. Implements function to set system time through
-      sys_set_time().
+	bool "Real-time clock support"
+	depends on $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_RTC))
+	default y
+	select RTC
+	select POSIX_TIMERS
+	help
+	  Initialize RTC time to dummy time if power had lost and set posix realtime
+	  clock time to RTC time. Implements function to set system time through
+	  sys_set_time().
 
 if NTURT_RTC
 
 config NTURT_LOG_REALTIME
-    bool "Enable logging with real-time timestamp"
-    default y
-    select LOG_TIMESTAMP_USE_REALTIME
-    help
-      Use real-time clock time as logging system timestamp.
+	bool "Enable logging with real-time timestamp"
+	default y
+	select LOG_TIMESTAMP_USE_REALTIME
+	help
+	  Use real-time clock time as logging system timestamp.
 
 config NTURT_RTC_SHELL
-    bool "Real-time clock shell"
-    depends on NTURT_SYS_SHELL
-    default y
-    select RTC_SHELL
+	bool "Real-time clock shell"
+	depends on NTURT_SYS_SHELL
+	default y
+	select RTC_SHELL
 
 endif # NTURT_RTC

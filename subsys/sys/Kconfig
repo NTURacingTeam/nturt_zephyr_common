@@ -1,7 +1,7 @@
 menuconfig NTURT_SYS
-    bool "Basic system functionalities"
-    depends on NTURT
-    select REBOOT
+	bool "Basic system support"
+	depends on NTURT
+	select REBOOT
 
 if NTURT_SYS
 
@@ -9,21 +9,21 @@ rsource "fs/Kconfig"
 rsource "rtc/Kconfig"
 
 config NTURT_SYS_INIT_PRIORITY
-    int "NTURT basic system init priority"
-    default 0
-    help
-      NTURT basic system initialization priority.
+	int "Init priority"
+	default 0
+	help
+	  Basic system initialization priority.
 
 DT_CHOSEN_NTURT_BUZZER := nturt,buzzer
 
 config NTURT_SYS_REBOOT_SOUND
-    bool "Reboot sound"
-    depends on $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_BUZZER))
-    default y
-    select GPIO
+	bool "Reboot sound"
+	depends on $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_BUZZER))
+	default y
+	select GPIO
 
 config NTURT_SHELL
-    bool "Shell support"
-    select SHELL
+	bool "Shell support"
+	select SHELL
 
 endif # NTURT_SYS

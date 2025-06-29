@@ -1,77 +1,77 @@
 menuconfig NTURT_FS
-    bool "File system"
-    select DISK_ACCESS
-    select FILE_SYSTEM
-    help
-      Automatically mount SD card to file system of choise.
+	bool "File system support"
+	select DISK_ACCESS
+	select FILE_SYSTEM
+	help
+	  Automatically mount SD card to file system of choice.
 
 if NTURT_FS
 
 config NTURT_FS_MOUNT_POINT
-    string "Mount point of the SD card"
-    default "/SD:"
+	string "Mount point of the SD card"
+	default "/SD:"
 
 choice NTURT_FS_TYPE
-    prompt "Which file system to use"
-    default NTURT_FS_FAT_FS
+	prompt "Which file system to use"
+	default NTURT_FS_FAT_FS
 
 config NTURT_FS_FAT_FS
-    bool "Uses FatFs as the file system"
-    select FAT_FILESYSTEM_ELM
-    select FS_FATFS_REENTRANT
+	bool "Uses FatFs as the file system"
+	select FAT_FILESYSTEM_ELM
+	select FS_FATFS_REENTRANT
 
 config NTURT_FS_LITTLE_FS
-    bool "Uses LittleFs as the file system"
-    select FILE_SYSTEM_LITTLEFS
-    select FS_LITTLEFS_BLK_DEV
+	bool "Uses LittleFs as the file system"
+	select FILE_SYSTEM_LITTLEFS
+	select FS_LITTLEFS_BLK_DEV
 
 endchoice
 
 config NTURT_FS_SD_DISK_NAME
-    string
-    default "SD" if NTURT_FS_FAT_FS
-    default "SDMMC"
+	string
+	default "SD" if NTURT_FS_FAT_FS
+	default "SDMMC"
 
 config NTURT_FS_SHELL
-    bool "File system shell"
-    depends on NTURT_SHELL
-    default y
-    select FILE_SYSTEM_SHELL
+	bool "File system shell"
+	depends on NTURT_SHELL
+	default y
+	select FILE_SYSTEM_SHELL
 
 config NTURT_FS_FAT_FS_HAS_RTC
-    bool "Use real-time clock for FAT FS timestamps"
-    depends on NTURT_RTC
-    depends on NTURT_FS_FAT_FS
-    default y
-    select FS_FATFS_HAS_RTC
+	bool "Use real-time clock for FAT FS timestamps"
+	depends on NTURT_RTC
+	depends on NTURT_FS_FAT_FS
+	default y
+	select FS_FATFS_HAS_RTC
 
 if LOG
 
 config LOG_BACKEND_FS
-    default y
+	default y
 
 config LOG_BACKEND_FS_DIR
-    default "/SD:/logs"
+	default "/SD:/logs"
 
 config LOG_BACKEND_FS_FILE_PREFIX
-    default ""
+	default ""
 
 config LOG_BACKEND_FS_FILES_LIMIT
-    default 5
+	default 5
 
 config LOG_BACKEND_FS_FILE_SIZE
-    default 262144
+	default 262144
 
 endif # LOG
 
 if SETTINGS
 
 choice SETTINGS_BACKEND
-    default SETTINGS_FILE
+	default SETTINGS_FILE
 endchoice
 
 config SETTINGS_FILE_PATH
-    default "/SD:/settings"
+	default "/SD:/settings"
 
 endif # SETTINGS
 
