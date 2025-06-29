@@ -14,7 +14,7 @@
 // project includes
 #include "nturt/sys/sys.h"
 
-LOG_MODULE_REGISTER(nturt_rtc, CONFIG_NTURT_LOG_LEVEL);
+LOG_MODULE_REGISTER(nturt_rtc, CONFIG_NTURT_SYS_LOG_LEVEL);
 
 /* static function declaration -----------------------------------------------*/
 /// @brief Initialization function for NTURT RTC system module.

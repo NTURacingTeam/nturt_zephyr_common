@@ -19,7 +19,7 @@
 // project includes
 #include "nturt/sys/sys.h"
 
-LOG_MODULE_REGISTER(nturt_fs);
+LOG_MODULE_REGISTER(nturt_fs, CONFIG_NTURT_SYS_LOG_LEVEL);
 
 /* static function declaration -----------------------------------------------*/
 /// @brief Initialization function for NTURT file system module.

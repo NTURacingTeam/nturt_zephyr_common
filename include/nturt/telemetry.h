@@ -1,3 +1,13 @@
+/**
+ * @file
+ * @brief Telemetry support.
+ *
+ * @author quantumspawner
+ * @version 0.0.1
+ * @date 2024-12-27
+ * @copyright Copyright (c) 2024 NTU Racing Team
+ */
+
 #ifndef NTURT_TM_H_
 #define NTURT_TM_H_
 
@@ -14,7 +24,9 @@
 #include "nturt/msg/aggregation.h"
 
 /**
- * @addtogroup tm Telemetry
+ * @defgroup tm Telemetry
+ * @brief Telemetry support.
+ * 
  * @{
  */
 
@@ -330,7 +342,7 @@ void tm_data_notify_lock(const struct tm_data *data);
 void tm_group_copy(struct tm_group *group);
 
 /**
- * @} // Telemetry
+ * @} // Tm
  */
 
 #endif  // NTURT_TM_H_

@@ -27,6 +27,7 @@
 /**
  * @defgroup msg_interface Message Interface
  * @brief Message type definitions.
+ * 
  * @ingroup msg
  * @{
  */

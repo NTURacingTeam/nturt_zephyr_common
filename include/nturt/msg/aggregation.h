@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Message agregation.
+ * @brief Data aggregation.
  *
  * @author quantumspawner
  * @version 0.0.1
@@ -26,6 +26,7 @@
 /**
  * @defgroup msg_agg Aggregation
  * @brief Data aggregation.
+ * 
  * @ingroup msg
  * @{
  */

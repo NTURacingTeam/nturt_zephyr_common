@@ -14,7 +14,7 @@
 #include <zephyr/sys/iterable_sections.h>
 #include <zephyr/sys/mpsc_pbuf.h>
 
-LOG_MODULE_REGISTER(nturt_cmd, CONFIG_NTURT_LOG_LEVEL);
+LOG_MODULE_REGISTER(nturt_cmd, CONFIG_NTURT_CMD_LOG_LEVEL);
 
 /* type ----------------------------------------------------------------------*/
 struct cmd_deffered {

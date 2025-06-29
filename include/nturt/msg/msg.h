@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Inter-thread communication.
+ * @brief Inter-thread communication support.
  *
  * @author quantumspawner
  * @version 0.0.1
@@ -24,7 +24,8 @@
 
 /**
  * @defgroup msg Message
- * @brief Inter-thread communication.
+ * @brief Inter-thread communication support.
+ * 
  * @{
  */
 

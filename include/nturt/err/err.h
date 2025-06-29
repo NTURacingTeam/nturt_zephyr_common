@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Error passing and handling.
+ * @brief Error passing and handling support.
  *
  * @author quantumspawner
  * @version 0.0.1
@@ -20,8 +20,13 @@
 #include <zephyr/sys/iterable_sections.h>
 #include <zephyr/sys/util.h>
 
+// project includes
+#include "nturt/err/errcode.h"
+
 /**
- * @addtogroup Err Error
+ * @addtogroup err Error
+ * @brief Error passing and handling support.
+ * 
  * @{
  */
 
@@ -238,7 +243,7 @@ int err_report(uint32_t errcode, bool set);
 const struct err* err_get(uint32_t errcode);
 
 /**
- * @} // Err
+ * @} // err
  */
 
 #endif  // NTURT_ERR_H_

@@ -6,6 +6,10 @@ menuconfig NTURT_ERR
 
 if NTURT_ERR
 
+module = NTURT_ERR
+module-str = Error Handling
+source "subsys/logging/Kconfig.template.log_config"
+
 config NTURT_ERR_INIT_PRIORITY
 	int "Init priority"
 	default 90

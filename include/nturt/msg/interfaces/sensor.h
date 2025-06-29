@@ -17,6 +17,7 @@
 /**
  * @defgroup msg_interface_sensor Sensor Message
  * @brief Sensor message type definitions.
+ * 
  * @ingroup msg_interface
  * @{
  */

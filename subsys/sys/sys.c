@@ -12,7 +12,7 @@
 #include <zephyr/logging/log_ctrl.h>
 #include <zephyr/sys/reboot.h>
 
-LOG_MODULE_REGISTER(nturt_sys);
+LOG_MODULE_REGISTER(nturt_sys, CONFIG_NTURT_SYS_LOG_LEVEL);
 
 /* static function declaration -----------------------------------------------*/
 static int init();

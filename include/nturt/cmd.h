@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Command module.
+ * @brief Command support.
  *
  * @author quantumspawner
  * @version 0.0.1
@@ -23,7 +23,9 @@
 #include <zephyr/sys/util.h>
 
 /**
- * @addtogroup cmd Command
+ * @defgroup cmd Command
+ * @brief Command support.
+ * 
  * @{
  */
 

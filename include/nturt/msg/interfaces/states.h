@@ -20,6 +20,7 @@
 /**
  * @defgroup msg_interface_states VCU Control System State Machine Message
  * @brief VCU control system state machine message type definitions.
+ * 
  * @ingroup msg_interface
  * @{
  */

@@ -7,6 +7,10 @@ menuconfig NTURT_CMD
 
 if NTURT_CMD
 
+module = NTURT_CMD
+module-str = Command
+source "subsys/logging/Kconfig.template.log_config"
+
 config NTURT_CMD_INIT_PRIORITY
 	int "Init priority"
 	default 50

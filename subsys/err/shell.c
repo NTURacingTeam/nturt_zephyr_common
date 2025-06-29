@@ -7,7 +7,7 @@
 #include <zephyr/sys/iterable_sections.h>
 
 // project includes
-#include "nturt/err.h"
+#include "nturt/err/err.h"
 #include "nturt/sys/util.h"
 
 /* static function declaration -----------------------------------------------*/

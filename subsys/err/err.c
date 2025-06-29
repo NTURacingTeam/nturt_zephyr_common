@@ -1,4 +1,4 @@
-#include "nturt/err.h"
+#include "nturt/err/err.h"
 
 // glibc includes
 #include <stdbool.h>
@@ -16,7 +16,7 @@
 // project includes
 #include "nturt/sys/util.h"
 
-LOG_MODULE_REGISTER(nturt_err, CONFIG_NTURT_LOG_LEVEL);
+LOG_MODULE_REGISTER(nturt_err, CONFIG_NTURT_ERR_LOG_LEVEL);
 
 /* type ----------------------------------------------------------------------*/
 struct err_ctx {

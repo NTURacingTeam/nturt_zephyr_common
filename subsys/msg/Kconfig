@@ -5,6 +5,10 @@ menuconfig NTURT_MSG
 
 if NTURT_MSG
 
+module = NTURT_MSG
+module-str = Inter-thread Communication
+source "subsys/logging/Kconfig.template.log_config"
+
 config NTURT_MSG_INIT_PRIORITY
 	int "Init priority"
 	default 10

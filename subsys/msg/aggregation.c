@@ -9,7 +9,7 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/__assert.h>
 
-LOG_MODULE_DECLARE(nturt_msg, CONFIG_NTURT_LOG_LEVEL);
+LOG_MODULE_DECLARE(nturt_msg, CONFIG_NTURT_MSG_LOG_LEVEL);
 
 /* function definition -------------------------------------------------------*/
 void agg_update(struct agg *agg, int idx) {

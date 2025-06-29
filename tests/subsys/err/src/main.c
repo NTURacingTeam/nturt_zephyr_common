@@ -9,7 +9,7 @@
 #include <zephyr/ztest_mock.h>
 
 // project include
-#include "nturt/err.h"
+#include "nturt/err/err.h"
 
 /* macro ---------------------------------------------------------------------*/
 #define _ERR_NAME(idx, sev) CONCAT(ERR_, sev, _, idx)

@@ -8,6 +8,10 @@ if NTURT_SYS
 rsource "fs/Kconfig"
 rsource "rtc/Kconfig"
 
+module = NTURT_SYS
+module-str = Basic System
+source "subsys/logging/Kconfig.template.log_config"
+
 config NTURT_SYS_INIT_PRIORITY
 	int "Init priority"
 	default 0

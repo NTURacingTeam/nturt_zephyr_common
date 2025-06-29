@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Utility.
+ * @brief Utility macros and functions.
  *
  * @author quantumspawner
  * @version 0.0.1
@@ -20,7 +20,10 @@
 #include <zephyr/sys/util.h>
 
 /**
- * @addtogroup Util Utility
+ * @addtogroup util Utility
+ * @brief Utility macros and functions.
+ * 
+ * @ingroup sys
  * @{
  */
 
@@ -164,7 +167,7 @@ struct work_ctx_buf {
 struct work_ctx* work_ctx_buf_alloc(struct work_ctx_buf* buf);
 
 /**
- * @} // Utility
+ * @} // util
  */
 
 #endif  // NTURT_SYS_UTIL_H_
