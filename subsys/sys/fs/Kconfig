@@ -73,6 +73,13 @@ endchoice
 config SETTINGS_FILE_PATH
 	default "/SD:/settings"
 
+config NTURT_SETTINGS_INIT_PRIORITY
+	int "Init priority"
+	default 99
+	help
+	  Settings subsystem initialization priority. Should be the last to load
+	  settings to each module only after they are initialized.
+
 endif # SETTINGS
 
 endif # NTURT_FS

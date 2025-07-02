@@ -1,0 +1,62 @@
+menuconfig NTURT_CANOPEN
+	bool "CANopen support"
+	depends on NTURT
+	select SYS_HASH_FUNC32
+	select SYS_HASH_MAP
+	select CAN
+	select CANOPEN
+	select CANOPENNODE
+	select NTURT_ERR
+
+if NTURT_CANOPEN
+
+module = NTURT_CANOPEN
+module-str = CANopen
+source "subsys/logging/Kconfig.template.log_config"
+
+config NTURT_CANOPEN_INIT_PRIORITY
+	int "Init priority"
+	default 30
+	help
+	  CANopen initialization priority.
+
+config NTURT_CANOPEN_TIME
+	bool "CANopen TIME object"
+	depends on NTURT_RTC
+	default y
+	select CANOPENNODE_TIME
+	help
+	  Set system time to the timestamp from CANopen when receiving TIME object
+	  for the first time after system reboot.
+
+config NTURT_CANOPEN_STORAGE
+	bool "CANopen object dictionary storage"
+	depends on NTURT_FS
+	default y
+	select SETTINGS
+	select CANOPENNODE_STORAGE
+	help
+	  Enable support for storing the CANopen object dictionary to settings
+	  subsystem.
+
+# config NTURT_CANOPEN_HB
+#     bool "Enable processing CANopen heartbeat object from other nodes"
+#     help
+#       Consume the heartbeat object of nodes defined in object dictionary 0x1016
+#       and set cooresponding errors if the node is not in NMT operational or
+#       timeout.
+
+# config NTURT_CANOPEN_SDO_CLI_BUF_SIZE
+#     int "SDO client buffer size"
+#     default 5
+#     help
+#       Number of concurrent SDO client request
+
+config NTURT_CANOPEN_SHELL
+	bool "CANopen shell"
+	depends on NTURT_SHELL
+	default y
+	select CAN_SHELL
+	select STATS
+
+endif # NTURT_CANOPEN
