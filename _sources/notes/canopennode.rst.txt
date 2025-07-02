@@ -60,30 +60,106 @@ The following is a list of filters added by CANopenNode:
 
 .. note::
 
-   Since STM32 only supports up to 28 standard ID filters, caution must be taken
-   when configuring CANopenNode.
+   Since STM32 series with FDCAN only supports up to 28 standard and 8 extended
+   ID filters [#]_, caution must be taken when configuring CANopenNode.
 
-Service Data Object (SDO)
-=========================
+Object Dictionary (OD)
+======================
 
-Each object dictionary (OD) entry can add additional functionalities by
-registering a callback function using :c:func:`CO_OD_configure`. And,
+Each object dictionary entry can be read/written via a callback function
+registered by `OD_extension_init()
+<https://canopennode.github.io/CANopenNode/group__CO__ODinterface.html#ga41c96feee5da30cd9117a35a307b96e1>`_
+instead of straightforwardly from/to the memory. This is default for SDOs;
+however, `CO_CONFIG_PDO_OD_IO_ACCESS
+<https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9>`_
+should be set to enable the same behavior for PDOs.
+
 CANopenNode already registered some common OD entries to provide functionalities
 according to the CiA 301 standard. The following is a list of registered ODs:
 
 - 0x1003: Pre-defined error field
 - 0x1005: COB-ID SYNC message
-- 0x1006: Communication cycle period
+- 0x100C: Guard time
+- 0x100D: Life time factor
 - 0x1010: Store parameters
 - 0x1011: Restore default parameters
+- 0x1012: COB-ID time stamp object
 - 0x1014: COB-ID EMCY
+- 0x1015: Inhibit time EMCY
 - 0x1016: Consumer heartbeat time
+- 0x1017: Producer heartbeat time
 - 0x1019: Synchronous counter overflow value
 - 0x1200: SDO server parameter
 - 0x1400 to 0x15FF: RPDO communication parameter
 - 0x1600 to 0x17FF: RPDO mapping parameter
 - 0x1800 to 0x19FF TPDO communication parameter
 - 0x1A00 to 0x1BFF TPDO mapping parameter
+
+Process Data Objectss (PDOs)
+============================
+
+Receive PDOs (RPDOs)
+--------------------
+
+OD 0x1400 to 0x15FF define the communication parameters of RPDOs, here are the
+overview of them and the implementation of CANopenNode:
+
+- **Transmission type (sub-index 0x02)**: There are two types of reception;
+  
+  - **Synchronous (0x00 to 0xF0)**: The received data will be *actuated* after a
+    SYNC message is received.
+  - **Event-Driven (0xFE, 0xFF)**: The received data will be *actuated*
+    immediately.
+
+  Here *actuated* means the received data will be copied to the mapped OD
+  entries defined in the RPDO mapping parameter (OD 0x1600 to 0x17FF) or the
+  registered callback function will be called to process the received data.
+
+- **Event-timer (sub-index 0x05)**: Define the deadline for the reception of
+  RPDOs. If the RPDO is not received before the event-timer expires, CANopen
+  error ``RPDO timeout (0x8250)`` will be reported. And if the RPDO is
+  received after the event-timer expires, the error will be cleared and the
+  timer will be reset.
+
+.. note::
+
+   If `CO_CONFIG_PDO_SYNC_ENABLE
+   <https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9>`_
+   is not set, the received synchronous RPDOs will be actuated immediately.
+
+Transmit PDOs (TPDOs)
+---------------------
+
+OD 0x1800 to 0x19FF define the communication parameters of TPDOs, here are the
+overview of them and the implementation of CANopenNode:
+
+- **Transmission type (sub-index 0x02)**: There are two types of transmission;
+  
+  - **Synchronous (0x00 to 0xF0)**: Transmitted after a SYNC message is
+    received. There are also two sub-types of synchronous transmission;
+
+    - **Acyclic (0x00)**: Transmitted when receiving the next SYNC message after
+      requested by an *event*.
+    - **Cyclic (0x01 to 0xF0)**: Transmitted after Nth SYNC message is received,
+      where N is the value of the transmission type.
+
+  - **Event-Driven (0xFE, 0xFF)**: Transmitted by an *event*.
+  
+  Here *event* means transmission is requested by the application via
+  :c:func:`CO_TPDOsendRequest` or :c:func:`OD_requestTPDO` or when the event
+  timer (sub-index 0x05) expires.
+
+- **Inhibit time (sub-index 0x03)**: Define the minimum time between two
+  consecutive transmissions of event-driven TPDOs.
+
+- **SYNC start value (sub-index 0x06)**: Define when the TPDO will start being
+  transmitted after the SYNC counter is equal to the SYNC start value.
+
+.. note::
+
+   If `CO_CONFIG_PDO_SYNC_ENABLE
+   <https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9>`_
+   is not set, synchronous and cyclic TPDOs will not be transmitted.
 
 Error Handling
 ==============
@@ -98,12 +174,12 @@ that can be used to indicate what errors are currently happening in the node.
 When an error is reported or cleared using :c:func:`CO_error`, the error status
 bits will be set or cleared accordingly and if the same bit is already set or
 cleared, no processing will happen. Such mutually exclusivity effectively making
-the error status bits the real error being tracked of and the CANopen error
+the ``error status bits`` the real error being tracked of and the CANopen error
 codes being the additional information of the error. The number of error status
 bits is defined by `CO_CONFIG_EM_ERR_STATUS_BITS_COUNT
 <https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#gab87776d4802748671b234112263760af>`_.
 
-If error status bits are needed to be accessed via the object dictionary, 
+If ``error status bits`` are needed to be accessed via the object dictionary, 
 `CO_CONFIG_EM_STATUS_BITS
 <https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62>`_
 should be set as well as define a OD entry ``Error status bits`` of type
@@ -117,18 +193,18 @@ Error register
 CANopenNode also manages ``Error register`` of OD 0x1001 via a set of
 `CO_CONFIG_ERR_CONDITION_*
 <https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html>`_
-macros based on the error status bits. However, the default behavior only sets
-the generic bit when error status bits between ``0x28`` to ``0x2F`` are set,
-which does **NOT** adhere to the CANopen specification stating that: "The
+macros based on the ``error status bits``. However, the default behavior only
+sets the generic bit when ``error status bits`` between ``0x28`` to ``0x2F`` are
+set, which does **NOT** adhere to the CANopen specification stating that: "The
 generic error shall be signaled at any error situation [#]_."
 
 EMCY write
 ----------
 
-In order to transmit the error status bits in the Emergency (EMCY) object, the
-first byte of the manufacturer-specific error code is used to store the error
-status bit currently reported, **NOT** the error status bits that are currently
-set.
+In order to transmit the ``error status bits`` in the Emergency (EMCY) object,
+the first byte of the manufacturer-specific error code is used to store the
+``error status bit`` currently reported, **NOT** the ``error status bits`` that
+are currently set.
 
 The standard CANopen EMCY write payload has the following format [#]_:
 
@@ -140,7 +216,7 @@ The standard CANopen EMCY write payload has the following format [#]_:
    +------------+----------------+----------------------------------+
 
 And CANopenNode uses the first byte of manufacturer-specific error code (the
-byte of index 3) to transmit the reported error status bit, so the payload
+byte of index 3) to transmit the reported ``error status bit``, so the payload
 becomes:
 
 .. code-block:: none
@@ -151,7 +227,7 @@ becomes:
    +------------+----------------+------------------------------------------------------+
 
 CANopenNode also recognizes the first byte of manufacturer-specific error code
-as error status bit when receiving EMCY messages from other nodes. The
+as ``error status bit`` when receiving EMCY messages from other nodes. The
 callback for receiving EMCY registered using :c:func:`CO_EM_initCallbackRx` has
 the prototype:
 
@@ -188,6 +264,10 @@ Reference
 .. [#] `Zephyr CAN bus driver documentation
    <https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving>`_
    on receiving messages
+.. [#] `STM32H7 FDCAN device tree source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/arm/st/h7/stm32h7.dtsi#L533>`_,
+   where the device tree binding for ``bosch,mram-cfg`` is defined in
+   `<https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml>`_
 .. [#] CiA 301, section 7.5.2.2 Error register
 .. [#] CiA 301, section 7.2.7.3.1 Protocol EMCY write
 .. [#] `CO_err() source code

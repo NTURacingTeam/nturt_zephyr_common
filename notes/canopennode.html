@@ -69,7 +69,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#filters">Filters</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#service-data-object-sdo">Service Data Object (SDO)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#object-dictionary-od">Object Dictionary (OD)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#process-data-objectss-pdos">Process Data Objectss (PDOs)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#receive-pdos-rpdos">Receive PDOs (RPDOs)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transmit-pdos-tpdos">Transmit PDOs (TPDOs)</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#error-handling">Error Handling</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#error-status-bits">Error status bits</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#error-register">Error register</a></li>
@@ -130,7 +135,7 @@ contains the modifications necessary to use the latest version of CANopenNode.</
 <h3>Callbacks<a class="headerlink" href="#callbacks" title="Link to this heading"></a></h3>
 <p>CAN bus driver in Zephyr uses hardware filters to filter out messages, and only
 messages that pass the filter will be received by the application using callback
-functions from an interrupt context <a class="footnote-reference brackets" href="#id7" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Since callbacks are called from ISR,
+functions from an interrupt context <a class="footnote-reference brackets" href="#id9" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Since callbacks are called from ISR,
 caution must be taken when setting callbacks related to CAN bus reception in
 CANopenNode. For example, <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_initCallbackRx()</span></code> and
 <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_NMT_initCallback()</span></code> both execute in the ISR context, please
@@ -156,25 +161,32 @@ monitored node</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since STM32 only supports up to 28 standard ID filters, caution must be taken
-when configuring CANopenNode.</p>
+<p>Since STM32 series with FDCAN only supports up to 28 standard and 8 extended
+ID filters <a class="footnote-reference brackets" href="#id10" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, caution must be taken when configuring CANopenNode.</p>
 </div>
 </section>
 </section>
-<section id="service-data-object-sdo">
-<h2>Service Data Object (SDO)<a class="headerlink" href="#service-data-object-sdo" title="Link to this heading"></a></h2>
-<p>Each object dictionary (OD) entry can add additional functionalities by
-registering a callback function using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_OD_configure()</span></code>. And,
-CANopenNode already registered some common OD entries to provide functionalities
+<section id="object-dictionary-od">
+<h2>Object Dictionary (OD)<a class="headerlink" href="#object-dictionary-od" title="Link to this heading"></a></h2>
+<p>Each object dictionary entry can be read/written via a callback function
+registered by <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__ODinterface.html#ga41c96feee5da30cd9117a35a307b96e1">OD_extension_init()</a>
+instead of straightforwardly from/to the memory. This is default for SDOs;
+however, <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9">CO_CONFIG_PDO_OD_IO_ACCESS</a>
+should be set to enable the same behavior for PDOs.</p>
+<p>CANopenNode already registered some common OD entries to provide functionalities
 according to the CiA 301 standard. The following is a list of registered ODs:</p>
 <ul class="simple">
 <li><p>0x1003: Pre-defined error field</p></li>
 <li><p>0x1005: COB-ID SYNC message</p></li>
-<li><p>0x1006: Communication cycle period</p></li>
+<li><p>0x100C: Guard time</p></li>
+<li><p>0x100D: Life time factor</p></li>
 <li><p>0x1010: Store parameters</p></li>
 <li><p>0x1011: Restore default parameters</p></li>
+<li><p>0x1012: COB-ID time stamp object</p></li>
 <li><p>0x1014: COB-ID EMCY</p></li>
+<li><p>0x1015: Inhibit time EMCY</p></li>
 <li><p>0x1016: Consumer heartbeat time</p></li>
+<li><p>0x1017: Producer heartbeat time</p></li>
 <li><p>0x1019: Synchronous counter overflow value</p></li>
 <li><p>0x1200: SDO server parameter</p></li>
 <li><p>0x1400 to 0x15FF: RPDO communication parameter</p></li>
@@ -182,6 +194,70 @@ according to the CiA 301 standard. The following is a list of registered ODs:</p
 <li><p>0x1800 to 0x19FF TPDO communication parameter</p></li>
 <li><p>0x1A00 to 0x1BFF TPDO mapping parameter</p></li>
 </ul>
+</section>
+<section id="process-data-objectss-pdos">
+<h2>Process Data Objectss (PDOs)<a class="headerlink" href="#process-data-objectss-pdos" title="Link to this heading"></a></h2>
+<section id="receive-pdos-rpdos">
+<h3>Receive PDOs (RPDOs)<a class="headerlink" href="#receive-pdos-rpdos" title="Link to this heading"></a></h3>
+<p>OD 0x1400 to 0x15FF define the communication parameters of RPDOs, here are the
+overview of them and the implementation of CANopenNode:</p>
+<ul>
+<li><p><strong>Transmission type (sub-index 0x02)</strong>: There are two types of reception;</p>
+<ul class="simple">
+<li><p><strong>Synchronous (0x00 to 0xF0)</strong>: The received data will be <em>actuated</em> after a
+SYNC message is received.</p></li>
+<li><p><strong>Event-Driven (0xFE, 0xFF)</strong>: The received data will be <em>actuated</em>
+immediately.</p></li>
+</ul>
+<p>Here <em>actuated</em> means the received data will be copied to the mapped OD
+entries defined in the RPDO mapping parameter (OD 0x1600 to 0x17FF) or the
+registered callback function will be called to process the received data.</p>
+</li>
+<li><p><strong>Event-timer (sub-index 0x05)</strong>: Define the deadline for the reception of
+RPDOs. If the RPDO is not received before the event-timer expires, CANopen
+error <code class="docutils literal notranslate"><span class="pre">RPDO</span> <span class="pre">timeout</span> <span class="pre">(0x8250)</span></code> will be reported. And if the RPDO is
+received after the event-timer expires, the error will be cleared and the
+timer will be reset.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9">CO_CONFIG_PDO_SYNC_ENABLE</a>
+is not set, the received synchronous RPDOs will be actuated immediately.</p>
+</div>
+</section>
+<section id="transmit-pdos-tpdos">
+<h3>Transmit PDOs (TPDOs)<a class="headerlink" href="#transmit-pdos-tpdos" title="Link to this heading"></a></h3>
+<p>OD 0x1800 to 0x19FF define the communication parameters of TPDOs, here are the
+overview of them and the implementation of CANopenNode:</p>
+<ul>
+<li><p><strong>Transmission type (sub-index 0x02)</strong>: There are two types of transmission;</p>
+<ul class="simple">
+<li><p><strong>Synchronous (0x00 to 0xF0)</strong>: Transmitted after a SYNC message is
+received. There are also two sub-types of synchronous transmission;</p>
+<ul>
+<li><p><strong>Acyclic (0x00)</strong>: Transmitted when receiving the next SYNC message after
+requested by an <em>event</em>.</p></li>
+<li><p><strong>Cyclic (0x01 to 0xF0)</strong>: Transmitted after Nth SYNC message is received,
+where N is the value of the transmission type.</p></li>
+</ul>
+</li>
+<li><p><strong>Event-Driven (0xFE, 0xFF)</strong>: Transmitted by an <em>event</em>.</p></li>
+</ul>
+<p>Here <em>event</em> means transmission is requested by the application via
+<code class="xref c c-func docutils literal notranslate"><span class="pre">CO_TPDOsendRequest()</span></code> or <code class="xref c c-func docutils literal notranslate"><span class="pre">OD_requestTPDO()</span></code> or when the event
+timer (sub-index 0x05) expires.</p>
+</li>
+<li><p><strong>Inhibit time (sub-index 0x03)</strong>: Define the minimum time between two
+consecutive transmissions of event-driven TPDOs.</p></li>
+<li><p><strong>SYNC start value (sub-index 0x06)</strong>: Define when the TPDO will start being
+transmitted after the SYNC counter is equal to the SYNC start value.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9">CO_CONFIG_PDO_SYNC_ENABLE</a>
+is not set, synchronous and cyclic TPDOs will not be transmitted.</p>
+</div>
+</section>
 </section>
 <section id="error-handling">
 <h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h2>
@@ -193,10 +269,10 @@ that can be used to indicate what errors are currently happening in the node.
 When an error is reported or cleared using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_error()</span></code>, the error status
 bits will be set or cleared accordingly and if the same bit is already set or
 cleared, no processing will happen. Such mutually exclusivity effectively making
-the error status bits the real error being tracked of and the CANopen error
+the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> the real error being tracked of and the CANopen error
 codes being the additional information of the error. The number of error status
 bits is defined by <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#gab87776d4802748671b234112263760af">CO_CONFIG_EM_ERR_STATUS_BITS_COUNT</a>.</p>
-<p>If error status bits are needed to be accessed via the object dictionary,
+<p>If <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> are needed to be accessed via the object dictionary,
 <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62">CO_CONFIG_EM_STATUS_BITS</a>
 should be set as well as define a OD entry <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">status</span> <span class="pre">bits</span></code> of type
 <code class="docutils literal notranslate"><span class="pre">OCTET_STRING</span></code> with length of <cite>CO_CONFIG_EM_ERR_STATUS_BITS_COUNT / 4</cite>. You
@@ -207,18 +283,18 @@ are responsible for defining the OD entry and register it to CANopenNode using
 <h3>Error register<a class="headerlink" href="#error-register" title="Link to this heading"></a></h3>
 <p>CANopenNode also manages <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">register</span></code> of OD 0x1001 via a set of
 <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html">CO_CONFIG_ERR_CONDITION_*</a>
-macros based on the error status bits. However, the default behavior only sets
-the generic bit when error status bits between <code class="docutils literal notranslate"><span class="pre">0x28</span></code> to <code class="docutils literal notranslate"><span class="pre">0x2F</span></code> are set,
-which does <strong>NOT</strong> adhere to the CANopen specification stating that: “The
-generic error shall be signaled at any error situation <a class="footnote-reference brackets" href="#id8" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.”</p>
+macros based on the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code>. However, the default behavior only
+sets the generic bit when <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> between <code class="docutils literal notranslate"><span class="pre">0x28</span></code> to <code class="docutils literal notranslate"><span class="pre">0x2F</span></code> are
+set, which does <strong>NOT</strong> adhere to the CANopen specification stating that: “The
+generic error shall be signaled at any error situation <a class="footnote-reference brackets" href="#id11" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.”</p>
 </section>
 <section id="emcy-write">
 <h3>EMCY write<a class="headerlink" href="#emcy-write" title="Link to this heading"></a></h3>
-<p>In order to transmit the error status bits in the Emergency (EMCY) object, the
-first byte of the manufacturer-specific error code is used to store the error
-status bit currently reported, <strong>NOT</strong> the error status bits that are currently
-set.</p>
-<p>The standard CANopen EMCY write payload has the following format <a class="footnote-reference brackets" href="#id9" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>:</p>
+<p>In order to transmit the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> in the Emergency (EMCY) object,
+the first byte of the manufacturer-specific error code is used to store the
+<code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bit</span></code> currently reported, <strong>NOT</strong> the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> that
+are currently set.</p>
+<p>The standard CANopen EMCY write payload has the following format <a class="footnote-reference brackets" href="#id12" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  0        1          2         3                              7
 +------------+----------------+----------------------------------+
 | error code | error register | manufacturer-specific error code |
@@ -226,7 +302,7 @@ set.</p>
 </pre></div>
 </div>
 <p>And CANopenNode uses the first byte of manufacturer-specific error code (the
-byte of index 3) to transmit the reported error status bit, so the payload
+byte of index 3) to transmit the reported <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bit</span></code>, so the payload
 becomes:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  0        1         2                  3           4                              7
 +------------+----------------+------------------------------------------------------+
@@ -235,7 +311,7 @@ becomes:</p>
 </pre></div>
 </div>
 <p>CANopenNode also recognizes the first byte of manufacturer-specific error code
-as error status bit when receiving EMCY messages from other nodes. The
+as <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bit</span></code> when receiving EMCY messages from other nodes. The
 callback for receiving EMCY registered using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_initCallbackRx()</span></code> has
 the prototype:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">pFunctSignalRx</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">ident</span><span class="p">,</span>
@@ -252,7 +328,7 @@ the prototype:</p>
 <p>CANopenNode also helps to maintain <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> of OD 0x1003 for
 recording errors that happened if <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62">CO_CONFIG_EM_HISTORY</a>
 is set. Once an error is reported using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_error()</span></code>, it will be recorded
-to <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> in the following format <a class="footnote-reference brackets" href="#id10" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>:</p>
+to <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> in the following format <a class="footnote-reference brackets" href="#id13" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>32               24     16           0
 +----------------+------+------------+
 | error register | 0x00 | error code |
@@ -265,21 +341,27 @@ MSB                                LSB
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id7" role="doc-footnote">
+<aside class="footnote brackets" id="id9" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving">Zephyr CAN bus driver documentation</a>
 on receiving messages</p>
 </aside>
-<aside class="footnote brackets" id="id8" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/arm/st/h7/stm32h7.dtsi#L533">STM32H7 FDCAN device tree source code</a>,
+where the device tree binding for <code class="docutils literal notranslate"><span class="pre">bosch,mram-cfg</span></code> is defined in
+<a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml">https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml</a></p>
+</aside>
+<aside class="footnote brackets" id="id11" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
 <p>CiA 301, section 7.5.2.2 Error register</p>
 </aside>
-<aside class="footnote brackets" id="id9" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id12" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
 <p>CiA 301, section 7.2.7.3.1 Protocol EMCY write</p>
 </aside>
-<aside class="footnote brackets" id="id10" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id13" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">5</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_Emergency.c#L673C14-L673C21">CO_err() source code</a></p>
 </aside>
 </aside>
