@@ -65,7 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="test.html">Testing in Zephyr</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">CANopenNode</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#can-reception">CAN Reception</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#callbacks">callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#callbacks">Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#filters">Filters</a></li>
 </ul>
 </li>
@@ -75,7 +75,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#error-register">Error register</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#emcy-write">EMCY write</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pre-defined-error-fields">Pre-defined error fields</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#emcy-reception">EMCY reception</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
@@ -112,22 +111,26 @@
              
   <section id="canopennode">
 <span id="notes-canopennode"></span><h1>CANopenNode<a class="headerlink" href="#canopennode" title="Link to this heading"></a></h1>
-<p>The <a class="reference external" href="https://github.com/zephyrproject-rtos/canopennode">CANopenNode track in Zephy</a> is currently outdated to
-the latest version of <a class="reference external" href="https://github.com/CANopenNode/CANopenNode">CANopenNode</a>, and the <a class="reference external" href="https://github.com/CANopenNode/CANopenEditor">CANopenEditor</a> does not support this legacy
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/canopennode">Zephyr’s branch on CANopenNode</a> is currently outdated
+comapring to the latest version of <a class="reference external" href="https://github.com/CANopenNode/CANopenNode">CANopenNode</a>, and the <a class="reference external" href="https://github.com/CANopenNode/CANopenEditor">CANopenEditor</a> does not support this legacy
 version of CANopenNode (it has a legacy exporter, but the generated code lacks
 some type definitions that it can’t compile).</p>
-<p>But CAN open is not that really open as a lot of the specifications are not
-free. For now I need CiA 302.</p>
-<p>However, since the current version of CANopenNode in Zephyr is still operational
-and provides the necessary features, it’s too good to not use it. Here are some
-notes for using CANopenNode in Zephyr:</p>
+<p>Also, CANopen itself as a protocol controlled by <a class="reference external" href="https://www.can-cia.org">CAN in Automation (CiA)</a> is not that really that open as a lot of the
+specifications are not free. For example, now I need CiA 302 and it costs 512
+Euros.</p>
+<p>However, since CANopen provides the necessary application layer over the
+original CAN protocol that only covers the transmission layer, with the legacy
+Zephyr integration of CANopenNode available, it’s too good to not use it. We
+maintain <a class="reference external" href="https://github.com/NTURacingTeam/zephyr">a fork of Zephyr</a> that
+contains the modifications necessary to use the latest version of CANopenNode.</p>
+<p>Here are some notes for using the latest version of CANopenNode in Zephyr:</p>
 <section id="can-reception">
 <h2>CAN Reception<a class="headerlink" href="#can-reception" title="Link to this heading"></a></h2>
 <section id="callbacks">
-<h3>callbacks<a class="headerlink" href="#callbacks" title="Link to this heading"></a></h3>
+<h3>Callbacks<a class="headerlink" href="#callbacks" title="Link to this heading"></a></h3>
 <p>CAN bus driver in Zephyr uses hardware filters to filter out messages, and only
 messages that pass the filter will be received by the application using callback
-functions from an interrupt context <a class="footnote-reference brackets" href="#id8" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Since callbacks are called from ISR,
+functions from an interrupt context <a class="footnote-reference brackets" href="#id7" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Since callbacks are called from ISR,
 caution must be taken when setting callbacks related to CAN bus reception in
 CANopenNode. For example, <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_initCallbackRx()</span></code> and
 <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_NMT_initCallback()</span></code> both execute in the ISR context, please
@@ -184,48 +187,55 @@ according to the CiA 301 standard. The following is a list of registered ODs:</p
 <h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h2>
 <section id="error-status-bits">
 <h3>Error status bits<a class="headerlink" href="#error-status-bits" title="Link to this heading"></a></h3>
-<p>CANopenNode uses an optional OD entry <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">status</span> <span class="pre">bits</span></code> of type
-<code class="docutils literal notranslate"><span class="pre">OCTET_STRING</span></code> and length more than 12 to store error status. You are
-responsible for setting it in OD and register it to CANopenNode using
-<code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_init()</span></code>. The first 6 bytes (and hence the minimum length of 12 of
-the octet string) is used internally by CANopenNode to store error status, and
-the rest 26 bytes can be used for manaufacturer specific errors. The definitions
-of the error status bits can be found in <a class="reference external" href="https://canopennode.github.io/CANopenSocket/group__CO__Emergency.html#ga587034df9d350c8e121c253f1d4eeacc">CO_EM_errorStatusBits_t</a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The length of <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">status</span> <span class="pre">bits</span></code> must grow coorespondingly to the number of
-manufacturer specific errors.</p>
-</div>
+<p>In addition to the standard CANopen error codes defined in CiA 301, CANopenNode
+defines a set of <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__EM__errorStatusBits__t.html">error status bits</a>
+that can be used to indicate what errors are currently happening in the node.
+When an error is reported or cleared using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_error()</span></code>, the error status
+bits will be set or cleared accordingly and if the same bit is already set or
+cleared, no processing will happen. Such mutually exclusivity effectively making
+the error status bits the real error being tracked of and the CANopen error
+codes being the additional information of the error. The number of error status
+bits is defined by <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#gab87776d4802748671b234112263760af">CO_CONFIG_EM_ERR_STATUS_BITS_COUNT</a>.</p>
+<p>If error status bits are needed to be accessed via the object dictionary,
+<a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62">CO_CONFIG_EM_STATUS_BITS</a>
+should be set as well as define a OD entry <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">status</span> <span class="pre">bits</span></code> of type
+<code class="docutils literal notranslate"><span class="pre">OCTET_STRING</span></code> with length of <cite>CO_CONFIG_EM_ERR_STATUS_BITS_COUNT / 4</cite>. You
+are responsible for defining the OD entry and register it to CANopenNode using
+<code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_init()</span></code>.</p>
 </section>
 <section id="error-register">
 <h3>Error register<a class="headerlink" href="#error-register" title="Link to this heading"></a></h3>
-<p>CANopenNode also helps mamnge generic, communication and manufacturer-specific
-bits of <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">register</span></code> at OD 0x1001 <a class="footnote-reference brackets" href="#id9" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. It sets communication bits when
-internal communication error occurs, and manufacturer-specific bits when any of
-the manaufacturer specific errors in <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">status</span> <span class="pre">bits</span></code> are set. However, it
-only set generic bit when <code class="docutils literal notranslate"><span class="pre">CO_EM_errorStatusBits_t</span></code> between 0x28 to 0x2F are
-set, which does <strong>NOT</strong> adhere to the standard stating that: “The generic error
-shall be signaled at any error situation <a class="footnote-reference brackets" href="#id10" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.”</p>
+<p>CANopenNode also manages <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">register</span></code> of OD 0x1001 via a set of
+<a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html">CO_CONFIG_ERR_CONDITION_*</a>
+macros based on the error status bits. However, the default behavior only sets
+the generic bit when error status bits between <code class="docutils literal notranslate"><span class="pre">0x28</span></code> to <code class="docutils literal notranslate"><span class="pre">0x2F</span></code> are set,
+which does <strong>NOT</strong> adhere to the CANopen specification stating that: “The
+generic error shall be signaled at any error situation <a class="footnote-reference brackets" href="#id8" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.”</p>
 </section>
 <section id="emcy-write">
 <h3>EMCY write<a class="headerlink" href="#emcy-write" title="Link to this heading"></a></h3>
-<p>In CANopen standard the EMCY write payload has the following format <a class="footnote-reference brackets" href="#id11" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>:</p>
+<p>In order to transmit the error status bits in the Emergency (EMCY) object, the
+first byte of the manufacturer-specific error code is used to store the error
+status bit currently reported, <strong>NOT</strong> the error status bits that are currently
+set.</p>
+<p>The standard CANopen EMCY write payload has the following format <a class="footnote-reference brackets" href="#id9" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  0        1          2         3                              7
 +------------+----------------+----------------------------------+
 | error code | error register | manufacturer-specific error code |
 +------------+----------------+----------------------------------+
 </pre></div>
 </div>
-<p>CANopenNode uses the first byte of manaufacturer-specific error code to transmit
-its <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">status</span> <span class="pre">bits</span></code>, so the payload becomes:</p>
+<p>And CANopenNode uses the first byte of manufacturer-specific error code (the
+byte of index 3) to transmit the reported error status bit, so the payload
+becomes:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  0        1         2                  3           4                              7
 +------------+----------------+------------------------------------------------------+
 | error code | error register | error status bits | manufacturer-specific error code |
 +------------+----------------+------------------------------------------------------+
 </pre></div>
 </div>
-<p>CANopenNode also recognizes the first byte of manaufacturer-specific error code
-as <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">status</span> <span class="pre">bits</span></code> when receiving EMCY messages from other nodes. The
+<p>CANopenNode also recognizes the first byte of manufacturer-specific error code
+as error status bit when receiving EMCY messages from other nodes. The
 callback for receiving EMCY registered using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_initCallbackRx()</span></code> has
 the prototype:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">pFunctSignalRx</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">ident</span><span class="p">,</span>
@@ -235,61 +245,42 @@ the prototype:</p>
 <span class="w">                    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">infoCode</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Where <code class="docutils literal notranslate"><span class="pre">errorBit</span></code> is for <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">status</span> <span class="pre">bits</span></code> (and <code class="docutils literal notranslate"><span class="pre">infoCode</span></code> for the rest
-of the manufacturer-specific error code).</p>
+<p>Where <code class="docutils literal notranslate"><span class="pre">infoCode</span></code> is the rest of the manufacturer-specific error code.</p>
 </section>
 <section id="pre-defined-error-fields">
 <h3>Pre-defined error fields<a class="headerlink" href="#pre-defined-error-fields" title="Link to this heading"></a></h3>
-<p>CANopenNode also helps to maintain <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> at OD 0x1003 for
-recording errors that happened <a class="footnote-reference brackets" href="#id12" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. Once an error is reported using
-<code class="xref c c-func docutils literal notranslate"><span class="pre">CO_errorReport()</span></code>, it will be recorded to <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> in
-the following format:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>32     24               16           0
-+------+----------------+------------+
-| 0x00 | error register | error code |
-+------+----------------+------------+
+<p>CANopenNode also helps to maintain <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> of OD 0x1003 for
+recording errors that happened if <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62">CO_CONFIG_EM_HISTORY</a>
+is set. Once an error is reported using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_error()</span></code>, it will be recorded
+to <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> in the following format <a class="footnote-reference brackets" href="#id10" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>32               24     16           0
++----------------+------+------------+
+| error register | 0x00 | error code |
++----------------+------+------------+
 MSB                                LSB
 </pre></div>
 </div>
-<p>where error code is one of the standard error codes defined in CiA 301.</p>
-</section>
-<section id="emcy-reception">
-<h3>EMCY reception<a class="headerlink" href="#emcy-reception" title="Link to this heading"></a></h3>
-<p>CANopenNode will receive all EMCY messages from the bus <a class="footnote-reference brackets" href="#id13" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a> and call the
-callback registered using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_initCallbackRx()</span></code>. It does not provide
-support for <code class="docutils literal notranslate"><span class="pre">Emergency</span> <span class="pre">consumer</span> <span class="pre">object</span></code> at OD 0x1014.</p>
 </section>
 </section>
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id8" role="doc-footnote">
+<aside class="footnote brackets" id="id7" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving">Zephyr CAN bus driver documentation</a>
 on receiving messages</p>
 </aside>
-<aside class="footnote brackets" id="id9" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p><a class="reference external" href="https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L251">CANopenNode CO_EM_process() source code (1)</a>
-that manages error register</p>
-</aside>
-<aside class="footnote brackets" id="id10" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
 <p>CiA 301, section 7.5.2.2 Error register</p>
 </aside>
-<aside class="footnote brackets" id="id11" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id9" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
 <p>CiA 301, section 7.2.7.3.1 Protocol EMCY write</p>
 </aside>
-<aside class="footnote brackets" id="id12" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">5</a><span class="fn-bracket">]</span></span>
-<p><a class="reference external" href="https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L310">CANopenNode CO_EM_process() source code (2)</a>
-that mantains pre-defined error fields</p>
-</aside>
-<aside class="footnote brackets" id="id13" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">6</a><span class="fn-bracket">]</span></span>
-<p><a class="reference external" href="https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L179">CANopenNode CO_EM_init() source code</a>
-that receives all EMCY messages</p>
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_Emergency.c#L673C14-L673C21">CO_err() source code</a></p>
 </aside>
 </aside>
 </section>

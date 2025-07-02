@@ -4,25 +4,31 @@
 CANopenNode
 ===========
 
-The `CANopenNode track in Zephy
-<https://github.com/zephyrproject-rtos/canopennode>`_ is currently outdated to
-the latest version of `CANopenNode
+`Zephyr's branch on CANopenNode
+<https://github.com/zephyrproject-rtos/canopennode>`_ is currently outdated
+comapring to the latest version of `CANopenNode
 <https://github.com/CANopenNode/CANopenNode>`_, and the `CANopenEditor
 <https://github.com/CANopenNode/CANopenEditor>`_ does not support this legacy
 version of CANopenNode (it has a legacy exporter, but the generated code lacks
 some type definitions that it can't compile).
 
-But CAN open is not that really open as a lot of the specifications are not
-free. For now I need CiA 302.
+Also, CANopen itself as a protocol controlled by `CAN in Automation (CiA)
+<https://www.can-cia.org>`_ is not that really that open as a lot of the
+specifications are not free. For example, now I need CiA 302 and it costs 512
+Euros.
 
-However, since the current version of CANopenNode in Zephyr is still operational
-and provides the necessary features, it's too good to not use it. Here are some
-notes for using CANopenNode in Zephyr:
+However, since CANopen provides the necessary application layer over the
+original CAN protocol that only covers the transmission layer, with the legacy
+Zephyr integration of CANopenNode available, it's too good to not use it. We
+maintain `a fork of Zephyr <https://github.com/NTURacingTeam/zephyr>`_ that
+contains the modifications necessary to use the latest version of CANopenNode.
+
+Here are some notes for using the latest version of CANopenNode in Zephyr:
 
 CAN Reception
 =============
 
-callbacks
+Callbacks
 ---------
 
 CAN bus driver in Zephyr uses hardware filters to filter out messages, and only
@@ -85,35 +91,46 @@ Error Handling
 Error status bits
 -----------------
 
-CANopenNode uses an optional OD entry ``Error status bits`` of type
-``OCTET_STRING`` and length more than 12 to store error status. You are
-responsible for setting it in OD and register it to CANopenNode using
-:c:func:`CO_EM_init`. The first 6 bytes (and hence the minimum length of 12 of
-the octet string) is used internally by CANopenNode to store error status, and
-the rest 26 bytes can be used for manaufacturer specific errors. The definitions
-of the error status bits can be found in `CO_EM_errorStatusBits_t
-<https://canopennode.github.io/CANopenSocket/group__CO__Emergency.html#ga587034df9d350c8e121c253f1d4eeacc>`_.
+In addition to the standard CANopen error codes defined in CiA 301, CANopenNode
+defines a set of `error status bits
+<https://canopennode.github.io/CANopenNode/group__CO__EM__errorStatusBits__t.html>`_
+that can be used to indicate what errors are currently happening in the node.
+When an error is reported or cleared using :c:func:`CO_error`, the error status
+bits will be set or cleared accordingly and if the same bit is already set or
+cleared, no processing will happen. Such mutually exclusivity effectively making
+the error status bits the real error being tracked of and the CANopen error
+codes being the additional information of the error. The number of error status
+bits is defined by `CO_CONFIG_EM_ERR_STATUS_BITS_COUNT
+<https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#gab87776d4802748671b234112263760af>`_.
 
-.. note::
-
-   The length of ``Error status bits`` must grow coorespondingly to the number of
-   manufacturer specific errors.
+If error status bits are needed to be accessed via the object dictionary, 
+`CO_CONFIG_EM_STATUS_BITS
+<https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62>`_
+should be set as well as define a OD entry ``Error status bits`` of type
+``OCTET_STRING`` with length of `CO_CONFIG_EM_ERR_STATUS_BITS_COUNT / 4`. You
+are responsible for defining the OD entry and register it to CANopenNode using
+:c:func:`CO_EM_init`.
 
 Error register
 --------------
 
-CANopenNode also helps mamnge generic, communication and manufacturer-specific
-bits of ``Error register`` at OD 0x1001 [#]_. It sets communication bits when
-internal communication error occurs, and manufacturer-specific bits when any of
-the manaufacturer specific errors in ``Error status bits`` are set. However, it
-only set generic bit when ``CO_EM_errorStatusBits_t`` between 0x28 to 0x2F are
-set, which does **NOT** adhere to the standard stating that: "The generic error
-shall be signaled at any error situation [#]_."
+CANopenNode also manages ``Error register`` of OD 0x1001 via a set of
+`CO_CONFIG_ERR_CONDITION_*
+<https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html>`_
+macros based on the error status bits. However, the default behavior only sets
+the generic bit when error status bits between ``0x28`` to ``0x2F`` are set,
+which does **NOT** adhere to the CANopen specification stating that: "The
+generic error shall be signaled at any error situation [#]_."
 
 EMCY write
 ----------
 
-In CANopen standard the EMCY write payload has the following format [#]_:
+In order to transmit the error status bits in the Emergency (EMCY) object, the
+first byte of the manufacturer-specific error code is used to store the error
+status bit currently reported, **NOT** the error status bits that are currently
+set.
+
+The standard CANopen EMCY write payload has the following format [#]_:
 
 .. code-block:: none
 
@@ -122,8 +139,9 @@ In CANopen standard the EMCY write payload has the following format [#]_:
    | error code | error register | manufacturer-specific error code |
    +------------+----------------+----------------------------------+
 
-CANopenNode uses the first byte of manaufacturer-specific error code to transmit
-its ``Error status bits``, so the payload becomes:
+And CANopenNode uses the first byte of manufacturer-specific error code (the
+byte of index 3) to transmit the reported error status bit, so the payload
+becomes:
 
 .. code-block:: none
 
@@ -132,8 +150,8 @@ its ``Error status bits``, so the payload becomes:
    | error code | error register | error status bits | manufacturer-specific error code |
    +------------+----------------+------------------------------------------------------+
 
-CANopenNode also recognizes the first byte of manaufacturer-specific error code
-as ``Error status bits`` when receiving EMCY messages from other nodes. The
+CANopenNode also recognizes the first byte of manufacturer-specific error code
+as error status bit when receiving EMCY messages from other nodes. The
 callback for receiving EMCY registered using :c:func:`CO_EM_initCallbackRx` has
 the prototype:
 
@@ -145,33 +163,24 @@ the prototype:
                        const uint8_t errorBit,
                        const uint32_t infoCode);
 
-Where ``errorBit`` is for ``Error status bits`` (and ``infoCode`` for the rest
-of the manufacturer-specific error code).
+Where ``infoCode`` is the rest of the manufacturer-specific error code.
 
 Pre-defined error fields
 ------------------------
 
-CANopenNode also helps to maintain ``Pre-defined error fields`` at OD 0x1003 for
-recording errors that happened [#]_. Once an error is reported using
-:c:func:`CO_errorReport`, it will be recorded to ``Pre-defined error fields`` in
-the following format:
+CANopenNode also helps to maintain ``Pre-defined error fields`` of OD 0x1003 for
+recording errors that happened if `CO_CONFIG_EM_HISTORY
+<https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62>`_
+is set. Once an error is reported using :c:func:`CO_error`, it will be recorded
+to ``Pre-defined error fields`` in the following format [#]_:
 
 .. code-block:: none
 
-   32     24               16           0
-   +------+----------------+------------+
-   | 0x00 | error register | error code |
-   +------+----------------+------------+
+   32               24     16           0
+   +----------------+------+------------+
+   | error register | 0x00 | error code |
+   +----------------+------+------------+
    MSB                                LSB
-
-where error code is one of the standard error codes defined in CiA 301.
-
-EMCY reception
---------------
-
-CANopenNode will receive all EMCY messages from the bus [#]_ and call the
-callback registered using :c:func:`CO_EM_initCallbackRx`. It does not provide
-support for ``Emergency consumer object`` at OD 0x1014.
 
 Reference
 =========
@@ -179,14 +188,7 @@ Reference
 .. [#] `Zephyr CAN bus driver documentation
    <https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving>`_
    on receiving messages
-.. [#] `CANopenNode CO_EM_process() source code (1)
-   <https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L251>`_ 
-   that manages error register
 .. [#] CiA 301, section 7.5.2.2 Error register
 .. [#] CiA 301, section 7.2.7.3.1 Protocol EMCY write
-.. [#] `CANopenNode CO_EM_process() source code (2)
-   <https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L310>`_
-   that mantains pre-defined error fields
-.. [#] `CANopenNode CO_EM_init() source code
-   <https://github.com/zephyrproject-rtos/canopennode/blob/zephyr/stack/CO_Emergency.c#L179>`_
-   that receives all EMCY messages
+.. [#] `CO_err() source code
+   <https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_Emergency.c#L673C14-L673C21>`_
