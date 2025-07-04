@@ -67,9 +67,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#can-reception">CAN Reception</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#callbacks">Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#filters">Filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#object-dictionary-od">Object Dictionary (OD)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#object-dictionary-od">Object Dictionary (OD)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">References</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#process-data-objectss-pdos">Process Data Objectss (PDOs)</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#receive-pdos-rpdos">Receive PDOs (RPDOs)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#transmit-pdos-tpdos">Transmit PDOs (TPDOs)</a></li>
@@ -80,9 +84,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#error-register">Error register</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#emcy-write">EMCY write</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pre-defined-error-fields">Pre-defined error fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">References</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
 </ul>
@@ -135,7 +139,7 @@ contains the modifications necessary to use the latest version of CANopenNode.</
 <h3>Callbacks<a class="headerlink" href="#callbacks" title="Link to this heading"></a></h3>
 <p>CAN bus driver in Zephyr uses hardware filters to filter out messages, and only
 messages that pass the filter will be received by the application using callback
-functions from an interrupt context <a class="footnote-reference brackets" href="#id9" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Since callbacks are called from ISR,
+functions from an interrupt context <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Since callbacks are called from ISR,
 caution must be taken when setting callbacks related to CAN bus reception in
 CANopenNode. For example, <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_initCallbackRx()</span></code> and
 <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_NMT_initCallback()</span></code> both execute in the ISR context, please
@@ -162,17 +166,43 @@ monitored node</p></li>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since STM32 series with FDCAN only supports up to 28 standard and 8 extended
-ID filters <a class="footnote-reference brackets" href="#id10" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, caution must be taken when configuring CANopenNode.</p>
+ID filters <a class="footnote-reference brackets" href="#id5" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, caution must be taken when configuring CANopenNode.</p>
 </div>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving">Zephyr CAN bus driver documentation</a>
+on receiving messages</p>
+</aside>
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/arm/st/h7/stm32h7.dtsi#L533">STM32H7 FDCAN device tree source code</a>,
+where the device tree binding for <code class="docutils literal notranslate"><span class="pre">bosch,mram-cfg</span></code> is defined in
+<a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml">https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml</a></p>
+</aside>
+</aside>
 </section>
 </section>
 <section id="object-dictionary-od">
 <h2>Object Dictionary (OD)<a class="headerlink" href="#object-dictionary-od" title="Link to this heading"></a></h2>
-<p>Each object dictionary entry can be read/written via a callback function
-registered by <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__ODinterface.html#ga41c96feee5da30cd9117a35a307b96e1">OD_extension_init()</a>
-instead of straightforwardly from/to the memory. This is default for SDOs;
-however, <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9">CO_CONFIG_PDO_OD_IO_ACCESS</a>
+<p>Each OD entry can be read/written by SDO via a callback function registered by
+<a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__ODinterface.html#ga41c96feee5da30cd9117a35a307b96e1">OD_extension_init()</a>
+instead of straightforwardly from/to the memory. However,
+<a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9">CO_CONFIG_PDO_OD_IO_ACCESS</a>
 should be set to enable the same behavior for PDOs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SDO and PDO internally get the OD entry read/write APIs are via
+<code class="xref c c-func docutils literal notranslate"><span class="pre">OD_getSub()</span></code>. However, SDO calls <code class="xref c c-func docutils literal notranslate"><span class="pre">OD_getSub()</span></code> everytime a
+request is processed <a class="footnote-reference brackets" href="#id9" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, so the newly registered callback functions will
+be used. On the other hand, PDOs only call <code class="xref c c-func docutils literal notranslate"><span class="pre">OD_getSub()</span></code> once when
+initialized <a class="footnote-reference brackets" href="#id10" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. So in order to make PDO use the callback functions to
+access OD entries, the callbacks should be registered before PDOs are
+initialized.</p>
+</div>
 <p>CANopenNode already registered some common OD entries to provide functionalities
 according to the CiA 301 standard. The following is a list of registered ODs:</p>
 <ul class="simple">
@@ -194,6 +224,21 @@ according to the CiA 301 standard. The following is a list of registered ODs:</p
 <li><p>0x1800 to 0x19FF TPDO communication parameter</p></li>
 <li><p>0x1A00 to 0x1BFF TPDO mapping parameter</p></li>
 </ul>
+<section id="id8">
+<h3>References<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id9" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_SDOserver.c#L644">CO_SDOserver_process() source code</a>
+that calls <code class="xref c c-func docutils literal notranslate"><span class="pre">OD_getSub()</span></code> to get the read/write APIs.</p>
+</aside>
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_PDO.c#L108">PDOconfigMap() source code</a>
+that is called when TPDOs and RPDOs are initialized.</p>
+</aside>
+</aside>
+</section>
 </section>
 <section id="process-data-objectss-pdos">
 <h2>Process Data Objectss (PDOs)<a class="headerlink" href="#process-data-objectss-pdos" title="Link to this heading"></a></h2>
@@ -286,7 +331,7 @@ are responsible for defining the OD entry and register it to CANopenNode using
 macros based on the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code>. However, the default behavior only
 sets the generic bit when <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> between <code class="docutils literal notranslate"><span class="pre">0x28</span></code> to <code class="docutils literal notranslate"><span class="pre">0x2F</span></code> are
 set, which does <strong>NOT</strong> adhere to the CANopen specification stating that: “The
-generic error shall be signaled at any error situation <a class="footnote-reference brackets" href="#id11" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.”</p>
+generic error shall be signaled at any error situation <a class="footnote-reference brackets" href="#id17" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.”</p>
 </section>
 <section id="emcy-write">
 <h3>EMCY write<a class="headerlink" href="#emcy-write" title="Link to this heading"></a></h3>
@@ -294,7 +339,7 @@ generic error shall be signaled at any error situation <a class="footnote-refere
 the first byte of the manufacturer-specific error code is used to store the
 <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bit</span></code> currently reported, <strong>NOT</strong> the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> that
 are currently set.</p>
-<p>The standard CANopen EMCY write payload has the following format <a class="footnote-reference brackets" href="#id12" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>:</p>
+<p>The standard CANopen EMCY write payload has the following format <a class="footnote-reference brackets" href="#id18" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  0        1          2         3                              7
 +------------+----------------+----------------------------------+
 | error code | error register | manufacturer-specific error code |
@@ -328,7 +373,7 @@ the prototype:</p>
 <p>CANopenNode also helps to maintain <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> of OD 0x1003 for
 recording errors that happened if <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62">CO_CONFIG_EM_HISTORY</a>
 is set. Once an error is reported using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_error()</span></code>, it will be recorded
-to <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> in the following format <a class="footnote-reference brackets" href="#id13" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>:</p>
+to <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> in the following format <a class="footnote-reference brackets" href="#id19" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>32               24     16           0
 +----------------+------+------------+
 | error register | 0x00 | error code |
@@ -337,34 +382,23 @@ MSB                                LSB
 </pre></div>
 </div>
 </section>
-</section>
-<section id="reference">
-<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
+<section id="id16">
+<h3>References<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id9" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
-<p><a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving">Zephyr CAN bus driver documentation</a>
-on receiving messages</p>
-</aside>
-<aside class="footnote brackets" id="id10" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/arm/st/h7/stm32h7.dtsi#L533">STM32H7 FDCAN device tree source code</a>,
-where the device tree binding for <code class="docutils literal notranslate"><span class="pre">bosch,mram-cfg</span></code> is defined in
-<a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml">https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml</a></p>
-</aside>
-<aside class="footnote brackets" id="id11" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id17" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">5</a><span class="fn-bracket">]</span></span>
 <p>CiA 301, section 7.5.2.2 Error register</p>
 </aside>
-<aside class="footnote brackets" id="id12" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id18" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">6</a><span class="fn-bracket">]</span></span>
 <p>CiA 301, section 7.2.7.3.1 Protocol EMCY write</p>
 </aside>
-<aside class="footnote brackets" id="id13" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">5</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id19" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">7</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_Emergency.c#L673C14-L673C21">CO_err() source code</a></p>
 </aside>
 </aside>
+</section>
 </section>
 </section>
 
