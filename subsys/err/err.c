@@ -48,14 +48,12 @@ SYS_INIT(init, APPLICATION, CONFIG_NTURT_ERR_INIT_PRIORITY);
 const struct err_list *__err_errors = &g_ctx.errors;
 
 /* function definition -------------------------------------------------------*/
-int err_report(uint32_t errcode, bool set) {
+void err_report(uint32_t errcode, bool set) {
   struct err *err = err_get_impl(errcode);
-  if (err == NULL) {
-    return -ENOENT;
-  }
+  __ASSERT(err != NULL, "Error code 0x%x does not exist", errcode);
 
   if (err->flags & ERR_FLAG_DISABLED) {
-    return 0;
+    return;
   }
 
   struct err err_copy;
@@ -66,7 +64,7 @@ int err_report(uint32_t errcode, bool set) {
 
   if (!XOR(set, already_set)) {
     k_spin_unlock(&g_ctx.lock, key);
-    return 0;
+    return;
   }
 
   if (set) {
@@ -85,8 +83,6 @@ int err_report(uint32_t errcode, bool set) {
 
   err_notify(&err_copy);
   err_log(&err_copy);
-
-  return 0;
 }
 
 const struct err *err_get(uint32_t errcode) {
@@ -193,12 +189,7 @@ static int init() {
     if (!(err->flags & ERR_FLAG_DISABLED) && err->flags & ERR_FLAG_SET) {
       err->flags &= ~ERR_FLAG_SET;
 
-      ret = err_report(err->errcode, true);
-      if (ret < 0) {
-        LOG_ERR("Failed to report error 0x%x: %s", err->errcode,
-                strerror(-ret));
-        return ret;
-      }
+      err_report(err->errcode, true);
     }
   }
 

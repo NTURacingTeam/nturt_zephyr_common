@@ -26,7 +26,7 @@
 /**
  * @defgroup tm Telemetry
  * @brief Telemetry support.
- * 
+ *
  * @{
  */
 
@@ -115,7 +115,7 @@
 
 /**
  * @brief Specify a telemetry data to be aggregated and published by a telemetry
- * group.
+ * group. Used in @ref TM_GROUP_DEFINE.
  *
  * @param[in] data Telemetry data to be aggregated and published.
  * @param[in] ... Optional flags of the data, the same ones and rules as
@@ -187,7 +187,6 @@
  *
  * @param[in] name Name of the telemetry data.
  * @param[in] value New value of the telemetry data.
- *
  */
 #define TM_DATA_UPDATE(name, value)                   \
   do {                                                \

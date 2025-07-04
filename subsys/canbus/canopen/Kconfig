@@ -7,6 +7,7 @@ menuconfig NTURT_CANOPEN
 	select CANOPEN
 	select CANOPENNODE
 	select NTURT_ERR
+	select NTURT_MSG
 
 if NTURT_CANOPEN
 
@@ -18,7 +19,15 @@ config NTURT_CANOPEN_INIT_PRIORITY
 	int "Init priority"
 	default 30
 	help
-	  CANopen initialization priority.
+	  CANopen initialization priority. Must be higher than Zephyr's CANopen
+	  initialization priority.
+
+config NTURT_CANOPEN_OD_INIT_PRIORITY
+	int "Init priority"
+	default 0
+	help
+	  Object dictionary initialization priority. Must be lower than Zephyr's
+	  CANopen object dictionary initialization priority.
 
 config NTURT_CANOPEN_TIME
 	bool "CANopen TIME object"

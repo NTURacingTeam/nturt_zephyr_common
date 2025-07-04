@@ -14,6 +14,9 @@
 // glibc includes
 #include <stdint.h>
 
+// zephyr includes
+#include <zephyr/kernel.h>
+
 /**
  * @addtogroup msg_interface
  * @{
@@ -76,6 +79,16 @@ union msg_4wheel_data {
     float rr;
   };
 };
+
+/* function declarations ---------------------------------------------------*/
+/**
+ * @brief Initialize a message header.
+ *
+ * @param[out] header Pointer to the message header.
+ */
+static inline void msg_header_init(struct msg_header *header) {
+  header->timestamp_ns = k_ticks_to_ns_floor64(k_uptime_ticks());
+}
 
 /**
  * @} // msg_interface

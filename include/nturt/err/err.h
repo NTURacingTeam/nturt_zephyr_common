@@ -227,11 +227,8 @@ extern const struct err_list* __err_errors;
  *
  * @param[in] errcode Error code to set or clear.
  * @param[in] set True to set error, false to clear error.
- *
- * @retval 0 For success.
- * @retval -ENOENT If the error code does not exist.
  */
-int err_report(uint32_t errcode, bool set);
+void err_report(uint32_t errcode, bool set);
 
 /**
  * @brief Get the error with its code.

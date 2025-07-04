@@ -63,16 +63,37 @@ The following is a list of filters added by CANopenNode:
    Since STM32 series with FDCAN only supports up to 28 standard and 8 extended
    ID filters [#]_, caution must be taken when configuring CANopenNode.
 
+References
+----------
+
+.. [#] `Zephyr CAN bus driver documentation
+   <https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving>`_
+   on receiving messages
+.. [#] `STM32H7 FDCAN device tree source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/arm/st/h7/stm32h7.dtsi#L533>`_,
+   where the device tree binding for ``bosch,mram-cfg`` is defined in
+   `<https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml>`_
+
 Object Dictionary (OD)
 ======================
 
-Each object dictionary entry can be read/written via a callback function
-registered by `OD_extension_init()
+Each OD entry can be read/written by SDO via a callback function registered by
+`OD_extension_init()
 <https://canopennode.github.io/CANopenNode/group__CO__ODinterface.html#ga41c96feee5da30cd9117a35a307b96e1>`_
-instead of straightforwardly from/to the memory. This is default for SDOs;
-however, `CO_CONFIG_PDO_OD_IO_ACCESS
+instead of straightforwardly from/to the memory. However,
+`CO_CONFIG_PDO_OD_IO_ACCESS
 <https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9>`_
 should be set to enable the same behavior for PDOs.
+
+.. note::
+
+   SDO and PDO internally get the OD entry read/write APIs are via
+   :c:func:`OD_getSub`. However, SDO calls :c:func:`OD_getSub` everytime a
+   request is processed [#]_, so the newly registered callback functions will
+   be used. On the other hand, PDOs only call :c:func:`OD_getSub` once when
+   initialized [#]_. So in order to make PDO use the callback functions to
+   access OD entries, the callbacks should be registered before PDOs are
+   initialized.
 
 CANopenNode already registered some common OD entries to provide functionalities
 according to the CiA 301 standard. The following is a list of registered ODs:
@@ -94,6 +115,16 @@ according to the CiA 301 standard. The following is a list of registered ODs:
 - 0x1600 to 0x17FF: RPDO mapping parameter
 - 0x1800 to 0x19FF TPDO communication parameter
 - 0x1A00 to 0x1BFF TPDO mapping parameter
+
+References
+----------
+
+.. [#] `CO_SDOserver_process() source code
+   <https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_SDOserver.c#L644>`_
+   that calls :c:func:`OD_getSub` to get the read/write APIs.
+.. [#] `PDOconfigMap() source code
+   <https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_PDO.c#L108>`_
+   that is called when TPDOs and RPDOs are initialized.
 
 Process Data Objectss (PDOs)
 ============================
@@ -258,16 +289,9 @@ to ``Pre-defined error fields`` in the following format [#]_:
    +----------------+------+------------+
    MSB                                LSB
 
-Reference
-=========
+References
+----------
 
-.. [#] `Zephyr CAN bus driver documentation
-   <https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving>`_
-   on receiving messages
-.. [#] `STM32H7 FDCAN device tree source code
-   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/arm/st/h7/stm32h7.dtsi#L533>`_,
-   where the device tree binding for ``bosch,mram-cfg`` is defined in
-   `<https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml>`_
 .. [#] CiA 301, section 7.5.2.2 Error register
 .. [#] CiA 301, section 7.2.7.3.1 Protocol EMCY write
 .. [#] `CO_err() source code

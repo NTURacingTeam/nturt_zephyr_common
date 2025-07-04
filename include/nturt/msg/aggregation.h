@@ -26,7 +26,7 @@
 /**
  * @defgroup msg_agg Aggregation
  * @brief Data aggregation.
- * 
+ *
  * @ingroup msg
  * @{
  */
@@ -92,7 +92,8 @@
                       _publish, _user_data, __VA_ARGS__)
 
 /**
- * @brief Specify a member of a struct to be monitored for aggregation.
+ * @brief Specify a member of a struct to be monitored for aggregation. Used in
+ * @ref AGG_TYPED_DEFINE.
  *
  * @param[in] member Member of the struct to be monitored.
  * @param[in] ... Optional flags of the member, multiple flags can be specified
@@ -105,12 +106,12 @@
 #define _AGG_MEMBER_FLAGS(member) GET_ARG_N(2, __DEBRACKET member)
 
 /**
- * @brief Intial value of the data.
+ * @brief Intial value of the data. Used in @ref AGG_TYPED_DEFINE.
  *
  * @param[in] val Initialization list of the data.
  * @return Initial value of the data.
  */
-#define AGG_DATA_INIT(val, ...) {val, __VA_ARGS__}
+#define AGG_DATA_INIT(val, ...) ({val, __VA_ARGS__})
 
 #define __AGG_MAP(idx, offset, type) [offset] = idx + 1
 #define _AGG_MAP(idx, member, type) \
@@ -148,7 +149,7 @@
                                                                               \
       .publish = _publish,                                                    \
                                                                               \
-      .data = &(_type)_init_val,                                              \
+      .data = &(_type)__DEBRACKET _init_val,                                  \
       .pub_data = &(_type){},                                                 \
   }
 
@@ -303,9 +304,6 @@ void agg_work_cb(struct k_work *work);
 
 /**
  * @brief Publish function for data aggregation.
- *
- * @param[in,out] agg Pointer to @ref agg.
- * @param[in] user_data Pointer to custom data for callback functions.
  *
  * @warning Internal use only.
  */

@@ -106,12 +106,7 @@ static int err_set_cmd_handler(const struct shell *sh, size_t argc, char **argv,
         return -EALREADY;
       }
 
-      int ret = err_report(err->errcode, true);
-      if (ret < 0) {
-        shell_error(sh, "Failed to set error %s(0x%X).", err->name,
-                    err->errcode);
-        return ret;
-      }
+      err_report(err->errcode, true);
 
       shell_info(sh, "Error %s(0x%X) set.", err->name, err->errcode);
       return 0;
@@ -134,12 +129,7 @@ static int err_clear_cmd_handler(const struct shell *sh, size_t argc,
         return -ENOENT;
       }
 
-      int ret = err_report(err->errcode, false);
-      if (ret < 0) {
-        shell_error(sh, "Failed to clear error %s(0x%X).", err->name,
-                    err->errcode);
-        return ret;
-      }
+      err_report(err->errcode, false);
 
       shell_info(sh, "Error %s(0x%X) cleared.", err->name, err->errcode);
       return 0;

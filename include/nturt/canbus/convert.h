@@ -1,8 +1,26 @@
-#ifndef NTURT_CONVERT_H_
-#define NTURT_CONVERT_H_
+/**
+ * @file
+ * @brief CAN bus data conversion macros.
+ *
+ * @author quantumspawner
+ * @version 0.0.1
+ * @date 2025-07-04
+ * @copyright Copyright (c) 2025 NTU Racing Team
+ */
+
+#ifndef NTURT_CANBUS_CONVERT_H_
+#define NTURT_CANBUS_CONVERT_H_
 
 // glibc includes
 #include <stdint.h>
+
+/**
+ * @defgroup can_convert CAN bus data conversion.
+ * @brief CAN bus data conversion macros.
+ * 
+ * @ingroup can
+ * @{
+ */
 
 /* Physical to CAN -----------------------------------------------------------*/
 /// @brief Voltage physical data in V (float), convert to 0.02 V (uint8_t).
@@ -77,4 +95,8 @@
 /// @brief Inverter current data in 0.01 A (int16_t), convert to A (float).
 #define INV_CURRENT_CAN_TO_PHY(CAN) (0.01F * CAN)
 
-#endif  // NTURT_CONVERT_H_
+/**
+ * @} // can_convert
+ */
+
+#endif  // NTURT_CANBUS_CONVERT_H_

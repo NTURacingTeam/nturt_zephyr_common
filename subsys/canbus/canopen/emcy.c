@@ -5,6 +5,7 @@
 // zephyr includes
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+#include <zephyr/sys/__assert.h>
 #include <zephyr/sys/hash_map.h>
 #include <zephyr/sys/iterable_sections.h>
 #include <zephyr/sys/util.h>
@@ -76,6 +77,8 @@ static void emcy_cb(uint16_t ident, uint16_t errorCode, uint8_t errorRegister,
   g_ctx.errorRegister = errorRegister;
   g_ctx.errorBit = errorBit;
   g_ctx.infoCode = infoCode;
+
+  k_work_submit(&g_ctx.work);
 }
 
 static void emcy_work(struct k_work *work) {
@@ -105,11 +108,26 @@ static void emcy_work(struct k_work *work) {
           g_ctx.errorRegister, g_ctx.errorBit, g_ctx.infoCode);
     }
 
-    int ret = 0;
-    ret = err_report(ERR_CODE_CANBUS, set);
-    if (ret < 0) {
-      LOG_ERR("Failed to report canbus error: %d", ret);
+    bool status_bit_set = false;
+    CO_LOCK_EMCY(CO->em->CANdevTx);
+
+    for (int i = 0; i < CO_EM_MANUFACTURER_START / 8; i++) {
+      int byte = CO->em->errorStatusBits[i];
+      while (byte) {
+        int bit = find_lsb_set(byte) - 1;
+        int status_bit = (i * 8) + bit;
+        if (status_bit != CO_EM_HEARTBEAT_CONSUMER &&
+            status_bit != CO_EM_HB_CONSUMER_REMOTE_RESET) {
+          status_bit_set = true;
+        }
+
+        byte &= ~BIT(bit);
+      }
     }
+
+    CO_UNLOCK_EMCY(CO->em->CANdevTx);
+
+    err_report(ERR_CODE_CANBUS, status_bit_set);
 
   } else {
     int id = g_ctx.ident - CO_CAN_ID_EMERGENCY;
@@ -141,7 +159,6 @@ static void err_cb(uint32_t errcode, bool set, void *user_data) {
 static int init() {
   int status_bit = CO_EM_MANUFACTURER_START;
 
-  struct err *err;
   STRUCT_SECTION_FOREACH(err, err) {
     __ASSERT(status_bit <= CO_EM_MANUFACTURER_END,
              "Too many errors defined, increase "
