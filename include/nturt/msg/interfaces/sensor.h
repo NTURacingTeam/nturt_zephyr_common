@@ -17,14 +17,15 @@
 /**
  * @defgroup msg_interface_sensor Sensor Message
  * @brief Sensor message type definitions.
- * 
+ *
  * @ingroup msg_interface
  * @{
  */
 
 /* macro ---------------------------------------------------------------------*/
 /// @brief List of sensor messages.
-#define MSG_SENSOR_LIST msg_imu_data, msg_gps_data, msg_wheel_data, msg_susp_data
+#define MSG_SENSOR_LIST \
+  msg_imu_data, msg_gps_data, msg_wheel_data, msg_susp_data
 
 /* type ----------------------------------------------------------------------*/
 /// @brief IMU data message.
@@ -32,14 +33,14 @@ struct msg_imu_data {
   /** Message header. */
   struct msg_header header;
 
-  /** Orientation in Eular angles. Unit: angle */
-  union msg_3d_data orient;
-
   /** Acceleration. Unit: m/s^2 */
   union msg_3d_data accel;
 
   /** Angular velocity. Unit: rad/s */
   union msg_3d_data gyro;
+
+  /** Orientation in Eular angles. Unit: angle */
+  union msg_3d_data orient;
 };
 
 /**
@@ -65,6 +66,9 @@ struct msg_wheel_data {
    * for braking. Unit: Nm
    */
   union msg_4wheel_data torque;
+
+  /** Tire temperature. Unit: °C */
+  union msg_4wheel_data tire_temp;
 };
 
 /// @brief Suspension data message.

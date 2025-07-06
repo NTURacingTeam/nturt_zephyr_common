@@ -22,23 +22,14 @@
  * @{
  */
 
-/* macro ---------------------------------------------------------------------*/
-/**
- * @brief Designated initializer for @ref msg_header.
- *
- */
-#define MSG_HEADER_INITIALIZER()                               \
-  {                                                            \
-      .timestamp_ns = k_ticks_to_ns_floor64(k_uptime_ticks()), \
-  }
-
 /* type ----------------------------------------------------------------------*/
 /// @brief Message header.
 struct msg_header {
   /**
    * Timestamp when the msg is generated as attained by
    * `k_ticks_to_ns_floor64(k_uptime_ticks())`. Same convention as sensor
-   * drivers.
+   * drivers. When `CONFIG_NTURT_RTC` is enabled, should be derived from
+   * `clock_gettime()` with `CLOCK_REALTIME`.
    */
   uint64_t timestamp_ns;
 };
@@ -80,15 +71,33 @@ union msg_4wheel_data {
   };
 };
 
+/// @brief 4-wheel flags.
+union msg_4wheel_flags {
+  /** 4-wheel flags in an array. */
+  uint32_t values[4];
+
+  struct {
+    /** Front left wheel flags */
+    uint32_t fl;
+
+    /** Front right wheel flags */
+    uint32_t fr;
+
+    /** Rear left wheel flags */
+    uint32_t rl;
+
+    /** Rear right wheel flags */
+    uint32_t rr;
+  };
+};
+
 /* function declarations ---------------------------------------------------*/
 /**
  * @brief Initialize a message header.
  *
  * @param[out] header Pointer to the message header.
  */
-static inline void msg_header_init(struct msg_header *header) {
-  header->timestamp_ns = k_ticks_to_ns_floor64(k_uptime_ticks());
-}
+void msg_header_init(struct msg_header *header);
 
 /**
  * @} // msg_interface
