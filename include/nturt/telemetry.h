@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2024 NTU Racing Team
  */
 
-#ifndef NTURT_TM_H_
-#define NTURT_TM_H_
+#ifndef NTURT_TELEMETRY_H_
+#define NTURT_TELEMETRY_H_
 
 // glibc includes
 #include <stddef.h>
@@ -341,7 +341,7 @@ void tm_data_notify_lock(const struct tm_data *data);
 void tm_group_copy(struct tm_group *group);
 
 /**
- * @} // Tm
+ * @} // tm
  */
 
-#endif  // NTURT_TM_H_
+#endif  // NTURT_TELEMETRY_H_

@@ -98,12 +98,12 @@ static void emcy_work(struct k_work *work) {
 
     if (set) {
       LOG_ERR(
-          "Received EMCY object from this node:\n"
+          "Received EMCY object from this node:\n\r"
           "\tError set: 0x%X, reg: 0x%X, status bit: 0x%X, info: %d",
           g_ctx.errorCode, g_ctx.errorRegister, g_ctx.errorBit, g_ctx.infoCode);
     } else {
       LOG_INF(
-          "Received EMCY object from this node:\n"
+          "Received EMCY object from this node:\n\r"
           "\tError cleared, reg: 0x%X, status bit: 0x%X, info: %d",
           g_ctx.errorRegister, g_ctx.errorBit, g_ctx.infoCode);
     }
@@ -134,13 +134,13 @@ static void emcy_work(struct k_work *work) {
 
     if (set) {
       LOG_ERR(
-          "Received EMCY object from node 0x%X:\n"
+          "Received EMCY object from node 0x%X:\n\r"
           "\tError set: 0x%X, reg: 0x%X, status bit: 0x%X, info: %d",
           id, g_ctx.errorCode, g_ctx.errorRegister, g_ctx.errorBit,
           g_ctx.infoCode);
     } else {
       LOG_INF(
-          "Received EMCY object from node 0x%X:\n"
+          "Received EMCY object from node 0x%X:\n\r"
           "\tError cleared, reg: 0x%X, status bit: 0x%X, info: %d",
           id, g_ctx.errorRegister, g_ctx.errorBit, g_ctx.infoCode);
     }

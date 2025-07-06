@@ -7,7 +7,6 @@ menuconfig NTURT_CANOPEN
 	select CANOPEN
 	select CANOPENNODE
 	select NTURT_ERR
-	select NTURT_MSG
 
 if NTURT_CANOPEN
 
@@ -47,6 +46,23 @@ config NTURT_CANOPEN_STORAGE
 	help
 	  Enable support for storing the CANopen object dictionary to settings
 	  subsystem.
+
+config NTURT_CANOPEN_TM
+	bool "CANopen telemetry support"
+	depends on NTURT_TM
+	default y
+	help
+	  Enable telemetry support for CANopen. This will allow CANopen to publish
+	  telemetry data to TPDOs using `CANOPEN_TM_TO_TPDO_DEFINE`.
+
+config NTURT_CANOPEN_MSG
+	bool "CANopen inter-thread communication support"
+	depends on NTURT_MSG
+	default y
+	help
+	  Enable inter-thread communication support for CANopen. This will allow
+	  CANopen to publish messages using `CANOPEN_OD_AGG_TO_MSG_DEFINE` based on
+	  object dictionary writes.
 
 # config NTURT_CANOPEN_HB
 #     bool "Enable processing CANopen heartbeat object from other nodes"
