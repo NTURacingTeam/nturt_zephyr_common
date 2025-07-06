@@ -1,12 +1,12 @@
 menuconfig AUXDISPLAY_GPIO_SEG_DISPLAY
-    bool "Seven segment displays controlled by GPIO as auxiliary display"
-    depends on DT_HAS_GPIO_SEG_DISPLAY_ENABLED
-    default y
-    select GPIO
-    select PWM if $(dt_compat_any_has_prop,gpio-seg-display,pwms)
-    help
-      Enable driver for seven segment displays controlled by GPIO as auxiliary
-      display.
+	bool "Seven segment displays controlled by GPIO as auxiliary display"
+	depends on DT_HAS_GPIO_SEG_DISPLAY_ENABLED
+	default y
+	select GPIO
+	select PWM if $(dt_compat_any_has_prop,gpio-seg-display,pwms)
+	help
+	  Enable driver for seven segment displays controlled by GPIO as auxiliary
+	  display.
 
 if AUXDISPLAY_GPIO_SEG_DISPLAY
 

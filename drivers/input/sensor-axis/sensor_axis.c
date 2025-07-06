@@ -24,6 +24,9 @@
 
 LOG_MODULE_REGISTER(sensor_axis, CONFIG_INPUT_LOG_LEVEL);
 
+/* macro ---------------------------------------------------------------------*/
+#define INVALID_OUT (INT32_MAX)
+
 /* type ----------------------------------------------------------------------*/
 struct sensor_axis_sensor_raw_cb {
   struct k_mutex lock;
@@ -296,7 +299,7 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
     data->raw_cb.cb(dev, &sensor_val, data->raw_cb.user_data);
   }
 
-  /* devide range first to prevent overflow */
+  // devide range first to prevent overflow
   int64_t range = DIV_ROUND_CLOSEST(max - min, 1000);
   val = DIV_ROUND_CLOSEST((val - min) * 1000, range);
 
@@ -347,6 +350,11 @@ static int channel_error_update(const struct device* dev, uint16_t error,
 
     if (data->accum_error_time >= config->time_tolerance) {
       ret2 = input_report(dev, INPUT_EV_ERROR, error, true, true, K_NO_WAIT);
+      if (ret2 < 0) {
+        goto err2;
+      }
+
+      data->prev_out = INVALID_OUT;
 
     } else {
       return ret;
@@ -362,6 +370,9 @@ static int channel_error_update(const struct device* dev, uint16_t error,
 
     if (data->accum_error_time == 0) {
       ret2 = input_report(dev, INPUT_EV_ERROR, error, false, true, K_NO_WAIT);
+      if (ret2 < 0) {
+        goto err2;
+      }
 
     } else {
       return -EAGAIN;
@@ -369,11 +380,6 @@ static int channel_error_update(const struct device* dev, uint16_t error,
 
   } else {
     return ret;
-  }
-
-  if (ret2 < 0) {
-    LOG_ERR("input_report failed: %s", strerror(-ret2));
-    return ret2;
   }
 
   data->error = error;
@@ -406,6 +412,10 @@ static int channel_error_update(const struct device* dev, uint16_t error,
   }
 
   return ret;
+
+err2:
+  LOG_ERR("input_report failed: %s", strerror(-ret2));
+  return ret2;
 }
 
 static int32_t out_deadzone(const struct device* dev, int32_t out) {
@@ -439,22 +449,22 @@ static int32_t out_deadzone(const struct device* dev, int32_t out) {
 }
 
 /**
- * @brief Get channel output.
+ * @brief Update channel.
  *
- * @param[in] dev The channel to get.
- * @param[out] _out The channel output.
+ * @param[in] dev The channel to update.
+ * @param[in] axis The axis of the channel.
  *
  * @retval 1 If the channel value is updated.
  * @retval 0 If the channel value is not updated.
- * @retval others Negative error number if error occurs.
+ * @retval others Negative error number.
  */
-static int channel_get(const struct device* dev, int32_t* _out) {
+static int channel_update(const struct device* dev, uint16_t axis) {
   struct sensor_axis_channel_data* data = dev->data;
   const struct sensor_axis_channel_config* config = dev->config;
 
   int ret;
 
-  /* normalized sensor values in one-millionth part */
+  // normalized sensor values in one-millionth part
   int32_t val_accum = 0;
   int32_t val_min = INT32_MAX;
   int32_t val_max = INT32_MIN;
@@ -489,16 +499,24 @@ static int channel_get(const struct device* dev, int32_t* _out) {
 
   int32_t out =
       out_deadzone(dev, DIV_ROUND_CLOSEST(val_accum, config->total_weight));
-  if (abs(out - data->prev_out) < config->noise) {
+  if (data->prev_out != INVALID_OUT &&
+      abs(out - data->prev_out) < config->noise) {
     return 0;
+  }
+
+  // devide out first to prevent overflow
+  int32_t _out = DIV_ROUND_CLOSEST(out, 1000);
+  _out = DIV_ROUND_CLOSEST(_out * (config->out_max - config->out_min), 1000) +
+         config->out_min;
+
+  ret = input_report_abs(dev, axis, _out, true, K_NO_WAIT);
+  if (ret < 0) {
+    LOG_ERR("input_report failed: %s", strerror(-ret));
+    return ret;
   }
 
   data->prev_out = out;
 
-  /* devide out first to prevent overflow */
-  out = DIV_ROUND_CLOSEST(out, 1000);
-  *_out = DIV_ROUND_CLOSEST(out * (config->out_max - config->out_min), 1000) +
-          config->out_min;
   return 1;
 }
 
@@ -514,16 +532,7 @@ static void sensor_axis_thread(void* arg1, void* arg2, void* arg3) {
     for (int i = 0; i < config->num_channel; i++) {
       const struct device* channel = config->channels[i];
 
-      int ret;
-      int32_t out;
-      ret = channel_get(channel, &out);
-      if (ret > 0) {
-        ret =
-            input_report_abs(channel, config->axises[i], out, true, K_NO_WAIT);
-        if (ret < 0) {
-          LOG_ERR("input_report failed: %s", strerror(-ret));
-        }
-      }
+      channel_update(channel, config->axises[i]);
     }
 
     k_timer_status_sync(&data->timer);
@@ -696,10 +705,8 @@ static int sensor_axis_calib_load(const char* key, size_t len,
 
 #define _SENSOR_AXIS_SENSOR_WEIGHT(node_id) DT_PROP(node_id, weight)
 
-/*
- * DT_FOREACH_CHILD_STATUS_OKAY_SEP does not work within the same call to
- * itself, define a new one with the same definition instead
- */
+// `DT_FOREACH_CHILD_STATUS_OKAY_SEP` does not work within the same call to
+// itself, define a new one with the same definition instead
 #define _DT_FOREACH_CHILD_STATUS_OKAY_SEP(node_id, fn, sep) \
   DT_CAT(node_id, _FOREACH_CHILD_STATUS_OKAY_SEP)(fn, sep)
 
@@ -709,7 +716,7 @@ static int sensor_axis_calib_load(const char* key, size_t len,
                                                                              \
   static struct sensor_axis_channel_data node_id##_data = {                  \
       .error = INPUT_ERROR_NONE,                                             \
-      .prev_out = 0,                                                         \
+      .prev_out = INVALID_OUT,                                               \
       .accum_error_time = 0,                                                 \
   };                                                                         \
                                                                              \
