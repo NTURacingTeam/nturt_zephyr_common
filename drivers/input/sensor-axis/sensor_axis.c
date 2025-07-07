@@ -277,7 +277,7 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   const struct sensor_axis_sensor_config* config = dev->config;
 
   int ret;
-  ret = k_mutex_lock(&data->raw_cb.lock, K_NO_WAIT);
+  ret = k_mutex_lock(&data->raw_cb.lock, K_MSEC(5));
   if (ret < 0) {
     return sensor_error_update(dev, INPUT_ERROR_BUSY, ret, NULL);
   }

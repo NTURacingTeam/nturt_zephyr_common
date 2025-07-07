@@ -124,11 +124,14 @@ static int gpio_seg_display_write(const struct device *dev, const uint8_t *chr,
 
   int chr_index = 0;
   for (int i = 0; i < len; i++) {
-    if (chr_index >= config->num_disp &&
-        (!config->decimal_point || chr[i] != '.')) {
+    if (chr[i] == '\0') {
       break;
 
+    } else if (chr_index >= config->num_disp &&
+               (!config->decimal_point || chr[i] != '.')) {
       LOG_WRN("Not enough digits to display. Truncating the rest");
+
+      break;
     }
 
     switch (chr[i]) {

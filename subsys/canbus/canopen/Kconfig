@@ -4,6 +4,7 @@ menuconfig NTURT_CANOPEN
 	select SYS_HASH_FUNC32
 	select SYS_HASH_MAP
 	select CAN
+	select CAN_ACCEPT_RTR
 	select CANOPEN
 	select CANOPENNODE
 	select NTURT_ERR
@@ -16,17 +17,10 @@ source "subsys/logging/Kconfig.template.log_config"
 
 config NTURT_CANOPEN_INIT_PRIORITY
 	int "Init priority"
-	default 30
+	default 21
 	help
 	  CANopen initialization priority. Must be higher than Zephyr's CANopen
 	  initialization priority.
-
-config NTURT_CANOPEN_OD_INIT_PRIORITY
-	int "Init priority"
-	default 0
-	help
-	  Object dictionary initialization priority. Must be lower than Zephyr's
-	  CANopen object dictionary initialization priority.
 
 config NTURT_CANOPEN_TIME
 	bool "CANopen TIME object"
@@ -81,7 +75,8 @@ config NTURT_CANOPEN_SHELL
 	bool "CANopen shell"
 	depends on NTURT_SHELL
 	default y
-	select CAN_SHELL
 	select STATS
+	select CAN_STATS
+	select CAN_SHELL
 
 endif # NTURT_CANOPEN

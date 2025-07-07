@@ -10,15 +10,20 @@
     chosen {
         zephyr,console = &usart1;
         zephyr,shell-uart = &usart1;
+        // zephyr,console = &cdc_acm_uart0;
+        // zephyr,shell-uart = &cdc_acm_uart0;
         zephyr,sram = &sram0;
         zephyr,flash = &flash0;
         zephyr,dtcm = &dtcm;
         zephyr,code-partition = &slot0_partition;
         zephyr,canbus = &fdcan1;
+        zephyr,canopen-green-led = &canopen_green_led;
+        zephyr,canopen-red-led = &canopen_red_led;
 
         nturt,rtc = &rtc;
         nturt,buzzer = &buzzer;
         nturt,brake-light = &brake_light;
+        nturt,rtd-light = &rtd_light;
         nturt,imu = &imu;
         nturt,pow-in-volt = &pow_in_volt;
         nturt,pow-5v-curr = &pow_5v_curr;
@@ -27,10 +32,7 @@
     };
 
     aliases {
-        led0 = &canopen_run_led;
-
-        canopen-green-led = &canopen_run_led;
-        canopen-red-led = &canopen_err_led;
+        led0 = &canopen_green_led;
     };
 
     soc {
@@ -73,11 +75,15 @@
             gpios = <&gpioa 7 GPIO_ACTIVE_HIGH>;
         };
 
-        canopen_run_led: canopen-run-led {
+        rtd_light: rtd-light {
+            gpios = <&gpiod 9 GPIO_ACTIVE_HIGH>;
+        };
+
+        canopen_green_led: canopen-green-led {
             gpios = <&gpioe 0 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
         };
 
-        canopen_err_led: canopen-err-led {
+        canopen_red_led: canopen-red-led {
             gpios = <&gpioe 1 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
         };
     };

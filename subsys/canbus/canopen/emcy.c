@@ -49,7 +49,7 @@ SYS_HASHMAP_DEFINE_STATIC(g_status_bit_map);
 SYS_INIT(init, APPLICATION, CONFIG_NTURT_CANOPEN_INIT_PRIORITY);
 
 ERR_DEFINE(canbus, ERR_CODE_CANBUS, ERR_SEV_FATAL, "CAN bus error");
-ERR_CALLBACK_DEFINE_NAMED(canopen_emcy, err_cb, NULL);
+ERR_CALLBACK_DEFINE(err_cb, NULL);
 
 /* static function declaration -----------------------------------------------*/
 static void emcy_cb(uint16_t ident, uint16_t errorCode, uint8_t errorRegister,

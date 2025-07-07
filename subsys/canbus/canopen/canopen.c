@@ -28,7 +28,7 @@ static int od_init();
 /* static variable -----------------------------------------------------------*/
 // OD must be initialized before canopen is initialized in zephyr since PDOs
 // will not use read/write callbacks registered afterwards.
-SYS_INIT(od_init, APPLICATION, CONFIG_NTURT_CANOPEN_OD_INIT_PRIORITY);
+SYS_INIT(od_init, APPLICATION, UTIL_DEC(CONFIG_CANOPENNODE_INIT_PRIORITY));
 
 /* function definition -------------------------------------------------------*/
 #ifdef CONFIG_NTURT_CANOPEN_TM
