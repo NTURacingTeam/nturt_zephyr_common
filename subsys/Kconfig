@@ -1,6 +1,5 @@
 menu "Subsystems and OS Services"
 
-rsource "canbus/Kconfig"
 rsource "cmd/Kconfig"
 rsource "err/Kconfig"
 rsource "msg/Kconfig"

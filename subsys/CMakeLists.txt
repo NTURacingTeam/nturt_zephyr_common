@@ -1,4 +1,3 @@
-add_subdirectory(canbus)
 add_subdirectory(cmd)
 add_subdirectory(err)
 add_subdirectory(msg)
