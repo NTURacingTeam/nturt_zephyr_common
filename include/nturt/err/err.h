@@ -26,7 +26,7 @@
 /**
  * @addtogroup err Error
  * @brief Error passing and handling support.
- * 
+ *
  * @{
  */
 
@@ -53,7 +53,7 @@
  * by using the bitwise OR operator (|).
  */
 #define ERR_DEFINE(_name, _errcode, _serverity, _desc, ...)                 \
-  STRUCT_SECTION_ITERABLE(err, CONCAT(__err_, _name)) = {                   \
+  static STRUCT_SECTION_ITERABLE(err, CONCAT(__err_, _name)) = {            \
       .errcode = _errcode,                                                  \
       .flags = _serverity | COND_CODE_1(__VA_OPT__(1), (__VA_ARGS__), (0)), \
       .name = STRINGIFY(_name),                                             \
@@ -94,7 +94,7 @@
  * callback.
  */
 #define ERR_CALLBACK_DEFINE_NAMED(_name, _handler, _user_data, ...) \
-  STRUCT_SECTION_ITERABLE(err_callback, _name) = {                  \
+  static const STRUCT_SECTION_ITERABLE(err_callback, _name) = {     \
       .handler = _handler,                                          \
       .user_data = _user_data,                                      \
       .filters = (struct err_filter[]){COND_CODE_1(                 \
@@ -111,7 +111,7 @@
  * are specified, they are applied in the "and" manner.
  *
  * @note Since the name of the callback is derived from the name of @p handler ,
- * if handlers with the same name are used for multiple callbacks,
+ * if the same handler is used for multiple callbacks,
  * @ref ERR_CALLBACK_DEFINE_NAMED can be used instead to prevent linker
  * errors.
  */
@@ -227,11 +227,8 @@ extern const struct err_list* __err_errors;
  *
  * @param[in] errcode Error code to set or clear.
  * @param[in] set True to set error, false to clear error.
- *
- * @retval 0 For success.
- * @retval -ENOENT If the error code does not exist.
  */
-int err_report(uint32_t errcode, bool set);
+void err_report(uint32_t errcode, bool set);
 
 /**
  * @brief Get the error with its code.

@@ -16,13 +16,15 @@
 
 // zephyr includes
 #include <zephyr/kernel.h>
-#include <zephyr/sys/atomic.h>
 #include <zephyr/sys/util.h>
+
+// project includes
+#include "nturt/sys/util_loops.h"
 
 /**
  * @addtogroup util Utility
  * @brief Utility macros and functions.
- * 
+ *
  * @ingroup sys
  * @{
  */
@@ -33,7 +35,8 @@
  *
  * @param[in] a First operand.
  * @param[in] b Second operand.
- * @return True if only one of the operands is true-like, i.e. not equal to 0.
+ * @return True if and only if one of the operands is true-like, i.e. not equal
+ * to 0.
  */
 #define XOR(a, b) (!(a) ^ !(b))
 
@@ -41,23 +44,23 @@
  * @brief Get the deferenced type of a pointer type.
  *
  * @param[in] type The pointer type.
- * @return The type of the pointer type.
+ * @return The type @param type points to.
  */
 #define DEREF_TYPE(type) __typeof__(*((type)0))
 
 /**
- * @brief Get the type of a struct field.
+ * @brief Get the type of a member in a structure (struct or union).
  *
- * @param[in] type The structure cintaining the field of interest.
- * @param[in] member The field to return the type of.
- * @return The type of the field.
+ * @param[in] type The structure containing the member.
+ * @param[in] member The member of the structure.
+ * @return The type of the member.
  */
 #define TYPEOF_FIELD(type, member) __typeof__(((type*)0)->member)
 
 /**
  * @brief Discards all arguments and expend to Zephyr `EMPTY`.
  *
- * @param ... Variable list of arguments to discard.
+ * @param[in] ... Arguments to discard.
  * @return Zephyr `EMPTY`.
  */
 #define DISCARD(...) EMPTY
@@ -65,29 +68,69 @@
 /**
  * @brief Same as zephyr GET_GET_ARG_N but accepts macro expansion for @p N .
  *
- * @param N Argument index to fetch. Counter from 1.
- * @param ... Variable list of arguments from which one argument is returned.
+ * @param[in] N The index of argument to fetch. Count from 1.
+ * @param[in] ... Arguments from which one argument is returned.
  * @return Nth argument.
  */
-#define GET_ARG_N_FIXED(N, ...) UTIL_CAT(Z_GET_ARG_, N)(__VA_ARGS__)
+#define GET_ARG_N_FIXED(N, ...) CONCAT(Z_GET_ARG_, N)(__VA_ARGS__)
 
 /**
  * @brief Check if a flag is set and clear that flag if it so.
  *
- * @param NUM Number to check.
- * @param FLAG Flag to check.
+ * @param[in] num Number to check.
+ * @param[in] flag Flag to check.
  * @return True if the flag is set.
  */
-#define FLAG_SET_AND_CLEAR(NUM, FLAG) ((NUM & FLAG) && ((NUM &= ~FLAG)))
+#define FLAG_SET_AND_CLEAR(num, flag) ((num & flag) && ((num &= ~flag)))
 
 /**
  * @brief Check if a bit is set and clear that bit if it so.
  *
- * @param NUM Number to check.
- * @param BIT_ Bit to check.
+ * @param[in] num Number to check.
+ * @param[in] bit Bit to check.
  * @return True if the bit is set.
  */
-#define BIT_SET_AND_CLEAR(NUM, BIT_) FLAG_SET_AND_CLEAR(NUM, BIT(BIT_))
+#define BIT_SET_AND_CLEAR(num, bit) FLAG_SET_AND_CLEAR(num, BIT(bit))
+
+#define _FOR_EACH_IDX_FIXED_ARG(idx, x, fixed_arg0, fixed_arg1) \
+  fixed_arg0(idx, x, fixed_arg1)
+
+/**
+ * @brief Same as Zephyr `FOR_EACH_IDX_FIXED_ARG`, useful for nested `FOR_EACH`
+ * macros.
+ *
+ */
+#define N_FOR_EACH_IDX_FIXED_ARG(F, sep, fixed_arg, ...) \
+  N_FOR_EACH_ENGINE(_FOR_EACH_IDX_FIXED_ARG, sep, F, fixed_arg, __VA_ARGS__)
+
+#define _FOR_EACH_FIXED_ARG(idx, x, fixed_arg0, fixed_arg1) \
+  fixed_arg0(x, fixed_arg1)
+
+/**
+ * @brief Same as Zephyr `FOR_EACH_FIXED_ARG`, useful for nested `FOR_EACH`
+ * macros.
+ *
+ */
+#define N_FOR_EACH_FIXED_ARG(F, sep, fixed_arg, ...) \
+  N_FOR_EACH_ENGINE(_FOR_EACH_FIXED_ARG, sep, F, fixed_arg, __VA_ARGS__)
+
+#define _FOR_EACH_IDX(idx, x, fixed_arg0, fixed_arg1) fixed_arg0(idx, x)
+
+/**
+ * @brief Same as Zephyr `FOR_EACH_IDX`, useful for nested `FOR_EACH` macros.
+ *
+ */
+#define N_FOR_EACH_IDX(F, sep, ...) \
+  N_FOR_EACH_ENGINE(_FOR_EACH_IDX, sep, F, _, __VA_ARGS__)
+
+#define _FOR_EACH(idx, x, fixed_arg0, fixed_arg1) fixed_arg0(x)
+
+/**
+ * @brief Same as Zephyr `FOR_EACH`, useful for nested `FOR_EACH` macros.
+ *
+ */
+#define N_FOR_EACH(F, sep, ...) \
+  N_FOR_EACH_ENGINE(_FOR_EACH, sep, F, _, __VA_ARGS__)
 
 #define _WORK_CTX_DEFINE(_i, _work_handler, _ctx, _args) \
   [_i] = {                                               \

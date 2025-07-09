@@ -72,6 +72,8 @@ void agg_work_cb(struct k_work *work) {
   if (agg->updated == 0) {
     // no member has been updated, stop publishing
     k_spin_unlock(&agg->lock, key);
+
+    LOG_DBG("No member has been updated, stop publishing %s", agg->name);
     return;
 
   } else if (agg->updated != agg->fully_updated) {
@@ -81,7 +83,7 @@ void agg_work_cb(struct k_work *work) {
     k_timer_start(&agg->period_timer, agg->period, K_FOREVER);
     k_timer_start(&agg->early_timer, agg->min_separation, K_FOREVER);
 
-    LOG_WRN(
+    LOG_DBG(
         "Watermark reached while the data of %s is not fully updated, "
         "publishing anyway",
         agg->name);

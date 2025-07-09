@@ -77,10 +77,14 @@ static int init() {
             CONFIG_NTURT_FS_MOUNT_POINT);
   }
 
+  return 0;
+}
+
 #ifdef CONFIG_SETTINGS
 
+static int settings_init() {
   settings_subsys_init();
-  ret = settings_load();
+  int ret = settings_load();
   if (ret < 0) {
     LOG_ERR("Failed to load settings: %s", strerror(-ret));
     return ret;
@@ -88,7 +92,10 @@ static int init() {
   } else {
     LOG_INF("Loaded settings from %s", CONFIG_SETTINGS_FILE_PATH);
   }
-#endif  // CONFIG_SETTINGS
 
   return 0;
 }
+
+SYS_INIT(settings_init, APPLICATION, CONFIG_NTURT_SETTINGS_INIT_PRIORITY);
+
+#endif  // CONFIG_SETTINGS

@@ -17,20 +17,20 @@
         compatible = "analog-generic-sensor";
         io-channels = <&adc3 2>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
-        min-voltage = <600>;
+        min-voltage = <1000>;
         max-voltage = <3000>;
-        min-value = <0 0>;
-        max-value = <15 0>;
+        min-value = <(-60) 0>;
+        max-value = <60 0>;
     };
 
     apps2: accel-encoder2 {
         compatible = "analog-generic-sensor";
         io-channels = <&adc1 17>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
-        min-voltage = <600>;
+        min-voltage = <1000>;
         max-voltage = <3000>;
-        min-value = <0 0>;
-        max-value = <15 0>;
+        min-value = <(-60) 0>;
+        max-value = <60 0>;
     };
 
     bse1: brake-press1 {

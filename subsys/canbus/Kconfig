@@ -1,0 +1,5 @@
+menu "Controller Area Network (CAN) bus support"
+
+rsource "canopen/Kconfig"
+
+endmenu

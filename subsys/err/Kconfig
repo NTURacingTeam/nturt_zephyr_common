@@ -12,13 +12,21 @@ source "subsys/logging/Kconfig.template.log_config"
 
 config NTURT_ERR_INIT_PRIORITY
 	int "Init priority"
-	default 90
+	default 0
 	help
 	  Error initialization priority.
 
+config NTURT_ERR_CB_DISPATCH_PRIORITY
+	int "Init priority to start processing error callbacks"
+	default 90
+	help
+	  Error callback dispatch priority after which the error callbacks will be
+	  processed. Callbacks with errors set before this priority will be deferred
+	  until this priority is reached.
+
 config NTURT_ERR_SHELL
 	bool "Error shell support"
-	default y
 	depends on NTURT_SHELL
+	default y
 
 endif # NTURT_ERR

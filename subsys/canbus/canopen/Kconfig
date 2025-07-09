@@ -1,0 +1,90 @@
+menuconfig NTURT_CANOPEN
+	bool "CANopen support"
+	depends on NTURT
+	select SYS_HASH_FUNC32
+	select SYS_HASH_MAP
+	select CAN
+	select CAN_ACCEPT_RTR
+	select CANOPEN
+	select CANOPENNODE
+	select NTURT_ERR
+
+if NTURT_CANOPEN
+
+module = NTURT_CANOPEN
+module-str = CANopen
+source "subsys/logging/Kconfig.template.log_config"
+
+config NTURT_CANOPEN_INIT_PRIORITY
+	int "Init priority"
+	default 21
+	help
+	  CANopen initialization priority. Must be higher than Zephyr's CANopen
+	  initialization priority.
+
+config NTURT_CANOPEN_HB_CONS
+	bool "CANopen consumer heartbeat time"
+	default y
+	help
+	  Consume heartbeat of nodes defined in object dictionary 0x1016 and set
+	  cooresponding error if the node is not in NMT operational state or the
+	  heartbeat time is exceeded.
+
+if NTURT_CANOPEN_HB_CONS
+
+choice CANOPENNODE_HB_CONS
+	default CANOPENNODE_HB_CONS_SINGLE_CALLBACK
+endchoice
+
+endif # NTURT_CANOPEN_HB_CONS
+
+config NTURT_CANOPEN_TIME
+	bool "CANopen TIME object"
+	depends on NTURT_RTC
+	default y
+	select CANOPENNODE_TIME
+	help
+	  Set system time to the timestamp from CANopen when receiving TIME object
+	  for the first time after system reboot.
+
+config NTURT_CANOPEN_STORAGE
+	bool "CANopen object dictionary storage"
+	depends on SETTINGS
+	default y
+	select CANOPENNODE_STORAGE
+	help
+	  Enable support for storing the CANopen object dictionary to settings
+	  subsystem.
+
+config NTURT_CANOPEN_TM
+	bool "CANopen telemetry support"
+	depends on NTURT_TM
+	default y
+	help
+	  Enable telemetry support for CANopen. This will allow CANopen to publish
+	  telemetry data to TPDOs using `CANOPEN_TM_TO_TPDO_DEFINE`.
+
+config NTURT_CANOPEN_MSG
+	bool "CANopen inter-thread communication support"
+	depends on NTURT_MSG
+	default y
+	help
+	  Enable inter-thread communication support for CANopen. This will allow
+	  CANopen to publish messages using `CANOPEN_OD_AGG_TO_MSG_DEFINE` based on
+	  object dictionary writes.
+
+# config NTURT_CANOPEN_SDO_CLI_BUF_SIZE
+#     int "SDO client buffer size"
+#     default 5
+#     help
+#       Number of concurrent SDO client request
+
+config NTURT_CANOPEN_SHELL
+	bool "CANopen shell"
+	depends on NTURT_SHELL
+	default y
+	select STATS
+	select CAN_STATS
+	select CAN_SHELL
+
+endif # NTURT_CANOPEN

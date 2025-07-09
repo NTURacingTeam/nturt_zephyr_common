@@ -76,6 +76,7 @@ static int init() {
       return ret;
     }
 
+    // get to check if the time can be get
     ret = rtc_get_time(rtc, &time);
   }
 

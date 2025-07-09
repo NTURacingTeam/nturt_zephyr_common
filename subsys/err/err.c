@@ -20,6 +20,8 @@ LOG_MODULE_REGISTER(nturt_err, CONFIG_NTURT_ERR_LOG_LEVEL);
 
 /* type ----------------------------------------------------------------------*/
 struct err_ctx {
+  bool cb_dispatched;
+
   struct k_spinlock lock;
 
   /** List of current errors. */
@@ -31,31 +33,31 @@ static struct err *err_get_impl(uint32_t errcode);
 static void err_notify(struct err *err);
 static void err_log(struct err *err);
 
-/// @brief Initialization function for error module.
 static int init();
+static int cb_init();
 
 /* static variable ----------------------------------------------------------*/
 /// @brief State module context.
 static struct err_ctx g_ctx = {
+    .cb_dispatched = false,
     .errors = TAILQ_HEAD_INITIALIZER(g_ctx.errors),
 };
 
 SYS_HASHMAP_DEFINE_STATIC(g_err_map);
 
 SYS_INIT(init, APPLICATION, CONFIG_NTURT_ERR_INIT_PRIORITY);
+SYS_INIT(cb_init, APPLICATION, CONFIG_NTURT_ERR_CB_DISPATCH_PRIORITY);
 
 /* exported variable ---------------------------------------------------------*/
 const struct err_list *__err_errors = &g_ctx.errors;
 
 /* function definition -------------------------------------------------------*/
-int err_report(uint32_t errcode, bool set) {
+void err_report(uint32_t errcode, bool set) {
   struct err *err = err_get_impl(errcode);
-  if (err == NULL) {
-    return -ENOENT;
-  }
+  __ASSERT(err != NULL, "Error code 0x%x does not exist", errcode);
 
   if (err->flags & ERR_FLAG_DISABLED) {
-    return 0;
+    return;
   }
 
   struct err err_copy;
@@ -66,7 +68,7 @@ int err_report(uint32_t errcode, bool set) {
 
   if (!XOR(set, already_set)) {
     k_spin_unlock(&g_ctx.lock, key);
-    return 0;
+    return;
   }
 
   if (set) {
@@ -83,10 +85,10 @@ int err_report(uint32_t errcode, bool set) {
 
   k_spin_unlock(&g_ctx.lock, key);
 
-  err_notify(&err_copy);
-  err_log(&err_copy);
-
-  return 0;
+  if (g_ctx.cb_dispatched) {
+    err_notify(&err_copy);
+    err_log(&err_copy);
+  }
 }
 
 const struct err *err_get(uint32_t errcode) {
@@ -177,29 +179,30 @@ static int init() {
              "Error must have one and only one severity.");
 
     ret = sys_hashmap_insert(&g_err_map, err->errcode, (uintptr_t)err, NULL);
+
+    __ASSERT(ret != 0, "Errors must not have the same error code: 0x%X",
+             err->errcode);
+
     if (ret < 0) {
       LOG_ERR("g_err_map insert failed: %s", strerror(-ret));
       return ret;
+    }
 
-    } else if (ret == 0) {
-      LOG_ERR("Error code 0x%x already exists", err->errcode);
-      return -EEXIST;
+    if (!(err->flags & ERR_FLAG_DISABLED) && err->flags & ERR_FLAG_SET) {
+      TAILQ_INSERT_HEAD(&g_ctx.errors, err, next);
     }
   }
 
-  // process default errors after all errors are registered to prevent ENOENT
-  // when setting errors within an error handler
-  STRUCT_SECTION_FOREACH(err, err) {
-    if (!(err->flags & ERR_FLAG_DISABLED) && err->flags & ERR_FLAG_SET) {
-      err->flags &= ~ERR_FLAG_SET;
+  return 0;
+}
 
-      ret = err_report(err->errcode, true);
-      if (ret < 0) {
-        LOG_ERR("Failed to report error 0x%x: %s", err->errcode,
-                strerror(-ret));
-        return ret;
-      }
-    }
+static int cb_init() {
+  g_ctx.cb_dispatched = true;
+
+  struct err *err;
+  ERR_FOREACH_SET(err) {
+    err_notify(err);
+    err_log(err);
   }
 
   return 0;

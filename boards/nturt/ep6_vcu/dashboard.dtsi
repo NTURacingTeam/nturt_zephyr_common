@@ -8,77 +8,77 @@
     chosen {
         zephyr,display = &display;
 
-        nturt,rtd-light = &rtd_light;
+        nturt,leds = &leds;
         nturt,speed-display = &speed_display;
         nturt,battery-display = &battery_display;
         nturt,accel-display = &accel_display;
         nturt,brake-display = &brake_display;
     };
 
-    matrix_leds: matrix-leds {
+    leds: leds {
         compatible = "gpio-leds";
 
-        matrix-led-0 {
+        led-0 {
             gpios = <&ex_gpio1 7 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-1 {
+        led-1 {
             gpios = <&ex_gpio1 6 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-2 {
+        led-2 {
             gpios = <&ex_gpio1 5 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-3 {
+        led-3 {
             gpios = <&ex_gpio1 4 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-4 {
+        led-4 {
             gpios = <&ex_gpio1 3 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-5 {
+        led-5 {
             gpios = <&ex_gpio1 2 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-6 {
+        led-6 {
             gpios = <&ex_gpio1 1 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-7 {
+        led-7 {
             gpios = <&ex_gpio1 0 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-8 {
+        led-8 {
             gpios = <&ex_gpio0 7 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-9 {
+        led-9 {
             gpios = <&ex_gpio0 6 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-10 {
+        led-10 {
             gpios = <&ex_gpio0 5 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-11 {
+        led-11 {
             gpios = <&ex_gpio0 4 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-12 {
+        led-12 {
             gpios = <&ex_gpio0 3 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-13 {
+        led-13 {
             gpios = <&ex_gpio0 2 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-14 {
+        led-14 {
             gpios = <&ex_gpio0 1 GPIO_ACTIVE_HIGH>;
         };
 
-        matrix-led-15 {
+        led-15 {
             gpios = <&ex_gpio0 0 GPIO_ACTIVE_HIGH>;
         };
     };
@@ -240,31 +240,6 @@
             gpios = <&gpiod 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
             zephyr,code = <INPUT_BTN_7>;
         };
-    };
-
-    double-tap {
-        input = <&buttons>;
-        compatible = "zephyr,input-double-tap";
-        input-codes = <INPUT_BTN_1>;
-        double-tap-codes = <INPUT_BTN_1>;
-        double-tap-delay-ms = <300>;
-        status = "disabled";
-    };
-
-    longpress {
-        input = <&buttons>;
-        compatible = "zephyr,input-longpress";
-        input-codes = <INPUT_BTN_1>;
-        short-codes = <INPUT_BTN_1>;
-        long-codes = <INPUT_BTN_1>;
-        long-delay-ms = <1000>;
-        status = "disabled";
-    };
-};
-
-&dummy_leds {
-    rtd_light: rtd-light {
-        gpios = <&gpiod 9 GPIO_ACTIVE_HIGH>;
     };
 };
 
