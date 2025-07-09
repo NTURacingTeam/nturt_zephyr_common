@@ -1,3 +1,5 @@
+#include "nturt/canbus/canopen.h"
+
 // glibc includes
 #include <stddef.h>
 #include <stdint.h>
@@ -13,9 +15,6 @@
 
 // canopennode includes
 #include <canopennode.h>
-
-// project includes
-#include "nturt/canbus/canopen.h"
 
 BUILD_ASSERT(CONFIG_NTURT_CANOPEN_INIT_PRIORITY >
              CONFIG_CANOPENNODE_INIT_PRIORITY);

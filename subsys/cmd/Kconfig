@@ -1,5 +1,5 @@
 menuconfig NTURT_CMD
-	bool "Commmand support"
+	bool "Command support"
 	depends on NTURT
 	select MPSC_PBUF
 	select SYS_HASH_FUNC32

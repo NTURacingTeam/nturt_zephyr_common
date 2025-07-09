@@ -25,32 +25,33 @@
 /* macro ---------------------------------------------------------------------*/
 /// @brief List of sensor messages.
 #define MSG_SENSOR_LIST \
-  msg_imu_data, msg_gps_data, msg_wheel_data, msg_susp_data
+  msg_cockpit_data, msg_wheel_data, msg_susp_data, msg_imu_data, msg_gps_data
 
 /* type ----------------------------------------------------------------------*/
-/// @brief IMU data message.
-struct msg_imu_data {
+struct msg_cockpit_data {
   /** Message header. */
   struct msg_header header;
 
-  /** Acceleration. Unit: m/s^2 */
-  union msg_3d_data accel;
+  /** Steering angle. Unit: degree */
+  float steer;
 
-  /** Angular velocity. Unit: rad/s */
-  union msg_3d_data gyro;
+  /** Accelerator pedal travel. Unit: % */
+  float accel;
 
-  /** Orientation in Eular angles. Unit: angle */
-  union msg_3d_data orient;
-};
+  /** Accelerator pedal position sensor (APPS) 1. Unit: degree */
+  float apps1;
 
-/**
- * @brief GPS data message.
- *
- * @todo
- */
-struct msg_gps_data {
-  /** Message header. */
-  struct msg_header header;
+  /** Accelerator pedal position sensor (APPS) 2. Unit: degree */
+  float apps2;
+
+  /** Brake pedal travel. Unit: % */
+  float brake;
+
+  /** Brake system encoder (BSE) 1. Unit: kPa */
+  float bse1;
+
+  /** Brake system encoder (BSE) 2. Unit: kPa */
+  float bse2;
 };
 
 /// @brief Wheel data message.
@@ -81,6 +82,31 @@ struct msg_susp_data {
    * Unit: m.
    */
   union msg_4wheel_data travel;
+};
+
+/// @brief IMU data message.
+struct msg_imu_data {
+  /** Message header. */
+  struct msg_header header;
+
+  /** Acceleration. Unit: m/s^2 */
+  union msg_3d_data accel;
+
+  /** Angular velocity. Unit: rad/s */
+  union msg_3d_data gyro;
+
+  /** Orientation in Eular angles. Unit: angle */
+  union msg_3d_data orient;
+};
+
+/**
+ * @brief GPS data message.
+ *
+ * @todo
+ */
+struct msg_gps_data {
+  /** Message header. */
+  struct msg_header header;
 };
 
 /**

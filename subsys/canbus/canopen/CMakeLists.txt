@@ -6,6 +6,10 @@ zephyr_library_sources(
     emcy.c
 )
 
+zephyr_library_sources_ifdef(CONFIG_NTURT_CANOPEN_HB_CONS
+    hb_consumer.c
+)
+
 zephyr_library_sources_ifdef(CONFIG_NTURT_CANOPEN_TIME
     time.c
 )
