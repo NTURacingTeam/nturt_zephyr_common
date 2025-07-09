@@ -126,7 +126,7 @@ static int err_clear_cmd_handler(const struct shell *sh, size_t argc,
     if (!strcmp(err->name, argv[1])) {
       if (!(err->flags & ERR_FLAG_SET)) {
         shell_warn(sh, "Error %s(0x%X) is not set.", err->name, err->errcode);
-        return -ENOENT;
+        return -EALREADY;
       }
 
       err_report(err->errcode, false);

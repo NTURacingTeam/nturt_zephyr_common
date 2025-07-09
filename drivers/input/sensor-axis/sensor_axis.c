@@ -587,12 +587,12 @@ static int sensor_axis_init(const struct device* dev) {
 #define SENSOR_AXIS_SETTINGS_ROOT "sensor_axis"
 
 /* static function definition ------------------------------------------------*/
-static int sensor_axis_calib_load(const char* key, size_t len_rd,
-                                  settings_read_cb read_cb, void* cb_arg);
+static int calib_load(const char* key, size_t len_rd, settings_read_cb read_cb,
+                      void* cb_arg);
 
 /* static variable -----------------------------------------------------------*/
 SETTINGS_STATIC_HANDLER_DEFINE(sensor_axis, SENSOR_AXIS_SETTINGS_ROOT, NULL,
-                               sensor_axis_calib_load, NULL, NULL);
+                               calib_load, NULL, NULL);
 
 /* function definition -------------------------------------------------------*/
 int sensor_axis_sensor_calib_save(const struct device* dev) {
@@ -627,8 +627,8 @@ err_settings:
 }
 
 /* static function definition ------------------------------------------------*/
-static int sensor_axis_calib_load(const char* key, size_t len,
-                                  settings_read_cb read_cb, void* cb_arg) {
+static int calib_load(const char* key, size_t len, settings_read_cb read_cb,
+                      void* cb_arg) {
   if (len != sizeof(struct sensor_value)) {
     return -EINVAL;
   }
@@ -769,75 +769,3 @@ static int sensor_axis_calib_load(const char* key, size_t len,
                         POST_KERNEL, CONFIG_INPUT_INIT_PRIORITY, NULL);
 
 DT_INST_FOREACH_STATUS_OKAY(SENSOR_AXIS_INIT)
-
-#include <zephyr/shell/shell.h>
-
-#define __DEVICE_GET(node_id) \
-  DT_CAT(node_id, _FOREACH_CHILD_STATUS_OKAY_SEP)(DEVICE_DT_GET, (, ))
-
-#define _DEVICE_GET(inst) \
-  DT_INST_FOREACH_CHILD_STATUS_OKAY_SEP(inst, __DEVICE_GET, (, ))
-
-
-const struct device* devices[] = {DT_INST_FOREACH_STATUS_OKAY(_DEVICE_GET)};
-
-static int sensor_axis_set_cmd_handler(const struct shell* sh, size_t argc,
-                                       char** argv, void* data) {
-  int ret = -1;
-  if(argc != 3) { goto err_settings; }
-  const struct device* dev = NULL;
-  for(int i=0; i<ARRAY_SIZE(devices); i++) {
-      if(!strcmp(argv[1], devices[i]->name)) {
-        dev = devices[i];
-      }
-  }
-  if(!dev) { goto err_settings; }
-
-  char path[SETTINGS_MAX_NAME_LEN + 1];
-  const struct sensor_axis_sensor_config* config = dev->config;
-  struct sensor_axis_sensor_calib* calib = config->calib;
-  if(!strcmp(argv[2], "set_min")) {
-    sensor_axis_sensor_min_set_curr(dev, 100, K_MSEC(100));
-    ret = snprintf(path, sizeof(path), SENSOR_AXIS_SETTINGS_ROOT "/%s/in_min",
-                   dev->name);
-    __ASSERT(ret < SETTINGS_MAX_NAME_LEN, "Path too long");
-    ret = settings_save_one(path, &calib->in_min, sizeof(struct sensor_value));
-  }
-  else if(!strcmp(argv[2], "set_max")) {
-    ret = snprintf(path, sizeof(path), SENSOR_AXIS_SETTINGS_ROOT "/%s/in_max",
-                   dev->name);
-    __ASSERT(ret < SETTINGS_MAX_NAME_LEN, "Path too long");
-    ret = settings_save_one(path, &calib->in_max, sizeof(struct sensor_value));
-  }
-  else{
-    goto err_settings;
-  }
-  
-  if (ret < 0) {
-    goto err_settings;
-  }
-
-  return 0;
-
-err_settings:
-  LOG_ERR("settings_save failed: %d", ret);
-  return ret;
-}
-
-SHELL_STATIC_SUBCMD_SET_CREATE(set_values, SHELL_CMD(set_min, NULL, "", NULL),
-                               SHELL_CMD(set_max, NULL, "", NULL),
-                               SHELL_SUBCMD_SET_END);
-
-#define __SUBCMD(node_id) \
-  SHELL_CMD(DT_NODE_FULL_NAME_UNQUOTED(node_id), &set_values, "", NULL)
-
-#define _SUBCMD(node_id) \
-  DT_CAT(node_id, _FOREACH_CHILD_STATUS_OKAY_SEP)(__SUBCMD, (, ))
-
-#define SUBCMD(inst) DT_INST_FOREACH_CHILD_STATUS_OKAY_SEP(inst, _SUBCMD, (, ))
-
-SHELL_STATIC_SUBCMD_SET_CREATE(name, DT_INST_FOREACH_STATUS_OKAY(SUBCMD),
-                               SHELL_SUBCMD_SET_END);
-
-SHELL_CMD_REGISTER(sensor_axis, &name, "Sensor Axis Settings",
-                   sensor_axis_set_cmd_handler);

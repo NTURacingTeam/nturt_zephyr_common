@@ -28,4 +28,12 @@ config INPUT_SENSOR_AXIS_SETTINGS
 	  `sensor_axis_calibration_save()` function to save the calibration into
 	  settings and load them automatically on startup.
 
+config INPUT_SENSOR_AXIS_SHELL
+	bool "Sensor axis shell commands"
+	depends on SHELL
+	default y
+	help
+	  Enable shell commands for sensor axis. This allows to calibrate the
+	  sensor axis using shell commands.
+
 endif # INPUT_SENSOR_AXIS
