@@ -6,9 +6,8 @@
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
-#include <zephyr/settings/settings.h>
 #include <zephyr/shell/shell.h>
+#include <zephyr/sys/util.h>
 
 /* static function declaration -----------------------------------------------*/
 static int sensor_axis_set_cmd_handler(const struct shell* sh, size_t argc,
@@ -60,15 +59,17 @@ static int sensor_axis_set_cmd_handler(const struct shell* sh, size_t argc,
 
   if (!strcmp(argv[2], "set_min")) {
     sensor_axis_sensor_min_set_curr(dev, 10, K_MSEC(10));
-    sensor_axis_sensor_calib_save(dev);
 
   } else if (!strcmp(argv[2], "set_max")) {
     sensor_axis_sensor_max_set_curr(dev, 10, K_MSEC(10));
-    sensor_axis_sensor_calib_save(dev);
 
   } else {
     shell_error(sh, "Invalid command: %s", argv[2]);
     return -EINVAL;
+  }
+
+  if (IS_ENABLED(CONFIG_INPUT_SENSOR_AXIS_SETTINGS)) {
+    sensor_axis_sensor_calib_save(dev);
   }
 
   return 0;
