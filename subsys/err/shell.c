@@ -38,7 +38,10 @@ SHELL_STATIC_SUBCMD_SET_CREATE(err_cmd,
                                              err_clear_cmd_handler, 2, 0),
                                SHELL_SUBCMD_SET_END);
 
-SHELL_CMD_REGISTER(err, &err_cmd, "Error module.", NULL);
+SHELL_CMD_REGISTER(err, &err_cmd,
+                   "Error module commands.\n"
+                   "Usage: err <subcommand>",
+                   NULL);
 /* static function definition ------------------------------------------------*/
 static void err_get_handler_impl(size_t idx, struct shell_static_entry *entry,
                                  bool is_set) {

@@ -28,26 +28,37 @@ LOG_MODULE_REGISTER(sensor_axis, CONFIG_INPUT_LOG_LEVEL);
 #define INVALID_OUT (INT32_MAX)
 
 /* type ----------------------------------------------------------------------*/
-struct sensor_axis_sensor_raw_cb {
-  struct k_mutex lock;
-  sensor_axis_sensor_raw_cb_t cb;
-  void* user_data;
+struct sensor_axis_sensor_calib {
+  /** Minimum input value. */
+  struct sensor_value in_min;
+
+  /** Maximum input value. */
+  struct sensor_value in_max;
 };
 
 struct sensor_axis_sensor_data {
+  /**
+   * Current error value. Not protected by lock since only the sensor-axis
+   * thread will update it.
+   */
   uint16_t error;
-  struct sensor_axis_sensor_raw_cb raw_cb;
-};
 
-struct sensor_axis_sensor_calib {
-  struct sensor_value in_min;
-  struct sensor_value in_max;
+  /** Lock to protect the following members and the underlying sensor. */
+  struct k_mutex lock;
+
+  /** Calibration data. */
+  struct sensor_axis_sensor_calib calib;
+
+  /** Callback for raw sensor data. */
+  sensor_axis_sensor_raw_cb_t cb;
+
+  /** User data for the callback. */
+  void* user_data;
 };
 
 struct sensor_axis_sensor_config {
   const struct device* sensor;
   enum sensor_channel channel;
-  struct sensor_axis_sensor_calib* calib;
   int32_t range_tolerance;
 };
 
@@ -96,57 +107,61 @@ void sensor_axis_sensor_set_raw_cb(const struct device* dev,
                                    void* user_data) {
   struct sensor_axis_sensor_data* data = dev->data;
 
-  data->raw_cb.cb = cb;
-  data->raw_cb.user_data = user_data;
+  k_mutex_lock(&data->lock, K_FOREVER);
+  data->cb = cb;
+  data->user_data = user_data;
+  k_mutex_unlock(&data->lock);
+}
+
+void sensor_axis_sensor_reset_raw_cb(const struct device* dev) {
+  struct sensor_axis_sensor_data* data = dev->data;
+
+  k_mutex_lock(&data->lock, K_FOREVER);
+  data->cb = NULL;
+  k_mutex_unlock(&data->lock);
 }
 
 void sensor_axis_sensor_min_get(const struct device* dev,
                                 struct sensor_value* val) {
   struct sensor_axis_sensor_data* data = dev->data;
-  const struct sensor_axis_sensor_config* config = dev->config;
 
-  k_mutex_lock(&data->raw_cb.lock, K_FOREVER);
-  *val = config->calib->in_min;
-  k_mutex_unlock(&data->raw_cb.lock);
+  k_mutex_lock(&data->lock, K_FOREVER);
+  *val = data->calib.in_min;
+  k_mutex_unlock(&data->lock);
 }
 
 void sensor_axis_sensor_max_get(const struct device* dev,
                                 struct sensor_value* val) {
   struct sensor_axis_sensor_data* data = dev->data;
-  const struct sensor_axis_sensor_config* config = dev->config;
 
-  k_mutex_lock(&data->raw_cb.lock, K_FOREVER);
-  *val = config->calib->in_max;
-  k_mutex_unlock(&data->raw_cb.lock);
+  k_mutex_lock(&data->lock, K_FOREVER);
+  *val = data->calib.in_max;
+  k_mutex_unlock(&data->lock);
 }
 
 void sensor_axis_sensor_min_set(const struct device* dev,
                                 const struct sensor_value* val) {
   struct sensor_axis_sensor_data* data = dev->data;
-  const struct sensor_axis_sensor_config* config = dev->config;
 
-  k_mutex_lock(&data->raw_cb.lock, K_FOREVER);
-  config->calib->in_min = *val;
-  k_mutex_unlock(&data->raw_cb.lock);
+  k_mutex_lock(&data->lock, K_FOREVER);
+  data->calib.in_min = *val;
+  k_mutex_unlock(&data->lock);
 }
 
 void sensor_axis_sensor_max_set(const struct device* dev,
                                 const struct sensor_value* val) {
   struct sensor_axis_sensor_data* data = dev->data;
-  const struct sensor_axis_sensor_config* config = dev->config;
 
-  k_mutex_lock(&data->raw_cb.lock, K_FOREVER);
-  config->calib->in_max = *val;
-  k_mutex_unlock(&data->raw_cb.lock);
+  k_mutex_lock(&data->lock, K_FOREVER);
+  data->calib.in_max = *val;
+  k_mutex_unlock(&data->lock);
 }
 
 static int sensor_axis_sensor_set_curr_impl(const struct device* dev, int times,
                                             k_timeout_t period, bool is_min) {
   struct sensor_axis_sensor_data* data = dev->data;
-  const struct sensor_axis_sensor_config* config = dev->config;
-  struct sensor_axis_sensor_calib* calib = config->calib;
 
-  k_mutex_lock(&data->raw_cb.lock, K_FOREVER);
+  k_mutex_lock(&data->lock, K_FOREVER);
 
   int64_t accum = 0;
   struct sensor_value val;
@@ -167,10 +182,11 @@ static int sensor_axis_sensor_set_curr_impl(const struct device* dev, int times,
   }
 
   accum = DIV_ROUND_CLOSEST(accum, times);
-  sensor_value_from_micro(is_min ? &calib->in_min : &calib->in_max, accum);
+  sensor_value_from_micro(is_min ? &data->calib.in_min : &data->calib.in_max,
+                          accum);
 
 out:
-  k_mutex_unlock(&data->raw_cb.lock);
+  k_mutex_unlock(&data->lock);
   return ret;
 }
 
@@ -277,7 +293,7 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   const struct sensor_axis_sensor_config* config = dev->config;
 
   int ret;
-  ret = k_mutex_lock(&data->raw_cb.lock, K_MSEC(5));
+  ret = k_mutex_lock(&data->lock, K_MSEC(5));
   if (ret < 0) {
     return sensor_error_update(dev, INPUT_ERROR_BUSY, ret, NULL);
   }
@@ -285,18 +301,18 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   struct sensor_value sensor_val;
   ret = sensor_get_raw(dev, &sensor_val);
   if (ret < 0) {
-    k_mutex_unlock(&data->raw_cb.lock);
+    k_mutex_unlock(&data->lock);
     return sensor_error_update(dev, INPUT_ERROR_IO, ret, NULL);
   }
 
   int64_t val = sensor_value_to_micro(&sensor_val);
-  int64_t min = sensor_value_to_micro(&config->calib->in_min);
-  int64_t max = sensor_value_to_micro(&config->calib->in_max);
+  int64_t min = sensor_value_to_micro(&data->calib.in_min);
+  int64_t max = sensor_value_to_micro(&data->calib.in_max);
 
-  k_mutex_unlock(&data->raw_cb.lock);
+  k_mutex_unlock(&data->lock);
 
-  if (data->raw_cb.cb != NULL) {
-    data->raw_cb.cb(dev, &sensor_val, data->raw_cb.user_data);
+  if (data->cb != NULL) {
+    data->cb(dev, &sensor_val, data->user_data);
   }
 
   // devide range first to prevent overflow
@@ -462,7 +478,7 @@ static int channel_update(const struct device* dev, uint16_t axis) {
   struct sensor_axis_channel_data* data = dev->data;
   const struct sensor_axis_channel_config* config = dev->config;
 
-  int ret;
+  int ret = 0;
 
   // normalized sensor values in one-millionth part
   int32_t val_accum = 0;
@@ -472,19 +488,24 @@ static int channel_update(const struct device* dev, uint16_t axis) {
     const struct device* sensor = config->sensors[i];
 
     if (!device_is_ready(sensor)) {
-      return channel_error_update(dev, INPUT_ERROR_NODEV, -ENODEV,
-                                  sensor->name);
+      ret = channel_error_update(dev, INPUT_ERROR_NODEV, -ENODEV, sensor->name);
+      continue;
     }
 
     int32_t val;
-    ret = sensor_get(sensor, &val);
-    if (ret < 0) {
-      return channel_error_update(dev, INPUT_ERROR_IO, ret, sensor->name);
+    int ret2 = sensor_get(sensor, &val);
+    if (ret2 < 0) {
+      ret = channel_error_update(dev, INPUT_ERROR_IO, ret2, sensor->name);
+      continue;
     }
 
     val_accum += val * config->weights[i];
     val_min = MIN(val_min, val);
     val_max = MAX(val_max, val);
+  }
+
+  if (ret < 0) {
+    return ret;
   }
 
   int32_t val_dev = val_max - val_min;
@@ -543,7 +564,7 @@ static int sensor_axis_sensor_init(const struct device* dev) {
   struct sensor_axis_sensor_data* data = dev->data;
   const struct sensor_axis_sensor_config* config = dev->config;
 
-  k_mutex_init(&data->raw_cb.lock);
+  k_mutex_init(&data->lock);
 
   if (!device_is_ready(config->sensor)) {
     LOG_ERR("Sensor %s not ready", config->sensor->name);
@@ -671,31 +692,29 @@ static int calib_load(const char* key, size_t len, settings_read_cb read_cb,
 #define SENSOR_AXIS_SENSOR_DEFINE(node_id)                                     \
   static struct sensor_axis_sensor_data node_id##_data = {                     \
       .error = INPUT_ERROR_NONE,                                               \
-      .raw_cb =                                                                \
+      .calib =                                                                 \
           {                                                                    \
-              .cb = NULL,                                                      \
+              .in_min =                                                        \
+                  {                                                            \
+                      .val1 = DT_PROP_BY_IDX(node_id, in_min, 0) +             \
+                              ZERO_OR_COMPILE_ERROR(                           \
+                                  DT_PROP_LEN(node_id, in_min) == 2),          \
+                      .val2 = DT_PROP_BY_IDX(node_id, in_min, 1),              \
+                  },                                                           \
+              .in_max =                                                        \
+                  {                                                            \
+                      .val1 = DT_PROP_BY_IDX(node_id, in_max, 0) +             \
+                              ZERO_OR_COMPILE_ERROR(                           \
+                                  DT_PROP_LEN(node_id, in_max) == 2),          \
+                      .val2 = DT_PROP_BY_IDX(node_id, in_max, 1),              \
+                  },                                                           \
           },                                                                   \
+      .cb = NULL,                                                              \
   };                                                                           \
                                                                                \
   const static struct sensor_axis_sensor_config node_id##_config = {           \
       .sensor = DEVICE_DT_GET(DT_PHANDLE(node_id, sensor)),                    \
       .channel = DT_PROP(node_id, zephyr_channel),                             \
-      .calib = (struct sensor_axis_sensor_calib[]){{                           \
-          .in_min =                                                            \
-              {                                                                \
-                  .val1 = DT_PROP_BY_IDX(node_id, in_min, 0) +                 \
-                          ZERO_OR_COMPILE_ERROR(                               \
-                              DT_PROP_LEN(node_id, in_min) == 2),              \
-                  .val2 = DT_PROP_BY_IDX(node_id, in_min, 1),                  \
-              },                                                               \
-          .in_max =                                                            \
-              {                                                                \
-                  .val1 = DT_PROP_BY_IDX(node_id, in_max, 0) +                 \
-                          ZERO_OR_COMPILE_ERROR(                               \
-                              DT_PROP_LEN(node_id, in_max) == 2),              \
-                  .val2 = DT_PROP_BY_IDX(node_id, in_max, 1),                  \
-              },                                                               \
-      }},                                                                      \
       .range_tolerance = DT_PROP(node_id, range_tolerance),                    \
   };                                                                           \
                                                                                \

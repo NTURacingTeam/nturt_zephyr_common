@@ -38,6 +38,13 @@ void sensor_axis_sensor_set_raw_cb(const struct device* dev,
                                    void* user_data);
 
 /**
+ * @brief Reset callback function for raw sensor value.
+ *
+ * @param dev The device to reset the callback.
+ */
+void sensor_axis_sensor_reset_raw_cb(const struct device* dev);
+
+/**
  * @brief Get sensor setpoint that will report minimum value.
  * 
  * @param[in] dev The sensor to get the setpoint.
