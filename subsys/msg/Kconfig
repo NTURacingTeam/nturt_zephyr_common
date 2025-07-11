@@ -20,4 +20,13 @@ config NTURT_MSG_CHAN_STATES
 	depends on VCU_STATES
 	default y
 
+config NTURT_MSG_SHELL
+	bool "Message shell support"
+	depends on NTURT_SHELL
+	default y
+	select CBPRINTF_FP_SUPPORT
+	select ZBUS_CHANNEL_NAME
+	select ZBUS_CHANNEL_PUBLISH_STATS
+	select ZBUS_RUNTIME_OBSERVERS
+
 endif # NTURT_MSG

@@ -22,6 +22,30 @@
  * @{
  */
 
+/* macro ---------------------------------------------------------------------*/
+#define PRImsg_header "s%llu.%06llu s"
+
+#define PRImsg_header_arg(header)                    \
+  "timestamp: ", (header).timestamp_ns / 1000000000, \
+      ((header).timestamp_ns % 1000000000) / 1000
+
+#define PRImsg_3d_data "s(%g, %g, %g)"
+
+#define PRImsg_3d_data_arg(data)                          \
+  "", (double)(data).values[0], (double)(data).values[1], \
+      (double)(data).values[2]
+
+#define PRImsg_4wheel_data "s(%g, %g, %g, %g)"
+
+#define PRImsg_4wheel_data_arg(data)                      \
+  "", (double)(data).values[0], (double)(data).values[1], \
+      (double)(data).values[2], (double)(data).values[3]
+
+#define PRImsg_4wheel_flags "s(0x%X, 0x%X, 0x%X, 0x%X)"
+
+#define PRImsg_4wheel_flags_arg(flags) \
+  "", (flags).values[0], (flags).values[1], (flags).values[2], (flags).values[3]
+
 /* type ----------------------------------------------------------------------*/
 /// @brief Message header.
 struct msg_header {

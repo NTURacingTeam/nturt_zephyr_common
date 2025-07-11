@@ -27,6 +27,45 @@
 #define MSG_SENSOR_LIST \
   msg_cockpit_data, msg_wheel_data, msg_susp_data, msg_imu_data, msg_gps_data
 
+#define PRImsg_cockpit_data                        \
+  PRImsg_header                                    \
+      "\n\r\tsteer (deg): %g"                      \
+      "\n\r\taccel (%%): %g, apps (deg): (%g, %g)" \
+      "\n\r\tbrake (%%): %g, bse (kPa): (%g, %g)"
+
+#define PRImsg_cockpit_data_arg(data)                                         \
+  PRImsg_header_arg((data).header), (double)((data).steer),                   \
+      (double)((data).accel), (double)((data).apps1), (double)((data).apps2), \
+      (double)((data).brake), (double)((data).bse1), (double)((data).bse2)
+
+#define PRImsg_wheel_data                                 \
+  PRImsg_header "\n\r\tspeed (rpm): %" PRImsg_4wheel_data \
+                "\n\r\ttorque (Nm): %" PRImsg_4wheel_data \
+                "\n\r\ttire temp (°C): %" PRImsg_4wheel_data
+
+#define PRImsg_wheel_data_arg(data)                                       \
+  PRImsg_header_arg((data).header), PRImsg_4wheel_data_arg((data).speed), \
+      PRImsg_4wheel_data_arg((data).torque),                              \
+      PRImsg_4wheel_data_arg((data).tire_temp)
+
+#define PRImsg_susp_data PRImsg_header "\n\r\ttravel (m): %" PRImsg_4wheel_data
+
+#define PRImsg_susp_data_arg(data) \
+  PRImsg_header_arg((data).header), PRImsg_4wheel_data_arg((data).travel)
+
+#define PRImsg_imu_data                                        \
+  PRImsg_header "\n\r\tacceleration (m/s^2): %" PRImsg_3d_data \
+                "\n\r\tgyration (rad/s): %" PRImsg_3d_data     \
+                "\n\r\teular angle (deg): %" PRImsg_3d_data
+
+#define PRImsg_imu_data_arg(data)                                     \
+  PRImsg_header_arg((data).header), PRImsg_3d_data_arg((data).accel), \
+      PRImsg_3d_data_arg((data).gyro), PRImsg_3d_data_arg((data).orient)
+
+#define PRImsg_gps_data PRImsg_header "\n\r\tTODO"
+
+#define PRImsg_gps_data_arg(data) PRImsg_header_arg((data).header)
+
 /* type ----------------------------------------------------------------------*/
 struct msg_cockpit_data {
   /** Message header. */

@@ -20,7 +20,7 @@
 /**
  * @defgroup msg_interface_states State Machine Message
  * @brief VCU control system state machine message type definitions.
- * 
+ *
  * @ingroup msg_interface
  * @{
  */
@@ -28,6 +28,10 @@
 /* macro ---------------------------------------------------------------------*/
 /// @brief List of state messages.
 #define MSG_STATES_LIST msg_states
+
+#define PRImsg_states PRImsg_header "\n\r\tTODO"
+
+#define PRImsg_states_arg(data) PRImsg_header_arg((data).header)
 
 /* type ----------------------------------------------------------------------*/
 /// @brief VCU control system state message.

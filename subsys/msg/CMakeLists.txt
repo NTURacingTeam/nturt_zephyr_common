@@ -6,4 +6,8 @@ zephyr_library_sources(
     msg.c
 )
 
+zephyr_library_sources_ifdef(CONFIG_NTURT_MSG_SHELL
+    shell.c
+)
+
 endif()
