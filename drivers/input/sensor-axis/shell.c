@@ -48,6 +48,10 @@ void sensor_axis_sensor_raw_cb(const struct device* dev,
 #define _SENSOR_GET(inst) \
   DT_INST_FOREACH_CHILD_STATUS_OKAY_SEP(inst, __SENSOR_GET, (, ))
 
+// Shell provides `shell_device_filter` and `shell_device_get_binding` functions
+// to get devices by filters and their names, respectively. However, since the
+// sensors here are not regular devices, it is difficult to filter them using
+// for example `DEVICE_API_IS`.
 const struct device* sensors[] = {DT_INST_FOREACH_STATUS_OKAY(_SENSOR_GET)};
 
 SHELL_STATIC_SUBCMD_SET_CREATE(
@@ -72,7 +76,7 @@ SHELL_DYNAMIC_CMD_CREATE(sensor_axis_calib_set_subcmd,
 
 SHELL_STATIC_SUBCMD_SET_CREATE(
     sensor_axis_dump_raw_cmd,
-    SHELL_CMD(on, NULL, "Dump raw sensor output.", NULL),
+    SHELL_CMD(on, NULL, "Enable dumping raw sensor output.", NULL),
     SHELL_CMD(off, NULL, "Disable dumping raw sensor output.", NULL),
     SHELL_SUBCMD_SET_END);
 
@@ -90,8 +94,8 @@ SHELL_STATIC_SUBCMD_SET_CREATE(
                   "Usage: calib_set <sensor> <curr_as_min|curr_as_max>",
                   sensor_axis_calib_set_cmd_handler, 3, 0),
     SHELL_CMD_ARG(dump_raw, &sensor_axis_dump_raw_subcmd,
-                  "Print raw sensor data.\n"
-                  "Usage: raw_print <sensor> <on|off>",
+                  "Enable raw sensor output dumping.\n"
+                  "Usage: dump_raw <sensor> <on|off>",
                   sensor_axis_dump_raw_cmd_handler, 3, 0),
     SHELL_SUBCMD_SET_END);
 
@@ -114,9 +118,9 @@ static const struct device* get_sensor_by_name(const char* name) {
 static void shell_print_sensor_value(const struct shell* sh,
                                      const struct sensor_value* val) {
   if (val->val2 >= 0) {
-    shell_fprintf(sh, SHELL_INFO, "%d.%06d", val->val1, val->val2);
+    shell_fprintf(sh, SHELL_NORMAL, "%d.%06d", val->val1, val->val2);
   } else {
-    shell_fprintf(sh, SHELL_INFO, "%d.%06d", val->val1, -val->val2);
+    shell_fprintf(sh, SHELL_NORMAL, "%d.%06d", val->val1, -val->val2);
   }
 }
 
@@ -167,7 +171,7 @@ static int sensor_axis_calib_get_cmd_handler(const struct shell* sh,
 
   const struct device* dev = get_sensor_by_name(argv[1]);
   if (dev == NULL) {
-    shell_error(sh, "Unknown device: %s", argv[1]);
+    shell_error(sh, "Unknown sensor: %s", argv[1]);
     return -ENOENT;
   }
 
@@ -175,16 +179,16 @@ static int sensor_axis_calib_get_cmd_handler(const struct shell* sh,
   if (!strcmp(argv[2], "min")) {
     sensor_axis_sensor_min_get(dev, &val);
 
-    shell_fprintf(sh, SHELL_INFO, "%s min value: ", dev->name);
+    shell_fprintf(sh, SHELL_NORMAL, "%s min value: ", dev->name);
     shell_print_sensor_value(sh, &val);
-    shell_fprintf(sh, SHELL_INFO, "\n");
+    shell_fprintf(sh, SHELL_NORMAL, "\n");
 
   } else if (!strcmp(argv[2], "max")) {
     sensor_axis_sensor_max_get(dev, &val);
 
-    shell_fprintf(sh, SHELL_INFO, "%s max value: ", dev->name);
+    shell_fprintf(sh, SHELL_NORMAL, "%s max value: ", dev->name);
     shell_print_sensor_value(sh, &val);
-    shell_fprintf(sh, SHELL_INFO, "\n");
+    shell_fprintf(sh, SHELL_NORMAL, "\n");
 
   } else {
     shell_error(sh, "Invalid command: %s", argv[2]);
@@ -202,7 +206,7 @@ static int sensor_axis_calib_set_cmd_handler(const struct shell* sh,
 
   const struct device* dev = get_sensor_by_name(argv[1]);
   if (dev == NULL) {
-    shell_error(sh, "Unknown device: %s", argv[1]);
+    shell_error(sh, "Unknown sensor: %s", argv[1]);
     return -ENOENT;
   }
 
@@ -231,7 +235,7 @@ static int sensor_axis_dump_raw_cmd_handler(const struct shell* sh, size_t argc,
 
   const struct device* dev = get_sensor_by_name(argv[1]);
   if (dev == NULL) {
-    shell_error(sh, "Unknown device: %s", argv[1]);
+    shell_error(sh, "Unknown sensor: %s", argv[1]);
     return -ENOENT;
   }
 
@@ -245,7 +249,7 @@ static int sensor_axis_dump_raw_cmd_handler(const struct shell* sh, size_t argc,
   if (is_on) {
     sensor_axis_sensor_set_raw_cb(dev, sensor_axis_sensor_raw_cb, NULL);
   } else {
-    sensor_axis_sensor_reset_raw_cb(dev);
+    sensor_axis_sensor_set_raw_cb(dev, NULL, NULL);
   }
 
   return 0;

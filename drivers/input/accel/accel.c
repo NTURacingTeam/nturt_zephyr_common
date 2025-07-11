@@ -15,8 +15,11 @@
 
 LOG_MODULE_REGISTER(accel, CONFIG_INPUT_LOG_LEVEL);
 
-#define PLAUS_ACTIVATE_TH (25 / 100)
-#define PLAUS_DEACTIVATE_TH (5 / 100)
+/* macro ---------------------------------------------------------------------*/
+// Explicitly not use brackets to integer multiply first and then divide
+#define PLAUS_ACTIVATE_TH 25 / 100
+#define PLAUS_DEACTIVATE_TH 5 / 100
+
 #define INVALID_OUT (INT32_MAX)
 
 enum accel_device_state {
@@ -64,11 +67,9 @@ static int error_update(const struct device* dev, uint16_t error) {
 
   int ret;
   if (data->error == INPUT_ERROR_NONE && error != INPUT_ERROR_NONE) {
-    if (data->prev_out != 0) {
-      ret = input_report_abs(dev, INPUT_ABS_THROTTLE, 0, true, K_NO_WAIT);
-      if (ret < 0) {
-        goto err;
-      }
+    ret = input_report_abs(dev, INPUT_ABS_THROTTLE, 0, true, K_NO_WAIT);
+    if (ret < 0) {
+      goto err;
     }
 
     data->prev_out = INVALID_OUT;

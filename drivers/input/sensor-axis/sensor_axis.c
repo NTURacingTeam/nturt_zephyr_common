@@ -113,14 +113,6 @@ void sensor_axis_sensor_set_raw_cb(const struct device* dev,
   k_mutex_unlock(&data->lock);
 }
 
-void sensor_axis_sensor_reset_raw_cb(const struct device* dev) {
-  struct sensor_axis_sensor_data* data = dev->data;
-
-  k_mutex_lock(&data->lock, K_FOREVER);
-  data->cb = NULL;
-  k_mutex_unlock(&data->lock);
-}
-
 void sensor_axis_sensor_min_get(const struct device* dev,
                                 struct sensor_value* val) {
   struct sensor_axis_sensor_data* data = dev->data;
@@ -222,7 +214,8 @@ static int sensor_get_raw(const struct device* dev, struct sensor_value* val) {
  * @param[in] ret Current return value.
  * @param[in] info Additional information to report.
  *
- * @return Original @p ret if success, negative error number otherwise.
+ * @retval Original @p ret if success.
+ * @retval others Negative error number if `input_report` fails.
  */
 static int sensor_error_update(const struct device* dev, uint16_t error,
                                int ret, const void* info) {
@@ -347,7 +340,7 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
  * @param[in] ret Current return value.
  * @param[in] info Additional information to report.
  *
- * @retval @p ret If success.
+ * @retval Original @p ret if success.
  * @retval -EAGAIN If during accmulating error time decay, the error is still
  * set.
  * @retval others Negative error number if `input_report` fails.
@@ -489,6 +482,9 @@ static int channel_update(const struct device* dev, uint16_t axis) {
 
     if (!device_is_ready(sensor)) {
       ret = channel_error_update(dev, INPUT_ERROR_NODEV, -ENODEV, sensor->name);
+
+      // Using continue here instead of break to ensure all sensors are checked
+      // and their raw data and errors are reported.
       continue;
     }
 
@@ -511,6 +507,9 @@ static int channel_update(const struct device* dev, uint16_t axis) {
   int32_t val_dev = val_max - val_min;
   if (val_dev > config->dev_tolerance * 10000) {
     return channel_error_update(dev, INPUT_ERROR_DEV, -EINVAL, &val_dev);
+  } else {
+    LOG_DBG("Channel %s deviates by %d%%", dev->name,
+            DIV_ROUND_CLOSEST(val_dev, 10000));
   }
 
   ret = channel_error_update(dev, INPUT_ERROR_NONE, 0, NULL);
@@ -551,9 +550,7 @@ static void sensor_axis_thread(void* arg1, void* arg2, void* arg3) {
 
   while (true) {
     for (int i = 0; i < config->num_channel; i++) {
-      const struct device* channel = config->channels[i];
-
-      channel_update(channel, config->axises[i]);
+      channel_update(config->channels[i], config->axises[i]);
     }
 
     k_timer_status_sync(&data->timer);
