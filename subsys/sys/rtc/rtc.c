@@ -90,7 +90,7 @@ static int init() {
       .tv_nsec = 0,
   };
 
-  char time_str[] = "1970-01-01T00:00:00";
+  char time_str[sizeof("1970-01-01T00:00:00")];
   strftime(time_str, sizeof(time_str), "%FT%T", rtc_time_to_tm(&time));
   LOG_INF("Set posix real-time clock to %lld.%06ld (%s)", ts.tv_sec, ts.tv_nsec,
           time_str);

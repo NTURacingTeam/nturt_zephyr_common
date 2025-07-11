@@ -29,5 +29,6 @@ config NTURT_SYS_REBOOT_SOUND
 config NTURT_SHELL
 	bool "Shell support"
 	select SHELL
+	select THREAD_RUNTIME_STATS
 
 endif # NTURT_SYS
