@@ -88,11 +88,12 @@ static void emcy_work(struct k_work *work) {
 
   // frame id == 0 when EMCY from this node
   if (ctx->ident == 0) {
-    // filter out manufacturer and heartbeat consumer errors since they are
-    // handled by other modules
-    if (ctx->errorBit >= CO_EM_MANUFACTURER_START ||
+    // filter out warnings as well as manufacturer and heartbeat consumer errors
+    // since they are handled by other modules
+    if (ctx->errorBit == CO_EM_CAN_BUS_WARNING ||
         ctx->errorBit == CO_EM_HEARTBEAT_CONSUMER ||
-        ctx->errorBit == CO_EM_HB_CONSUMER_REMOTE_RESET) {
+        ctx->errorBit == CO_EM_HB_CONSUMER_REMOTE_RESET ||
+        ctx->errorBit >= CO_EM_MANUFACTURER_START) {
       return;
     }
 

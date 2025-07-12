@@ -18,6 +18,10 @@ zephyr_library_sources_ifdef(CONFIG_NTURT_CANOPEN_STORAGE
     storage.c
 )
 
+zephyr_library_sources_ifdef(CONFIG_NTURT_CANOPEN_SHELL
+    shell.c
+)
+
 zephyr_linker_sources(DATA_SECTIONS
     iterable_sections.ld
 )
