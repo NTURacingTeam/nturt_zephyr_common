@@ -13,7 +13,7 @@ source "subsys/logging/Kconfig.template.log_config"
 
 config NTURT_CMD_INIT_PRIORITY
 	int "Init priority"
-	default 50
+	default 10
 	help
 	  Command initialization priority.
 
@@ -27,6 +27,6 @@ config NTURT_CMD_PROCESS_THREAD_STACK_SIZE
 
 config NTURT_CMD_PROCESS_THREAD_PRIORITY
 	int "Command processing thread priority"
-	default 1
+	default 0
 
 endif # NTURT_CMD

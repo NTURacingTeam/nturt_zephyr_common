@@ -9,7 +9,7 @@ if NTURT_TM
 
 config NTURT_TM_INIT_PRIORITY
 	int "Init priority"
-	default 50
+	default 10
 	help
 	  Telemetry initialization priority.
 
