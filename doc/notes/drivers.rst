@@ -140,32 +140,6 @@ Reference
    <https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/serial/uart_stm32.c#L1580>`_
    that set the DMA source address in async mode to the buffer
 
-Battery Backed RAM (BBRAM)
-==========================
-
-Zephyr provides a battery backed RAM (BBRAM) driver that allows you to store
-data across system resets through `BBRAM API
-<https://docs.zephyrproject.org/3.6.0/hardware/peripherals/bbram.html>`_.
-Depending on the hardware, the data may be persisted even if the main power is
-lost, being kept by the dedicated battery, hence the name.
-
-However, not all STM32 serise device tree include ``st,stm32-bbram`` device that
-corrsepond to BBRAM. To use it, add it to ``st,stm32-rtc`` device in the device
-tree overlay like so:
-
-.. code-block:: dts
-
-   &rtc {
-       bbram: backup_regs {
-           compatible = "st,stm32-bbram";
-           st,backup-regs = <32>;
-           status = "okay";
-       };
-   };
-
-Where ``st,backup-regs`` is the number of backup register of the STM32 and
-the exact values should refer to the reference manuals.
-
 General Purpose Input/Output (GPIO)
 ===================================
 
@@ -291,14 +265,38 @@ The driver for controller area network (CAN) driver provides a nice feature of
 figuring out the sync jump width and other parameters for the bus automatically,
 you only need to provide the baud rate and the sampling point.
 
-Weirdly, maximum baud rate for CAN bus is set to 800kbps in Zephyr [#]_.
+Error behaviors
+---------------
+
+In the overview section of the `Zephyr CAN controller documentation
+<https://docs.zephyrproject.org/4.1.0/hardware/peripherals/can/controller.html>`_,
+it mententioned the error behaviors of the CAN controller according to the ISO
+11898-1. For CAN controllers that utilizes the `Bosch's M_CAN
+<https://www.bosch-semiconductors.com/products/ip-modules/can-ip-modules/m-can/>`_
+(incluing STM32's FDCAN controllers), when not in `CAN_MANUAL_RECOVERY
+<https://docs.zephyrproject.org/4.1.0/doxygen/html/group__can__interface.html#ga3d8675253125b2af2bd22f0b2cc60cdd>`_
+mode, the driver will automatically request the controller to recover from
+bus-off state [#]_.
+
+Since the receive error counter (``REC``) and the transmit error counter
+(``TEC``) fields of the error counter register (``ECR``) are only up to 127 and
+255 respectively [#]_, they should not be used to determine the error-passive
+and bus-off states since those states are entered when the counter values exceed
+127 and 255 respectively. Instead, the warning status (``EW``), error passive
+(``EP``), and bus-off status (``BO``) bits of the protocol status register
+(``PSR``) should be used to determine the error states. All of the above can be
+accessed via :c:func:`can_get_state`.
 
 Reference
 ---------
 
-.. [#] `Zephyr CAN driver source code
-   <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/include/zephyr/drivers/can/can_mcan.h#L1322>`_
-   that limits the maximum baud rate to 800kbps
+.. [#] `Zephyr M_CAN driver source code
+   <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/drivers/can/can_mcan.c#L493>`_
+   that automatically recovers from bus-off state
+.. [#] `M_CAN user manual
+   <https://www.bosch-semiconductors.com/media/ip_modules/pdf_2/m_can/mcan_users_manual_v331.pdf>`_
+   where the error counter register (``ECR``) is described in section 2.3.13
+
 
 Secure Digital Input Output (SDIO)
 ==================================
@@ -327,6 +325,33 @@ STM32 microcontrollers are not able to connect other devices such as WiFi
 modules that uses SDIO and cannot be tested by tests for SDHC controllers such
 as ``tests/drivers/sdhc`` or ``tests/subsys/sd/sdmmc`` which requires generic
 ``zephyr,sdmmc-disk`` binding.
+
+Battery Backed RAM (BBRAM)
+
+==========================
+
+Zephyr provides a battery backed RAM (BBRAM) driver that allows you to store
+data across system resets through `BBRAM API
+<https://docs.zephyrproject.org/3.6.0/hardware/peripherals/bbram.html>`_.
+Depending on the hardware, the data may be persisted even if the main power is
+lost, being kept by the dedicated battery, hence the name.
+
+However, not all STM32 serise device tree include ``st,stm32-bbram`` device that
+corrsepond to BBRAM. To use it, add it to ``st,stm32-rtc`` device in the device
+tree overlay like so:
+
+.. code-block:: dts
+
+   &rtc {
+       bbram: backup_regs {
+           compatible = "st,stm32-bbram";
+           st,backup-regs = <32>;
+           status = "okay";
+       };
+   };
+
+Where ``st,backup-regs`` is the number of backup register of the STM32 and
+the exact values should refer to the reference manuals.
 
 Real Time I/O (RTIO)
 ====================
