@@ -76,7 +76,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#battery-backed-ram-bbram">Battery Backed RAM (BBRAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#general-purpose-input-output-gpio">General Purpose Input/Output (GPIO)</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#light-emitting-diode-led">Light Emitting Diode (LED)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#input">Input</a></li>
@@ -90,18 +89,19 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#can-bus">CAN Bus</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id18">Reference</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error-behaviors">Error behaviors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">Reference</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#secure-digital-input-output-sdio">Secure Digital Input Output (SDIO)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#real-time-i-o-rtio">Real Time I/O (RTIO)</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#work-request">Work Request</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id23">References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id25">References</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#sensors">Sensors</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#asynchronous-api">Asynchronous API</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id28">References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id30">References</a></li>
 </ul>
 </li>
 </ul>
@@ -263,27 +263,6 @@ that set the DMA source address in async mode to the buffer</p>
 </aside>
 </section>
 </section>
-<section id="battery-backed-ram-bbram">
-<h2>Battery Backed RAM (BBRAM)<a class="headerlink" href="#battery-backed-ram-bbram" title="Link to this heading"></a></h2>
-<p>Zephyr provides a battery backed RAM (BBRAM) driver that allows you to store
-data across system resets through <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/bbram.html">BBRAM API</a>.
-Depending on the hardware, the data may be persisted even if the main power is
-lost, being kept by the dedicated battery, hence the name.</p>
-<p>However, not all STM32 serise device tree include <code class="docutils literal notranslate"><span class="pre">st,stm32-bbram</span></code> device that
-corrsepond to BBRAM. To use it, add it to <code class="docutils literal notranslate"><span class="pre">st,stm32-rtc</span></code> device in the device
-tree overlay like so:</p>
-<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">rtc</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nl">bbram</span><span class="p">:</span><span class="w"> </span><span class="nf">backup_regs</span><span class="cm"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kr">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;st,stm32-bbram&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="n">st</span><span class="p">,</span><span class="n">backup-regs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="w">        </span><span class="kr">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;okay&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="p">};</span>
-</pre></div>
-</div>
-<p>Where <code class="docutils literal notranslate"><span class="pre">st,backup-regs</span></code> is the number of backup register of the STM32 and
-the exact values should refer to the reference manuals.</p>
-</section>
 <section id="general-purpose-input-output-gpio">
 <h2>General Purpose Input/Output (GPIO)<a class="headerlink" href="#general-purpose-input-output-gpio" title="Link to this heading"></a></h2>
 <p>Zephyr provides basic GPIO driver using the <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/gpio.html">GPIO API</a> that can
@@ -407,14 +386,35 @@ Low</p>
 <p>The driver for controller area network (CAN) driver provides a nice feature of
 figuring out the sync jump width and other parameters for the bus automatically,
 you only need to provide the baud rate and the sampling point.</p>
-<p>Weirdly, maximum baud rate for CAN bus is set to 800kbps in Zephyr <a class="footnote-reference brackets" href="#id19" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.</p>
-<section id="id18">
-<h3>Reference<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<section id="error-behaviors">
+<h3>Error behaviors<a class="headerlink" href="#error-behaviors" title="Link to this heading"></a></h3>
+<p>In the overview section of the <a class="reference external" href="https://docs.zephyrproject.org/4.1.0/hardware/peripherals/can/controller.html">Zephyr CAN controller documentation</a>,
+it mententioned the error behaviors of the CAN controller according to the ISO
+11898-1. For CAN controllers that utilizes the <a class="reference external" href="https://www.bosch-semiconductors.com/products/ip-modules/can-ip-modules/m-can/">Bosch’s M_CAN</a>
+(incluing STM32’s FDCAN controllers), when not in <a class="reference external" href="https://docs.zephyrproject.org/4.1.0/doxygen/html/group__can__interface.html#ga3d8675253125b2af2bd22f0b2cc60cdd">CAN_MANUAL_RECOVERY</a>
+mode, the driver will automatically request the controller to recover from
+bus-off state <a class="footnote-reference brackets" href="#id20" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.</p>
+<p>Since the receive error counter (<code class="docutils literal notranslate"><span class="pre">REC</span></code>) and the transmit error counter
+(<code class="docutils literal notranslate"><span class="pre">TEC</span></code>) fields of the error counter register (<code class="docutils literal notranslate"><span class="pre">ECR</span></code>) are only up to 127 and
+255 respectively <a class="footnote-reference brackets" href="#id21" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>, they should not be used to determine the error-passive
+and bus-off states since those states are entered when the counter values exceed
+127 and 255 respectively. Instead, the warning status (<code class="docutils literal notranslate"><span class="pre">EW</span></code>), error passive
+(<code class="docutils literal notranslate"><span class="pre">EP</span></code>), and bus-off status (<code class="docutils literal notranslate"><span class="pre">BO</span></code>) bits of the protocol status register
+(<code class="docutils literal notranslate"><span class="pre">PSR</span></code>) should be used to determine the error states. All of the above can be
+accessed via <code class="xref c c-func docutils literal notranslate"><span class="pre">can_get_state()</span></code>.</p>
+</section>
+<section id="id19">
+<h3>Reference<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id19" role="doc-footnote">
+<aside class="footnote brackets" id="id20" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">8</a><span class="fn-bracket">]</span></span>
-<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/include/zephyr/drivers/can/can_mcan.h#L1322">Zephyr CAN driver source code</a>
-that limits the maximum baud rate to 800kbps</p>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/drivers/can/can_mcan.c#L493">Zephyr M_CAN driver source code</a>
+that automatically recovers from bus-off state</p>
+</aside>
+<aside class="footnote brackets" id="id21" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">9</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.bosch-semiconductors.com/media/ip_modules/pdf_2/m_can/mcan_users_manual_v331.pdf">M_CAN user manual</a>
+where the error counter register (<code class="docutils literal notranslate"><span class="pre">ECR</span></code>) is described in section 2.3.13</p>
 </aside>
 </aside>
 </section>
@@ -437,6 +437,26 @@ STM32 microcontrollers are not able to connect other devices such as WiFi
 modules that uses SDIO and cannot be tested by tests for SDHC controllers such
 as <code class="docutils literal notranslate"><span class="pre">tests/drivers/sdhc</span></code> or <code class="docutils literal notranslate"><span class="pre">tests/subsys/sd/sdmmc</span></code> which requires generic
 <code class="docutils literal notranslate"><span class="pre">zephyr,sdmmc-disk</span></code> binding.</p>
+<p>Battery Backed RAM (BBRAM)</p>
+<hr class="docutils" />
+<p>Zephyr provides a battery backed RAM (BBRAM) driver that allows you to store
+data across system resets through <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/bbram.html">BBRAM API</a>.
+Depending on the hardware, the data may be persisted even if the main power is
+lost, being kept by the dedicated battery, hence the name.</p>
+<p>However, not all STM32 serise device tree include <code class="docutils literal notranslate"><span class="pre">st,stm32-bbram</span></code> device that
+corrsepond to BBRAM. To use it, add it to <code class="docutils literal notranslate"><span class="pre">st,stm32-rtc</span></code> device in the device
+tree overlay like so:</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">rtc</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nl">bbram</span><span class="p">:</span><span class="w"> </span><span class="nf">backup_regs</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kr">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;st,stm32-bbram&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">st</span><span class="p">,</span><span class="n">backup-regs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">        </span><span class="kr">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;okay&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">st,backup-regs</span></code> is the number of backup register of the STM32 and
+the exact values should refer to the reference manuals.</p>
 </section>
 <section id="real-time-i-o-rtio">
 <h2>Real Time I/O (RTIO)<a class="headerlink" href="#real-time-i-o-rtio" title="Link to this heading"></a></h2>
@@ -447,7 +467,7 @@ the norm for defining new APIs for asynchronous I/O operations in Zephyr but
 currently only includes I2C, SPI, and sensor drivers. Today still very few
 drivers natively support RTIO (i.e. use DMA or other coprocessors for true
 asynchronous transaction), threre are fallbacks that wraps the synchronous API
-to RTIO API for the above three drivers <a class="footnote-reference brackets" href="#id24" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id25" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id26" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>.</p>
+to RTIO API for the above three drivers <a class="footnote-reference brackets" href="#id26" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id27" id="id23" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id28" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>.</p>
 <p>The official documentation does not provide much information about the use of
 RTIO, but you can refer to the code and comments in <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/samples/drivers/i2c/rtio_loopback/README.html#i2c-rtio-loopback">I2C lookpack sample</a>
 for a sample usage of RTIO and <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__rtio.html">RTIO reference</a> for API
@@ -464,21 +484,21 @@ doxygen group that can be referenced from the RTIO group. It’s only available
 in <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/work_8h.html">its file reference</a>.</p>
 </div>
 </section>
-<section id="id23">
-<h3>References<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
+<section id="id25">
+<h3>References<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id24" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">9</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id26" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">10</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/spi/spi_rtio.c">SPI driver source code</a>
 for RTIO fallback</p>
 </aside>
-<aside class="footnote brackets" id="id25" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">10</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id27" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">11</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/i2c/i2c_rtio_default.c">I2C driver source code</a>
 for RTIO fallback</p>
 </aside>
-<aside class="footnote brackets" id="id26" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">11</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id28" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">12</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c">Sensor driver source code</a>
 for RTIO fallback</p>
 </aside>
@@ -495,15 +515,15 @@ documentation.</p>
 <p>To create a new sensor driver that support asynchronous API, both the decoder
 API and the async read initialization (<code class="xref c c-member docutils literal notranslate"><span class="pre">sensor_driver_api.submit</span></code>) can
 be referenced from <a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c">default_rtio_sensor.c</a>.
-And since default implementation for <code class="docutils literal notranslate"><span class="pre">submit</span></code> does not support streaming <a class="footnote-reference brackets" href="#id29" id="id27" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>,
+And since default implementation for <code class="docutils literal notranslate"><span class="pre">submit</span></code> does not support streaming <a class="footnote-reference brackets" href="#id31" id="id29" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a>,
 the implementation of it can be referenced from existing drivers such as
 <a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/adi/adxl345/adxl345_stream.c">adxl345_stream.c</a>.</p>
 </section>
-<section id="id28">
-<h3>References<a class="headerlink" href="#id28" title="Link to this heading"></a></h3>
+<section id="id30">
+<h3>References<a class="headerlink" href="#id30" title="Link to this heading"></a></h3>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id29" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id27">12</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id31" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id29">13</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c#L25">sensor_iodev_submit() source code</a>
 that does not support streaming</p>
 </aside>
