@@ -5,7 +5,6 @@ rsource "cmd/Kconfig"
 rsource "err/Kconfig"
 rsource "msg/Kconfig"
 rsource "sensing/Kconfig"
-rsource "sensors/Kconfig"
 rsource "sys/Kconfig"
 rsource "telemetry/Kconfig"
 
