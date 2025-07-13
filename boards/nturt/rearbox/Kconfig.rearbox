@@ -1,2 +1,0 @@
-config BOARD_REARBOX
-	select SOC_STM32H562XX

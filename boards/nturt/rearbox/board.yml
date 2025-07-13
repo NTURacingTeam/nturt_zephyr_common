@@ -1,5 +1,0 @@
-board:
-  name: rearbox
-  vendor: nturt
-  socs:
-    - name: stm32h562xx
