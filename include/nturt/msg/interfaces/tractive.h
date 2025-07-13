@@ -41,7 +41,7 @@
       (data).soc, (double)((data).capacity)
 
 #define PRImsg_inv                                                   \
-  PRImsg_header "\n\r\tstatus: %" PRImsg_4wheel_flags                \
+  PRImsg_header "\n\r\tstatus word: %" PRImsg_4wheel_flags                \
                 "\n\r\tdc bus voltage (V): %" PRImsg_4wheel_data     \
                 "\n\r\tdc bus current (A): %" PRImsg_4wheel_data     \
                 "\n\r\tmos temperature (°C): %" PRImsg_4wheel_data   \

@@ -230,14 +230,12 @@ extern const struct err_list* __err_errors;
  */
 void err_report(uint32_t errcode, bool set);
 
-/**
- * @brief Get the error with its code.
+/** * @brief Check if the error is set.
  *
- * @param[in] errcode Error code.
- * @return const struct err* Pointer to the error, NULL if the error code does
- * not exist.
+ * @param[in] errcode Error code to check.
+ * @return true if the error is set, false otherwise.
  */
-const struct err* err_get(uint32_t errcode);
+bool err_is_set(uint32_t errcode);
 
 /**
  * @} // err

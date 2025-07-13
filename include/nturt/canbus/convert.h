@@ -22,71 +22,79 @@
  * @{
  */
 
+#define INV_RATED_TORQUE 100.0F
+
 /* Physical to CAN -----------------------------------------------------------*/
 /// @brief Steering angle physical data in deg (float), convert to 0.01 deg
 /// (int16_t).
-#define STEER_PHY_TO_CAN(PHY) (int16_t)(PHY / 0.01F)
+#define STEER_PHY_TO_CAN(phy) (int16_t)(100.0F * phy)
 
-/// @brief Pedal travel physical data in 0~1 (float), convert to 0.5% (uint8_t).
-#define PEDAL_TRAV_PHY_TO_CAN(PHY) (uint8_t)(200.0F * PHY)
+/// @brief Pedal travel physical data in 100% (float), convert to (uint8_t).
+#define PEDAL_TRAV_PHY_TO_CAN(phy) (uint8_t)(phy)
 
-/// @todo
-#define APPS_RAW_PHY_TO_CAN(PHY) (int8_t)(10.0F * PHY)
-
-/// @brief Brake pressure physical data in hPa (float), convert to bar
+/// @brief Accelerator pedal position physical data in deg (float), convert to
 /// (uint8_t).
-#define BSE_RAW_PHY_TO_CAN(PHY) (uint8_t)(PHY / 1000.0F)
+#define APPS_RAW_PHY_TO_CAN(phy) (int8_t)(phy)
+
+/// @brief Brake pressure physical data in kPa (float), convert to bar
+/// (uint8_t).
+#define BSE_RAW_PHY_TO_CAN(phy) (uint8_t)(0.01F * phy)
 
 /// @brief Wheel speed physical data in RPM (float), convert to RPM (uint16_t).
-#define WHEEL_SPEED_PHY_TO_CAN(PHY) (uint16_t)(PHY)
+#define WHEEL_SPEED_PHY_TO_CAN(phy) (uint16_t)(phy)
 
 /// @todo
-#define SUSP_PHY_TO_CAN(PHY) (PHY)
+#define SUSP_PHY_TO_CAN(phy) (phy)
+
+/// @brief Torque command physical data in Nm (float), convert to 0.001 rated
+/// torque (int16_t).
+#define TORQUE_PHY_TO_CAN(phy) (int16_t)(phy / INV_RATED_TORQUE * 1000.0F)
 
 /* CAN to physical -----------------------------------------------------------*/
 /// @brief Accumulator voltage CAN data in 1/1024 V (uint32_t), convert to V
 /// (float).
-#define ACC_VOLT_CAN_TO_PHY(CAN) ((float)CAN / 1024.0F)
+#define ACC_VOLT_CAN_TO_PHY(can) ((float)can / 1024.0F)
 
 /// @brief Accumulator current CAN data in 0.01 A (int16_t), convert to A
 /// (float).
-#define ACC_CURRENT_CAN_TO_PHY(CAN) (0.01F * CAN)
+#define ACC_CURRENT_CAN_TO_PHY(can) (0.01F * can)
 
 /// @brief Accumulator temperature CAN data in 0.125 °C (int16_t), convert to °C
 /// (float).
-#define ACC_TEMP_CAN_TO_PHY(CAN) (0.125F * CAN)
+#define ACC_TEMP_CAN_TO_PHY(can) (0.125F * can)
 
 /// @brief Accumulator capacity CAN data in 10 mAh (int16_t), convert to mAh
 /// (float).
-#define ACC_CAPACITY_CAN_TO_PHY(CAN) (10.0F * CAN)
+#define ACC_CAPACITY_CAN_TO_PHY(can) (10.0F * can)
 
-/// @brief Inverter motor speed data in RPM (int16_t), convert to (float).
-#define INV_SPEED_CAN_TO_PHY(CAN) (float)(CAN)
+/// @brief Inverter motor speed CAN data in RPM (int16_t), convert to (float).
+#define INV_SPEED_CAN_TO_PHY(can) (float)(can)
 
-/// @brief Inverter torque data in 0.001 m*s (int16_t), convert to m*s (float).
-#define INV_TORQUE_CAN_TO_PHY(CAN) (0.001F * CAN)
-
-/// @brief Inverter voltage data in 0.01 V (uint16_t), convert to V (float).
-#define INV_VOLT_CAN_TO_PHY(CAN) (0.01F * CAN)
-
-/// @brief Inverter current data in 0.01 A (int16_t), convert to A (float).
-#define INV_CURRENT_CAN_TO_PHY(CAN) (0.01F * CAN)
-
-/// @brief Inverter MOS temperature data in 0.1 °C (int16_t), convert to °C
+/// @brief Inverter torque CAN data in 0.001 rated torque (int16_t), convert to Nm
 /// (float).
-#define INV_TEMP_CAN_TO_PHY(CAN) (0.1F * CAN)
+#define INV_TORQUE_CAN_TO_PHY(can) (0.001F * INV_RATED_TORQUE * can)
 
-/// @brief IMU CAN acceleration data in 0.001 g (int16_t), convert to m/s^2
+/// @brief Inverter voltage CAN data in 0.01 V (uint16_t), convert to V (float).
+#define INV_VOLT_CAN_TO_PHY(can) (0.01F * can)
+
+/// @brief Inverter current CAN data in 0.01 A (int16_t), convert to A (float).
+#define INV_CURRENT_CAN_TO_PHY(can) (0.01F * can)
+
+/// @brief Inverter MOS temperature CAN data in 0.1 °C (int16_t), convert to °C
 /// (float).
-#define IMU_ACCEL_CAN_TO_PHY(CAN) (0.00981F * CAN)
+#define INV_TEMP_CAN_TO_PHY(can) (0.1F * can)
 
-/// @brief IMU CAN gyro data in 0.1 deg/s (int16_t), convert to RPM
+/// @brief IMU CAN acceleration CAN data in 0.001 g (int16_t), convert to m/s^2
 /// (float).
-#define IMU_GYRO_CAN_TO_PHY(CAN) (CAN / 60.0F)
+#define IMU_ACCEL_CAN_TO_PHY(can) (0.00981F * can)
 
-/// @brief IMU CAN orientation data in 0.01 deg (int16_t), convert to
+/// @brief IMU CAN angular velocity CAN data in 0.1 deg/s (int16_t), convert to
+/// RPM (float).
+#define IMU_GYRO_CAN_TO_PHY(can) (can / 60.0F)
+
+/// @brief IMU CAN orientation CAN data in 0.01 deg (int16_t), convert to
 /// degrees (float).
-#define IMU_ORIENT_CAN_TO_PHY(CAN) (CAN / 100.0F)
+#define IMU_ORIENT_CAN_TO_PHY(can) (0.01F * can)
 
 /**
  * @} // can_convert

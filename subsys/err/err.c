@@ -29,7 +29,7 @@ struct err_ctx {
 };
 
 /* static function declaration -----------------------------------------------*/
-static struct err *err_get_impl(uint32_t errcode);
+static struct err *err_get(uint32_t errcode);
 static void err_notify(struct err *err);
 static void err_log(struct err *err);
 
@@ -53,8 +53,7 @@ const struct err_list *__err_errors = &g_ctx.errors;
 
 /* function definition -------------------------------------------------------*/
 void err_report(uint32_t errcode, bool set) {
-  struct err *err = err_get_impl(errcode);
-  __ASSERT(err != NULL, "Error code 0x%x does not exist", errcode);
+  struct err *err = err_get(errcode);
 
   if (err->flags & ERR_FLAG_DISABLED) {
     return;
@@ -91,20 +90,15 @@ void err_report(uint32_t errcode, bool set) {
   }
 }
 
-const struct err *err_get(uint32_t errcode) {
-  struct err *err = err_get_impl(errcode);
-  if (err == NULL) {
-    LOG_ERR("Error code 0x%x does not exist", errcode);
-  }
-
-  return err;
+bool err_is_set(uint32_t errcode) {
+  return err_get(errcode)->flags & ERR_FLAG_SET;
 }
 
 /* static function definition ------------------------------------------------*/
-static struct err *err_get_impl(uint32_t errcode) {
+static struct err *err_get(uint32_t errcode) {
   uint64_t value;
   if (!sys_hashmap_get(&g_err_map, errcode, &value)) {
-    return NULL;
+    __ASSERT(0, "Error code 0x%X does not exist", errcode);
   }
 
   return (struct err *)(uintptr_t)value;
@@ -151,15 +145,15 @@ static void err_log(struct err *err) {
   if (err->flags & ERR_FLAG_SET) {
     switch (err->flags & ERR_FLAG_SEV_MASK) {
       case ERR_SEV_INFO:
-        LOG_INF("Error 0x%x set: %s", err->errcode, err->desc);
+        LOG_INF("Error 0x%X (%s) set: %s", err->errcode, err->name, err->desc);
         break;
 
       case ERR_SEV_WARN:
-        LOG_WRN("Error 0x%x set: %s", err->errcode, err->desc);
+        LOG_WRN("Error 0x%X (%s) set: %s", err->errcode, err->name, err->desc);
         break;
 
       case ERR_SEV_FATAL:
-        LOG_ERR("Error 0x%x set: %s", err->errcode, err->desc);
+        LOG_ERR("Error 0x%X (%s) set: %s", err->errcode, err->name, err->desc);
         break;
 
       default:
@@ -167,7 +161,7 @@ static void err_log(struct err *err) {
     }
 
   } else {
-    LOG_INF("Error 0x%x cleared", err->errcode);
+    LOG_INF("Error 0x%X (%s) cleared", err->errcode, err->name);
   }
 }
 
