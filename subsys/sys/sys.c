@@ -14,15 +14,29 @@
 
 LOG_MODULE_REGISTER(nturt_sys, CONFIG_NTURT_SYS_LOG_LEVEL);
 
-/* static function declaration -----------------------------------------------*/
-static int init();
-
-/* static varaible -----------------------------------------------------------*/
-SYS_INIT(init, APPLICATION, CONFIG_NTURT_SYS_INIT_PRIORITY);
-
 #ifdef CONFIG_NTURT_SYS_REBOOT_SOUND
+
 static const struct gpio_dt_spec buzzer =
     GPIO_DT_SPEC_GET(DT_CHOSEN(nturt_buzzer), gpios);
+
+static int gpio_init() {
+  if (!device_is_ready(buzzer.port)) {
+    LOG_ERR("Buzzer device not ready");
+    return -ENODEV;
+  }
+
+  int ret = gpio_pin_configure_dt(&buzzer, GPIO_OUTPUT_INACTIVE);
+  if (ret < 0) {
+    LOG_ERR("Failed to configure buzzer: %s", strerror(-ret));
+    return ret;
+  }
+
+  return 0;
+}
+
+// use the same init priority as the LEDs since they are used in the same way
+SYS_INIT(gpio_init, POST_KERNEL, CONFIG_LED_INIT_PRIORITY);
+
 #endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
 
 /* function definition -------------------------------------------------------*/
@@ -47,22 +61,4 @@ void sys_reset() {
 #endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
 
   sys_reboot(SYS_REBOOT_COLD);
-}
-
-/* static function definition ------------------------------------------------*/
-static int init() {
-#ifdef CONFIG_NTURT_SYS_REBOOT_SOUND
-  if (!device_is_ready(buzzer.port)) {
-    LOG_ERR("Buzzer device not ready");
-    return -ENODEV;
-  }
-
-  int ret = gpio_pin_configure_dt(&buzzer, GPIO_OUTPUT_INACTIVE);
-  if (ret < 0) {
-    LOG_ERR("Failed to configure buzzer: %s", strerror(-ret));
-    return ret;
-  }
-#endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
-
-  return 0;
 }

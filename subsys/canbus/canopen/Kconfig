@@ -15,6 +15,9 @@ module = NTURT_CANOPEN
 module-str = CANopen
 source "subsys/logging/Kconfig.template.log_config"
 
+config CANOPENNODE_BITRATE
+	default 1000
+
 config NTURT_CANOPEN_INIT_PRIORITY
 	int "Init priority"
 	default 21
