@@ -9,7 +9,4 @@ rsource "sensors/Kconfig"
 rsource "sys/Kconfig"
 rsource "telemetry/Kconfig"
 
-rsource "front_box/Kconfig"
-rsource "rear_box/Kconfig"
-
 endmenu

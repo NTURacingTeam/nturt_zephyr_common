@@ -7,9 +7,6 @@ add_subdirectory(sensing)
 add_subdirectory(sys)
 add_subdirectory(telemetry)
 
-add_subdirectory(front_box)
-add_subdirectory(rear_box)
-
 if(CONFIG_NTURT)
 
 zephyr_library()
