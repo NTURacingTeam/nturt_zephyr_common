@@ -20,7 +20,7 @@
         zephyr,canopen-green-led = &canopen_green_led;
         zephyr,canopen-red-led = &canopen_red_led;
 
-        nturt,rtc = &rtc;
+        // nturt,rtc = &rtc;
         nturt,buzzer = &buzzer;
         nturt,brake-light = &brake_light;
         nturt,rtd-light = &rtd_light;
@@ -33,24 +33,6 @@
 
     aliases {
         led0 = &canopen_green_led;
-    };
-
-    soc {
-        // stm32h743.dtsi does not define usb hs controller, copied from
-        // stm32h745.dtsi
-        usbotg_hs: usb@40040000 {
-            compatible = "st,stm32-otghs";
-            reg = <0x40040000 0x40000>;
-            interrupts = <74 0>, <75 0>, <76 0>, <77 0>;
-            interrupt-names = "ep1_out", "ep1_in", "wkup", "otghs";
-            num-bidir-endpoints = <9>;
-            ram-size = <4096>;
-            maximum-speed = "full-speed";
-            clocks = <&rcc STM32_CLOCK(AHB1, 25U)>,
-                     <&rcc STM32_SRC_HSI48 USB_SEL(3)>;
-            phys = <&otghs_fs_phy>;
-            status = "disabled";
-        };
     };
 
     mipi_dbi: mipi-dbi-spi {
@@ -416,6 +398,9 @@
 &usart1 {
     clocks = <&rcc STM32_CLOCK_BUS_APB2 0x00000010>,
              <&rcc STM32_SRC_PLL3_Q USART16_SEL(2)>;
+    dmas = <&dmamux1 0 42 STM32_DMA_PERIPH_TX>,
+           <&dmamux1 1 41 STM32_DMA_PERIPH_RX>;
+    dma-names = "tx", "rx";
     pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
     pinctrl-names = "default";
     current-speed = <115200>;
@@ -461,15 +446,17 @@
 &spi1 {
     clocks = <&rcc STM32_CLOCK_BUS_APB2 0x00001000>,
              <&rcc STM32_SRC_PLL3_P SPI123_SEL(2)>;
+    dmas = <&dmamux1 2 38 STM32_DMA_PERIPH_TX>,
+           <&dmamux1 3 37 STM32_DMA_PERIPH_RX>;
+    dma-names = "tx", "rx";
     pinctrl-0 = <&spi1_sck_pg11 &spi1_miso_pg9 &spi1_mosi_pd7>;
     pinctrl-names = "default";
-    dmas = <&dmamux1 0 38 STM32_DMA_PERIPH_TX>,
-           <&dmamux1 1 37 STM32_DMA_PERIPH_RX>;
-    dma-names = "tx", "rx";
     cs-gpios = <&gpiog 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
     status = "okay";
 };
 
+// does not use dma since the dma overhead is higher than the transfer time of
+// 11 bytes
 &spi4 {
     clocks = <&rcc STM32_CLOCK_BUS_APB2 0x00002000>,
              <&rcc STM32_SRC_PLL3_Q SPI45_SEL(2)>;
@@ -520,28 +507,3 @@ zephyr_udc0: &usbotg_fs {
         compatible = "zephyr,cdc-acm-uart";
     };
 };
-
-// zephyr_udc0: &usbotg_hs {
-//     clocks = <&rcc STM32_CLOCK_BUS_AHB1 0x6000000>,
-//              <&rcc STM32_SRC_PLL1_Q USB_SEL(1)>;
-//     pinctrl-0 = <&usb_otg_hs_ulpi_d0_pa3 &usb_otg_hs_ulpi_d1_pb0
-//                  &usb_otg_hs_ulpi_d2_pb1 &usb_otg_hs_ulpi_d3_pb10
-//                  &usb_otg_hs_ulpi_d4_pb11 &usb_otg_hs_ulpi_d5_pb12
-//                  &usb_otg_hs_ulpi_d6_pb13 &usb_otg_hs_ulpi_d7_pb5
-//                  &usb_otg_hs_ulpi_ck_pa5 &usb_otg_hs_ulpi_stp_pc0
-//                  &usb_otg_hs_ulpi_dir_pc2_c &usb_otg_hs_ulpi_nxt_pc3_c>;
-//     pinctrl-names = "default";
-//     phys = <&otghs_ulpi_phy>;
-//     maximum-speed = "high-speed";
-//     num-bidir-endpoints = <4>;
-//     status = "okay";
-
-//     cdc_acm_uart0: cdc_acm_uart0 {
-//         compatible = "zephyr,cdc-acm-uart";
-//     };
-// };
-
-// &otghs_ulpi_phy {
-//     reset-gpios = <&gpioc 5 GPIO_ACTIVE_HIGH>;
-//     status = "okay";
-// };

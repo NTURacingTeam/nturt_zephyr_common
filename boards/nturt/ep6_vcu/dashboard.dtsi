@@ -243,10 +243,6 @@
     };
 };
 
-&i2c2 {
-
-};
-
 &spi4 {
     74hc595@0 {
         compatible = "diodes,74hc595";
@@ -332,10 +328,6 @@
             #gpio-cells = <2>;
         };
     };
-};
-
-&spi6 {
-
 };
 
 &mipi_dbi {
