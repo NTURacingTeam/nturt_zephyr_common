@@ -27,6 +27,11 @@ LOG_MODULE_REGISTER(sensor_axis, CONFIG_INPUT_LOG_LEVEL);
 /* macro ---------------------------------------------------------------------*/
 #define INVALID_OUT (INT32_MAX)
 
+/// @brief Hysteresis for checking if the value is in range. The final tolerance
+/// should be (1 + RANGE_HYSTERESIS) when in range, and (1 - RANGE_HYSTERESIS)
+/// when out of range.
+#define RANGE_HYSTERESIS 10 / 100
+
 /* type ----------------------------------------------------------------------*/
 struct sensor_axis_sensor_calib {
   /** Minimum input value. */
@@ -313,10 +318,17 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   val = DIV_ROUND_CLOSEST((val - min) * 1000, range);
 
   if (config->range_tolerance >= 0) {
-    if (val < -config->range_tolerance * 10000) {
+    int32_t tolerance =
+        config->range_tolerance +
+        ((data->error == INPUT_ERROR_UNDER || data->error == INPUT_ERROR_OVER)
+             ? -1
+             : 1) *
+            RANGE_HYSTERESIS * config->range_tolerance;
+
+    if (val < -tolerance * 10000) {
       return sensor_error_update(dev, INPUT_ERROR_UNDER, -EINVAL, &val);
 
-    } else if (val > 1000000 + config->range_tolerance * 10000) {
+    } else if (val > 1000000 + tolerance * 10000) {
       return sensor_error_update(dev, INPUT_ERROR_OVER, -EINVAL, &val);
     }
   }
@@ -505,11 +517,18 @@ static int channel_update(const struct device* dev, uint16_t axis) {
   }
 
   int32_t val_dev = val_max - val_min;
-  if (val_dev > config->dev_tolerance * 10000) {
-    return channel_error_update(dev, INPUT_ERROR_DEV, -EINVAL, &val_dev);
-  } else {
-    LOG_DBG("Channel %s deviates by %d%%", dev->name,
-            DIV_ROUND_CLOSEST(val_dev, 10000));
+  if (config->dev_tolerance >= 0) {
+    int tolerance =
+        config->dev_tolerance + (data->error == INPUT_ERROR_DEV ? -1 : 1) *
+                                    RANGE_HYSTERESIS * config->dev_tolerance;
+
+    if (val_dev > tolerance * 10000) {
+      return channel_error_update(dev, INPUT_ERROR_DEV, -EINVAL, &val_dev);
+
+    } else {
+      LOG_DBG("Channel %s deviates by %d%%", dev->name,
+              DIV_ROUND_CLOSEST(val_dev, 10000));
+    }
   }
 
   ret = channel_error_update(dev, INPUT_ERROR_NONE, 0, NULL);

@@ -105,10 +105,10 @@ child-binding:
         greater than noise.
     dev-tolerance:
       type: int
-      default: 100
+      default: -1
       description: |
         The tolerance of value deviation between any two sensors used in this
-        axis in percentage. Set to 100 to disable deviation check.
+        axis in percentage. Set to -1 to disable deviation check.
     time-tolerance:
       type: int
       default: 0
