@@ -58,7 +58,7 @@ static struct agg_fixture agg_fixture;
 AGG_TYPED_DEFINE(agg_susp, struct msg_susp_data, AGG_DATA_INIT(0),
                  K_TICKS(PERIOD), K_TICKS(MIN_SEPARATION), K_TICKS(WATERMARK),
                  susp_publish, &agg_fixture,
-                 AGG_MEMBER(header, AGG_FLAG_OPTIONAL), AGG_MEMBER(travel.fl),
+                 AGG_MEMBER(header, AGG_MEMBER_FLAG_OPTIONAL), AGG_MEMBER(travel.fl),
                  AGG_MEMBER(travel.fr), AGG_MEMBER(travel.rl),
                  AGG_MEMBER(travel.rr));
 

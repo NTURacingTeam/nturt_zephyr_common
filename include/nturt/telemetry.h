@@ -135,30 +135,32 @@
  * @param[in] _min_separation Minimum separation time between two data
  * publishing.
  * @param[in] _watermark Watermark to wait for late-arriving members.
+ * @param[in] _flag Flag of the aggregation. The same ones and rules as @p flag
+ * in @ref AGG_DEFINE.
  * @param[in] _publish Function to publish the data, must be of type
  * @ref tm_publish_t.
  * @param[in] _user_data Pointer to custom data for the callback.
  * @param[in] ... Data to be aggregated and published, must be specified by
  * @ref TM_GROUP_DATA.
  */
-#define TM_GROUP_DEFINE(_name, _period, _min_separation, _watermark, _publish, \
-                        _user_data, ...)                                       \
-  _TM_AGG_PUBLISH_DEFINE(_name,                                                \
-                         FOR_EACH(_TM_GROUP_DATA_DATA, (, ), __VA_ARGS__));    \
-                                                                               \
-  STRUCT_SECTION_ITERABLE(tm_group, _name) = {                                 \
-      .agg =                                                                   \
-          AGG_INITIALIZER(_name.agg, _name, _period, _min_separation,          \
-                          _watermark, _TM_AGG_PUBLISH(_name), _user_data,      \
-                          FOR_EACH(_TM_GROUP_DATA_FLAGS, (, ), __VA_ARGS__)),  \
-      .publish = _publish,                                                     \
-      .num_data = NUM_VA_ARGS(__VA_ARGS__),                                    \
-      .datas =                                                                 \
-          (struct tm_group_data[]){                                            \
-              FOR_EACH_FIXED_ARG(                                              \
-                  _TM_GROUP_DATA, (, ), _name,                                 \
-                  FOR_EACH(_TM_GROUP_DATA_DATA, (, ), __VA_ARGS__)),           \
-          },                                                                   \
+#define TM_GROUP_DEFINE(_name, _period, _min_separation, _watermark, _flag, \
+                        _publish, _user_data, ...)                          \
+  _TM_AGG_PUBLISH_DEFINE(_name,                                             \
+                         FOR_EACH(_TM_GROUP_DATA_DATA, (, ), __VA_ARGS__)); \
+                                                                            \
+  STRUCT_SECTION_ITERABLE(tm_group, _name) = {                              \
+      .agg = AGG_INITIALIZER(                                               \
+          _name.agg, _name, _period, _min_separation, _watermark, _flag,    \
+          _TM_AGG_PUBLISH(_name), _user_data,                               \
+          FOR_EACH(_TM_GROUP_DATA_FLAGS, (, ), __VA_ARGS__)),               \
+      .publish = _publish,                                                  \
+      .num_data = NUM_VA_ARGS(__VA_ARGS__),                                 \
+      .datas =                                                              \
+          (struct tm_group_data[]){                                         \
+              FOR_EACH_FIXED_ARG(                                           \
+                  _TM_GROUP_DATA, (, ), _name,                              \
+                  FOR_EACH(_TM_GROUP_DATA_DATA, (, ), __VA_ARGS__)),        \
+          },                                                                \
   }
 
 /**

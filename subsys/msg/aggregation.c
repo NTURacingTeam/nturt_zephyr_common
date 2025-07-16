@@ -14,9 +14,9 @@ LOG_MODULE_DECLARE(nturt_msg, CONFIG_NTURT_MSG_LOG_LEVEL);
 /* function definition -------------------------------------------------------*/
 void agg_update(struct agg *agg, int idx) {
   K_SPINLOCK(&agg->lock) {
-    uint8_t flags = agg->flags[idx];
+    uint8_t flag = agg->member_flags[idx];
 
-    if (!(flags & AGG_FLAG_OPTIONAL)) {
+    if (!(flag & AGG_MEMBER_FLAG_OPTIONAL)) {
       agg->updated |= BIT(idx);
     }
 
@@ -69,7 +69,7 @@ void agg_work_cb(struct k_work *work) {
 
   k_spinlock_key_t key = k_spin_lock(&agg->lock);
 
-  if (agg->updated == 0) {
+  if (!(agg->flag & AGG_FLAG_ALWAYS_PUBLISH) && agg->updated == 0) {
     // no member has been updated, stop publishing
     k_spin_unlock(&agg->lock, key);
 

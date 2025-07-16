@@ -88,15 +88,17 @@
  * @param[in] _min_separation Minimum separation time between two data
  * publishing.
  * @param[in] _watermark Watermark to wait for late-arriving members.
+ * @param[in] flag Flag of the aggregation. The same ones and rules as @p flag
+ * in @ref AGG_DEFINE.
  * @param[in] ... Telemetry data to be published to PDOs, must be specified by
  * @ref TPDO_DATA.
  */
 #define CANOPEN_TM_TO_TPDO_DEFINE(_name, _period, _min_separation, _watermark, \
-                                  ...)                                         \
+                                  flag, ...)                                   \
   FOR_EACH(_TO_TPDO_ALIAS_DEFINE, (;), __VA_ARGS__);                           \
                                                                                \
   TM_GROUP_DEFINE(_TO_TPDO_NAME(_name), _period, _min_separation, _watermark,  \
-                  canopen_tm_publish, NULL,                                    \
+                  flag, canopen_tm_publish, NULL,                              \
                   FOR_EACH(_TO_TPDO_GROUP_DATA, (, ), __VA_ARGS__))
 
 /**
@@ -191,16 +193,18 @@
  * @param[in] _min_separation Minimum separation time between two data
  * publishing.
  * @param[in] _watermark Watermark to wait for late-arriving members.
+ * @param[in] _flag Flag of the aggregation. The same ones and rules as @p flag
+ * in @ref AGG_DEFINE.
  * @param[in] ... OD entries to be aggregated, must be specified by
  * @ref OD_AGG_ENTRY.
  */
-#define CANOPEN_OD_AGG_TO_MSG_DEFINE(_name, _init_val, _period,           \
-                                     _min_separation, _watermark, ...)    \
-  AGG_TYPED_DEFINE(_OD_AGG_NAME(_name), struct _name, _init_val, _period, \
-                   _min_separation, _watermark, canopen_od_agg_publish,   \
-                   (void *)&_MSG_CHAN_NAME(_name),                        \
-                   _OD_AGG_MEMBERS(__VA_ARGS__));                         \
-                                                                          \
+#define CANOPEN_OD_AGG_TO_MSG_DEFINE(_name, _init_val, _period,                \
+                                     _min_separation, _watermark, _flag, ...)  \
+  AGG_TYPED_DEFINE(_OD_AGG_NAME(_name), struct _name, _init_val, _period,      \
+                   _min_separation, _watermark, _flag, canopen_od_agg_publish, \
+                   (void *)&_MSG_CHAN_NAME(_name),                             \
+                   _OD_AGG_MEMBERS(__VA_ARGS__));                              \
+                                                                               \
   FOR_EACH_FIXED_ARG(_OD_AGG_WRITE_DEFINE, (;), _name, __VA_ARGS__);
 
 /* type ----------------------------------------------------------------------*/
