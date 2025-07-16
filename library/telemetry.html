@@ -217,7 +217,7 @@ transmission of data.</p></li>
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.TM_GROUP_DATA">
 <span class="target" id="group__tm_1ga7418493b34158e1c4af33d39ca61edf9"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_GROUP_DATA</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_GROUP_DATA" title="Link to this definition"></a><br /></dt>
-<dd><p>Specify a telemetry data to be aggregated and published by a telemetry group. Used in <a class="reference internal" href="#group__tm_1ga919115fbcf4ff4f39d6358a78fd044f7"><span class="std std-ref">TM_GROUP_DEFINE</span></a>. </p>
+<dd><p>Specify a telemetry data to be aggregated and published by a telemetry group. Used in <a class="reference internal" href="#group__tm_1ga281537f150bdc4d872e3c068d30671bf"><span class="std std-ref">TM_GROUP_DEFINE</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -230,7 +230,7 @@ transmission of data.</p></li>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.TM_GROUP_DEFINE">
-<span class="target" id="group__tm_1ga919115fbcf4ff4f39d6358a78fd044f7"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_GROUP_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_period</span></span>, <span class="n"><span class="pre">_min_separation</span></span>, <span class="n"><span class="pre">_watermark</span></span>, <span class="n"><span class="pre">_publish</span></span>, <span class="n"><span class="pre">_user_data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_GROUP_DEFINE" title="Link to this definition"></a><br /></dt>
+<span class="target" id="group__tm_1ga281537f150bdc4d872e3c068d30671bf"></span><span class="sig-name descname"><span class="n"><span class="pre">TM_GROUP_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_period</span></span>, <span class="n"><span class="pre">_min_separation</span></span>, <span class="n"><span class="pre">_watermark</span></span>, <span class="n"><span class="pre">_flag</span></span>, <span class="n"><span class="pre">_publish</span></span>, <span class="n"><span class="pre">_user_data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.TM_GROUP_DEFINE" title="Link to this definition"></a><br /></dt>
 <dd><p>Define a telemetry group to aggregrate and publish telementry data. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -239,6 +239,7 @@ transmission of data.</p></li>
 <li><p><strong>_period</strong> – <strong>[in]</strong> Period of data publishing. </p></li>
 <li><p><strong>_min_separation</strong> – <strong>[in]</strong> Minimum separation time between two data publishing. </p></li>
 <li><p><strong>_watermark</strong> – <strong>[in]</strong> Watermark to wait for late-arriving members. </p></li>
+<li><p><strong>_flag</strong> – <strong>[in]</strong> Flag of the aggregation. The same ones and rules as <code class="docutils literal notranslate"><span class="pre">flag</span></code> in AGG_DEFINE. </p></li>
 <li><p><strong>_publish</strong> – <strong>[in]</strong> Function to publish the data, must be of type <a class="reference internal" href="#group__tm_1ga3ae02eab3d38e1ad87ad3a5e206cc5e8"><span class="std std-ref">tm_publish_t</span></a>. </p></li>
 <li><p><strong>_user_data</strong> – <strong>[in]</strong> Pointer to custom data for the callback. </p></li>
 <li><p><strong>...</strong> – <strong>[in]</strong> Data to be aggregated and published, must be specified by <a class="reference internal" href="#group__tm_1ga7418493b34158e1c4af33d39ca61edf9"><span class="std std-ref">TM_GROUP_DATA</span></a>. </p></li>
