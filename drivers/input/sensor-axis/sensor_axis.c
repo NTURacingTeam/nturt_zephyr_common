@@ -323,7 +323,7 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
         ((data->error == INPUT_ERROR_UNDER || data->error == INPUT_ERROR_OVER)
              ? -1
              : 1) *
-            RANGE_HYSTERESIS * config->range_tolerance;
+            config->range_tolerance * RANGE_HYSTERESIS;
 
     if (val < -tolerance * 10000) {
       return sensor_error_update(dev, INPUT_ERROR_UNDER, -EINVAL, &val);
@@ -520,7 +520,7 @@ static int channel_update(const struct device* dev, uint16_t axis) {
   if (config->dev_tolerance >= 0) {
     int tolerance =
         config->dev_tolerance + (data->error == INPUT_ERROR_DEV ? -1 : 1) *
-                                    RANGE_HYSTERESIS * config->dev_tolerance;
+                                    config->dev_tolerance * RANGE_HYSTERESIS;
 
     if (val_dev > tolerance * 10000) {
       return channel_error_update(dev, INPUT_ERROR_DEV, -EINVAL, &val_dev);
