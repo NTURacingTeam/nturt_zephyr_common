@@ -25,11 +25,14 @@
 /**
  * @defgroup msg Message
  * @brief Inter-thread communication support.
- * 
+ *
  * @{
  */
 
 /* macro ---------------------------------------------------------------------*/
+/// @brief List of all messages.
+#define MSG_LIST MSG_SENSOR_LIST, MSG_TRACTIVE_LIST
+
 #define _MSG_CHAN_NAME(msg) CONCAT(msg, _chan)
 
 #define _MSG_ZBUS_CHAN_DEFINE(msg)                              \
@@ -40,12 +43,19 @@
  * @brief Define one message channel for every message in @p list .
  *
  * @param[in] list List of messages to define channels.
- *
  */
 #define MSG_ZBUS_CHAN_DEFINE(list) FOR_EACH(_MSG_ZBUS_CHAN_DEFINE, (;), list)
 
+/**
+ * @brief Declare one message channel for every message in @p list .
+ *
+ * @param[in] list List of messages to define channels.
+ */
+#define MSG_ZBUS_CHAN_DECLARE(list) \
+  ZBUS_CHAN_DECLARE(FOR_EACH(_MSG_CHAN_NAME, (, ), list))
+
 /* exported variable ---------------------------------------------------------*/
-ZBUS_CHAN_DECLARE(FOR_EACH(_MSG_CHAN_NAME, (, ), MSG_LIST));
+MSG_ZBUS_CHAN_DECLARE(MSG_LIST);
 
 /**
  * @} // msg

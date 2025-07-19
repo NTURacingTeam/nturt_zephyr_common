@@ -18,13 +18,8 @@
 #include <zephyr/sys/util.h>
 
 // project includes
-#include "nturt/msg/interfaces/ctrl.h"
 #include "nturt/msg/interfaces/sensor.h"
 #include "nturt/msg/interfaces/tractive.h"
-
-#ifdef CONFIG_NTURT_MSG_CHAN_STATES
-#include "nturt/msg/interfaces/states.h"
-#endif
 
 /**
  * @defgroup msg_interface Message Interface
@@ -33,13 +28,6 @@
  * @ingroup msg
  * @{
  */
-
-/* macro ---------------------------------------------------------------------*/
-/// @brief List of all messages.
-#define MSG_LIST                                         \
-  LIST_DROP_EMPTY(                                       \
-      MSG_SENSOR_LIST, MSG_TRACTIVE_LIST, MSG_CTRL_LIST, \
-      COND_CODE_1(CONFIG_NTURT_MSG_CHAN_STATES, (MSG_STATES_LIST), ()))
 
 /**
  * @} // msg_interface

@@ -15,11 +15,6 @@ config NTURT_MSG_INIT_PRIORITY
 	help
 	  Inter-thread communication initialization priority.
 
-config NTURT_MSG_CHAN_STATES
-	bool "Channel for VCU control system state machine"
-	depends on VCU_STATES
-	default y
-
 config NTURT_MSG_SHELL
 	bool "Message shell support"
 	depends on NTURT_SHELL
