@@ -17,6 +17,7 @@ LOG_MODULE_REGISTER(nturt_msg, CONFIG_NTURT_MSG_LOG_LEVEL);
 
 /* static variable -----------------------------------------------------------*/
 MSG_ZBUS_CHAN_DEFINE(MSG_LIST);
+MSG_SHELL_DEFINE(MSG_LIST);
 
 /* function definition -------------------------------------------------------*/
 void msg_header_init(struct msg_header *header) {

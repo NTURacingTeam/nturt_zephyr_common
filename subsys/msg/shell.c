@@ -6,16 +6,14 @@
 
 // zephyr includes
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
 #include <zephyr/shell/shell.h>
+#include <zephyr/sys/iterable_sections.h>
 #include <zephyr/sys/util.h>
 #include <zephyr/zbus/zbus.h>
 
 // project includes
 #include "nturt/msg/msg.h"
 #include "nturt/sys/util.h"
-
-LOG_MODULE_REGISTER(msg_shell, CONFIG_NTURT_MSG_LOG_LEVEL);
 
 /* static function declaration -----------------------------------------------*/
 static void msg_dump_get_handler(size_t idx, struct shell_static_entry *entry);
@@ -28,9 +26,6 @@ static int msg_dump_cmd_handler(const struct shell *sh, size_t argc,
 static void msg_cb(const struct zbus_channel *chan);
 
 /* static variable -----------------------------------------------------------*/
-const struct zbus_channel *const chans[] = {
-    FOR_EACH(&_MSG_CHAN_NAME, (, ), MSG_LIST)};
-
 SHELL_STATIC_SUBCMD_SET_CREATE(
     msg_dump_cmd, SHELL_CMD(on, NULL, "Enable dumping message.", NULL),
     SHELL_CMD(off, NULL, "Disable dumping message.", NULL),
@@ -57,12 +52,17 @@ ZBUS_LISTENER_DEFINE(msg_shell_listener, msg_cb);
 
 /* static function definition ------------------------------------------------*/
 static void msg_dump_get_handler(size_t idx, struct shell_static_entry *entry) {
-  if (idx >= ARRAY_SIZE(chans)) {
+  size_t count;
+  STRUCT_SECTION_COUNT(msg_shell, &count);
+  if (idx >= count) {
     entry->syntax = NULL;
     return;
   }
 
-  entry->syntax = zbus_chan_name(chans[idx]);
+  const struct msg_shell *shell;
+  STRUCT_SECTION_GET(msg_shell, idx, &shell);
+
+  entry->syntax = zbus_chan_name(shell->chan);
   entry->handler = NULL;
   entry->subcmd = &msg_dump_cmd;
   entry->help = NULL;
@@ -74,17 +74,18 @@ static int msg_stats_cmd_handler(const struct shell *sh, size_t argc,
   (void)argv;
   (void)data;
 
-  for (int i = 0; i < ARRAY_SIZE(chans); i++) {
-    shell_print(sh, "%s", zbus_chan_name(chans[i]));
-    if (zbus_chan_pub_stats_count(chans[i]) == 0) {
+  STRUCT_SECTION_FOREACH(msg_shell, shell) {
+    shell_print(sh, "%s", zbus_chan_name(shell->chan));
+    if (zbus_chan_pub_stats_count(shell->chan) == 0) {
       shell_print(sh, "\tNo messages published yet.\n");
       continue;
     }
 
     uint32_t diff = k_ticks_to_ms_floor32(
-        k_uptime_ticks() - zbus_chan_pub_stats_last_time(chans[i]));
-    uint32_t avg = zbus_chan_pub_stats_avg_period(chans[i]);
-    shell_print(sh, "\tpublish count: %u", zbus_chan_pub_stats_count(chans[i]));
+        k_uptime_ticks() - zbus_chan_pub_stats_last_time(shell->chan));
+    uint32_t avg = zbus_chan_pub_stats_avg_period(shell->chan);
+    shell_print(sh, "\tpublish count: %u",
+                zbus_chan_pub_stats_count(shell->chan));
     shell_print(sh, "\tlast published: %u.%03u s ago, average: %u.%03u s\n",
                 diff / 1000, diff % 1000, avg / 1000, avg % 1000);
   }
@@ -98,9 +99,9 @@ static int msg_dump_cmd_handler(const struct shell *sh, size_t argc,
   (void)data;
 
   const struct zbus_channel *chan = NULL;
-  for (int i = 0; i < ARRAY_SIZE(chans); i++) {
-    if (!strcmp(argv[1], zbus_chan_name(chans[i]))) {
-      chan = chans[i];
+  STRUCT_SECTION_FOREACH(msg_shell, shell) {
+    if (!strcmp(argv[1], zbus_chan_name(shell->chan))) {
+      chan = shell->chan;
       break;
     }
   }
@@ -140,21 +141,10 @@ static int msg_dump_cmd_handler(const struct shell *sh, size_t argc,
   return ret;
 }
 
-#define _LOG(msg)                              \
-  LOG_INF("%s:\n\r\t%" CONCAT(PRI, msg), #msg, \
-          CONCAT(PRI, msg, _arg)(*((struct msg *)data)))
-
-#define _LOG_CASE(msg)                       \
-  else if (chan == &(_MSG_CHAN_NAME(msg))) { \
-    _LOG(msg);                               \
-  }
-
 static void msg_cb(const struct zbus_channel *chan) {
-  const void *data = zbus_chan_const_msg(chan);
-
-  if (chan == &(_MSG_CHAN_NAME(GET_ARG_N(1, MSG_LIST)))) {
-    _LOG(GET_ARG_N(1, MSG_LIST));
+  STRUCT_SECTION_FOREACH(msg_shell, shell) {
+    if (shell->print(chan)) {
+      return;
+    }
   }
-
-  N_FOR_EACH(_LOG_CASE, (), GET_ARGS_LESS_N(1, MSG_LIST));
 }
