@@ -25,6 +25,8 @@
 LOG_MODULE_REGISTER(sensor_axis, CONFIG_INPUT_LOG_LEVEL);
 
 /* macro ---------------------------------------------------------------------*/
+#define WAIT_PERIOD K_MSEC(5)
+
 #define INVALID_OUT (INT32_MAX)
 
 /// @brief Hysteresis for checking if the value is in range. The final tolerance
@@ -33,14 +35,6 @@ LOG_MODULE_REGISTER(sensor_axis, CONFIG_INPUT_LOG_LEVEL);
 #define RANGE_HYSTERESIS 10 / 100
 
 /* type ----------------------------------------------------------------------*/
-struct sensor_axis_sensor_calib {
-  /** Minimum input value. */
-  struct sensor_value in_min;
-
-  /** Maximum input value. */
-  struct sensor_value in_max;
-};
-
 struct sensor_axis_sensor_data {
   /**
    * Current error value. Not protected by lock since only the sensor-axis
@@ -51,8 +45,11 @@ struct sensor_axis_sensor_data {
   /** Lock to protect the following members and the underlying sensor. */
   struct k_mutex lock;
 
-  /** Calibration data. */
-  struct sensor_axis_sensor_calib calib;
+  /** Minimum input value. */
+  struct sensor_value in_min;
+
+  /** Maximum input value. */
+  struct sensor_value in_max;
 
   /** Callback for raw sensor data. */
   sensor_axis_sensor_raw_cb_t cb;
@@ -123,7 +120,7 @@ void sensor_axis_sensor_min_get(const struct device* dev,
   struct sensor_axis_sensor_data* data = dev->data;
 
   k_mutex_lock(&data->lock, K_FOREVER);
-  *val = data->calib.in_min;
+  *val = data->in_min;
   k_mutex_unlock(&data->lock);
 }
 
@@ -132,7 +129,7 @@ void sensor_axis_sensor_max_get(const struct device* dev,
   struct sensor_axis_sensor_data* data = dev->data;
 
   k_mutex_lock(&data->lock, K_FOREVER);
-  *val = data->calib.in_max;
+  *val = data->in_max;
   k_mutex_unlock(&data->lock);
 }
 
@@ -141,7 +138,7 @@ void sensor_axis_sensor_min_set(const struct device* dev,
   struct sensor_axis_sensor_data* data = dev->data;
 
   k_mutex_lock(&data->lock, K_FOREVER);
-  data->calib.in_min = *val;
+  data->in_min = *val;
   k_mutex_unlock(&data->lock);
 }
 
@@ -150,7 +147,7 @@ void sensor_axis_sensor_max_set(const struct device* dev,
   struct sensor_axis_sensor_data* data = dev->data;
 
   k_mutex_lock(&data->lock, K_FOREVER);
-  data->calib.in_max = *val;
+  data->in_max = *val;
   k_mutex_unlock(&data->lock);
 }
 
@@ -179,8 +176,7 @@ static int sensor_axis_sensor_set_curr_impl(const struct device* dev, int times,
   }
 
   accum = DIV_ROUND_CLOSEST(accum, times);
-  sensor_value_from_micro(is_min ? &data->calib.in_min : &data->calib.in_max,
-                          accum);
+  sensor_value_from_micro(is_min ? &data->in_min : &data->in_max, accum);
 
 out:
   k_mutex_unlock(&data->lock);
@@ -291,7 +287,7 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   const struct sensor_axis_sensor_config* config = dev->config;
 
   int ret;
-  ret = k_mutex_lock(&data->lock, K_MSEC(5));
+  ret = k_mutex_lock(&data->lock, WAIT_PERIOD);
   if (ret < 0) {
     return sensor_error_update(dev, INPUT_ERROR_BUSY, ret, NULL);
   }
@@ -304,8 +300,8 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   }
 
   int64_t val = sensor_value_to_micro(&sensor_val);
-  int64_t min = sensor_value_to_micro(&data->calib.in_min);
-  int64_t max = sensor_value_to_micro(&data->calib.in_max);
+  int64_t min = sensor_value_to_micro(&data->in_min);
+  int64_t max = sensor_value_to_micro(&data->in_max);
 
   k_mutex_unlock(&data->lock);
 
@@ -706,25 +702,15 @@ static int calib_load(const char* key, size_t len, settings_read_cb read_cb,
 #endif  // CONFIG_INPUT_SENSOR_AXIS_SETTINGS
 
 #define SENSOR_AXIS_SENSOR_DEFINE(node_id)                                     \
+  BUILD_ASSERT(DT_PROP_LEN(node_id, in_min) == 2,                              \
+               "length of min-value should be two");                           \
+  BUILD_ASSERT(DT_PROP_LEN(node_id, in_max) == 2,                              \
+               "length of max-value should be two");                           \
+                                                                               \
   static struct sensor_axis_sensor_data node_id##_data = {                     \
       .error = INPUT_ERROR_NONE,                                               \
-      .calib =                                                                 \
-          {                                                                    \
-              .in_min =                                                        \
-                  {                                                            \
-                      .val1 = DT_PROP_BY_IDX(node_id, in_min, 0) +             \
-                              ZERO_OR_COMPILE_ERROR(                           \
-                                  DT_PROP_LEN(node_id, in_min) == 2),          \
-                      .val2 = DT_PROP_BY_IDX(node_id, in_min, 1),              \
-                  },                                                           \
-              .in_max =                                                        \
-                  {                                                            \
-                      .val1 = DT_PROP_BY_IDX(node_id, in_max, 0) +             \
-                              ZERO_OR_COMPILE_ERROR(                           \
-                                  DT_PROP_LEN(node_id, in_max) == 2),          \
-                      .val2 = DT_PROP_BY_IDX(node_id, in_max, 1),              \
-                  },                                                           \
-          },                                                                   \
+      .in_min = DT_PROP(node_id, in_min),                                      \
+      .in_max = DT_PROP(node_id, in_max),                                      \
       .cb = NULL,                                                              \
   };                                                                           \
                                                                                \

@@ -8,12 +8,10 @@
 #include <zephyr/kernel.h>
 #include <zephyr/shell/shell.h>
 #include <zephyr/sys/iterable_sections.h>
-#include <zephyr/sys/util.h>
 #include <zephyr/zbus/zbus.h>
 
 // project includes
 #include "nturt/msg/msg.h"
-#include "nturt/sys/util.h"
 
 /* static function declaration -----------------------------------------------*/
 static void msg_dump_get_handler(size_t idx, struct shell_static_entry *entry);

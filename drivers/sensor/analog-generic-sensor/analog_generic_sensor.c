@@ -13,6 +13,9 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/util.h>
 
+// project includes
+#include "nturt/sys/util.h"
+
 LOG_MODULE_REGISTER(analog_generic_sensor, CONFIG_SENSOR_LOG_LEVEL);
 
 struct analog_generic_data {
@@ -104,7 +107,8 @@ static int analog_generic_sample_fetch(const struct device* dev,
   return 0;
 
 err_range:
-  LOG_ERR("Sensor %s voltage out of range: %d mV", dev->name, mv);
+  LOG_ERR_THROTTLE(K_MSEC(500), "Sensor %s voltage out of range: %d mV",
+                   dev->name, mv);
   return -EIO;
 }
 

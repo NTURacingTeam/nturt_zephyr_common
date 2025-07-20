@@ -16,7 +16,6 @@
 
 // zerphyr includes
 #include <zephyr/logging/log.h>
-#include <zephyr/sys/util.h>
 #include <zephyr/zbus/zbus.h>
 
 // project includes

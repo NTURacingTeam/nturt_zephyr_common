@@ -31,14 +31,64 @@
 
 /* macros --------------------------------------------------------------------*/
 /**
- * @brief Logical XOR.
+ * @brief Discards all arguments and expend to Zephyr `EMPTY`.
  *
- * @param[in] a First operand.
- * @param[in] b Second operand.
- * @return True if and only if one of the operands is true-like, i.e. not equal
- * to 0.
+ * @param[in] ... Arguments to discard.
+ * @return Zephyr `EMPTY`.
  */
-#define XOR(a, b) (!(a) ^ !(b))
+#define DISCARD(...) EMPTY
+
+/**
+ * @brief Same as Zephyr `GET_GET_ARG_N` but accepts macro expansion for @p N .
+ *
+ * @param[in] N The index of argument to fetch. Count from 1.
+ * @param[in] ... Arguments from which one argument is returned.
+ * @return Nth argument.
+ */
+#define GET_ARG_N_FIXED(N, ...) CONCAT(Z_GET_ARG_, N)(__VA_ARGS__)
+
+#define _FOR_EACH_IDX_FIXED_ARG(idx, x, fixed_arg0, fixed_arg1) \
+  fixed_arg0(idx, x, fixed_arg1)
+
+/**
+ * @brief Same as Zephyr `FOR_EACH_IDX_FIXED_ARG`, useful for nested `FOR_EACH`
+ * macros.
+ */
+#define N_FOR_EACH_IDX_FIXED_ARG(F, sep, fixed_arg, ...) \
+  N_FOR_EACH_ENGINE(_FOR_EACH_IDX_FIXED_ARG, sep, F, fixed_arg, __VA_ARGS__)
+
+#define _FOR_EACH_FIXED_ARG(idx, x, fixed_arg0, fixed_arg1) \
+  fixed_arg0(x, fixed_arg1)
+
+/**
+ * @brief Same as Zephyr `FOR_EACH_FIXED_ARG`, useful for nested `FOR_EACH`
+ * macros.
+ */
+#define N_FOR_EACH_FIXED_ARG(F, sep, fixed_arg, ...) \
+  N_FOR_EACH_ENGINE(_FOR_EACH_FIXED_ARG, sep, F, fixed_arg, __VA_ARGS__)
+
+#define _FOR_EACH_IDX(idx, x, fixed_arg0, fixed_arg1) fixed_arg0(idx, x)
+
+/**
+ * @brief Same as Zephyr `FOR_EACH_IDX`, useful for nested `FOR_EACH` macros.
+ */
+#define N_FOR_EACH_IDX(F, sep, ...) \
+  N_FOR_EACH_ENGINE(_FOR_EACH_IDX, sep, F, _, __VA_ARGS__)
+
+#define _FOR_EACH(idx, x, fixed_arg0, fixed_arg1) fixed_arg0(x)
+
+/**
+ * @brief Same as Zephyr `FOR_EACH`, useful for nested `FOR_EACH` macros.
+ */
+#define N_FOR_EACH(F, sep, ...) \
+  N_FOR_EACH_ENGINE(_FOR_EACH, sep, F, _, __VA_ARGS__)
+
+#define _WORK_CTX_DEFINE(_i, _work_handler, _ctx, _args) \
+  [_i] = {                                               \
+      .work = Z_WORK_INITIALIZER(_work_handler),         \
+      .ctx = _ctx,                                       \
+      .args = _args[_i],                                 \
+  }
 
 /**
  * @brief Get the deferenced type of a pointer type.
@@ -58,21 +108,14 @@
 #define TYPEOF_FIELD(type, member) __typeof__(((type*)0)->member)
 
 /**
- * @brief Discards all arguments and expend to Zephyr `EMPTY`.
+ * @brief Logical XOR.
  *
- * @param[in] ... Arguments to discard.
- * @return Zephyr `EMPTY`.
+ * @param[in] a First operand.
+ * @param[in] b Second operand.
+ * @return True if and only if one of the operands is true-like, i.e. not equal
+ * to 0.
  */
-#define DISCARD(...) EMPTY
-
-/**
- * @brief Same as zephyr GET_GET_ARG_N but accepts macro expansion for @p N .
- *
- * @param[in] N The index of argument to fetch. Count from 1.
- * @param[in] ... Arguments from which one argument is returned.
- * @return Nth argument.
- */
-#define GET_ARG_N_FIXED(N, ...) CONCAT(Z_GET_ARG_, N)(__VA_ARGS__)
+#define XOR(a, b) (!(a) ^ !(b))
 
 /**
  * @brief Check if a flag is set and clear that flag if it so.
@@ -81,10 +124,10 @@
  * @param[in] flag Flag to check.
  * @return True if the flag is set.
  */
-#define FLAG_SET_AND_CLEAR(num, flag) ((num & flag) && ((num &= ~flag)))
 
+#define FLAG_SET_AND_CLEAR(num, flag) ((num & flag) && ((num &= ~flag)))
 /**
- * @brief Check if a bit is set and clear that bit if it so.
+ * @brief Check if a bit is set and clear that bit if it is so.
  *
  * @param[in] num Number to check.
  * @param[in] bit Bit to check.
@@ -92,52 +135,49 @@
  */
 #define BIT_SET_AND_CLEAR(num, bit) FLAG_SET_AND_CLEAR(num, BIT(bit))
 
-#define _FOR_EACH_IDX_FIXED_ARG(idx, x, fixed_arg0, fixed_arg1) \
-  fixed_arg0(idx, x, fixed_arg1)
+#define _LOG_THROTTLE(level, min_separation, ...)               \
+  do {                                                          \
+    static k_timepoint_t __log_throttle_next = {0};             \
+    if (sys_timepoint_expired(__log_throttle_next)) {           \
+      CONCAT(LOG_, level)(__VA_ARGS__);                         \
+                                                                \
+      __log_throttle_next = sys_timepoint_calc(min_separation); \
+    }                                                           \
+  } while (0)
 
 /**
- * @brief Same as Zephyr `FOR_EACH_IDX_FIXED_ARG`, useful for nested `FOR_EACH`
- * macros.
+ * @brief Writes a DEBUG level message to the log with throttling.
  *
+ * @param[in] min_separation Minimum time between log messages.
+ * @param[in] ... Same as Zephyr `LOG_DBG`.
  */
-#define N_FOR_EACH_IDX_FIXED_ARG(F, sep, fixed_arg, ...) \
-  N_FOR_EACH_ENGINE(_FOR_EACH_IDX_FIXED_ARG, sep, F, fixed_arg, __VA_ARGS__)
-
-#define _FOR_EACH_FIXED_ARG(idx, x, fixed_arg0, fixed_arg1) \
-  fixed_arg0(x, fixed_arg1)
+#define LOG_DBG_THROTTLE(min_separation, ...) \
+  _LOG_THROTTLE(DBG, min_separation, __VA_ARGS__)
 
 /**
- * @brief Same as Zephyr `FOR_EACH_FIXED_ARG`, useful for nested `FOR_EACH`
- * macros.
+ * @brief Writes an INFO level message to the log with throttling.
  *
+ * @param[in] min_separation Minimum time between log messages.
+ * @param[in] ... Same as Zephyr `LOG_INF`.
  */
-#define N_FOR_EACH_FIXED_ARG(F, sep, fixed_arg, ...) \
-  N_FOR_EACH_ENGINE(_FOR_EACH_FIXED_ARG, sep, F, fixed_arg, __VA_ARGS__)
+#define LOG_INF_THROTTLE(min_separation, ...) \
+  _LOG_THROTTLE(INF, min_separation, __VA_ARGS__)
 
-#define _FOR_EACH_IDX(idx, x, fixed_arg0, fixed_arg1) fixed_arg0(idx, x)
-
-/**
- * @brief Same as Zephyr `FOR_EACH_IDX`, useful for nested `FOR_EACH` macros.
+/** * @brief Writes a WARNING level message to the log with throttling.
  *
+ * @param[in] min_separation Minimum time between log messages.
+ * @param[in] ... Same as Zephyr `LOG_WRN`.
  */
-#define N_FOR_EACH_IDX(F, sep, ...) \
-  N_FOR_EACH_ENGINE(_FOR_EACH_IDX, sep, F, _, __VA_ARGS__)
+#define LOG_WRN_THROTTLE(min_separation, ...) \
+  _LOG_THROTTLE(WARN, min_separation, __VA_ARGS__)
 
-#define _FOR_EACH(idx, x, fixed_arg0, fixed_arg1) fixed_arg0(x)
-
-/**
- * @brief Same as Zephyr `FOR_EACH`, useful for nested `FOR_EACH` macros.
+/** @brief Writes an ERROR level message to the log with throttling.
  *
+ * @param[in] min_separation Minimum time between log messages.
+ * @param[in] ... Same as Zephyr `LOG_ERR`.
  */
-#define N_FOR_EACH(F, sep, ...) \
-  N_FOR_EACH_ENGINE(_FOR_EACH, sep, F, _, __VA_ARGS__)
-
-#define _WORK_CTX_DEFINE(_i, _work_handler, _ctx, _args) \
-  [_i] = {                                               \
-      .work = Z_WORK_INITIALIZER(_work_handler),         \
-      .ctx = _ctx,                                       \
-      .args = _args[_i],                                 \
-  }
+#define LOG_ERR_THROTTLE(min_separation, ...) \
+  _LOG_THROTTLE(ERR, min_separation, __VA_ARGS__)
 
 /**
  * @brief Define work context buffer for the bottom half of an ISR.
@@ -178,7 +218,8 @@
 #define WORK_CTX_ARGS(_work) \
   (((struct work_ctx*)CONTAINER_OF(_work, struct work_ctx, work))->args)
 
-/* types ---------------------------------------------------------------------*/
+/* types
+   ---------------------------------------------------------------------*/
 /// @brief Work context.
 struct work_ctx {
   /// @brief Work.
