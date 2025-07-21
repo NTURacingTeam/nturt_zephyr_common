@@ -23,26 +23,50 @@
  */
 
 /* macro ---------------------------------------------------------------------*/
+/// @brief Insert @ref msg_header format string.
 #define PRImsg_header "s%llu.%06llu s"
 
+/**
+ * @brief Insert @ref msg_header arguments to print format.
+ *
+ * @param[in] header The message header.
+ */
 #define PRImsg_header_arg(header)                    \
   "timestamp: ", (header).timestamp_ns / 1000000000, \
       ((header).timestamp_ns % 1000000000) / 1000
 
+/// @brief Insert @ref msg_3d_data format string.
 #define PRImsg_3d_data "s(%g, %g, %g)"
 
+/**
+ * @brief Insert @ref msg_3d_data arguments to print format.
+ *
+ * @param[in] data The 3D data.
+ */
 #define PRImsg_3d_data_arg(data)                          \
   "", (double)(data).values[0], (double)(data).values[1], \
       (double)(data).values[2]
 
+/// @brief Insert @ref msg_4wheel_data format string.
 #define PRImsg_4wheel_data "s(%g, %g, %g, %g)"
 
+/**
+ * @brief Insert @ref msg_4wheel_data arguments to print format.
+ *
+ * @param[in] data The 4-wheel data.
+ */
 #define PRImsg_4wheel_data_arg(data)                      \
   "", (double)(data).values[0], (double)(data).values[1], \
       (double)(data).values[2], (double)(data).values[3]
 
+/// @brief Insert @ref msg_4wheel_flags format string.
 #define PRImsg_4wheel_flags "s(0x%X, 0x%X, 0x%X, 0x%X)"
 
+/**
+ * @brief Insert @ref msg_4wheel_flags arguments to print format.
+ *
+ * @param[in] flags The 4-wheel flags.
+ */
 #define PRImsg_4wheel_flags_arg(flags) \
   "", (flags).values[0], (flags).values[1], (flags).values[2], (flags).values[3]
 

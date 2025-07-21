@@ -106,12 +106,6 @@
         sense-resistor-milli-ohms = <10>;
         sense-gain-mult = <100>;
     };
-
-    otghs_ulpi_phy: otghs-ulpi-phy {
-        compatible = "usb-ulpi-phy";
-        #phy-cells = <0>;
-        status = "disabled";
-    };
 };
 
 // include here for them to reference the added nodes above

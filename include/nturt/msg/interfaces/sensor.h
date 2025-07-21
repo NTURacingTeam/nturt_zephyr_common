@@ -24,50 +24,83 @@
 
 /* macro ---------------------------------------------------------------------*/
 /// @brief List of sensor messages.
-#define MSG_SENSOR_LIST \
-  msg_cockpit_data, msg_wheel_data, msg_susp_data, msg_imu_data, msg_gps_data
+#define MSG_SENSOR_LIST                                                  \
+  msg_sensor_cockpit, msg_sensor_wheel, msg_sensor_susp, msg_sensor_imu, \
+      msg_sensor_gps
 
-#define PRImsg_cockpit_data                        \
+/// @brief Insert @ref msg_sensor_cockpit printf format string.
+#define PRImsg_sensor_cockpit                      \
   PRImsg_header                                    \
       "\n\r\tsteer (deg): %g"                      \
       "\n\r\taccel (%%): %g, apps (deg): (%g, %g)" \
       "\n\r\tbrake (%%): %g, bse (kPa): (%g, %g)"
 
-#define PRImsg_cockpit_data_arg(data)                                         \
+/**
+ * @brief Insert @ref msg_sensor_cockpit arguments to printf format.
+ *
+ * @param[in] data The cockpit sensor data.
+ */
+#define PRImsg_sensor_cockpit_arg(data)                                       \
   PRImsg_header_arg((data).header), (double)((data).steer),                   \
       (double)((data).accel), (double)((data).apps1), (double)((data).apps2), \
       (double)((data).brake), (double)((data).bse1), (double)((data).bse2)
 
-#define PRImsg_wheel_data                                 \
+/// @brief Insert @ref msg_sensor_wheel printf format string.
+#define PRImsg_sensor_wheel                               \
   PRImsg_header "\n\r\tspeed (rpm): %" PRImsg_4wheel_data \
                 "\n\r\ttorque (Nm): %" PRImsg_4wheel_data \
                 "\n\r\ttire temp (°C): %" PRImsg_4wheel_data
 
-#define PRImsg_wheel_data_arg(data)                                       \
+/**
+ * @brief Insert @ref msg_sensor_wheel arguments to printf format.
+ *
+ * @param[in] data The wheel sensor data.
+ */
+#define PRImsg_sensor_wheel_arg(data)                                     \
   PRImsg_header_arg((data).header), PRImsg_4wheel_data_arg((data).speed), \
       PRImsg_4wheel_data_arg((data).torque),                              \
       PRImsg_4wheel_data_arg((data).tire_temp)
 
-#define PRImsg_susp_data PRImsg_header "\n\r\ttravel (m): %" PRImsg_4wheel_data
+/// @brief Insert @ref msg_sensor_susp printf format string.
+#define PRImsg_sensor_susp \
+  PRImsg_header "\n\r\ttravel (m): %" PRImsg_4wheel_data
 
-#define PRImsg_susp_data_arg(data) \
+/**
+ * @brief Insert @ref msg_sensor_susp arguments to printf format.
+ *
+ * @param[in] data The suspension sensor data.
+ */
+#define PRImsg_sensor_susp_arg(data) \
   PRImsg_header_arg((data).header), PRImsg_4wheel_data_arg((data).travel)
 
-#define PRImsg_imu_data                                        \
+/// @brief Insert @ref msg_sensor_imu printf format string.
+#define PRImsg_sensor_imu                                      \
   PRImsg_header "\n\r\tacceleration (m/s^2): %" PRImsg_3d_data \
                 "\n\r\tgyration (rad/s): %" PRImsg_3d_data     \
                 "\n\r\teular angle (deg): %" PRImsg_3d_data
 
-#define PRImsg_imu_data_arg(data)                                     \
+/**
+ * @brief Insert @ref msg_sensor_imu arguments to printf format.
+ *
+ * @param[in] data The IMU sensor data.
+ */
+#define PRImsg_sensor_imu_arg(data)                                   \
   PRImsg_header_arg((data).header), PRImsg_3d_data_arg((data).accel), \
       PRImsg_3d_data_arg((data).gyro), PRImsg_3d_data_arg((data).orient)
 
-#define PRImsg_gps_data PRImsg_header "\n\r\tTODO"
+/// @brief Insert @ref msg_sensor_gps printf format string.
+#define PRImsg_sensor_gps PRImsg_header "\n\r\tTODO"
 
-#define PRImsg_gps_data_arg(data) PRImsg_header_arg((data).header)
+/**
+ * @brief Insert @ref msg_sensor_gps arguments to printf format.
+ *
+ * @param[in] data The GPS sensor data.
+ */
+#define PRImsg_sensor_gps_arg(data) PRImsg_header_arg((data).header)
 
 /* type ----------------------------------------------------------------------*/
-struct msg_cockpit_data {
+/// @brief Cockpit sensor message.
+struct msg_sensor_cockpit {
   /** Message header. */
   struct msg_header header;
 
@@ -93,8 +126,8 @@ struct msg_cockpit_data {
   float bse2;
 };
 
-/// @brief Wheel data message.
-struct msg_wheel_data {
+/// @brief Wheel sensor message.
+struct msg_sensor_wheel {
   /** Message header. */
   struct msg_header header;
 
@@ -112,7 +145,7 @@ struct msg_wheel_data {
 };
 
 /// @brief Suspension data message.
-struct msg_susp_data {
+struct msg_sensor_susp {
   /** Message header. */
   struct msg_header header;
 
@@ -124,7 +157,7 @@ struct msg_susp_data {
 };
 
 /// @brief IMU data message.
-struct msg_imu_data {
+struct msg_sensor_imu {
   /** Message header. */
   struct msg_header header;
 
@@ -143,7 +176,7 @@ struct msg_imu_data {
  *
  * @todo
  */
-struct msg_gps_data {
+struct msg_sensor_gps {
   /** Message header. */
   struct msg_header header;
 };

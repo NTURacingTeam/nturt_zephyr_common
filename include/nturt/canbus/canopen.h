@@ -215,6 +215,7 @@ enum canopen_node_id {
   NODE_ID_RPI = 0x04,
 
   NODE_ID_IMU = 0x08,
+  NODE_ID_GPS,
 
   NODE_ID_ACC = 0x10,
   NODE_ID_INV_FL,

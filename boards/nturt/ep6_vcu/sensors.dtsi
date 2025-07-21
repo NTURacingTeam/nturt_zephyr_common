@@ -7,10 +7,10 @@
         nturt,bse1 = &bse1;
         nturt,bse2 = &bse2;
         nturt,steer_encoder = &steer_encoder;
-        nturt,susp_fl = &susp_fl;
-        nturt,susp_fr = &susp_fr;
-        nturt,susp_rl = &susp_rl;
-        nturt,susp_rr = &susp_rr;
+        nturt,susp-fl = &susp_fl;
+        nturt,susp-fr = &susp_fr;
+        nturt,susp-rl = &susp_rl;
+        nturt,susp-rr = &susp_rr;
     };
 
     apps1: accel-encoder1 {
