@@ -38,7 +38,7 @@
     mipi_dbi: mipi-dbi-spi {
         compatible = "zephyr,mipi-dbi-spi";
         spi-dev = <&spi1>;
-        dc-gpios = <&gpiog 12 GPIO_ACTIVE_HIGH>;
+        dc-gpios = <&gpiog 10 GPIO_ACTIVE_HIGH>;
         write-only;
         #address-cells = <1>;
         #size-cells = <0>;
@@ -54,7 +54,7 @@
         };
 
         brake_light: brake-light {
-            gpios = <&gpioa 7 GPIO_ACTIVE_HIGH>;
+            gpios = <&gpioe 10 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
         };
 
         rtd_light: rtd-light {
@@ -62,11 +62,11 @@
         };
 
         canopen_green_led: canopen-green-led {
-            gpios = <&gpioe 0 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
+            gpios = <&gpioe 14 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
         };
 
         canopen_red_led: canopen-red-led {
-            gpios = <&gpioe 1 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
+            gpios = <&gpioe 15 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
         };
     };
 
@@ -445,7 +445,7 @@
     dma-names = "tx", "rx";
     pinctrl-0 = <&spi1_sck_pg11 &spi1_miso_pg9 &spi1_mosi_pd7>;
     pinctrl-names = "default";
-    cs-gpios = <&gpiog 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    cs-gpios = <&gpiod 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
     status = "okay";
 };
 
@@ -479,6 +479,18 @@
     bitrate-data = <1000000>;
     sample-point-data = <800>;
     status = "okay";
+};
+
+&fdcan2 {
+    clocks = <&rcc STM32_CLOCK_BUS_APB1_2 0x00000100>,
+             <&rcc STM32_SRC_PLL2_Q FDCAN_SEL(2)>;
+    pinctrl-0 = <&fdcan2_tx_pb6 &fdcan2_rx_pb5>;
+    pinctrl-names = "default";
+    bitrate = <1000000>;
+    sample-point = <800>;
+    bitrate-data = <1000000>;
+    sample-point-data = <800>;
+    status = "disabled";
 };
 
 &sdmmc1 {
