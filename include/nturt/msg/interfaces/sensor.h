@@ -26,7 +26,7 @@
 /// @brief List of sensor messages.
 #define MSG_SENSOR_LIST                                                  \
   msg_sensor_cockpit, msg_sensor_wheel, msg_sensor_susp, msg_sensor_imu, \
-      msg_sensor_gps
+      msg_sensor_gps, msg_sensor_pow
 
 /// @brief Insert @ref msg_sensor_cockpit printf format string.
 #define PRImsg_sensor_cockpit                      \
@@ -98,8 +98,24 @@
  */
 #define PRImsg_sensor_gps_arg(data) PRImsg_header_arg((data).header)
 
+/// @brief Insert @ref msg_sensor_pow printf format string.
+#define PRImsg_sensor_pow           \
+  PRImsg_header                     \
+      "\n\r\tinput voltage (V): %g" \
+      "\n\r\t5V current (A): %g"    \
+      "\n\r\t5V RPi current (A): %g"
+
+/**
+ * @brief Insert @ref msg_sensor_pow arguments to printf format.
+ *
+ * @param[in] data The power sensor data.
+ */
+#define PRImsg_sensor_pow_arg(data)                           \
+  PRImsg_header_arg((data).header), (double)((data).in_volt), \
+      (double)((data).v5_curr), (double)((data).v5_rpi_curr)
+
 /* type ----------------------------------------------------------------------*/
-/// @brief Cockpit sensor message.
+/// @brief Cockpit sensors message.
 struct msg_sensor_cockpit {
   /** Message header. */
   struct msg_header header;
@@ -126,7 +142,7 @@ struct msg_sensor_cockpit {
   float bse2;
 };
 
-/// @brief Wheel sensor message.
+/// @brief Wheel sensors message.
 struct msg_sensor_wheel {
   /** Message header. */
   struct msg_header header;
@@ -144,7 +160,7 @@ struct msg_sensor_wheel {
   union msg_4wheel_data tire_temp;
 };
 
-/// @brief Suspension data message.
+/// @brief Suspension sensors message.
 struct msg_sensor_susp {
   /** Message header. */
   struct msg_header header;
@@ -156,7 +172,7 @@ struct msg_sensor_susp {
   union msg_4wheel_data travel;
 };
 
-/// @brief IMU data message.
+/// @brief IMU message.
 struct msg_sensor_imu {
   /** Message header. */
   struct msg_header header;
@@ -172,13 +188,28 @@ struct msg_sensor_imu {
 };
 
 /**
- * @brief GPS data message.
+ * @brief GPS message.
  *
  * @todo
  */
 struct msg_sensor_gps {
   /** Message header. */
   struct msg_header header;
+};
+
+/// @brief Power sensors message.
+struct msg_sensor_pow {
+  /** Message header. */
+  struct msg_header header;
+
+  /** Input voltage. Unit: V */
+  float in_volt;
+
+  /** 5V current. Unit: A */
+  float v5_curr;
+
+  /** 5V Raspberry Pi current. Unit: A */
+  float v5_rpi_curr;
 };
 
 /**

@@ -30,8 +30,7 @@ LOG_MODULE_REGISTER(sensor_axis, CONFIG_INPUT_LOG_LEVEL);
 #define INVALID_OUT (INT32_MAX)
 
 /// @brief Hysteresis for checking if the value is in range. The final tolerance
-/// should be (1 + RANGE_HYSTERESIS) when in range, and (1 - RANGE_HYSTERESIS)
-/// when out of range.
+/// should be (1 - RANGE_HYSTERESIS) when out of range.
 #define RANGE_HYSTERESIS 10 / 100
 
 /* type ----------------------------------------------------------------------*/
@@ -314,12 +313,10 @@ static int sensor_get(const struct device* dev, int32_t* _val) {
   val = DIV_ROUND_CLOSEST((val - min) * 1000, range);
 
   if (config->range_tolerance >= 0) {
-    int32_t tolerance =
-        config->range_tolerance +
-        ((data->error == INPUT_ERROR_UNDER || data->error == INPUT_ERROR_OVER)
-             ? -1
-             : 1) *
-            config->range_tolerance * RANGE_HYSTERESIS;
+    int32_t tolerance = config->range_tolerance;
+    if (data->error == INPUT_ERROR_UNDER || data->error == INPUT_ERROR_OVER) {
+      tolerance -= config->range_tolerance * RANGE_HYSTERESIS;
+    }
 
     if (val < -tolerance * 10000) {
       return sensor_error_update(dev, INPUT_ERROR_UNDER, -EINVAL, &val);
@@ -514,9 +511,10 @@ static int channel_update(const struct device* dev, uint16_t axis) {
 
   int32_t val_dev = val_max - val_min;
   if (config->dev_tolerance >= 0) {
-    int tolerance =
-        config->dev_tolerance + (data->error == INPUT_ERROR_DEV ? -1 : 1) *
-                                    config->dev_tolerance * RANGE_HYSTERESIS;
+    int tolerance = config->dev_tolerance;
+    if (data->error == INPUT_ERROR_DEV) {
+      tolerance -= config->dev_tolerance * RANGE_HYSTERESIS;
+    }
 
     if (val_dev > tolerance * 10000) {
       return channel_error_update(dev, INPUT_ERROR_DEV, -EINVAL, &val_dev);
