@@ -29,10 +29,10 @@
       msg_sensor_gps, msg_sensor_pow
 
 /// @brief Insert @ref msg_sensor_cockpit printf format string.
-#define PRImsg_sensor_cockpit                      \
-  PRImsg_header                                    \
-      "\n\r\tsteer (deg): %g"                      \
-      "\n\r\taccel (%%): %g, apps (deg): (%g, %g)" \
+#define PRImsg_sensor_cockpit                                            \
+  PRImsg_header                                                          \
+      "\n\r\tsteer (deg): %g"                                            \
+      "\n\r\taccel (%%): %g, pedal plaus (%%): %g, apps (deg): (%g, %g)" \
       "\n\r\tbrake (%%): %g, bse (kPa): (%g, %g)"
 
 /**
@@ -42,8 +42,9 @@
  */
 #define PRImsg_sensor_cockpit_arg(data)                                       \
   PRImsg_header_arg((data).header), (double)((data).steer),                   \
-      (double)((data).accel), (double)((data).apps1), (double)((data).apps2), \
-      (double)((data).brake), (double)((data).bse1), (double)((data).bse2)
+      (double)((data).accel), (double)((data).accel_pedal_plaus),             \
+      (double)((data).apps1), (double)((data).apps2), (double)((data).brake), \
+      (double)((data).bse1), (double)((data).bse2)
 
 /// @brief Insert @ref msg_sensor_wheel printf format string.
 #define PRImsg_sensor_wheel                               \
@@ -125,6 +126,9 @@ struct msg_sensor_cockpit {
 
   /** Accelerator pedal travel. Unit: % */
   float accel;
+
+  /** Accelerator pedal travel after considering pedal plausibility. Unit: % */
+  float accel_pedal_plaus;
 
   /** Accelerator pedal position sensor (APPS) 1. Unit: degree */
   float apps1;

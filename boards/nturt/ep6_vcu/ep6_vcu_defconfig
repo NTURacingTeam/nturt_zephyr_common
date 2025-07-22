@@ -8,6 +8,9 @@ CONFIG_GPIO=y
 ## uart
 CONFIG_SERIAL=y
 
+## spi
+CONFIG_SPI=y
+
 # drivers
 ## clock
 CONFIG_CLOCK_CONTROL=y
