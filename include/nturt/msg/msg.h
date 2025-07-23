@@ -92,7 +92,7 @@
  *
  * @return true if the message was printed, false otherwise.
  */
-typedef bool (*msg_print_t)(const struct zbus_channel *chann);
+typedef bool (*msg_print_t)(const struct zbus_channel *chan);
 
 /// @brief Message shell support.
 struct msg_shell {

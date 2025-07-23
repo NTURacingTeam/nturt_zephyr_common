@@ -4,6 +4,15 @@
 Vehicle Control Unit
 ====================
 
+Architecture
+============
+
+.. figure:: ../_static/images/architecture.svg
+   :width: 100%
+   :align: center
+
+   The architecture of the Vehicle Control Unit (VCU).
+
 Data Flow Diagram
 =================
 
