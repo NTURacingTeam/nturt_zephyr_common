@@ -2,4 +2,12 @@ menu "Controller Area Network (CAN) bus support"
 
 rsource "canopen/Kconfig"
 
+config NTURT_CAN_SHELL
+	bool "CAN shell"
+	depends on NTURT_SHELL
+	default y
+	select STATS
+	select CAN_STATS
+	select CAN_SHELL
+
 endmenu

@@ -8,6 +8,7 @@
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/init.h>
+#include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/logging/log_ctrl.h>
 #include <zephyr/sys/reboot.h>
@@ -39,11 +40,18 @@ SYS_INIT(gpio_init, POST_KERNEL, CONFIG_LED_INIT_PRIORITY);
 
 #endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
 
+/* static function declaration -----------------------------------------------*/
+void reset_cb(struct k_timer *timer);
+
+/* static variable -----------------------------------------------------------*/
+static K_TIMER_DEFINE(reset_timer, reset_cb, NULL);
+
 /* function definition -------------------------------------------------------*/
 void sys_reset() {
   k_sched_lock();
 
   LOG_INF("System reset");
+  k_timer_start(&reset_timer, K_SECONDS(2), K_NO_WAIT);
   log_panic();
 
 #ifdef CONFIG_NTURT_SYS_REBOOT_SOUND
@@ -59,6 +67,13 @@ void sys_reset() {
   k_busy_wait(100 * 1000);
   gpio_pin_set_dt(&buzzer, false);
 #endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
+
+  sys_reboot(SYS_REBOOT_COLD);
+}
+
+/* static function definition ------------------------------------------------*/
+void reset_cb(struct k_timer *timer) {
+  (void)timer;
 
   sys_reboot(SYS_REBOOT_COLD);
 }

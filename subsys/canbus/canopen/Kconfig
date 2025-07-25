@@ -86,8 +86,6 @@ config NTURT_CANOPEN_SHELL
 	bool "CANopen shell"
 	depends on NTURT_SHELL
 	default y
-	select STATS
-	select CAN_STATS
-	select CAN_SHELL
+	select NTURT_CAN_SHELL
 
 endif # NTURT_CANOPEN
