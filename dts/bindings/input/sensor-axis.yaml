@@ -125,7 +125,7 @@ child-binding:
         Decay rate of accumulated error time (accumulated_time -= time_tolerance 
         * decay_rate) in percentage when the axis passes all checks. It can be
         used to avoid sporadic successes mixed in the failures to be considered
-        valid. It is also used to clear the error once the accumulated error
+        as valid. It is also used to clear the error once the accumulated error
         time has decayed to 0. Set to 100 to disable decay and immediately clear
         error once the axis passes all checks.
 
@@ -150,8 +150,7 @@ child-binding:
           Minimum value from the sensor that corresponds to minimum output
           value.
           The format is the same as struct sensor_value in <X Y>, where X is the
-          integer part and Y is the one-
-          millionth part.
+          integer part and Y is the one-millionth part.
       in-max:
         type: array
         required: true
@@ -159,8 +158,7 @@ child-binding:
           Maximum value from the sensor that corresponds to maximum output
           value.
           The format is the same as struct sensor_value in <X Y>, where X is the
-          integer part and Y is the one-
-          millionth part.
+          integer part and Y is the one-millionth part.
       range-tolerance:
         type: int
         default: -1

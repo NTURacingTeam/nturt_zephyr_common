@@ -97,6 +97,36 @@ int sensor_axis_sensor_min_set_curr(const struct device* dev, int times,
 int sensor_axis_sensor_max_set_curr(const struct device* dev, int times,
                                     k_timeout_t interval);
 
+/**
+ * @brief Use current sensor value as setpoint that will report center value.
+ * Use with `sensor_axis_sensor_range_set_curr()` for setting the center point
+ * and the range.
+ *
+ * @param[in] dev The sensor to set the setpoint.
+ * @param[in] times The number of times to sample the sensor.
+ * @param[in] interval The interval between each sample.
+ *
+ * @return 0 If success, negative error number otherwise.
+ */
+int sensor_axis_sensor_center_set_curr(const struct device* dev, int times,
+                                       k_timeout_t interval);
+
+/**
+ * @brief Use current sensor value as setpoint that will be used as range. Use
+ * with `sensor_axis_sensor_center_set_curr()` for setting the center point and
+ * the range.
+ *
+ * @param[in] dev The sensor to set the setpoint.
+ * @param[in] times The number of times to sample the sensor.
+ * @param[in] interval The interval between each sample.
+ * @param[in] is_min If true, use the current value as minimum, otherwise as
+ * maximum.
+ *
+ * @return 0 If success, negative error number otherwise.
+ */
+int sensor_axis_sensor_range_set_curr(const struct device* dev, int times,
+                                      k_timeout_t interval, bool is_min);
+
 #ifdef CONFIG_INPUT_SENSOR_AXIS_SETTINGS
 
 /**

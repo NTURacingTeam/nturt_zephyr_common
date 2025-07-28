@@ -40,7 +40,8 @@
         min-voltage = <600>;
         max-voltage = <3000>;
         min-value = <0 0>;
-        max-value = <100 0>;
+        max-value = <6894 76>; // 1000 psi (6894 kPa)
+        tolerance = <10>;
     };
 
     bse2: brake-press2 {
@@ -50,7 +51,8 @@
         min-voltage = <600>;
         max-voltage = <3000>;
         min-value = <0 0>;
-        max-value = <100 0>;
+        max-value = <6894 76>; // 1000 psi (6894 kPa)
+        tolerance = <10>;
     };
 
     steer_encoder: steer-encoder {
