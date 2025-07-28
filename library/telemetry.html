@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Doc Implementation" href="../doc.html" />
-    <link rel="prev" title="Command System" href="command.html" /> 
+    <link rel="next" title="Command System" href="command.html" />
+    <link rel="prev" title="Data Aggregation" href="aggregation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -51,7 +51,7 @@
 <p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Common Library</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="command.html">Command System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregation.html">Data Aggregation</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Telemetry System</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
@@ -81,6 +81,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="command.html">Command System</a></li>
 </ul>
 </li>
 </ul>
@@ -222,7 +223,7 @@ transmission of data.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – <strong>[in]</strong> Telemetry data to be aggregated and published. </p></li>
-<li><p><strong>...</strong> – <strong>[in]</strong> Optional flags of the data, the same ones and rules as AGG_MEMBER. </p></li>
+<li><p><strong>...</strong> – <strong>[in]</strong> Optional flags of the data, the same ones and rules as <a class="reference internal" href="aggregation.html#group__msg__agg_1ga784151f612f43be94fabff2a822ec4cb"><span class="std std-ref">AGG_MEMBER</span></a>. </p></li>
 </ul>
 </dd>
 </dl>
@@ -239,7 +240,7 @@ transmission of data.</p></li>
 <li><p><strong>_period</strong> – <strong>[in]</strong> Period of data publishing. </p></li>
 <li><p><strong>_min_separation</strong> – <strong>[in]</strong> Minimum separation time between two data publishing. </p></li>
 <li><p><strong>_watermark</strong> – <strong>[in]</strong> Watermark to wait for late-arriving members. </p></li>
-<li><p><strong>_flag</strong> – <strong>[in]</strong> Flag of the aggregation. The same ones and rules as <code class="docutils literal notranslate"><span class="pre">flag</span></code> in AGG_DEFINE. </p></li>
+<li><p><strong>_flag</strong> – <strong>[in]</strong> Flag of the aggregation. The same ones and rules as <code class="docutils literal notranslate"><span class="pre">flag</span></code> in <a class="reference internal" href="aggregation.html#group__msg__agg_1gacea980b7e48de0678a3a8d7c60829f4a"><span class="std std-ref">AGG_DEFINE</span></a>. </p></li>
 <li><p><strong>_publish</strong> – <strong>[in]</strong> Function to publish the data, must be of type <a class="reference internal" href="#group__tm_1ga3ae02eab3d38e1ad87ad3a5e206cc5e8"><span class="std std-ref">tm_publish_t</span></a>. </p></li>
 <li><p><strong>_user_data</strong> – <strong>[in]</strong> Pointer to custom data for the callback. </p></li>
 <li><p><strong>...</strong> – <strong>[in]</strong> Data to be aggregated and published, must be specified by <a class="reference internal" href="#group__tm_1ga7418493b34158e1c4af33d39ca61edf9"><span class="std std-ref">TM_GROUP_DATA</span></a>. </p></li>
@@ -546,8 +547,8 @@ transmission of data.</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="command.html" class="btn btn-neutral float-left" title="Command System" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../doc.html" class="btn btn-neutral float-right" title="Doc Implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="aggregation.html" class="btn btn-neutral float-left" title="Data Aggregation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="command.html" class="btn btn-neutral float-right" title="Command System" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

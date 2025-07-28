@@ -1,0 +1,537 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Aggregation &mdash; NTU Racing Team Zephyr Common Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Telemetry System" href="telemetry.html" />
+    <link rel="prev" title="Common Library" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decisions/index.html">Architecture Decision Records</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Common Library</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Data Aggregation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#c.AGG_FLAG_ALWAYS_PUBLISH"><code class="docutils literal notranslate"><span class="pre">AGG_FLAG_ALWAYS_PUBLISH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL"><code class="docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.AGG_INITIALIZER"><code class="docutils literal notranslate"><span class="pre">AGG_INITIALIZER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.AGG_DEFINE"><code class="docutils literal notranslate"><span class="pre">AGG_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.AGG_MEMBER"><code class="docutils literal notranslate"><span class="pre">AGG_MEMBER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.AGG_DATA_INIT"><code class="docutils literal notranslate"><span class="pre">AGG_DATA_INIT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.AGG_TYPED_DEFINE"><code class="docutils literal notranslate"><span class="pre">AGG_TYPED_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.AGG_TYPED_UPDATE"><code class="docutils literal notranslate"><span class="pre">AGG_TYPED_UPDATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.msg_agg_publish_t"><code class="docutils literal notranslate"><span class="pre">msg_agg_publish_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.msg_agg_typed_publish_t"><code class="docutils literal notranslate"><span class="pre">msg_agg_typed_publish_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.agg_update"><code class="docutils literal notranslate"><span class="pre">agg_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.agg_period_timer_cb"><code class="docutils literal notranslate"><span class="pre">agg_period_timer_cb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.agg_early_timer_cb"><code class="docutils literal notranslate"><span class="pre">agg_early_timer_cb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.agg_work_cb"><code class="docutils literal notranslate"><span class="pre">agg_work_cb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.agg_typed_publish"><code class="docutils literal notranslate"><span class="pre">agg_typed_publish()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.agg"><code class="docutils literal notranslate"><span class="pre">agg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.agg_typed"><code class="docutils literal notranslate"><span class="pre">agg_typed</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command.html">Command System</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../doc.html">Doc Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notes/index.html">Developer’s Note</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NTU Racing Team Zephyr Common</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Common Library</a></li>
+      <li class="breadcrumb-item active">Data Aggregation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/library/aggregation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-aggregation">
+<span id="library-aggregation"></span><h1>Data Aggregation<a class="headerlink" href="#data-aggregation" title="Link to this heading"></a></h1>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__msg__agg"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">Aggregation</span></span></dt>
+<dd><p>Data aggregation. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.AGG_FLAG_ALWAYS_PUBLISH">
+<span class="target" id="group__msg__agg_1ga74b5436be26677a7d64b9d847ea799f4"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_FLAG_ALWAYS_PUBLISH</span></span></span><a class="headerlink" href="#c.AGG_FLAG_ALWAYS_PUBLISH" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag indicating the aggregation will always publish the data, even if no members are updated. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.AGG_MEMBER_FLAG_OPTIONAL">
+<span class="target" id="group__msg__agg_1gaf14750a4e9037a3243f74039e1eb3ec7"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></span></span><a class="headerlink" href="#c.AGG_MEMBER_FLAG_OPTIONAL" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag indicating the aggregation will not wait for the member to be updated before publishing. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.AGG_INITIALIZER">
+<span class="target" id="group__msg__agg_1gad4e61905f12b2495203ff5735dda29fa"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_INITIALIZER</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_obj</span></span>, <span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_period</span></span>, <span class="n"><span class="pre">_min_separation</span></span>, <span class="n"><span class="pre">_watermark</span></span>, <span class="n"><span class="pre">_flag</span></span>, <span class="n"><span class="pre">_publish</span></span>, <span class="n"><span class="pre">_user_data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.AGG_INITIALIZER" title="Link to this definition"></a><br /></dt>
+<dd><p>Static initializer for a dataa aggregation. Refer to <a class="reference internal" href="#group__msg__agg_1gacea980b7e48de0678a3a8d7c60829f4a"><span class="std std-ref">AGG_DEFINE</span></a> for detailed parameter descriptions. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_obj</strong> – <strong>[in]</strong> Object to be initialized. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.AGG_DEFINE">
+<span class="target" id="group__msg__agg_1gacea980b7e48de0678a3a8d7c60829f4a"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">period</span></span>, <span class="n"><span class="pre">min_separation</span></span>, <span class="n"><span class="pre">watermark</span></span>, <span class="n"><span class="pre">flag</span></span>, <span class="n"><span class="pre">publish</span></span>, <span class="n"><span class="pre">user_data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.AGG_DEFINE" title="Link to this definition"></a><br /></dt>
+<dd><p>Define a data aggregation named <code class="docutils literal notranslate"><span class="pre">_name</span></code> to monitor the update of data. May be specified as <code class="docutils literal notranslate"><span class="pre">static</span></code> to limit the scope of the aggregation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – <strong>[in]</strong> Name of the aggregation. </p></li>
+<li><p><strong>period</strong> – <strong>[in]</strong> Period of data publishing. </p></li>
+<li><p><strong>min_separation</strong> – <strong>[in]</strong> Minimum separation time between two data publishing. </p></li>
+<li><p><strong>watermark</strong> – <strong>[in]</strong> Watermark to wait for late-arriving members. </p></li>
+<li><p><strong>flag</strong> – <strong>[in]</strong> Flag of the aggregation. If no flag is required, 0 should be specified, and multiple flags can be combined by using the bitwise OR operator (|). </p></li>
+<li><p><strong>publish</strong> – <strong>[in]</strong> Function to publish the data, must be of type <a class="reference internal" href="#group__msg__agg_1ga0013271e02d8c4a2efa1cce1d298fa2e"><span class="std std-ref">msg_agg_publish_t</span></a>. </p></li>
+<li><p><strong>user_data</strong> – <strong>[in]</strong> Pointer to custom data for the callback. </p></li>
+<li><p><strong>...</strong> – <strong>[in]</strong> Flags of the data to be monitored, where each flag represents a data to be monitored. If the data does not require flag, 0 should be specified. The flags can be combined by using the bitwise OR operator (|). </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.AGG_MEMBER">
+<span class="target" id="group__msg__agg_1ga784151f612f43be94fabff2a822ec4cb"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_MEMBER</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">member</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.AGG_MEMBER" title="Link to this definition"></a><br /></dt>
+<dd><p>Specify a member of a struct to be monitored for aggregation. Used in <a class="reference internal" href="#group__msg__agg_1ga190039420aa8359fcdb561d53cdc8522"><span class="std std-ref">AGG_TYPED_DEFINE</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>member</strong> – <strong>[in]</strong> Member of the struct to be monitored. </p></li>
+<li><p><strong>...</strong> – <strong>[in]</strong> Optional flags of the member, multiple flags can be specified by using the bitwise OR operator (|). </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.AGG_DATA_INIT">
+<span class="target" id="group__msg__agg_1ga97f8513bff45f367cc05447c1403cf06"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_DATA_INIT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">val</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.AGG_DATA_INIT" title="Link to this definition"></a><br /></dt>
+<dd><p>Intial value of the data. Used in <a class="reference internal" href="#group__msg__agg_1ga190039420aa8359fcdb561d53cdc8522"><span class="std std-ref">AGG_TYPED_DEFINE</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>val</strong> – <strong>[in]</strong> Initialization list of the data. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Initial value of the data. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.AGG_TYPED_DEFINE">
+<span class="target" id="group__msg__agg_1ga190039420aa8359fcdb561d53cdc8522"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_TYPED_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_type</span></span>, <span class="n"><span class="pre">_init_val</span></span>, <span class="n"><span class="pre">_period</span></span>, <span class="n"><span class="pre">_min_separation</span></span>, <span class="n"><span class="pre">_watermark</span></span>, <span class="n"><span class="pre">_flag</span></span>, <span class="n"><span class="pre">_publish</span></span>, <span class="n"><span class="pre">_user_data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.AGG_TYPED_DEFINE" title="Link to this definition"></a><br /></dt>
+<dd><p>Define a data aggregation named <code class="docutils literal notranslate"><span class="pre">_name</span></code> to monitor the update of members within a data type. May be specified as <code class="docutils literal notranslate"><span class="pre">static</span></code> to limit the scope of the aggregation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_name</strong> – <strong>[in]</strong> Name of the aggregation. </p></li>
+<li><p><strong>_type</strong> – <strong>[in]</strong> Data type to be monitored. </p></li>
+<li><p><strong>_init_val</strong> – <strong>[in]</strong> Initial value of the data, must be a specified by <a class="reference internal" href="#group__msg__agg_1ga97f8513bff45f367cc05447c1403cf06"><span class="std std-ref">AGG_DATA_INIT</span></a>. </p></li>
+<li><p><strong>_period</strong> – <strong>[in]</strong> Period of data publishing. </p></li>
+<li><p><strong>_min_separation</strong> – <strong>[in]</strong> Minimum separation time between two data publishing. </p></li>
+<li><p><strong>_watermark</strong> – <strong>[in]</strong> Watermark to wait for late-arriving members. </p></li>
+<li><p><strong>_flag</strong> – <strong>[in]</strong> Flag of the aggregation. If no flag is required, 0 </p></li>
+<li><p><strong>_publish</strong> – <strong>[in]</strong> Function to publish the data, must be of type <a class="reference internal" href="#group__msg__agg_1gab13db25f95a161dbd86ea6f726bba7e3"><span class="std std-ref">msg_agg_typed_publish_t</span></a>. </p></li>
+<li><p><strong>_user_data</strong> – <strong>[in]</strong> Pointer to custom data for the callback. </p></li>
+<li><p><strong>...</strong> – <strong>[in]</strong> Members of <code class="docutils literal notranslate"><span class="pre">_type</span></code> to be monitored, must be specified by <a class="reference internal" href="#group__msg__agg_1ga784151f612f43be94fabff2a822ec4cb"><span class="std std-ref">AGG_MEMBER</span></a>. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.AGG_TYPED_UPDATE">
+<span class="target" id="group__msg__agg_1ga9eb0ad8d3f070100f9c06d1fb151a3a3"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_TYPED_UPDATE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">agg_typed</span></span>, <span class="n"><span class="pre">type</span></span>, <span class="n"><span class="pre">member</span></span>, <span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.AGG_TYPED_UPDATE" title="Link to this definition"></a><br /></dt>
+<dd><p>Update a member of data. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agg_typed</strong> – Pointer to the data aggregation. </p></li>
+<li><p><strong>type</strong> – <strong>[in]</strong> Type of the data, must be the same as the type specified in <a class="reference internal" href="#group__msg__agg_1ga190039420aa8359fcdb561d53cdc8522"><span class="std std-ref">AGG_TYPED_DEFINE</span></a>. </p></li>
+<li><p><strong>member</strong> – <strong>[in]</strong> Member of the data to be updated, must be listed in <a class="reference internal" href="#group__msg__agg_1ga190039420aa8359fcdb561d53cdc8522"><span class="std std-ref">AGG_TYPED_DEFINE</span></a>. </p></li>
+<li><p><strong>value</strong> – <strong>[in]</strong> New value of the member. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.msg_agg_publish_t">
+<span class="target" id="group__msg__agg_1ga0013271e02d8c4a2efa1cce1d298fa2e"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">msg_agg_publish_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.agg" title="agg"><span class="n"><span class="pre">agg</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">agg</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.msg_agg_publish_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Function to publish the data. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param agg<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Pointer to the data aggregation. </p>
+</dd>
+<dt class="field-even">Param user_data<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Pointer to custom data for callback functions. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.msg_agg_typed_publish_t">
+<span class="target" id="group__msg__agg_1gab13db25f95a161dbd86ea6f726bba7e3"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">msg_agg_typed_publish_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.msg_agg_typed_publish_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Function to publish the data. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param data<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Pointer to the data to be published. </p>
+</dd>
+<dt class="field-even">Param user_data<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Pointer to custom data for callback functions. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.agg_update">
+<span class="target" id="group__msg__agg_1gaad709bdcd0bd3c5704d6f3e80ec500aa"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">agg_update</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.agg_update" title="agg"><span class="n"><span class="pre">agg</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">agg</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">idx</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.agg_update" title="Link to this definition"></a><br /></dt>
+<dd><p>Signal the update of a data in aggregation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agg</strong> – <strong>[inout]</strong> Pointer to <a class="reference internal" href="#structagg"><span class="std std-ref">agg</span></a>. </p></li>
+<li><p><strong>idx</strong> – <strong>[in]</strong> Index of the data that is updated. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.agg_period_timer_cb">
+<span class="target" id="group__msg__agg_1ga6969afddb00687948690d2774623b647"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">agg_period_timer_cb</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_timer</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">timer</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.agg_period_timer_cb" title="Link to this definition"></a><br /></dt>
+<dd><p>Timer callback function for periodic publishing. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Internal use only. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timer</strong> – <strong>[inout]</strong> Timer.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.agg_early_timer_cb">
+<span class="target" id="group__msg__agg_1ga627cf203ae8b8421c077f9a5deed84c7"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">agg_early_timer_cb</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_timer</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">timer</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.agg_early_timer_cb" title="Link to this definition"></a><br /></dt>
+<dd><p>Timer callback function for tracking minimum separation time. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Internal use only. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timer</strong> – <strong>[inout]</strong> Timer.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.agg_work_cb">
+<span class="target" id="group__msg__agg_1gaa5c7b19f686b8cfa99097799cc7a566d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">agg_work_cb</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_work</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">work</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.agg_work_cb" title="Link to this definition"></a><br /></dt>
+<dd><p>Work callback function for the bottom half of publishing, also used for late publishing. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Internal use only. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>work</strong> – <strong>[inout]</strong> Work.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.agg_typed_publish">
+<span class="target" id="group__msg__agg_1ga68e2e4263568ba3b1d0a133accf23eb8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">agg_typed_publish</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.agg_typed_publish" title="agg"><span class="n"><span class="pre">agg</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">agg</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.agg_typed_publish" title="Link to this definition"></a><br /></dt>
+<dd><p>Publish function for data aggregation. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Internal use only. </p>
+</div>
+</dd></dl>
+
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.agg">
+<span class="target" id="structagg"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">agg</span></span></span><a class="headerlink" href="#c.agg" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;nturt/msg/aggregation.h&gt;</em></div>
+<p>Data aggregation. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.name">
+<span class="target" id="structagg_1a5b847f6063e7b0c602545f473f1aee0c"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><a class="headerlink" href="#c.agg.name" title="Link to this definition"></a><br /></dt>
+<dd><p>Name of the aggregation. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.flag">
+<span class="target" id="structagg_1ae7dc121c6b4a58693e0f7e4a77358360"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flag</span></span></span><a class="headerlink" href="#c.agg.flag" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag of the aggregation. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.num_member">
+<span class="target" id="structagg_1ab88877513aead5b21803d0dea66b01d9"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">num_member</span></span></span><a class="headerlink" href="#c.agg.num_member" title="Link to this definition"></a><br /></dt>
+<dd><p>Number of members to be monitored for updating. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.member_flags">
+<span class="target" id="structagg_1a92bb0a3c3781ddc6f9f5c01e6276af26"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">member_flags</span></span></span><a class="headerlink" href="#c.agg.member_flags" title="Link to this definition"></a><br /></dt>
+<dd><p>Flags of the members. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.fully_updated">
+<span class="target" id="structagg_1a8f51af158d0687c78141f2cc246b575a"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fully_updated</span></span></span><a class="headerlink" href="#c.agg.fully_updated" title="Link to this definition"></a><br /></dt>
+<dd><p>What <a class="reference internal" href="#structagg_1a23d33372b17aaa0b49e09b9768f0efa6"><span class="std std-ref">agg::updated</span></a> should be when every members are updated. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.period">
+<span class="target" id="structagg_1aafd7c922f7c403f32b5b7f929de67401"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">k_timeout_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">period</span></span></span><a class="headerlink" href="#c.agg.period" title="Link to this definition"></a><br /></dt>
+<dd><p>Period of data publishing. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.min_separation">
+<span class="target" id="structagg_1ac712ee6dc390e204d33ab0bea3e7bebf"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">k_timeout_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">min_separation</span></span></span><a class="headerlink" href="#c.agg.min_separation" title="Link to this definition"></a><br /></dt>
+<dd><p>Minimum separation time between two data publishing. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.watermark">
+<span class="target" id="structagg_1a444a593931f1f4bfcb135dedde1c6bce"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">k_timeout_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">watermark</span></span></span><a class="headerlink" href="#c.agg.watermark" title="Link to this definition"></a><br /></dt>
+<dd><p>Watermark to wait for late-arriving members. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.publish">
+<span class="target" id="structagg_1a62221cf01b040e521726aaa4404c68bc"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.msg_agg_publish_t" title="msg_agg_publish_t"><span class="n"><span class="pre">msg_agg_publish_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publish</span></span></span><a class="headerlink" href="#c.agg.publish" title="Link to this definition"></a><br /></dt>
+<dd><p>Function to publish the data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.user_data">
+<span class="target" id="structagg_1aa47f76f6f29e6b1f01c459e43265b590"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">user_data</span></span></span><a class="headerlink" href="#c.agg.user_data" title="Link to this definition"></a><br /></dt>
+<dd><p>User data for the callback. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.lock">
+<span class="target" id="structagg_1a1cfa2f535e387a7f0848873058afeeee"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_spinlock</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">lock</span></span></span><a class="headerlink" href="#c.agg.lock" title="Link to this definition"></a><br /></dt>
+<dd><p>Spinlock to protect the following struct members. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.period_timer">
+<span class="target" id="structagg_1afa12fb49601b5828e21088e4080e2a40"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_timer</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">period_timer</span></span></span><a class="headerlink" href="#c.agg.period_timer" title="Link to this definition"></a><br /></dt>
+<dd><p>Timer for periodic publishing. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.early_timer">
+<span class="target" id="structagg_1a10fcb00b6a24f06b916042657eb90613"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_timer</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">early_timer</span></span></span><a class="headerlink" href="#c.agg.early_timer" title="Link to this definition"></a><br /></dt>
+<dd><p>Timer for tracking minimum separation time. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.work">
+<span class="target" id="structagg_1a3a5915454249560123b9daa632e8116f"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_work_delayable</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">work</span></span></span><a class="headerlink" href="#c.agg.work" title="Link to this definition"></a><br /></dt>
+<dd><p>Work for the bottom half of publishing, also used for late publishing. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg.updated">
+<span class="target" id="structagg_1a23d33372b17aaa0b49e09b9768f0efa6"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">updated</span></span></span><a class="headerlink" href="#c.agg.updated" title="Link to this definition"></a><br /></dt>
+<dd><p>Which member has been updated, each bit represents one member. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.agg_typed">
+<span class="target" id="structagg__typed"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">agg_typed</span></span></span><a class="headerlink" href="#c.agg_typed" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;nturt/msg/aggregation.h&gt;</em></div>
+<p>Data aggregation for a specific type. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg_typed.data_size">
+<span class="target" id="structagg__typed_1a54942a658a6453cf1600e8abb5ee3589"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">data_size</span></span></span><a class="headerlink" href="#c.agg_typed.data_size" title="Link to this definition"></a><br /></dt>
+<dd><p>Size of the data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg_typed.map">
+<span class="target" id="structagg__typed_1ab1d138fc976644b87c9595c7bbb2ca31"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">map</span></span></span><a class="headerlink" href="#c.agg_typed.map" title="Link to this definition"></a><br /></dt>
+<dd><p>Map from the offset of member in the type to the index of data in <a class="reference internal" href="#structagg"><span class="std std-ref">agg</span></a>. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg_typed.publish">
+<span class="target" id="structagg__typed_1a7691326668b338d746c37f5ae6d8a4a4"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.msg_agg_typed_publish_t" title="msg_agg_typed_publish_t"><span class="n"><span class="pre">msg_agg_typed_publish_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publish</span></span></span><a class="headerlink" href="#c.agg_typed.publish" title="Link to this definition"></a><br /></dt>
+<dd><p>Function to publish the data. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg_typed.lock">
+<span class="target" id="structagg__typed_1adf098c18389e53d57af511117fc96eed"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_spinlock</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">lock</span></span></span><a class="headerlink" href="#c.agg_typed.lock" title="Link to this definition"></a><br /></dt>
+<dd><p>Spinlock to protect the following struct members. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg_typed.agg">
+<span class="target" id="structagg__typed_1ac4698de76acb4131be068b7eeda6826f"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.agg_typed.agg" title="agg"><span class="n"><span class="pre">agg</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">agg</span></span></span><a class="headerlink" href="#c.agg_typed.agg" title="Link to this definition"></a><br /></dt>
+<dd><p>Data aggregation. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg_typed.data">
+<span class="target" id="structagg__typed_1aea6a87ae24a4f7ffc7ccc4a9b4487489"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">data</span></span></span><a class="headerlink" href="#c.agg_typed.data" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to the buffer for updating. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.agg_typed.pub_data">
+<span class="target" id="structagg__typed_1a72660e854b9459bc6576f90ce5873cef"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pub_data</span></span></span><a class="headerlink" href="#c.agg_typed.pub_data" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to the buffer for publishing. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Common Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="telemetry.html" class="btn btn-neutral float-right" title="Telemetry System" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, NTU Racing Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
