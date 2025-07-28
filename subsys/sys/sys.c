@@ -40,40 +40,52 @@ SYS_INIT(gpio_init, POST_KERNEL, CONFIG_LED_INIT_PRIORITY);
 
 #endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
 
+/* macro ---------------------------------------------------------------------*/
+#define RESET_TIMEOUT K_SECONDS(2)
+
+#define RESET_SOUND_COUNT 5
+
 /* static function declaration -----------------------------------------------*/
-void reset_cb(struct k_timer *timer);
+static void reset();
+
+static void reset_cb(struct k_timer *timer);
 
 /* static variable -----------------------------------------------------------*/
 static K_TIMER_DEFINE(reset_timer, reset_cb, NULL);
 
 /* function definition -------------------------------------------------------*/
 void sys_reset() {
-  k_sched_lock();
+  k_timer_start(&reset_timer, RESET_TIMEOUT, K_FOREVER);
 
   LOG_INF("System reset");
-  k_timer_start(&reset_timer, K_SECONDS(2), K_NO_WAIT);
   log_panic();
 
+  k_timer_stop(&reset_timer);
+
+  reset();
+}
+
+/* static function definition ------------------------------------------------*/
+static void reset() {
+  irq_lock();
+
 #ifdef CONFIG_NTURT_SYS_REBOOT_SOUND
-  gpio_pin_set_dt(&buzzer, true);
-  k_busy_wait(300 * 1000);
-  gpio_pin_set_dt(&buzzer, false);
-  k_busy_wait(100 * 1000);
-  gpio_pin_set_dt(&buzzer, true);
-  k_busy_wait(100 * 1000);
-  gpio_pin_set_dt(&buzzer, false);
-  k_busy_wait(100 * 1000);
-  gpio_pin_set_dt(&buzzer, true);
-  k_busy_wait(100 * 1000);
-  gpio_pin_set_dt(&buzzer, false);
+  for (int i = 0; i < RESET_SOUND_COUNT; i++) {
+    gpio_pin_set_dt(&buzzer, true);
+    k_busy_wait(100 * 1000);
+    gpio_pin_set_dt(&buzzer, false);
+
+    if (i != RESET_SOUND_COUNT - 1) {
+      k_busy_wait(100 * 1000);
+    }
+  }
 #endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
 
   sys_reboot(SYS_REBOOT_COLD);
 }
 
-/* static function definition ------------------------------------------------*/
-void reset_cb(struct k_timer *timer) {
+static void reset_cb(struct k_timer *timer) {
   (void)timer;
 
-  sys_reboot(SYS_REBOOT_COLD);
+  reset();
 }

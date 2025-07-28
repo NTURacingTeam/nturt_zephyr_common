@@ -29,11 +29,11 @@
 /// (int16_t).
 #define STEER_PHY_TO_CAN(phy) (int16_t)(100.0F * phy)
 
-/// @brief Pedal travel physical data in 100% (float), convert to (uint8_t).
+/// @brief Pedal travel physical data in % (float), convert to % (uint8_t).
 #define PEDAL_TRAV_PHY_TO_CAN(phy) (uint8_t)(phy)
 
 /// @brief Accelerator pedal position physical data in deg (float), convert to
-/// (uint8_t).
+/// deg (int8_t).
 #define APPS_RAW_PHY_TO_CAN(phy) (int8_t)(phy)
 
 /// @brief Brake pressure physical data in kPa (float), convert to bar
@@ -70,8 +70,8 @@
 /// @brief Inverter motor speed CAN data in RPM (int16_t), convert to (float).
 #define INV_SPEED_CAN_TO_PHY(can) (float)(can)
 
-/// @brief Inverter torque CAN data in 0.001 rated torque (int16_t), convert to Nm
-/// (float).
+/// @brief Inverter torque CAN data in 0.001 rated torque (int16_t), convert to
+/// Nm (float).
 #define INV_TORQUE_CAN_TO_PHY(can) (0.001F * INV_RATED_TORQUE * can)
 
 /// @brief Inverter voltage CAN data in 0.01 V (uint16_t), convert to V (float).
