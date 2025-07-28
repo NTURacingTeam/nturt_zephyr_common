@@ -1,7 +1,11 @@
 # Documentation build configuration file.
 # Reference: https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+import os
 import subprocess
+
+os.makedirs("_build/html", exist_ok=True)
+os.makedirs("_build/xml", exist_ok=True)
 
 subprocess.call("doxygen _doxygen/Doxyfile", shell=True)
 
@@ -43,7 +47,7 @@ github_url = "https://github.com/NTURacingTeam/nturt_zephyr_common"
 # -- Options for Breathe plugin -------------------------------------------
 
 breathe_projects = {
-	"NTURT Zephyr Common Library": "_build_doxygen/xml/"
+    "NTURT Zephyr Common Library": "_build/xml/doxygen"
 }
 breathe_default_project = "NTURT Zephyr Common Library"
 breathe_domain_by_extension = {

@@ -7,5 +7,6 @@ Common Library
 .. toctree::
    :maxdepth: 1
 
-   command
+   aggregation
    telemetry
+   command

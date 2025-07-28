@@ -241,8 +241,6 @@ Reference
    <https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/subsys/fs/littlefs_fs.c#L302>`_
    that allocate file cache
 
-.. _notes_services_sensing_subsystem:
-
 Storage Systems
 ===============
 
@@ -271,7 +269,7 @@ for detailed comparison between them).
    have to be used.
 
 Settings
--------
+--------
 
 Zephyr provides a `settings system
 <https://docs.zephyrproject.org/4.1.0/services/storage/settings/index.html>`_
@@ -297,6 +295,8 @@ References
    <https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/subsys/settings/src/settings_nvs.c#L23>`_
 .. [#] `Settings ZMS backend source code
    <https://github.com/zephyrproject-rtos/zephyr/blob/main/subsys/settings/src/settings_zms.c#L24>`_
+
+.. _notes_services_sensing_subsystem:
 
 Sensing Subsystem
 =================

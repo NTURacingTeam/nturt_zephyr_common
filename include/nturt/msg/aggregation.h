@@ -57,7 +57,7 @@
       .flag = _flag,                                                         \
       .num_member = NUM_VA_ARGS(__VA_ARGS__) +                               \
                     ZERO_OR_COMPILE_ERROR(NUM_VA_ARGS(__VA_ARGS__) < 32),    \
-      .member_flags = (uint8_t[]){__VA_ARGS__},                                     \
+      .member_flags = (uint8_t[]){__VA_ARGS__},                              \
       .fully_updated = FOR_EACH_IDX(_ARG_FULLY_UPDATED, (|), __VA_ARGS__),   \
                                                                              \
       .period = _period,                                                     \
