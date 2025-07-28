@@ -1,0 +1,14 @@
+<map id="nturt/msg/interfaces/common.h" name="nturt/msg/interfaces/common.h">
+<area shape="rect" id="Node000001" title="Common message type definitions." alt="" coords="95,5,249,45"/>
+<area shape="rect" id="Node000002" href="$sensor_8h.html" title="Sensor message type definitions." alt="" coords="5,93,160,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,57,104,95,101,91,140,53"/>
+<area shape="rect" id="Node000006" href="$tractive_8h.html" title="Tractive system message type definitions." alt="" coords="184,93,339,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="204,53,243,91,240,95,200,57"/>
+<area shape="rect" id="Node000003" href="$interfaces_8h.html" title="Message type definitions." alt="" coords="95,181,249,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="114,141,154,179,150,183,111,145"/>
+<area shape="rect" id="Node000004" href="$msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="107,269,237,295"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="175,235,175,269,169,269,169,235"/>
+<area shape="rect" id="Node000005" href="$canopen_8h.html" title="CANopen support." alt="" coords="85,343,259,368"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="175,308,175,343,169,343,169,308"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="233,145,194,183,190,179,230,141"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="CAN bus" name="CAN bus">
+<area shape="rect" id="Node000001" title="Controller area network (CAN) support." alt="" coords="5,31,83,56"/>
+<area shape="rect" id="Node000002" href="$group__can__convert.html" title="CAN bus data conversion macros." alt="" coords="131,5,320,31"/>
+<area shape="rect" id="Node000003" href="$group__can__open.html" title="CANopen support." alt="" coords="184,55,267,80"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="msg_ts_acc" name="msg_ts_acc">
+<area shape="rect" id="Node000001" title="Accumulator message." alt="" coords="7,93,106,119"/>
+<area shape="rect" id="Node000002" href="$structmsg__header.html" title="Message header." alt="" coords="5,5,108,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,45,59,93,54,93,54,45"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Input Interface" name="Input Interface">
+<area shape="rect" id="Node000001" title="Input Interface &#160;." alt="" coords="196,5,313,31"/>
+<area shape="rect" id="Node000003" href="$group__input__sensor__axis.html" title="Sensor axis API &#160;." alt="" coords="361,5,484,31"/>
+<area shape="rect" id="Node000002" href="$group__io__interfaces.html" title="Device Driver APIs &#160;." alt="" coords="5,5,148,31"/>
+</map>

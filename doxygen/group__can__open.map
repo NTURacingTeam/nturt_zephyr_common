@@ -1,0 +1,4 @@
+<map id="CANopen" name="CANopen">
+<area shape="rect" id="Node000002" href="$group__can.html" title="Controller area network (CAN) support." alt="" coords="5,5,83,31"/>
+<area shape="rect" id="Node000001" title="CANopen support." alt="" coords="131,5,213,31"/>
+</map>

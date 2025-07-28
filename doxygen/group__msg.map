@@ -1,0 +1,5 @@
+<map id="Message" name="Message">
+<area shape="rect" id="Node000001" title="Inter&#45;thread communication support." alt="" coords="5,31,85,56"/>
+<area shape="rect" id="Node000002" href="$group__msg__agg.html" title="Data aggregation." alt="" coords="154,5,255,31"/>
+<area shape="rect" id="Node000003" href="$group__msg__interface.html" title="Message type definitions." alt="" coords="133,55,276,80"/>
+</map>

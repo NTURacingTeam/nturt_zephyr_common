@@ -1,0 +1,9 @@
+<map id="zephyr/drivers/input/sensor_axis.h" name="zephyr/drivers/input/sensor_axis.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="165,5,317,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,131,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,48,107,90,105,85,199,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="155,93,328,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="244,46,244,79,239,79,239,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="353,93,482,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="285,43,380,85,378,90,282,48"/>
+</map>

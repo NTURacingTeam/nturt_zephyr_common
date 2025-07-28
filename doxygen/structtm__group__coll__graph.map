@@ -1,0 +1,11 @@
+<map id="tm_group" name="tm_group">
+<area shape="rect" id="Node000001" title="Telemetry publishing group." alt="" coords="165,93,249,119"/>
+<area shape="rect" id="Node000003" href="$structtm__group__data.html" title="Telemetry group data." alt="" coords="75,181,195,207"/>
+<area shape="poly" id="edge3_Node000003_Node000001" title=" " alt="" coords="155,125,134,144,130,162,133,180,128,181,124,162,129,141,151,121"/>
+<area shape="rect" id="Node000002" href="$structagg.html" title="Data aggregation." alt="" coords="184,5,231,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,45,210,93,205,93,205,45"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="161,171,176,156,200,117,204,120,180,159,165,174"/>
+<area shape="rect" id="Node000004" href="$structtm__data.html" title="Telemetry data." alt="" coords="5,93,81,119"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="63,127,89,155,119,179,116,183,86,159,59,131"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="96,97,104,100,108,106,99,115,82,117,81,111,97,110,103,106,101,104,94,102"/>
+</map>

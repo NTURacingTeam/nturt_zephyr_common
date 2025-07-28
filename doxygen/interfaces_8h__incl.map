@@ -1,0 +1,20 @@
+<map id="nturt/msg/interfaces/interfaces.h" name="nturt/msg/interfaces/interfaces.h">
+<area shape="rect" id="Node000001" title="Message type definitions." alt="" coords="95,5,249,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="142,269,213,295"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,42,50,62,30,76,14,95,8,113,15,132,40,174,75,209,111,238,145,260,142,265,108,243,71,213,36,177,10,134,3,113,10,92,27,73,47,57,93,37"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="25,101,154,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,47,112,92,108,89,152,44"/>
+<area shape="rect" id="Node000004" href="$sensor_8h.html" title="Sensor message type definitions." alt="" coords="357,93,512,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="231,43,365,87,364,92,229,48"/>
+<area shape="rect" id="Node000007" href="$tractive_8h.html" title="Tractive system message type definitions." alt="" coords="179,93,333,133"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="193,44,230,82,226,85,189,47"/>
+<area shape="rect" id="Node000005" href="$common_8h.html" title="Common message type definitions." alt="" coords="321,181,476,221"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="429,135,414,170,410,168,424,133"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="347,224,224,267,222,262,345,219"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="337,269,460,295"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="401,222,401,255,396,255,396,222"/>
+<area shape="poly" id="edge9_Node000007_Node000002" title=" " alt="" coords="239,135,221,157,205,183,191,220,183,256,178,255,186,219,200,180,217,154,235,132"/>
+<area shape="poly" id="edge10_Node000007_Node000005" title=" " alt="" coords="289,131,357,172,354,177,286,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="215,189,297,214"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="259,134,259,175,253,175,253,134"/>
+</map>

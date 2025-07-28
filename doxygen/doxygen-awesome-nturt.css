@@ -1,0 +1,18 @@
+#titlearea {
+    padding-bottom: 0;
+}
+
+#titlearea table {
+    width: 100%;
+}
+
+#projectlogo img {
+    width: 200px;
+    height: 55px;
+    max-height: none !important;
+    padding-top: 12px;
+}
+
+#projectalign {
+    display: none;
+}
