@@ -48,7 +48,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Architecture</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Vehicle Control Unit</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#architecture">Architecture</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-flow-diagram">Data Flow Diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-flow">Data Flow</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#state-transition-diagram">State Transition Diagram</a></li>
 </ul>
 </li>
@@ -59,9 +59,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../decisions/index.html">Architecture Decision Records</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../library/index.html">Common Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/vcu/index.html">VCU Library</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developing</span></p>
 <ul>
@@ -99,31 +100,50 @@
 <span id="architecture-vehicle-control-unit"></span><h1>Vehicle Control Unit<a class="headerlink" href="#vehicle-control-unit" title="Link to this heading"></a></h1>
 <section id="architecture">
 <h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h2>
+<p>The Vehicle Control Unit (VCU) is architected in a layered manner to ensure
+modularity and maintainability. Most of the drivers and the middlewares are
+provided by Zephyr, with only parts in blue being implemented by us.</p>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../_images/architecture.svg"><img alt="../_images/architecture.svg" src="../_images/architecture.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">The architecture of the Vehicle Control Unit (VCU).</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+<p><span class="caption-text">The architecture of the VCU.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
-<section id="data-flow-diagram">
-<h2>Data Flow Diagram<a class="headerlink" href="#data-flow-diagram" title="Link to this heading"></a></h2>
+<section id="data-flow">
+<h2>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h2>
+<p>The system’s data mainly comes from the sensors and CAN Open, which is
+aggregated first into appropriate <a class="reference external" href="https://nturacingteam.github.io/nturt_zephyr_common/doxygen/group__msg__interface.html">messages types</a>
+using <a class="reference internal" href="../library/aggregation.html#library-aggregation"><span class="std std-ref">Data Aggregation</span></a> and then published to Zephyr <a class="reference external" href="https://docs.zephyrproject.org/4.2.0/services/zbus/index.html">Zbus</a>. CAN Open may
+also send commands to change the state of the system, the parameters of the
+control algorithms, etc., which is handled by <a class="reference internal" href="../library/command.html#library-command"><span class="std std-ref">Command System</span></a> and then
+dispatched to appropriate modules via function calls. Finally, in order to
+transmit telemetry data, <a class="reference internal" href="../library/telemetry.html#library-telemetry"><span class="std std-ref">Telemetry System</span></a> is used as the broker to
+receive messages from Zbus for various backend protocols, including data
+logginger, to publish.</p>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="../_images/data_flow_diagram.svg"><img alt="../_images/data_flow_diagram.svg" src="../_images/data_flow_diagram.svg" style="width: 75%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 2 </span><span class="caption-text">The data flow diagram of the Vehicle Control Unit (VCU).</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+<p><span class="caption-text">The data flow diagram of the VCU.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="state-transition-diagram">
 <h2>State Transition Diagram<a class="headerlink" href="#state-transition-diagram" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="../library/vcu/states.html#library-vcu-states"><span class="std std-ref">State Machine</span></a> uses Zephyr <a class="reference external" href="https://docs.zephyrproject.org/4.2.0/services/smf/index.html">state machine framework</a>, which is based
+on <a class="reference external" href="https://en.wikipedia.org/wiki/UML_state_machine#Hierarchically_nested_states">Hierarchical state machine</a>,
+to manage the complex state transitions of VCU’s control system. Here the black
+filled circles represent the initial state and the initial state transition of
+the state machine, meaning which substate to enter when transitioning to the
+parent state. So the initial state of the VCU is <code class="docutils literal notranslate"><span class="pre">RTD_BLINK</span></code>.</p>
 <figure class="align-center" id="id3">
-<a class="reference internal image-reference" href="../_images/state_transition_diagram.svg"><img alt="../_images/state_transition_diagram.svg" src="../_images/state_transition_diagram.svg" style="width: 75%;" />
+<a class="reference internal image-reference" href="../_images/state_transition_diagram.svg"><img alt="../_images/state_transition_diagram.svg" src="../_images/state_transition_diagram.svg" style="width: 90%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">The state transition diagram of the Vehicle Control Unit (VCU).</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+<p><span class="caption-text"><a class="reference external" href="https://sparxsystems.com/resources/tutorials/uml2/state-diagram.html">UML state diagram</a> of
+the VCU.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>

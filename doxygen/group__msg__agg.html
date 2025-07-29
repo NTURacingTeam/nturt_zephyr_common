@@ -169,12 +169,12 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga0013271e02d8c4a2efa1cce1d298fa2e" id="r_ga0013271e02d8c4a2efa1cce1d298fa2e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga0013271e02d8c4a2efa1cce1d298fa2e">msg_agg_publish_t</a>) (struct <a class="el" href="structagg.html">agg</a> *<a class="el" href="structagg.html">agg</a>, void *user_data)</td></tr>
-<tr class="memdesc:ga0013271e02d8c4a2efa1cce1d298fa2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to publish the data.  <br /></td></tr>
-<tr class="separator:ga0013271e02d8c4a2efa1cce1d298fa2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab13db25f95a161dbd86ea6f726bba7e3" id="r_gab13db25f95a161dbd86ea6f726bba7e3"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab13db25f95a161dbd86ea6f726bba7e3">msg_agg_typed_publish_t</a>) (const void *data, void *user_data)</td></tr>
-<tr class="memdesc:gab13db25f95a161dbd86ea6f726bba7e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to publish the data.  <br /></td></tr>
-<tr class="separator:gab13db25f95a161dbd86ea6f726bba7e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga848100bb30e00344bf425261be87a00a" id="r_ga848100bb30e00344bf425261be87a00a"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga848100bb30e00344bf425261be87a00a">agg_publish_t</a>) (struct <a class="el" href="structagg.html">agg</a> *<a class="el" href="structagg.html">agg</a>, void *user_data)</td></tr>
+<tr class="memdesc:ga848100bb30e00344bf425261be87a00a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to publish the data.  <br /></td></tr>
+<tr class="separator:ga848100bb30e00344bf425261be87a00a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e05ae7276d3caa5c674601230780caa" id="r_ga4e05ae7276d3caa5c674601230780caa"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga4e05ae7276d3caa5c674601230780caa">agg_typed_publish_t</a>) (const void *data, void *user_data)</td></tr>
+<tr class="memdesc:ga4e05ae7276d3caa5c674601230780caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to publish the data.  <br /></td></tr>
+<tr class="separator:ga4e05ae7276d3caa5c674601230780caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -282,11 +282,11 @@ Functions</h2></td></tr>
 <p><code>#include &lt;<a class="el" href="aggregation_8h.html">nturt/msg/aggregation.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">struct </span><a class="code hl_struct" href="structagg.html">agg</a> <a class="code hl_variable" href="structagg.html#a5b847f6063e7b0c602545f473f1aee0c">name</a> =                                                        \</div>
 <div class="line">      AGG_INITIALIZER(<a class="code hl_variable" href="structagg.html#a5b847f6063e7b0c602545f473f1aee0c">name</a>, <a class="code hl_variable" href="structagg.html#a5b847f6063e7b0c602545f473f1aee0c">name</a>, <a class="code hl_variable" href="structagg.html#aafd7c922f7c403f32b5b7f929de67401">period</a>, <a class="code hl_variable" href="structagg.html#ac712ee6dc390e204d33ab0bea3e7bebf">min_separation</a>, <a class="code hl_variable" href="structagg.html#a444a593931f1f4bfcb135dedde1c6bce">watermark</a>, <a class="code hl_variable" href="structagg.html#ae7dc121c6b4a58693e0f7e4a77358360">flag</a>, \</div>
-<div class="line">                      <a class="code hl_variable" href="structagg.html#a62221cf01b040e521726aaa4404c68bc">publish</a>, <a class="code hl_variable" href="structagg.html#aa47f76f6f29e6b1f01c459e43265b590">user_data</a>, __VA_ARGS__)</div>
+<div class="line">                      <a class="code hl_variable" href="structagg.html#a10fd80be5db2e39abff635d517dd438f">publish</a>, <a class="code hl_variable" href="structagg.html#aa47f76f6f29e6b1f01c459e43265b590">user_data</a>, __VA_ARGS__)</div>
 <div class="ttc" id="astructagg_html"><div class="ttname"><a href="structagg.html">agg</a></div><div class="ttdoc">Data aggregation.</div><div class="ttdef"><b>Definition</b> aggregation.h:208</div></div>
+<div class="ttc" id="astructagg_html_a10fd80be5db2e39abff635d517dd438f"><div class="ttname"><a href="structagg.html#a10fd80be5db2e39abff635d517dd438f">agg::publish</a></div><div class="ttdeci">const agg_publish_t publish</div><div class="ttdef"><b>Definition</b> aggregation.h:234</div></div>
 <div class="ttc" id="astructagg_html_a444a593931f1f4bfcb135dedde1c6bce"><div class="ttname"><a href="structagg.html#a444a593931f1f4bfcb135dedde1c6bce">agg::watermark</a></div><div class="ttdeci">const k_timeout_t watermark</div><div class="ttdef"><b>Definition</b> aggregation.h:231</div></div>
 <div class="ttc" id="astructagg_html_a5b847f6063e7b0c602545f473f1aee0c"><div class="ttname"><a href="structagg.html#a5b847f6063e7b0c602545f473f1aee0c">agg::name</a></div><div class="ttdeci">const char * name</div><div class="ttdef"><b>Definition</b> aggregation.h:210</div></div>
-<div class="ttc" id="astructagg_html_a62221cf01b040e521726aaa4404c68bc"><div class="ttname"><a href="structagg.html#a62221cf01b040e521726aaa4404c68bc">agg::publish</a></div><div class="ttdeci">const msg_agg_publish_t publish</div><div class="ttdef"><b>Definition</b> aggregation.h:234</div></div>
 <div class="ttc" id="astructagg_html_aa47f76f6f29e6b1f01c459e43265b590"><div class="ttname"><a href="structagg.html#aa47f76f6f29e6b1f01c459e43265b590">agg::user_data</a></div><div class="ttdeci">void *const user_data</div><div class="ttdef"><b>Definition</b> aggregation.h:237</div></div>
 <div class="ttc" id="astructagg_html_aafd7c922f7c403f32b5b7f929de67401"><div class="ttname"><a href="structagg.html#aafd7c922f7c403f32b5b7f929de67401">agg::period</a></div><div class="ttdeci">const k_timeout_t period</div><div class="ttdef"><b>Definition</b> aggregation.h:225</div></div>
 <div class="ttc" id="astructagg_html_ac712ee6dc390e204d33ab0bea3e7bebf"><div class="ttname"><a href="structagg.html#ac712ee6dc390e204d33ab0bea3e7bebf">agg::min_separation</a></div><div class="ttdeci">const k_timeout_t min_separation</div><div class="ttdef"><b>Definition</b> aggregation.h:228</div></div>
@@ -300,7 +300,7 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">min_separation</td><td>Minimum separation time between two data publishing. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">watermark</td><td>Watermark to wait for late-arriving members. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">flag</td><td>Flag of the aggregation. If no flag is required, 0 should be specified, and multiple flags can be combined by using the bitwise OR operator (|). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">publish</td><td>Function to publish the data, must be of type <a class="el" href="#ga0013271e02d8c4a2efa1cce1d298fa2e">msg_agg_publish_t</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">publish</td><td>Function to publish the data, must be of type <a class="el" href="#ga848100bb30e00344bf425261be87a00a">agg_publish_t</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">user_data</td><td>Pointer to custom data for the callback. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>Flags of the data to be monitored, where each flag represents a data to be monitored. If the data does not require flag, 0 should be specified. The flags can be combined by using the bitwise OR operator (|). </td></tr>
   </table>
@@ -560,7 +560,7 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_min_separation</td><td>Minimum separation time between two data publishing. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_watermark</td><td>Watermark to wait for late-arriving members. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_flag</td><td>Flag of the aggregation. If no flag is required, 0 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">_publish</td><td>Function to publish the data, must be of type <a class="el" href="#gab13db25f95a161dbd86ea6f726bba7e3">msg_agg_typed_publish_t</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_publish</td><td>Function to publish the data, must be of type <a class="el" href="#ga4e05ae7276d3caa5c674601230780caa">agg_typed_publish_t</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_user_data</td><td>Pointer to custom data for the callback. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>Members of <code>_type</code> to be monitored, must be specified by <a class="el" href="#ga784151f612f43be94fabff2a822ec4cb">AGG_MEMBER</a>. </td></tr>
   </table>
@@ -624,14 +624,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="ga0013271e02d8c4a2efa1cce1d298fa2e" name="ga0013271e02d8c4a2efa1cce1d298fa2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0013271e02d8c4a2efa1cce1d298fa2e">&#9670;&#160;</a></span>msg_agg_publish_t</h2>
+<a id="ga848100bb30e00344bf425261be87a00a" name="ga848100bb30e00344bf425261be87a00a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga848100bb30e00344bf425261be87a00a">&#9670;&#160;</a></span>agg_publish_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* msg_agg_publish_t) (struct <a class="el" href="structagg.html">agg</a> *<a class="el" href="structagg.html">agg</a>, void *user_data)</td>
+          <td class="memname">typedef void(* agg_publish_t) (struct <a class="el" href="structagg.html">agg</a> *<a class="el" href="structagg.html">agg</a>, void *user_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -649,14 +649,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gab13db25f95a161dbd86ea6f726bba7e3" name="gab13db25f95a161dbd86ea6f726bba7e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab13db25f95a161dbd86ea6f726bba7e3">&#9670;&#160;</a></span>msg_agg_typed_publish_t</h2>
+<a id="ga4e05ae7276d3caa5c674601230780caa" name="ga4e05ae7276d3caa5c674601230780caa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4e05ae7276d3caa5c674601230780caa">&#9670;&#160;</a></span>agg_typed_publish_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* msg_agg_typed_publish_t) (const void *data, void *user_data)</td>
+          <td class="memname">typedef void(* agg_typed_publish_t) (const void *data, void *user_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -822,7 +822,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jul 28 2025 10:28:32 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Tue Jul 29 2025 10:07:23 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

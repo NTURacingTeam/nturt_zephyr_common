@@ -10,7 +10,7 @@ var structagg =
     [ "num_member", "structagg.html#ab88877513aead5b21803d0dea66b01d9", null ],
     [ "period", "structagg.html#aafd7c922f7c403f32b5b7f929de67401", null ],
     [ "period_timer", "structagg.html#afa12fb49601b5828e21088e4080e2a40", null ],
-    [ "publish", "structagg.html#a62221cf01b040e521726aaa4404c68bc", null ],
+    [ "publish", "structagg.html#a10fd80be5db2e39abff635d517dd438f", null ],
     [ "updated", "structagg.html#a23d33372b17aaa0b49e09b9768f0efa6", null ],
     [ "user_data", "structagg.html#aa47f76f6f29e6b1f01c459e43265b590", null ],
     [ "watermark", "structagg.html#a444a593931f1f4bfcb135dedde1c6bce", null ],

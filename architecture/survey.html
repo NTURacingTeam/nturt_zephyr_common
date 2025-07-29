@@ -68,7 +68,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#kilpper">Kilpper</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#zephyr-projects">Zephyr projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-zephyr-projects">Other Zephyr projects</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="message.html">Inter-Thread Communication</a></li>
@@ -77,9 +77,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../decisions/index.html">Architecture Decision Records</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../library/index.html">Common Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/vcu/index.html">VCU Library</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developing</span></p>
 <ul>
@@ -115,7 +116,8 @@
              
   <section id="survey">
 <span id="architecture-survey"></span><h1>Survey<a class="headerlink" href="#survey" title="Link to this heading"></a></h1>
-<p>Here are some embedded control system projects.</p>
+<p>Here are some projects that can be referenced for designing an embedded control
+system.</p>
 <section id="motor-controllers">
 <h2>Motor Controllers<a class="headerlink" href="#motor-controllers" title="Link to this heading"></a></h2>
 <section id="simplefoc">
@@ -128,13 +130,25 @@ sensor.</p></li>
 <li><p>Then caculates the PWM duty cycles.</p></li>
 <li><p>Finally, applies the PWM duty cycles to each phase.</p></li>
 </ol>
-<p><a class="reference external" href="https://docs.simplefoc.com/code">SimpleFOC code</a></p>
+<section id="references">
+<h4>References<a class="headerlink" href="#references" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.simplefoc.com/code">SimpleFOC code</a></p></li>
+</ul>
+</section>
 </section>
 <section id="st-motor-workbench">
 <h3>ST Motor Workbench<a class="headerlink" href="#st-motor-workbench" title="Link to this heading"></a></h3>
-<p>Interrupt-based loops with sensor data acquired in the control loop.</p>
-<p>The hardware is optimized for motor control, so the software can be simple.</p>
-<p><a class="reference external" href="https://www.youtube.com/watch?v=ctN6wYqE970&amp;list=PLnMKNibPkDnFxzg5RExF_MNOxX6wfT95M&amp;index=10">ST motor control course: FOC library about interrupt</a></p>
+<p>Hardware timer-driven system where time-critical tasks are executed in ISRs and
+utilizes Cortex-M’s NVIC to have preemptible interrupts with priorities. Since
+the hardware is optimized for motor control (specialized timer for three phase
+PWM), so the software can be simple.</p>
+<section id="id1">
+<h4>References<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=ctN6wYqE970&amp;list=PLnMKNibPkDnFxzg5RExF_MNOxX6wfT95M&amp;index=10">ST motor control course: FOC library about interrupt</a></p></li>
+</ul>
+</section>
 </section>
 <section id="spinner">
 <h3>Spinner<a class="headerlink" href="#spinner" title="Link to this heading"></a></h3>
@@ -143,27 +157,27 @@ sensor.</p></li>
 <a class="reference external" href="https://docs.zephyrproject.org/latest/kernel/services/interrupts.html#defining-a-direct-isr">Direct ISR</a>
 for;</p>
 <ul class="simple">
-<li><p>Phase current sampling using ADC <a class="footnote-reference brackets" href="#id4" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p></li>
-<li><p>Hall effect encoder using timer <a class="footnote-reference brackets" href="#id5" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p></li>
+<li><p>Phase current sampling using ADC <a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p></li>
+<li><p>Hall effect encoder using timer <a class="footnote-reference brackets" href="#id7" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p></li>
 </ul>
-<p>PWM duty cycle is calcuated and set in the current sampling loop <a class="footnote-reference brackets" href="#id6" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
-<section id="references">
-<h4>References<a class="headerlink" href="#references" title="Link to this heading"></a></h4>
+<p>PWM duty cycle is calcuated and set in the current sampling loop <a class="footnote-reference brackets" href="#id8" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
+<section id="id5">
+<h4>References<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference external" href="https://teslabs.github.io/spinner/index.html">Spinner Documentation</a></p></li>
 <li><p><a class="reference external" href="https://github.com/teslabs/spinner">Spinner GitHub</a></p></li>
 </ul>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id4" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/teslabs/spinner/blob/main/drivers/currsmp/currsmp_shunt_stm32.c#L48">Spinner current sampling source code</a></p>
 </aside>
-<aside class="footnote brackets" id="id5" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://github.com/teslabs/spinner/blob/main/drivers/feedback/halls_stm32.c#L54">Spinner hall effect sensor source code</a></p>
 </aside>
-<aside class="footnote brackets" id="id6" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://teslabs.github.io/spinner/components/currsmp/index.html#c.currsmp_configure">currsmp_configure() API reference</a>
 that sets current regulation callback.</p>
 </aside>
@@ -175,8 +189,14 @@ that sets current regulation callback.</p>
 <h2>Vechicle Controllers<a class="headerlink" href="#vechicle-controllers" title="Link to this heading"></a></h2>
 <section id="cognipilot-cerebri">
 <h3>CogniPilot - Cerebri<a class="headerlink" href="#cognipilot-cerebri" title="Link to this heading"></a></h3>
-<p>Publisher/subscriber model.</p>
-<p><a class="reference external" href="https://github.com/CogniPilot/cerebri">GitHub: CogniPilot/cerebri</a></p>
+<p>Vehicle management unit based on Zephyr for autonomous vehicles.</p>
+<p>It is publisher / subscriber model similar to ROS.</p>
+<section id="id9">
+<h4>References<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/CogniPilot/cerebri">GitHub: CogniPilot/cerebri</a></p></li>
+</ul>
+</section>
 </section>
 </section>
 <section id="flight-controllers">
@@ -185,13 +205,23 @@ that sets current regulation callback.</p>
 <h3>ArduPilot<a class="headerlink" href="#ardupilot" title="Link to this heading"></a></h3>
 <a class="reference internal image-reference" href="https://ardupilot.org/dev/_images/copter-architecture.png"><img alt="ArduPilot Architecture" class="align-center" src="https://ardupilot.org/dev/_images/copter-architecture.png" style="width: 100%;" />
 </a>
-<p><a class="reference external" href="https://ardupilot.org/dev/docs/apmcopter-code-overview.html">ArduPilot code overview</a></p>
+<section id="id10">
+<h4>References<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ardupilot.org/dev/docs/apmcopter-code-overview.html">ArduPilot code overview</a></p></li>
+</ul>
+</section>
 </section>
 <section id="px4">
 <h3>PX4<a class="headerlink" href="#px4" title="Link to this heading"></a></h3>
-<a class="reference internal image-reference" href="https://docs.px4.io/main/assets/PX4_Architecture.BOZwmjrc.svg"><img alt="PX4 Architecture" class="align-center" src="https://docs.px4.io/main/assets/PX4_Architecture.BOZwmjrc.svg" style="width: 100%;" />
+<a class="reference internal image-reference" href="https://docs.px4.io/main/assets/PX4_Architecture.sDy5Z0TR.svg"><img alt="PX4 Architecture" class="align-center" src="https://docs.px4.io/main/assets/PX4_Architecture.sDy5Z0TR.svg" style="width: 100%;" />
 </a>
-<p><a class="reference external" href="https://docs.px4.io/main/en/concept/architecture.html">Software architecture</a></p>
+<section id="id11">
+<h4>References<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.px4.io/main/en/concept/architecture.html">Software architecture</a></p></li>
+</ul>
+</section>
 </section>
 </section>
 <section id="d-printers">
@@ -205,10 +235,10 @@ that sets current regulation callback.</p>
 <p><a class="reference external" href="https://www.klipper3d.org/Code_Overview.html">Kilpper code overview</a></p>
 </section>
 </section>
-<section id="zephyr-projects">
-<h2>Zephyr projects<a class="headerlink" href="#zephyr-projects" title="Link to this heading"></a></h2>
+<section id="other-zephyr-projects">
+<h2>Other Zephyr projects<a class="headerlink" href="#other-zephyr-projects" title="Link to this heading"></a></h2>
 <p>List of Zephyr applications and frameworks: <a class="reference external" href="https://github.com/golioth/awesome-zephyr-rtos">awesome Zephyr</a></p>
-<p>Popular Zephyr projects:</p>
+<p>Some popular Zephyr projects:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://zmk.dev/">ZMK Firmware</a></p></li>
 <li><p><a class="reference external" href="https://github.com/jakkra/ZSWatch">ZSWatch</a></p></li>

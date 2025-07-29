@@ -6,5 +6,5 @@ var structagg__typed =
     [ "lock", "structagg__typed.html#adf098c18389e53d57af511117fc96eed", null ],
     [ "map", "structagg__typed.html#ab1d138fc976644b87c9595c7bbb2ca31", null ],
     [ "pub_data", "structagg__typed.html#a72660e854b9459bc6576f90ce5873cef", null ],
-    [ "publish", "structagg__typed.html#a7691326668b338d746c37f5ae6d8a4a4", null ]
+    [ "publish", "structagg__typed.html#a98d33b151e8de66c6f1955c598364a73", null ]
 ];

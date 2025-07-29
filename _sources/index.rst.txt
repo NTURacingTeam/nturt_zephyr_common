@@ -13,11 +13,12 @@ NTU Racing Team Zephyr Documentation
    decisions/index
 
 .. toctree::
-   :caption: Common Library
+   :caption: Libraries
    :maxdepth: 1
    :hidden:
 
    library/index
+   library/vcu/index
 
 .. toctree::
    :caption: Developing

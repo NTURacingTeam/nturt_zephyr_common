@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Telemetry System" href="telemetry.html" />
-    <link rel="prev" title="Common Library" href="index.html" /> 
+    <link rel="prev" title="Error Handling" href="errors.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,10 +48,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../decisions/index.html">Architecture Decision Records</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Common Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Error Handling</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Data Aggregation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core-concepts">Core concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#defining-an-aggregation">Defining an Aggregation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#updating-members">Updating Members</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#publish-function">Publish Function</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#c.AGG_FLAG_ALWAYS_PUBLISH"><code class="docutils literal notranslate"><span class="pre">AGG_FLAG_ALWAYS_PUBLISH</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL"><code class="docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a></li>
@@ -61,8 +72,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#c.AGG_DATA_INIT"><code class="docutils literal notranslate"><span class="pre">AGG_DATA_INIT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.AGG_TYPED_DEFINE"><code class="docutils literal notranslate"><span class="pre">AGG_TYPED_DEFINE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.AGG_TYPED_UPDATE"><code class="docutils literal notranslate"><span class="pre">AGG_TYPED_UPDATE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#c.msg_agg_publish_t"><code class="docutils literal notranslate"><span class="pre">msg_agg_publish_t</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#c.msg_agg_typed_publish_t"><code class="docutils literal notranslate"><span class="pre">msg_agg_typed_publish_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.agg_publish_t"><code class="docutils literal notranslate"><span class="pre">agg_publish_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.agg_typed_publish_t"><code class="docutils literal notranslate"><span class="pre">agg_typed_publish_t</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.agg_update"><code class="docutils literal notranslate"><span class="pre">agg_update()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.agg_period_timer_cb"><code class="docutils literal notranslate"><span class="pre">agg_period_timer_cb()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.agg_early_timer_cb"><code class="docutils literal notranslate"><span class="pre">agg_early_timer_cb()</span></code></a></li>
@@ -78,6 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="command.html">Command System</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="vcu/index.html">VCU Library</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developing</span></p>
 <ul>
@@ -113,6 +125,153 @@
              
   <section id="data-aggregation">
 <span id="library-aggregation"></span><h1>Data Aggregation<a class="headerlink" href="#data-aggregation" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The data aggregation module provides a flexible mechanism for monitoring,
+collecting, and publishing updates to a collection of data or struct members.
+It is designed to track changes of individual data items, aggregate updates, and
+trigger publishing actions based on configurable timing and update policies.
+This is particularly useful for aggregating data scattered from various sources,
+such as sensor data from ADC and CAN bus, which must be collected and sent at
+regular intervals or upon change. This module can be added to any application by
+enabling the <code class="docutils literal notranslate"><span class="pre">CONFIG_NTURT_MSG</span></code> Kconfig option.</p>
+<section id="core-concepts">
+<h3>Core concepts<a class="headerlink" href="#core-concepts" title="Link to this heading"></a></h3>
+<section id="timing-parameters">
+<h4>Timing Parameters<a class="headerlink" href="#timing-parameters" title="Link to this heading"></a></h4>
+<p>There are three timing parameters that control the behavior of the aggregation:</p>
+<ul class="simple">
+<li><p><strong>Period</strong>: The typical interval at which the aggregated data is published.</p></li>
+<li><p><strong>Minimum Separation</strong>: The minimum time between two consecutive publications.</p></li>
+<li><p><strong>Watermark</strong>: The additional time to wait for late-arriving data.</p></li>
+</ul>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/aggregation_timing.svg"><img alt="../_images/aggregation_timing.svg" src="../_images/aggregation_timing.svg" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Timing parameters for data aggregation.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Basically, only after every data item in an aggregation are updated will the
+aggregated data be published. However, if after <strong>Period</strong> time has elapsed
+since the last publication and some data items are still not updated,
+additional <strong>Watermark</strong> time will be waited for late-arriving data. If after
+that time some data items are still not updated, the aggregated data will be
+published anyway, using the last known values of those data items.</p>
+<p>If the updates of specific data items are not necessary,
+<a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL" title="AGG_MEMBER_FLAG_OPTIONAL"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a> flag can be set in <a class="reference internal" href="#c.AGG_MEMBER" title="AGG_MEMBER"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER</span></code></a>
+to mark a member as optional.</p>
+<p>Since the data aggregation module is designed to be used for processing
+real-time data, aggregated data is published immediately after all data items
+are updated. And <strong>Minimum Separation</strong> is used to ensure that the publication
+does not happen too frequently. Hence the aggregated data can only be published
+in the <strong>Publish Interval</strong>.</p>
+</section>
+<section id="dormant-and-cold-start">
+<h4>Dormant and Cold Start<a class="headerlink" href="#dormant-and-cold-start" title="Link to this heading"></a></h4>
+<p>If after <strong>Period</strong> plus <strong>Watermark</strong> time has elapsed and no data items are
+updated, the aggregation will be dormant, meaning it will stop publishing until
+any one of its data items is updated again. This is useful to stop unnecessary
+publication when the source modules are not active or the data is not changing.</p>
+<p>After the aggregation is cold started by an update of a data item (including
+data marked by <a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL" title="AGG_MEMBER_FLAG_OPTIONAL"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a>), it will only wait
+<strong>Watermark</strong> time for other data items to be updated before publishing.</p>
+<p>Dormant can be turned off by setting <a class="reference internal" href="#c.AGG_FLAG_ALWAYS_PUBLISH" title="AGG_FLAG_ALWAYS_PUBLISH"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_FLAG_ALWAYS_PUBLISH</span></code></a> flag in
+<a class="reference internal" href="#c.AGG_DEFINE" title="AGG_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_DEFINE</span></code></a> or <a class="reference internal" href="#c.AGG_TYPED_DEFINE" title="AGG_TYPED_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_TYPED_DEFINE</span></code></a>, which will force the
+aggregation to publish every <strong>Period</strong> plus <strong>Watermark</strong> even if no data items
+are updated.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, the aggregation module does not start automatically even if
+<a class="reference internal" href="#c.AGG_FLAG_ALWAYS_PUBLISH" title="AGG_FLAG_ALWAYS_PUBLISH"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_FLAG_ALWAYS_PUBLISH</span></code></a> is set. It will only start when
+the first data item is updated. This may be changed in the future to
+automatically start the aggregation after initialization.</p>
+</div>
+</section>
+<section id="data-update">
+<h4>Data Update<a class="headerlink" href="#data-update" title="Link to this heading"></a></h4>
+<p>If one data item is updated multiple times before next publication, only the
+latest value will be published. This is to ensure that the aggregated data
+reflects the most recent state of the system. If a data item is not updated
+before the next publication, its last known value will be used.</p>
+</section>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<section id="defining-an-aggregation">
+<h3>Defining an Aggregation<a class="headerlink" href="#defining-an-aggregation" title="Link to this heading"></a></h3>
+<p>The aggregation module can be used in two main ways:</p>
+<ul class="simple">
+<li><p>For external or unrelated data items, use the <a class="reference internal" href="#c.agg" title="agg"><code class="xref c c-struct docutils literal notranslate"><span class="pre">agg</span></code></a> and define it
+using <a class="reference internal" href="#c.AGG_DEFINE" title="AGG_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_DEFINE</span></code></a> or initialize it with <a class="reference internal" href="#c.AGG_INITIALIZER" title="AGG_INITIALIZER"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_INITIALIZER</span></code></a>
+within a struct. This allows you to aggregate updates to data items by their
+index, suitable for cases where the data items are not part of a single
+struct.</p></li>
+<li><p>For struct members, use <a class="reference internal" href="#c.AGG_TYPED_DEFINE" title="AGG_TYPED_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_TYPED_DEFINE</span></code></a> to define a typed
+aggregation. This macro sets up an aggregation for a specific struct type,
+allowing you to monitor and update individual members. This is useful for
+aggregating updates to fields within a message in <a class="reference external" href="https://nturacingteam.github.io/nturt_zephyr_common/doxygen/group__msg__interface.html">message types</a>
+or data structure.</p></li>
+</ul>
+<p>Suppose we have a struct representing a message:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">my_msg</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">foo</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="n">bar</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>An aggregation can be defined to monitor updates to these members:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">AGG_TYPED_DEFINE</span><span class="p">(</span><span class="n">my_msg_agg</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">my_msg</span><span class="p">,</span>
+<span class="w">    </span><span class="n">AGG_DATA_INIT</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">}}),</span><span class="w">              </span><span class="c1">// initial value</span>
+<span class="w">    </span><span class="n">K_MSEC</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span><span class="w">                                   </span><span class="c1">// period</span>
+<span class="w">    </span><span class="n">K_MSEC</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w">                                    </span><span class="c1">// minimum separation</span>
+<span class="w">    </span><span class="n">K_MSEC</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w">                                    </span><span class="c1">// watermark</span>
+<span class="w">    </span><span class="mi">0</span><span class="p">,</span><span class="w">                                             </span><span class="c1">// aggregation flags</span>
+<span class="w">    </span><span class="n">my_publish_func</span><span class="p">,</span><span class="w">                               </span><span class="c1">// publish callback</span>
+<span class="w">    </span><span class="nb">NULL</span><span class="p">,</span><span class="w">                                          </span><span class="c1">// user data for the callback</span>
+<span class="w">    </span><span class="n">AGG_MEMBER</span><span class="p">(</span><span class="n">foo</span><span class="p">),</span><span class="w">                               </span><span class="c1">// members to monitor</span>
+<span class="w">    </span><span class="n">AGG_MEMBER</span><span class="p">(</span><span class="n">bar</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">AGG_MEMBER_FLAG_OPTIONAL</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all members need to be monitored. But if a member is not monitored, only
+the initial value will be used when the aggregation is published.</p>
+</div>
+</section>
+<section id="updating-members">
+<h3>Updating Members<a class="headerlink" href="#updating-members" title="Link to this heading"></a></h3>
+<p>To signal that a member has been updated, use <a class="reference internal" href="#c.agg_update" title="agg_update"><code class="xref c c-func docutils literal notranslate"><span class="pre">agg_update()</span></code></a> for
+<a class="reference internal" href="#c.agg" title="agg"><code class="xref c c-struct docutils literal notranslate"><span class="pre">agg</span></code></a> or <a class="reference internal" href="#c.AGG_TYPED_UPDATE" title="AGG_TYPED_UPDATE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_TYPED_UPDATE</span></code></a> for typed aggregations:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">AGG_TYPED_UPDATE</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_msg_agg</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">my_msg</span><span class="p">,</span><span class="w"> </span><span class="n">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span>
+<span class="n">AGG_TYPED_UPDATE</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_msg_agg</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">my_msg</span><span class="p">,</span><span class="w"> </span><span class="n">bar</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mf">3.14F</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only members declared in the <a class="reference internal" href="#c.AGG_TYPED_DEFINE" title="AGG_TYPED_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_TYPED_DEFINE</span></code></a> can be updated. If
+a unknown member is updated, an assertion will fail at runtime.</p>
+</div>
+</section>
+<section id="publish-function">
+<h3>Publish Function<a class="headerlink" href="#publish-function" title="Link to this heading"></a></h3>
+<p>The aggregation module publishes the aggregated data by calling a user-defined
+publish function of type <a class="reference internal" href="#c.agg_publish_t" title="agg_publish_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">agg_publish_t</span></code></a> for <a class="reference internal" href="#c.agg" title="agg"><code class="xref c c-struct docutils literal notranslate"><span class="pre">agg</span></code></a> or
+<a class="reference internal" href="#c.agg_typed_publish_t" title="agg_typed_publish_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">agg_typed_publish_t</span></code></a> for typed aggregations:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">my_publish</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">my_msg</span><span class="w"> </span><span class="o">*</span><span class="n">agg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// publish the aggregated data</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="api-reference">
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
 <dl>
@@ -158,7 +317,7 @@
 <li><p><strong>min_separation</strong> – <strong>[in]</strong> Minimum separation time between two data publishing. </p></li>
 <li><p><strong>watermark</strong> – <strong>[in]</strong> Watermark to wait for late-arriving members. </p></li>
 <li><p><strong>flag</strong> – <strong>[in]</strong> Flag of the aggregation. If no flag is required, 0 should be specified, and multiple flags can be combined by using the bitwise OR operator (|). </p></li>
-<li><p><strong>publish</strong> – <strong>[in]</strong> Function to publish the data, must be of type <a class="reference internal" href="#group__msg__agg_1ga0013271e02d8c4a2efa1cce1d298fa2e"><span class="std std-ref">msg_agg_publish_t</span></a>. </p></li>
+<li><p><strong>publish</strong> – <strong>[in]</strong> Function to publish the data, must be of type <a class="reference internal" href="#group__msg__agg_1ga848100bb30e00344bf425261be87a00a"><span class="std std-ref">agg_publish_t</span></a>. </p></li>
 <li><p><strong>user_data</strong> – <strong>[in]</strong> Pointer to custom data for the callback. </p></li>
 <li><p><strong>...</strong> – <strong>[in]</strong> Flags of the data to be monitored, where each flag represents a data to be monitored. If the data does not require flag, 0 should be specified. The flags can be combined by using the bitwise OR operator (|). </p></li>
 </ul>
@@ -210,7 +369,7 @@
 <li><p><strong>_min_separation</strong> – <strong>[in]</strong> Minimum separation time between two data publishing. </p></li>
 <li><p><strong>_watermark</strong> – <strong>[in]</strong> Watermark to wait for late-arriving members. </p></li>
 <li><p><strong>_flag</strong> – <strong>[in]</strong> Flag of the aggregation. If no flag is required, 0 </p></li>
-<li><p><strong>_publish</strong> – <strong>[in]</strong> Function to publish the data, must be of type <a class="reference internal" href="#group__msg__agg_1gab13db25f95a161dbd86ea6f726bba7e3"><span class="std std-ref">msg_agg_typed_publish_t</span></a>. </p></li>
+<li><p><strong>_publish</strong> – <strong>[in]</strong> Function to publish the data, must be of type <a class="reference internal" href="#group__msg__agg_1ga4e05ae7276d3caa5c674601230780caa"><span class="std std-ref">agg_typed_publish_t</span></a>. </p></li>
 <li><p><strong>_user_data</strong> – <strong>[in]</strong> Pointer to custom data for the callback. </p></li>
 <li><p><strong>...</strong> – <strong>[in]</strong> Members of <code class="docutils literal notranslate"><span class="pre">_type</span></code> to be monitored, must be specified by <a class="reference internal" href="#group__msg__agg_1ga784151f612f43be94fabff2a822ec4cb"><span class="std std-ref">AGG_MEMBER</span></a>. </p></li>
 </ul>
@@ -238,8 +397,8 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
 <dl class="c type">
-<dt class="sig sig-object c" id="c.msg_agg_publish_t">
-<span class="target" id="group__msg__agg_1ga0013271e02d8c4a2efa1cce1d298fa2e"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">msg_agg_publish_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.agg" title="agg"><span class="n"><span class="pre">agg</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">agg</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.msg_agg_publish_t" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object c" id="c.agg_publish_t">
+<span class="target" id="group__msg__agg_1ga848100bb30e00344bf425261be87a00a"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">agg_publish_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.agg" title="agg"><span class="n"><span class="pre">agg</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">agg</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.agg_publish_t" title="Link to this definition"></a><br /></dt>
 <dd><p>Function to publish the data. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Param agg<span class="colon">:</span></dt>
@@ -252,8 +411,8 @@
 </dd></dl>
 
 <dl class="c type">
-<dt class="sig sig-object c" id="c.msg_agg_typed_publish_t">
-<span class="target" id="group__msg__agg_1gab13db25f95a161dbd86ea6f726bba7e3"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">msg_agg_typed_publish_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.msg_agg_typed_publish_t" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object c" id="c.agg_typed_publish_t">
+<span class="target" id="group__msg__agg_1ga4e05ae7276d3caa5c674601230780caa"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">agg_typed_publish_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.agg_typed_publish_t" title="Link to this definition"></a><br /></dt>
 <dd><p>Function to publish the data. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Param data<span class="colon">:</span></dt>
@@ -402,7 +561,7 @@
 
 <dl class="c var">
 <dt class="sig sig-object c" id="c.agg.publish">
-<span class="target" id="structagg_1a62221cf01b040e521726aaa4404c68bc"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.msg_agg_publish_t" title="msg_agg_publish_t"><span class="n"><span class="pre">msg_agg_publish_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publish</span></span></span><a class="headerlink" href="#c.agg.publish" title="Link to this definition"></a><br /></dt>
+<span class="target" id="structagg_1a10fd80be5db2e39abff635d517dd438f"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.agg_publish_t" title="agg_publish_t"><span class="n"><span class="pre">agg_publish_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publish</span></span></span><a class="headerlink" href="#c.agg.publish" title="Link to this definition"></a><br /></dt>
 <dd><p>Function to publish the data. </p>
 </dd></dl>
 
@@ -467,7 +626,7 @@
 
 <dl class="c var">
 <dt class="sig sig-object c" id="c.agg_typed.publish">
-<span class="target" id="structagg__typed_1a7691326668b338d746c37f5ae6d8a4a4"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.msg_agg_typed_publish_t" title="msg_agg_typed_publish_t"><span class="n"><span class="pre">msg_agg_typed_publish_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publish</span></span></span><a class="headerlink" href="#c.agg_typed.publish" title="Link to this definition"></a><br /></dt>
+<span class="target" id="structagg__typed_1a98d33b151e8de66c6f1955c598364a73"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.agg_typed_publish_t" title="agg_typed_publish_t"><span class="n"><span class="pre">agg_typed_publish_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publish</span></span></span><a class="headerlink" href="#c.agg_typed.publish" title="Link to this definition"></a><br /></dt>
 <dd><p>Function to publish the data. </p>
 </dd></dl>
 
@@ -507,7 +666,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Common Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="errors.html" class="btn btn-neutral float-left" title="Error Handling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="telemetry.html" class="btn btn-neutral float-right" title="Telemetry System" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

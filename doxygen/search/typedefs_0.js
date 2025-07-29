@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['cmd_5fdeffered_5fhandler_5ft_0',['cmd_deffered_handler_t',['../group__cmd.html#ga2c9c69215b6a7c11be67e7186d211e16',1,'cmd.h']]],
-  ['cmd_5fimmed_5fhandler_5ft_1',['cmd_immed_handler_t',['../group__cmd.html#ga12f14670490745300e33d6841ae10a03',1,'cmd.h']]]
+  ['agg_5fpublish_5ft_0',['agg_publish_t',['../group__msg__agg.html#ga848100bb30e00344bf425261be87a00a',1,'aggregation.h']]],
+  ['agg_5ftyped_5fpublish_5ft_1',['agg_typed_publish_t',['../group__msg__agg.html#ga4e05ae7276d3caa5c674601230780caa',1,'aggregation.h']]]
 ];

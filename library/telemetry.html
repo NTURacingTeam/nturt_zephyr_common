@@ -48,15 +48,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../decisions/index.html">Architecture Decision Records</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Common Library</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Common Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Error Handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="aggregation.html">Data Aggregation</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Telemetry System</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#design">Design</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core-concepts">Core concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#defining-telemetry-data">Defining Telemetry Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#updating-and-retrieving-data">Updating and Retrieving Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grouping-data">Grouping Data</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a><ul>
@@ -84,6 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="command.html">Command System</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="vcu/index.html">VCU Library</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developing</span></p>
 <ul>
@@ -121,32 +127,99 @@
 <span id="library-telemetry"></span><h1>Telemetry System<a class="headerlink" href="#telemetry-system" title="Link to this heading"></a></h1>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>The telemetry system acts as the interface between temeletry data producers and
-data consumers. It consists of the following core components:</p>
+<p>The telemetry system provides a type-safe interface for defining, updating,
+and aggregating telemetry data to be consumed by various backends. It can be
+added to any application by enabling the <code class="docutils literal notranslate"><span class="pre">CONFIG_NTURT_TM</span></code> Kconfig option.</p>
+<section id="core-concepts">
+<h3>Core concepts<a class="headerlink" href="#core-concepts" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>Data</strong>: Data is a collection of address-value pairs, where each of them
-represnets one piece of data that is being monitored such as battery voltage
-of segment 1 or IMU acceleration in the x-axis. The address is an integer that
-uniquely identifies the data which does not need to be contiguously defined.</p></li>
-<li><p><strong>Group</strong>: A group is a collection of data that are logically related to each
-other. For example, a group can be a collection of data that are related to
-the IMU sensor. And only after all data in a group is updated by the producer
-side will the data be updated on the consumer side or published by the backend
-if the group is associated with one. Each group also has a unique ID to
-identify it which also does not need to be contiguously defined.</p></li>
-<li><p><strong>Backend</strong>: A backend is used to transmit data to the consumers such as
-through UART to the host or to another thread when a group associated with it
-is updated. Backends must be defined by the user to implement the actual
-transmission of data.</p></li>
+<li><p><strong>Data Address</strong>: Since most of the embedded protocols uses an address to
+identify data such as I2C, Modbus, or CAN Open, the telemetry system uses the
+same concept. Each piece of data is defined by <a class="reference internal" href="#c.TM_DATA_DEFINE" title="TM_DATA_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">TM_DATA_DEFINE</span></code></a> using
+its name, type, and address.</p></li>
+<li><p><strong>Data Aliases</strong>: To support multiple protocols with different addresses for
+the same data, data aliases can be defined using <a class="reference internal" href="#c.TM_ALIAS_DEFINE" title="TM_ALIAS_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">TM_ALIAS_DEFINE</span></code></a>.
+This allows the same data to be accessed using different addresses and when
+either the data or any of its aliases is updated, all aliases as well as the
+original data are updated.</p></li>
+<li><p><strong>Publishing Groups</strong>: To support the situation where multiple pieces of data
+need to be published together such as different sensor data within a single
+CAN frame, data and aliases can be grouped via <a class="reference internal" href="#c.TM_GROUP_DEFINE" title="TM_GROUP_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">TM_GROUP_DEFINE</span></code></a> to
+be aggregated into a single frame.</p></li>
+<li><p><strong>Data Retrieval</strong>: Aside from actively publishing data to a backend, data
+also can be queried by passive protocols such as I2C or Modbus using
+<a class="reference internal" href="#c.tm_data_get" title="tm_data_get"><code class="xref c c-func docutils literal notranslate"><span class="pre">tm_data_get()</span></code></a>.</p></li>
 </ul>
+<p>All data operations are reentrant and thread-safe.</p>
+</section>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<section id="defining-telemetry-data">
+<h3>Defining Telemetry Data<a class="headerlink" href="#defining-telemetry-data" title="Link to this heading"></a></h3>
+<p>Use <a class="reference internal" href="#c.TM_DATA_DEFINE" title="TM_DATA_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">TM_DATA_DEFINE</span></code></a> to define one piece of data. If that data would be
+accessed across multiple files, use <a class="reference internal" href="#c.TM_DATA_DECLARE" title="TM_DATA_DECLARE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">TM_DATA_DECLARE</span></code></a> to declare it in
+a header file.</p>
+<p>To define a data named <code class="docutils literal notranslate"><span class="pre">foo</span></code> of type <code class="docutils literal notranslate"><span class="pre">int</span></code> with address <code class="docutils literal notranslate"><span class="pre">0x01</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code>
+of type <code class="docutils literal notranslate"><span class="pre">float</span></code> with address <code class="docutils literal notranslate"><span class="pre">0x02</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// in a header file</span>
+<span class="n">TM_DATA_DECLARE</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+<span class="n">TM_DATA_DECLARE</span><span class="p">(</span><span class="n">bar</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="p">);</span>
+
+<span class="c1">// in a source file</span>
+<span class="n">TM_DATA_DEFINE</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">);</span>
+<span class="n">TM_DATA_DEFINE</span><span class="p">(</span><span class="n">bar</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="p">,</span><span class="w"> </span><span class="mh">0x02</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Data aliases are defined and declared in similar way using
+<a class="reference internal" href="#c.TM_ALIAS_DEFINE" title="TM_ALIAS_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">TM_ALIAS_DEFINE</span></code></a> and <a class="reference internal" href="#c.TM_ALIAS_DECLARE" title="TM_ALIAS_DECLARE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">TM_ALIAS_DECLARE</span></code></a>. To define an alias
+for the data <code class="docutils literal notranslate"><span class="pre">bar</span></code> with the name <code class="docutils literal notranslate"><span class="pre">baz</span></code> and alias address <code class="docutils literal notranslate"><span class="pre">0x100</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// in a header file</span>
+<span class="n">TM_ALIAS_DECLARE</span><span class="p">(</span><span class="n">baz</span><span class="p">,</span><span class="w"> </span><span class="n">bar</span><span class="p">);</span>
+
+<span class="c1">// in a source file</span>
+<span class="n">TM_ALIAS_DEFINE</span><span class="p">(</span><span class="n">baz</span><span class="p">,</span><span class="w"> </span><span class="n">bar</span><span class="p">,</span><span class="w"> </span><span class="mh">0x100</span><span class="p">);</span>
+</pre></div>
+</div>
 </section>
-<section id="design">
-<h2>Design<a class="headerlink" href="#design" title="Link to this heading"></a></h2>
-<section id="architecture">
-<h3>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h3>
+<section id="updating-and-retrieving-data">
+<h3>Updating and Retrieving Data<a class="headerlink" href="#updating-and-retrieving-data" title="Link to this heading"></a></h3>
+<p>Data and aliases can be accessed either by their names via
+<a class="reference internal" href="#c.TM_DATA_GET" title="TM_DATA_GET"><code class="xref c c-macro docutils literal notranslate"><span class="pre">TM_DATA_GET</span></code></a>, <a class="reference internal" href="#c.TM_DATA_UPDATE" title="TM_DATA_UPDATE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">TM_DATA_UPDATE</span></code></a> macros, or by their addresses
+via <a class="reference internal" href="#c.tm_data_get" title="tm_data_get"><code class="xref c c-func docutils literal notranslate"><span class="pre">tm_data_get()</span></code></a>, <a class="reference internal" href="#c.tm_data_update" title="tm_data_update"><code class="xref c c-func docutils literal notranslate"><span class="pre">tm_data_update()</span></code></a> functions.</p>
+<p>Since the type of the data is known at compile time, accessing by their names is
+internally done via assignment operator <code class="docutils literal notranslate"><span class="pre">=</span></code>. For example, to update the data
+<code class="docutils literal notranslate"><span class="pre">foo</span></code> that is an integer with a float value or retrieve it as a boolean:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">TM_DATA_UPDATE</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="w"> </span><span class="mf">3.14F</span><span class="p">);</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="n">is_non_zero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TM_DATA_GET</span><span class="p">(</span><span class="n">foo</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>However, since accessing data by their addresses is internally done via
+<code class="xref c c-func docutils literal notranslate"><span class="pre">memcpy()</span></code>, the argument must be of the same type as the data. For
+example, to update the data <code class="docutils literal notranslate"><span class="pre">foo</span></code> of address <code class="docutils literal notranslate"><span class="pre">0x01</span></code> with a float value:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">new_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.14F</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">new_foo_int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_foo</span><span class="p">;</span>
+<span class="n">tm_data_update</span><span class="p">(</span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">new_foo_int</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="grouping-data">
+<h3>Grouping Data<a class="headerlink" href="#grouping-data" title="Link to this heading"></a></h3>
+<p>Telemetry system uses <a class="reference internal" href="aggregation.html#library-aggregation"><span class="std std-ref">Data Aggregation</span></a> to aggregate data into groups
+for publishing. For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">TM_GROUP_DEFINE</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span>
+<span class="w">    </span><span class="n">period</span><span class="p">,</span><span class="w"> </span><span class="n">min_separation</span><span class="p">,</span><span class="w"> </span><span class="n">watermark</span><span class="p">,</span><span class="w"> </span><span class="n">flag</span><span class="p">,</span><span class="w"> </span><span class="n">publish</span><span class="p">,</span><span class="w"> </span><span class="n">user_data</span>
+<span class="w">    </span><span class="n">TM_DATA</span><span class="p">(</span><span class="n">foo</span><span class="p">),</span>
+<span class="w">    </span><span class="n">TM_DATA</span><span class="p">(</span><span class="n">baz</span><span class="p">,</span><span class="w"> </span><span class="n">AGG_MEMBER_FLAG_OPTIONAL</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>defines a group named <code class="docutils literal notranslate"><span class="pre">my_group</span></code> that aggregates the data <code class="docutils literal notranslate"><span class="pre">foo</span></code> and
+<code class="docutils literal notranslate"><span class="pre">baz</span></code>. Where <code class="docutils literal notranslate"><span class="pre">period</span></code>, <code class="docutils literal notranslate"><span class="pre">min_separation</span></code>, <code class="docutils literal notranslate"><span class="pre">watermark</span></code>, and <code class="docutils literal notranslate"><span class="pre">flag</span></code> are
+parameters for aggregation.</p>
+<p>After the data is aggregated, <code class="docutils literal notranslate"><span class="pre">publish</span></code> of type <a class="reference internal" href="#c.tm_publish_t" title="tm_publish_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">tm_publish_t</span></code></a> is
+called for every data in the group.</p>
 </section>
 </section>
 <section id="api-reference">
