@@ -27,7 +27,6 @@ extensions = [
     "sphinx_rtd_theme",
 ]
 
-numfig = True
 templates_path = ["_templates"]
 exclude_patterns = ["_build"]
 
