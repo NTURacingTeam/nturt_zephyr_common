@@ -87,7 +87,7 @@
  * should be specified, and multiple flags can be combined by using the bitwise
  * OR operator (|).
  * @param[in] publish Function to publish the data, must be of type
- * @ref msg_agg_publish_t.
+ * @ref agg_publish_t.
  * @param[in] user_data Pointer to custom data for the callback.
  * @param[in] ... Flags of the data to be monitored, where each flag represents
  * a data to be monitored. If the data does not require flag, 0 should be
@@ -140,7 +140,7 @@
  * @param[in] _watermark Watermark to wait for late-arriving members.
  * @param[in] _flag Flag of the aggregation. If no flag is required, 0
  * @param[in] _publish Function to publish the data, must be of type
- * @ref msg_agg_typed_publish_t.
+ * @ref agg_typed_publish_t.
  * @param[in] _user_data Pointer to custom data for the callback.
  * @param[in] ... Members of @p _type to be monitored, must be specified by
  * @ref AGG_MEMBER.
@@ -194,7 +194,7 @@ struct agg;
  * @param[in] agg Pointer to the data aggregation.
  * @param[in] user_data  Pointer to custom data for callback functions.
  */
-typedef void (*msg_agg_publish_t)(struct agg *agg, void *user_data);
+typedef void (*agg_publish_t)(struct agg *agg, void *user_data);
 
 /**
  * @brief Function to publish the data.
@@ -202,7 +202,7 @@ typedef void (*msg_agg_publish_t)(struct agg *agg, void *user_data);
  * @param[in] data Pointer to the data to be published.
  * @param[in] user_data  Pointer to custom data for callback functions.
  */
-typedef void (*msg_agg_typed_publish_t)(const void *data, void *user_data);
+typedef void (*agg_typed_publish_t)(const void *data, void *user_data);
 
 /// @brief Data aggregation.
 struct agg {
@@ -231,7 +231,7 @@ struct agg {
   const k_timeout_t watermark;
 
   /** Function to publish the data. */
-  const msg_agg_publish_t publish;
+  const agg_publish_t publish;
 
   /** User data for the callback. */
   void *const user_data;
@@ -263,7 +263,7 @@ struct agg_typed {
   const uint8_t *const map;
 
   /** Function to publish the data. */
-  const msg_agg_typed_publish_t publish;
+  const agg_typed_publish_t publish;
 
   /** Spinlock to protect the following struct members. */
   struct k_spinlock lock;

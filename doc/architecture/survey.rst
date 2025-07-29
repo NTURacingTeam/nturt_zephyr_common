@@ -4,7 +4,8 @@
 Survey
 ======
 
-Here are some embedded control system projects.
+Here are some projects that can be referenced for designing an embedded control
+system.
 
 Motor Controllers
 =================
@@ -20,17 +21,24 @@ controled in a while loop that;
 2. Then caculates the PWM duty cycles.
 3. Finally, applies the PWM duty cycles to each phase.
 
-`SimpleFOC code <https://docs.simplefoc.com/code>`_
+References
+~~~~~~~~~~
+
+* `SimpleFOC code <https://docs.simplefoc.com/code>`_
 
 ST Motor Workbench
 ------------------
 
-Interrupt-based loops with sensor data acquired in the control loop.
+Hardware timer-driven system where time-critical tasks are executed in ISRs and
+utilizes Cortex-M's NVIC to have preemptible interrupts with priorities. Since
+the hardware is optimized for motor control (specialized timer for three phase
+PWM), so the software can be simple.
 
-The hardware is optimized for motor control, so the software can be simple.
+References
+~~~~~~~~~~
 
-`ST motor control course: FOC library about interrupt
-<https://www.youtube.com/watch?v=ctN6wYqE970&list=PLnMKNibPkDnFxzg5RExF_MNOxX6wfT95M&index=10>`_
+* `ST motor control course: FOC library about interrupt
+  <https://www.youtube.com/watch?v=ctN6wYqE970&list=PLnMKNibPkDnFxzg5RExF_MNOxX6wfT95M&index=10>`_
 
 Spinner
 -------
@@ -67,9 +75,14 @@ Vechicle Controllers
 CogniPilot - Cerebri
 --------------------
 
-Publisher/subscriber model.
+Vehicle management unit based on Zephyr for autonomous vehicles.
 
-`GitHub: CogniPilot/cerebri <https://github.com/CogniPilot/cerebri>`_
+It is publisher / subscriber model similar to ROS.
+
+References
+~~~~~~~~~~
+
+* `GitHub: CogniPilot/cerebri <https://github.com/CogniPilot/cerebri>`_
 
 Flight Controllers
 ==================
@@ -82,17 +95,23 @@ ArduPilot
    :align: center
    :width: 100%
 
-`ArduPilot code overview <https://ardupilot.org/dev/docs/apmcopter-code-overview.html>`_
+References
+~~~~~~~~~~
+
+* `ArduPilot code overview <https://ardupilot.org/dev/docs/apmcopter-code-overview.html>`_
 
 PX4
 ---
 
-.. image:: https://docs.px4.io/main/assets/PX4_Architecture.BOZwmjrc.svg
+.. image:: https://docs.px4.io/main/assets/PX4_Architecture.sDy5Z0TR.svg
    :alt: PX4 Architecture
    :align: center
    :width: 100%
 
-`Software architecture <https://docs.px4.io/main/en/concept/architecture.html>`_
+References
+~~~~~~~~~~
+
+* `Software architecture <https://docs.px4.io/main/en/concept/architecture.html>`_
 
 3D Printers
 ===========
@@ -107,13 +126,13 @@ Kilpper
 
 `Kilpper code overview <https://www.klipper3d.org/Code_Overview.html>`_
 
-Zephyr projects
-===============
+Other Zephyr projects
+=====================
 
 List of Zephyr applications and frameworks: `awesome Zephyr
 <https://github.com/golioth/awesome-zephyr-rtos>`_
 
-Popular Zephyr projects:
+Some popular Zephyr projects:
 
 * `ZMK Firmware <https://zmk.dev/>`_
 * `ZSWatch <https://github.com/jakkra/ZSWatch>`_
