@@ -46,7 +46,11 @@ struct canopen_emcy_ctx g_ctx = {
 };
 
 SYS_HASHMAP_DEFINE_STATIC(g_status_bit_map);
-SYS_INIT(init, APPLICATION, CONFIG_NTURT_CANOPEN_INIT_PRIORITY);
+
+// EMCY must be initialized before canopen is initialized in zephyr since
+// canopennode will report errors in initialization via CO_error() and call the
+// error callback registered in this module.
+SYS_INIT(init, APPLICATION, UTIL_DEC(CONFIG_CANOPENNODE_INIT_PRIORITY));
 
 ERR_DEFINE(canbus, ERR_CODE_CANBUS, ERR_SEV_FATAL, "CAN bus error");
 ERR_CALLBACK_DEFINE(err_cb, NULL);
