@@ -25,9 +25,10 @@ NTU Racing Team Zephyr Documentation
    :maxdepth: 1
    :hidden:
 
-   doc
+   doxygen
    test
    notes/index
+   doc
 
 Indices and Tables
 ==================

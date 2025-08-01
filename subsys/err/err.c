@@ -109,19 +109,19 @@ static void err_notify(struct err *err) {
     bool match = true;
 
     for (struct err_filter *filter = callback->filters;
-         match && filter->type != ERR_FILTER_INVALID; filter++) {
+         match && filter->type != ERR_FILTER_TYPE_INVALID; filter++) {
       match = false;
 
       for (size_t i = 0; !match && i < filter->size; i++) {
         switch (filter->type) {
-          case ERR_FILTER_CODE:
+          case ERR_FILTER_TYPE_CODE:
             if (filter->errcodes[i] == err->errcode) {
               match = true;
             }
 
             break;
 
-          case ERR_FILTER_SEV:
+          case ERR_FILTER_TYPE_SEV:
             if (filter->serverities[i] == (err->flags & ERR_FLAG_SEV_MASK)) {
               match = true;
             }

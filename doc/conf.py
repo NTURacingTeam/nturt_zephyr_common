@@ -55,3 +55,7 @@ breathe_domain_by_extension = {
 }
 breathe_show_enumvalue_initializer = True
 breathe_default_members = ("members", )
+
+# -- Options for other plugins --------------------------------------------
+
+todo_include_todos = True

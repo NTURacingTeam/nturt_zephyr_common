@@ -11,7 +11,7 @@ The Vehicle Control Unit (VCU) is architected in a layered manner to ensure
 modularity and maintainability. Most of the drivers and the middlewares are
 provided by Zephyr, with only parts in blue being implemented by us.
 
-.. figure:: ../_static/images/architecture.svg
+.. figure:: /_static/images/architecture.svg
    :width: 100%
    :align: center
 
@@ -32,7 +32,7 @@ transmit telemetry data, :ref:`library_telemetry` is used as the broker to
 receive messages from Zbus for various backend protocols, including data
 logginger, to publish.
 
-.. figure:: ../_static/images/data_flow_diagram.svg
+.. figure:: /_static/images/data_flow_diagram.svg
    :width: 75%
    :align: center
 
@@ -50,7 +50,7 @@ filled circles represent the initial state and the initial state transition of
 the state machine, meaning which substate to enter when transitioning to the
 parent state. So the initial state of the VCU is ``RTD_BLINK``.
 
-.. figure:: ../_static/images/state_transition_diagram.svg
+.. figure:: /_static/images/state_transition_diagram.svg
    :width: 90%
    :align: center
 

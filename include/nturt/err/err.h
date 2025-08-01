@@ -60,9 +60,9 @@
       .desc = _desc,                                                        \
   }
 
-#define _ERR_FILTER_LAST          \
-  {                               \
-      .type = ERR_FILTER_INVALID, \
+#define _ERR_FILTER_LAST               \
+  {                                    \
+      .type = ERR_FILTER_TYPE_INVALID, \
   }
 
 /**
@@ -72,7 +72,7 @@
  */
 #define ERR_FILTER_CODE(...)                 \
   {                                          \
-      .type = ERR_FILTER_CODE,               \
+      .type = ERR_FILTER_TYPE_CODE,          \
       .size = NUM_VA_ARGS(__VA_ARGS__),      \
       .errcodes = (uint32_t[]){__VA_ARGS__}, \
   }
@@ -84,7 +84,7 @@
  */
 #define ERR_FILTER_SEV(...)                     \
   {                                             \
-      .type = ERR_FILTER_SEV,                   \
+      .type = ERR_FILTER_TYPE_SEV,              \
       .size = NUM_VA_ARGS(__VA_ARGS__),         \
       .serverities = (uint32_t[]){__VA_ARGS__}, \
   }
@@ -153,13 +153,13 @@ enum err_sev {
 /// @brief Error filter type.
 enum err_filter_type {
   /** Invalid filter, internal use only. */
-  ERR_FILTER_INVALID = 0,
+  ERR_FILTER_TYPE_INVALID = 0,
 
   /** Filter for error codes. */
-  ERR_FILTER_CODE = 1,
+  ERR_FILTER_TYPE_CODE = 1,
 
   /** Filter for severities. */
-  ERR_FILTER_SEV = 2,
+  ERR_FILTER_TYPE_SEV = 2,
 };
 
 /// @brief Error.
@@ -230,7 +230,8 @@ extern const struct err_list* __err_errors;
  */
 void err_report(uint32_t errcode, bool set);
 
-/** * @brief Check if the error is set.
+/**
+ * @brief Check if the error is set.
  *
  * @param[in] errcode Error code to check.
  * @return true if the error is set, false otherwise.
