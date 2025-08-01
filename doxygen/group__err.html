@@ -195,9 +195,9 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga62bf75f148b9a5c4167dcdef27d10b0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error severity.  <a href="#ga62bf75f148b9a5c4167dcdef27d10b0a">More...</a><br /></td></tr>
 <tr class="separator:ga62bf75f148b9a5c4167dcdef27d10b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga602bd59ba72bb49f23ccace76777a3fd" id="r_ga602bd59ba72bb49f23ccace76777a3fd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga602bd59ba72bb49f23ccace76777a3fd">err_filter_type</a> { <a class="el" href="#gga602bd59ba72bb49f23ccace76777a3fdaa6edacca53c252b3f13dd012d07f422d">ERR_FILTER_INVALID</a> = 0
-, <a class="el" href="#gga602bd59ba72bb49f23ccace76777a3fdadae581c22d0c85e6462182ec44b565da">ERR_FILTER_CODE</a> = 1
-, <a class="el" href="#gga602bd59ba72bb49f23ccace76777a3fdaeb85b5a14ad86dea1412825f4d274fd5">ERR_FILTER_SEV</a> = 2
+<tr class="memitem:ga602bd59ba72bb49f23ccace76777a3fd" id="r_ga602bd59ba72bb49f23ccace76777a3fd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga602bd59ba72bb49f23ccace76777a3fd">err_filter_type</a> { <a class="el" href="#gga602bd59ba72bb49f23ccace76777a3fda28074fc2c38fb934648266a4d3cf6a7c">ERR_FILTER_TYPE_INVALID</a> = 0
+, <a class="el" href="#gga602bd59ba72bb49f23ccace76777a3fda12ae9cb1c022e3f7f4fa0595a64557f2">ERR_FILTER_TYPE_CODE</a> = 1
+, <a class="el" href="#gga602bd59ba72bb49f23ccace76777a3fdab77829f00ae294460241fae305108524">ERR_FILTER_TYPE_SEV</a> = 2
  }</td></tr>
 <tr class="memdesc:ga602bd59ba72bb49f23ccace76777a3fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error filter type.  <a href="#ga602bd59ba72bb49f23ccace76777a3fd">More...</a><br /></td></tr>
 <tr class="separator:ga602bd59ba72bb49f23ccace76777a3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -374,11 +374,11 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="err_8h.html">nturt/err/err.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  {                                          \</div>
-<div class="line">      .type = <a class="code hl_define" href="#gab50611f7443a2c01df4c6a2d81b0b876">ERR_FILTER_CODE</a>,               \</div>
+<div class="line">      .type = <a class="code hl_enumvalue" href="#gga602bd59ba72bb49f23ccace76777a3fda12ae9cb1c022e3f7f4fa0595a64557f2">ERR_FILTER_TYPE_CODE</a>,          \</div>
 <div class="line">      .size = NUM_VA_ARGS(__VA_ARGS__),      \</div>
 <div class="line">      .errcodes = (uint32_t[]){__VA_ARGS__}, \</div>
 <div class="line">  }</div>
-<div class="ttc" id="agroup__err_html_gab50611f7443a2c01df4c6a2d81b0b876"><div class="ttname"><a href="#gab50611f7443a2c01df4c6a2d81b0b876">ERR_FILTER_CODE</a></div><div class="ttdeci">#define ERR_FILTER_CODE(...)</div><div class="ttdoc">Error filter for error codes.</div><div class="ttdef"><b>Definition</b> err.h:73</div></div>
+<div class="ttc" id="agroup__err_html_gga602bd59ba72bb49f23ccace76777a3fda12ae9cb1c022e3f7f4fa0595a64557f2"><div class="ttname"><a href="#gga602bd59ba72bb49f23ccace76777a3fda12ae9cb1c022e3f7f4fa0595a64557f2">ERR_FILTER_TYPE_CODE</a></div><div class="ttdeci">@ ERR_FILTER_TYPE_CODE</div><div class="ttdef"><b>Definition</b> err.h:159</div></div>
 </div><!-- fragment -->
 <p>Error filter for error codes. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -407,11 +407,11 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="err_8h.html">nturt/err/err.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  {                                             \</div>
-<div class="line">      .type = <a class="code hl_define" href="#gaad4bda9111cbe56ab396684174c3690d">ERR_FILTER_SEV</a>,                   \</div>
+<div class="line">      .type = <a class="code hl_enumvalue" href="#gga602bd59ba72bb49f23ccace76777a3fdab77829f00ae294460241fae305108524">ERR_FILTER_TYPE_SEV</a>,              \</div>
 <div class="line">      .size = NUM_VA_ARGS(__VA_ARGS__),         \</div>
 <div class="line">      .serverities = (uint32_t[]){__VA_ARGS__}, \</div>
 <div class="line">  }</div>
-<div class="ttc" id="agroup__err_html_gaad4bda9111cbe56ab396684174c3690d"><div class="ttname"><a href="#gaad4bda9111cbe56ab396684174c3690d">ERR_FILTER_SEV</a></div><div class="ttdeci">#define ERR_FILTER_SEV(...)</div><div class="ttdoc">Error filter for severities.</div><div class="ttdef"><b>Definition</b> err.h:85</div></div>
+<div class="ttc" id="agroup__err_html_gga602bd59ba72bb49f23ccace76777a3fdab77829f00ae294460241fae305108524"><div class="ttname"><a href="#gga602bd59ba72bb49f23ccace76777a3fdab77829f00ae294460241fae305108524">ERR_FILTER_TYPE_SEV</a></div><div class="ttdeci">@ ERR_FILTER_TYPE_SEV</div><div class="ttdef"><b>Definition</b> err.h:162</div></div>
 </div><!-- fragment -->
 <p>Error filter for severities. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -549,11 +549,11 @@ Functions</h2></td></tr>
 
 <p>Error filter type. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga602bd59ba72bb49f23ccace76777a3fdaa6edacca53c252b3f13dd012d07f422d" name="gga602bd59ba72bb49f23ccace76777a3fdaa6edacca53c252b3f13dd012d07f422d"></a>ERR_FILTER_INVALID&#160;</td><td class="fielddoc"><p>Invalid filter, internal use only. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga602bd59ba72bb49f23ccace76777a3fda28074fc2c38fb934648266a4d3cf6a7c" name="gga602bd59ba72bb49f23ccace76777a3fda28074fc2c38fb934648266a4d3cf6a7c"></a>ERR_FILTER_TYPE_INVALID&#160;</td><td class="fielddoc"><p>Invalid filter, internal use only. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga602bd59ba72bb49f23ccace76777a3fdadae581c22d0c85e6462182ec44b565da" name="gga602bd59ba72bb49f23ccace76777a3fdadae581c22d0c85e6462182ec44b565da"></a>ERR_FILTER_CODE&#160;</td><td class="fielddoc"><p>Filter for error codes. </p>
+<tr><td class="fieldname"><a id="gga602bd59ba72bb49f23ccace76777a3fda12ae9cb1c022e3f7f4fa0595a64557f2" name="gga602bd59ba72bb49f23ccace76777a3fda12ae9cb1c022e3f7f4fa0595a64557f2"></a>ERR_FILTER_TYPE_CODE&#160;</td><td class="fielddoc"><p>Filter for error codes. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga602bd59ba72bb49f23ccace76777a3fdaeb85b5a14ad86dea1412825f4d274fd5" name="gga602bd59ba72bb49f23ccace76777a3fdaeb85b5a14ad86dea1412825f4d274fd5"></a>ERR_FILTER_SEV&#160;</td><td class="fielddoc"><p>Filter for severities. </p>
+<tr><td class="fieldname"><a id="gga602bd59ba72bb49f23ccace76777a3fdab77829f00ae294460241fae305108524" name="gga602bd59ba72bb49f23ccace76777a3fdab77829f00ae294460241fae305108524"></a>ERR_FILTER_TYPE_SEV&#160;</td><td class="fielddoc"><p>Filter for severities. </p>
 </td></tr>
 </table>
 
@@ -604,9 +604,6 @@ Functions</h2></td></tr>
 <p><code>#include &lt;<a class="el" href="err_8h.html">nturt/err/err.h</a>&gt;</code></p>
 
 <p>Check if the error is set. </p>
-<ul>
-<li></li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">errcode</td><td>Error code to check. </td></tr>
@@ -654,7 +651,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 29 2025 10:07:23 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Fri Aug 1 2025 09:43:10 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

@@ -51,7 +51,40 @@
 <p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Common Library</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Error Handling</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Error Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core-concepts">Core concepts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runtime-behavior">Runtime Behavior</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#defining-errors">Defining Errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reporting-errors">Reporting Errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#handling-errors">Handling Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#c.ERR_FLAG_DISABLED"><code class="docutils literal notranslate"><span class="pre">ERR_FLAG_DISABLED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.ERR_FLAG_SET"><code class="docutils literal notranslate"><span class="pre">ERR_FLAG_SET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.ERR_FLAG_SEV_MASK"><code class="docutils literal notranslate"><span class="pre">ERR_FLAG_SEV_MASK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.ERR_DEFINE"><code class="docutils literal notranslate"><span class="pre">ERR_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.ERR_FILTER_CODE"><code class="docutils literal notranslate"><span class="pre">ERR_FILTER_CODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.ERR_FILTER_SEV"><code class="docutils literal notranslate"><span class="pre">ERR_FILTER_SEV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.ERR_CALLBACK_DEFINE_NAMED"><code class="docutils literal notranslate"><span class="pre">ERR_CALLBACK_DEFINE_NAMED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.ERR_CALLBACK_DEFINE"><code class="docutils literal notranslate"><span class="pre">ERR_CALLBACK_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.ERR_FOREACH_SET"><code class="docutils literal notranslate"><span class="pre">ERR_FOREACH_SET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.err_handler_t"><code class="docutils literal notranslate"><span class="pre">err_handler_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.err_sev"><code class="docutils literal notranslate"><span class="pre">err_sev</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.err_filter_type"><code class="docutils literal notranslate"><span class="pre">err_filter_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.err_report"><code class="docutils literal notranslate"><span class="pre">err_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.err_is_set"><code class="docutils literal notranslate"><span class="pre">err_is_set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.err"><code class="docutils literal notranslate"><span class="pre">err</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.err_filter"><code class="docutils literal notranslate"><span class="pre">err_filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.err_callback"><code class="docutils literal notranslate"><span class="pre">err_callback</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="aggregation.html">Data Aggregation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="command.html">Command System</a></li>
@@ -61,9 +94,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developing</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../doc.html">Doc Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doxygen.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../test.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notes/index.html">Developer’s Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc.html">Doc Implementation</a></li>
 </ul>
 
         </div>
@@ -93,6 +127,421 @@
              
   <section id="error-handling">
 <span id="library-errors"></span><h1>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The error handling system provides a centralized way to define, report, and
+handle errors. It can be added to any application by enabling the
+<code class="docutils literal notranslate"><span class="pre">CONFIG_NTURT_ERR</span></code> Kconfig option.</p>
+<section id="core-concepts">
+<h3>Core concepts<a class="headerlink" href="#core-concepts" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Severity Levels</strong>: Errors are categorized into different severity levels in
+<a class="reference internal" href="#c.err_sev" title="err_sev"><code class="xref c c-enum docutils literal notranslate"><span class="pre">err_sev</span></code></a>.</p></li>
+<li><p><strong>Error Codes</strong>: Each error is identified by a unique error code defined using
+<a class="reference internal" href="#c.ERR_DEFINE" title="ERR_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_DEFINE</span></code></a>, which does not need to be contiguous.</p></li>
+<li><p><strong>Callbacks</strong>: Modules can register callbacks via
+<a class="reference internal" href="#c.ERR_CALLBACK_DEFINE" title="ERR_CALLBACK_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_CALLBACK_DEFINE</span></code></a> to be called when an error is reported (set or
+cleared). The callbacks may be optionally registered with filters to specify
+which errors they should handle using <a class="reference internal" href="#c.ERR_FILTER_CODE" title="ERR_FILTER_CODE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_FILTER_CODE</span></code></a> or
+<a class="reference internal" href="#c.ERR_FILTER_SEV" title="ERR_FILTER_SEV"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_FILTER_SEV</span></code></a>.</p></li>
+</ul>
+</section>
+<section id="runtime-behavior">
+<h3>Runtime Behavior<a class="headerlink" href="#runtime-behavior" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>Initialization</strong>: During system initialization, reported errors are deferred
+until <code class="docutils literal notranslate"><span class="pre">CONFIG_NTURT_ERR_CB_DISPATCH_PRIORITY</span></code> is reached. This allows error
+callbacks from modules not yet initialized to be processed later.</p></li>
+<li><p><strong>Order of Callback Dispatch</strong>: At <code class="docutils literal notranslate"><span class="pre">CONFIG_NTURT_ERR_CB_DISPATCH_PRIORITY</span></code>
+initialization priority, errors defined with <a class="reference internal" href="#c.ERR_FLAG_SET" title="ERR_FLAG_SET"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_FLAG_SET</span></code></a> are first
+processed, followed by the same order errors were reported.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Since the error callbacks are deferred, during callback dispatch, handlers
+may observe <cite>future</cite> errors that were reported after the current error was
+set.</p>
+</div>
+</li>
+<li><p><strong>Execution Context</strong>: Error callbacks are executed in the same context of the
+thread that reported the error, and they are reentrant and thread-safe.</p></li>
+</ul>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<section id="defining-errors">
+<h3>Defining Errors<a class="headerlink" href="#defining-errors" title="Link to this heading"></a></h3>
+<p>Use <a class="reference internal" href="#c.ERR_DEFINE" title="ERR_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_DEFINE</span></code></a> to define one error. For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_DEFINE</span><span class="p">(</span><span class="n">my_error</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="n">ERR_SEV_FATAL</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;My error occurred&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Errors may also be defined with additional flags to control their behavior,
+those include:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#c.ERR_FLAG_SET" title="ERR_FLAG_SET"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_FLAG_SET</span></code></a>: Indicates that the error is set after initialization.</p></li>
+<li><p><a class="reference internal" href="#c.ERR_FLAG_DISABLED" title="ERR_FLAG_DISABLED"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_FLAG_DISABLED</span></code></a>: Indicates that the error is disabled and setting
+or clearing the error will not have any effect.</p></li>
+</ul>
+</section>
+<section id="reporting-errors">
+<h3>Reporting Errors<a class="headerlink" href="#reporting-errors" title="Link to this heading"></a></h3>
+<p>Use <a class="reference internal" href="#c.err_report" title="err_report"><code class="xref c c-func docutils literal notranslate"><span class="pre">err_report()</span></code></a> to report an error using its code:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">err_report</span><span class="p">(</span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span><span class="w">  </span><span class="c1">// set the error</span>
+<span class="n">err_report</span><span class="p">(</span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"> </span><span class="c1">// clear the error</span>
+</pre></div>
+</div>
+</section>
+<section id="handling-errors">
+<h3>Handling Errors<a class="headerlink" href="#handling-errors" title="Link to this heading"></a></h3>
+<p>Use the <a class="reference internal" href="#c.ERR_CALLBACK_DEFINE" title="ERR_CALLBACK_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_CALLBACK_DEFINE</span></code></a> to define a callback to handle errors in
+event-driven fasion. For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">my_error_handler</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">errcode</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">set</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// handle the error</span>
+<span class="p">}</span>
+
+<span class="n">ERR_CALLBACK_DEFINE</span><span class="p">(</span><span class="n">my_error_handler</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can also filter which errors the callback should handle using
+<a class="reference internal" href="#c.ERR_FILTER_CODE" title="ERR_FILTER_CODE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_FILTER_CODE</span></code></a> or <a class="reference internal" href="#c.ERR_FILTER_SEV" title="ERR_FILTER_SEV"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_FILTER_SEV</span></code></a>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_CALLBACK_DEFINE</span><span class="p">(</span><span class="n">my_error_handler</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">ERR_FILTER_CODE</span><span class="p">(</span><span class="mh">0x01</span><span class="p">));</span>
+
+<span class="c1">// or</span>
+
+<span class="n">ERR_CALLBACK_DEFINE</span><span class="p">(</span><span class="n">my_error_handler</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">ERR_FILTER_SEV</span><span class="p">(</span><span class="n">ERR_SEV_FATAL</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>When two filters are specified, they are combined using logical AND, meaning the
+callback will only be invoked if both conditions are met.</p>
+<p>Errors may also be polled using <a class="reference internal" href="#c.err_is_set" title="err_is_set"><code class="xref c c-func docutils literal notranslate"><span class="pre">err_is_set()</span></code></a> or
+<a class="reference internal" href="#c.ERR_FOREACH_SET" title="ERR_FOREACH_SET"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ERR_FOREACH_SET</span></code></a> to iterate over all currently set errors.</p>
+</section>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__err"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">Error</span></span></dt>
+<dd><p>Error passing and handling support. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.ERR_FLAG_DISABLED">
+<span class="target" id="group__err_1ga37b54bcf1a36c4acde002787b9bb1f98"></span><span class="sig-name descname"><span class="n"><span class="pre">ERR_FLAG_DISABLED</span></span></span><a class="headerlink" href="#c.ERR_FLAG_DISABLED" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag indicating the error is disabled, meaning setting or clearing the error will not have any effect. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.ERR_FLAG_SET">
+<span class="target" id="group__err_1gaa9cf478dfaabc9e8f4c5d2dc32c8f095"></span><span class="sig-name descname"><span class="n"><span class="pre">ERR_FLAG_SET</span></span></span><a class="headerlink" href="#c.ERR_FLAG_SET" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag indicating the error is set. Can also be used in <a class="reference internal" href="#group__err_1gadfa829b0a03c8edda1b667ff95f88ece"><span class="std std-ref">ERR_DEFINE</span></a> to define an error that will be set after initialization. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.ERR_FLAG_SEV_MASK">
+<span class="target" id="group__err_1gaa9f6e14e6b4a114cb3ef9cac29f0bcb1"></span><span class="sig-name descname"><span class="n"><span class="pre">ERR_FLAG_SEV_MASK</span></span></span><a class="headerlink" href="#c.ERR_FLAG_SEV_MASK" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag mask indicating the severity of the error. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.ERR_DEFINE">
+<span class="target" id="group__err_1gadfa829b0a03c8edda1b667ff95f88ece"></span><span class="sig-name descname"><span class="n"><span class="pre">ERR_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_errcode</span></span>, <span class="n"><span class="pre">_serverity</span></span>, <span class="n"><span class="pre">_desc</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ERR_DEFINE" title="Link to this definition"></a><br /></dt>
+<dd><p>Define an error. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_name</strong> – <strong>[in]</strong> Name of the error. </p></li>
+<li><p><strong>_errcode</strong> – <strong>[in]</strong> Code of the error. </p></li>
+<li><p><strong>_serverity</strong> – <strong>[in]</strong> Serverity of the error, must be one of <a class="reference internal" href="#group__err_1ga62bf75f148b9a5c4167dcdef27d10b0a"><span class="std std-ref">err_sev</span></a>. </p></li>
+<li><p><strong>_desc</strong> – <strong>[in]</strong> Description of the error. </p></li>
+<li><p><strong>...</strong> – <strong>[in]</strong> Optional flags of the error, multiple flags can be specified by using the bitwise OR operator (|). </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.ERR_FILTER_CODE">
+<span class="target" id="group__err_1gab50611f7443a2c01df4c6a2d81b0b876"></span><span class="sig-name descname"><span class="n"><span class="pre">ERR_FILTER_CODE</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ERR_FILTER_CODE" title="Link to this definition"></a><br /></dt>
+<dd><p>Error filter for error codes. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>...</strong> – <strong>[in]</strong> Error codes to filter. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.ERR_FILTER_SEV">
+<span class="target" id="group__err_1gaad4bda9111cbe56ab396684174c3690d"></span><span class="sig-name descname"><span class="n"><span class="pre">ERR_FILTER_SEV</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ERR_FILTER_SEV" title="Link to this definition"></a><br /></dt>
+<dd><p>Error filter for severities. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>...</strong> – <strong>[in]</strong> Severities to filter. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.ERR_CALLBACK_DEFINE_NAMED">
+<span class="target" id="group__err_1ga81d68997b763168d465570e49316a981"></span><span class="sig-name descname"><span class="n"><span class="pre">ERR_CALLBACK_DEFINE_NAMED</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_handler</span></span>, <span class="n"><span class="pre">_user_data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ERR_CALLBACK_DEFINE_NAMED" title="Link to this definition"></a><br /></dt>
+<dd><p>Same as <a class="reference internal" href="#group__err_1gaba4f69e4540de578ef91d763193a2ebd"><span class="std std-ref">ERR_CALLBACK_DEFINE</span></a>, but with a custom name for the callback. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.ERR_CALLBACK_DEFINE">
+<span class="target" id="group__err_1gaba4f69e4540de578ef91d763193a2ebd"></span><span class="sig-name descname"><span class="n"><span class="pre">ERR_CALLBACK_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">handler</span></span>, <span class="n"><span class="pre">user_data</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ERR_CALLBACK_DEFINE" title="Link to this definition"></a><br /></dt>
+<dd><p>Define an error callback. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the name of the callback is derived from the name of <code class="docutils literal notranslate"><span class="pre">handler</span></code> , if the same handler is used for multiple callbacks, <a class="reference internal" href="#group__err_1ga81d68997b763168d465570e49316a981"><span class="std std-ref">ERR_CALLBACK_DEFINE_NAMED</span></a> can be used instead to prevent linker errors. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handler</strong> – <strong>[in]</strong> Handler of the error. </p></li>
+<li><p><strong>user_data</strong> – <strong>[in]</strong> Pointer to custom data for the callback. </p></li>
+<li><p><strong>...</strong> – <strong>[in]</strong> Optional filters for the error callback. If multiple filters are specified, they are applied in the “and” manner.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.ERR_FOREACH_SET">
+<span class="target" id="group__err_1ga560e6f7bd6c6ef4ab7063a8a004cace1"></span><span class="sig-name descname"><span class="n"><span class="pre">ERR_FOREACH_SET</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">item</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ERR_FOREACH_SET" title="Link to this definition"></a><br /></dt>
+<dd><p>Iterate over all set errors. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> – <strong>[out]</strong> <a class="reference internal" href="#group__err"><span class="std std-ref">Error</span></a> pointer to the set errors, NULL if the loop exits normally or no errors are set. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.err_handler_t">
+<span class="target" id="group__err_1gafa5b85c330587ff48762387aff33b896"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">err_handler_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">errcode</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">set</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.err_handler_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Error handler type. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param errcode<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Code of the error. </p>
+</dd>
+<dt class="field-even">Param set<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the error is set, false if the error is cleared. </p>
+</dd>
+<dt class="field-odd">Param user_data<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pointer to custom user data for the callback provided by <a class="reference internal" href="#group__err_1gaba4f69e4540de578ef91d763193a2ebd"><span class="std std-ref">ERR_CALLBACK_DEFINE</span></a>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.err_sev">
+<span class="target" id="group__err_1ga62bf75f148b9a5c4167dcdef27d10b0a"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">err_sev</span></span></span><a class="headerlink" href="#c.err_sev" title="Link to this definition"></a><br /></dt>
+<dd><p>Error severity. </p>
+<p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.err_sev.ERR_SEV_INFO">
+<span class="target" id="group__err_1gga62bf75f148b9a5c4167dcdef27d10b0aa805db7a2df0314826a7654be3ba24402"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ERR_SEV_INFO</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.err_sev.ERR_SEV_INFO" title="Link to this definition"></a><br /></dt>
+<dd><p>Info serverity, the system operates normally. </p>
+</dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.err_sev.ERR_SEV_WARN">
+<span class="target" id="group__err_1gga62bf75f148b9a5c4167dcdef27d10b0aa0196508b0c4178006b2433586b3726c1"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ERR_SEV_WARN</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.err_sev.ERR_SEV_WARN" title="Link to this definition"></a><br /></dt>
+<dd><p>Warning serverity, the system may continue running. </p>
+</dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.err_sev.ERR_SEV_FATAL">
+<span class="target" id="group__err_1gga62bf75f148b9a5c4167dcdef27d10b0aa12bb2b25e289baa08bd64ac4b9a5d3f9"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ERR_SEV_FATAL</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.err_sev.ERR_SEV_FATAL" title="Link to this definition"></a><br /></dt>
+<dd><p>Fatal serverity, the system must stop. </p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.err_filter_type">
+<span class="target" id="group__err_1ga602bd59ba72bb49f23ccace76777a3fd"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">err_filter_type</span></span></span><a class="headerlink" href="#c.err_filter_type" title="Link to this definition"></a><br /></dt>
+<dd><p>Error filter type. </p>
+<p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.err_filter_type.ERR_FILTER_TYPE_INVALID">
+<span class="target" id="group__err_1gga602bd59ba72bb49f23ccace76777a3fda28074fc2c38fb934648266a4d3cf6a7c"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ERR_FILTER_TYPE_INVALID</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.err_filter_type.ERR_FILTER_TYPE_INVALID" title="Link to this definition"></a><br /></dt>
+<dd><p>Invalid filter, internal use only. </p>
+</dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.err_filter_type.ERR_FILTER_TYPE_CODE">
+<span class="target" id="group__err_1gga602bd59ba72bb49f23ccace76777a3fda12ae9cb1c022e3f7f4fa0595a64557f2"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ERR_FILTER_TYPE_CODE</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><a class="headerlink" href="#c.err_filter_type.ERR_FILTER_TYPE_CODE" title="Link to this definition"></a><br /></dt>
+<dd><p>Filter for error codes. </p>
+</dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.err_filter_type.ERR_FILTER_TYPE_SEV">
+<span class="target" id="group__err_1gga602bd59ba72bb49f23ccace76777a3fdab77829f00ae294460241fae305108524"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ERR_FILTER_TYPE_SEV</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><a class="headerlink" href="#c.err_filter_type.ERR_FILTER_TYPE_SEV" title="Link to this definition"></a><br /></dt>
+<dd><p>Filter for severities. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.err_report">
+<span class="target" id="group__err_1ga5eaba373b7749604b21989c027015e21"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">err_report</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">errcode</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">set</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.err_report" title="Link to this definition"></a><br /></dt>
+<dd><p>Set or clear error. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>errcode</strong> – <strong>[in]</strong> Error code to set or clear. </p></li>
+<li><p><strong>set</strong> – <strong>[in]</strong> True to set error, false to clear error. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.err_is_set">
+<span class="target" id="group__err_1gad191f3c6e31e98e6c62c5483f3226854"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">err_is_set</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">errcode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.err_is_set" title="Link to this definition"></a><br /></dt>
+<dd><p>Check if the error is set. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>errcode</strong> – <strong>[in]</strong> Error code to check. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if the error is set, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.err">
+<span class="target" id="structerr"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">err</span></span></span><a class="headerlink" href="#c.err" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;nturt/err/err.h&gt;</em></div>
+<p>Error. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c">
+<span class="target" id="structerr_1ab79dd0c9f11fdcdd1293cf35a2a3416b"></span><span class="sig-name descname"><span class="pre">TAILQ_ENTRY</span> <span class="pre">(err)</span> <span class="pre">next</span></span></dt>
+<dd><p>List entry of the error. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err.errcode">
+<span class="target" id="structerr_1a31ef0ad79c3a42ba673a5849e7ecfbc2"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">errcode</span></span></span><a class="headerlink" href="#c.err.errcode" title="Link to this definition"></a><br /></dt>
+<dd><p>Code of the error. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err.name">
+<span class="target" id="structerr_1ad7c3ab9cb69fd99c63623e9d0be010bc"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><a class="headerlink" href="#c.err.name" title="Link to this definition"></a><br /></dt>
+<dd><p>String representation of the error. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err.desc">
+<span class="target" id="structerr_1af6d7662402623b857eb5cc11fa09dca0"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">desc</span></span></span><a class="headerlink" href="#c.err.desc" title="Link to this definition"></a><br /></dt>
+<dd><p>Description of the error. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.err_filter">
+<span class="target" id="structerr__filter"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">err_filter</span></span></span><a class="headerlink" href="#c.err_filter" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;nturt/err/err.h&gt;</em></div>
+<p>Error filter for error callbacks. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err_filter.type">
+<span class="target" id="structerr__filter_1af282d0c79df96a08aebd59fc0cbf3984"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.err_filter_type" title="err_filter_type"><span class="n"><span class="pre">err_filter_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><a class="headerlink" href="#c.err_filter.type" title="Link to this definition"></a><br /></dt>
+<dd><p>Type of the filter. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err_filter.size">
+<span class="target" id="structerr__filter_1a1b6cec9d2bcc88cff58865ca5be1bbc1"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size</span></span></span><a class="headerlink" href="#c.err_filter.size" title="Link to this definition"></a><br /></dt>
+<dd><p>Number of elements in the filter. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err_filter.errcodes">
+<span class="target" id="structerr__filter_1a55b7dd395d09bc660a0b5b5c80e6c1f4"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">errcodes</span></span></span><a class="headerlink" href="#c.err_filter.errcodes" title="Link to this definition"></a><br /></dt>
+<dd><p>Error codes to filter. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err_filter.serverities">
+<span class="target" id="structerr__filter_1a373af57873d99b5dba780f848f112020"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">serverities</span></span></span><a class="headerlink" href="#c.err_filter.serverities" title="Link to this definition"></a><br /></dt>
+<dd><p>Severities to filter. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.err_callback">
+<span class="target" id="structerr__callback"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">err_callback</span></span></span><a class="headerlink" href="#c.err_callback" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;nturt/err/err.h&gt;</em></div>
+<p>Error callback. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err_callback.handler">
+<span class="target" id="structerr__callback_1a33f2cf6a8d03895c1348bbc30544c24b"></span><a class="reference internal" href="#c.err_handler_t" title="err_handler_t"><span class="n"><span class="pre">err_handler_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handler</span></span></span><a class="headerlink" href="#c.err_callback.handler" title="Link to this definition"></a><br /></dt>
+<dd><p>Error handler. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err_callback.user_data">
+<span class="target" id="structerr__callback_1a0cdbd5cc671bb3b0bbea5737fc002319"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">user_data</span></span></span><a class="headerlink" href="#c.err_callback.user_data" title="Link to this definition"></a><br /></dt>
+<dd><p>User data for the callback functions. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err_callback.size">
+<span class="target" id="structerr__callback_1ae6c23abde4e671b15a0855f1af3cfedb"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size</span></span></span><a class="headerlink" href="#c.err_callback.size" title="Link to this definition"></a><br /></dt>
+<dd><p>Number of error filters. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.err_callback.filters">
+<span class="target" id="structerr__callback_1a7ae77da1770bd506b1f9c6e22c82a499"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.err_filter" title="err_filter"><span class="n"><span class="pre">err_filter</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">filters</span></span></span><a class="headerlink" href="#c.err_callback.filters" title="Link to this definition"></a><br /></dt>
+<dd><p>Array of error filters. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
 

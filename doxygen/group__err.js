@@ -31,9 +31,9 @@ var group__err =
     [ "ERR_FOREACH_SET", "group__err.html#ga560e6f7bd6c6ef4ab7063a8a004cace1", null ],
     [ "err_handler_t", "group__err.html#gafa5b85c330587ff48762387aff33b896", null ],
     [ "err_filter_type", "group__err.html#ga602bd59ba72bb49f23ccace76777a3fd", [
-      [ "ERR_FILTER_INVALID", "group__err.html#gga602bd59ba72bb49f23ccace76777a3fdaa6edacca53c252b3f13dd012d07f422d", null ],
-      [ "ERR_FILTER_CODE", "group__err.html#gga602bd59ba72bb49f23ccace76777a3fdadae581c22d0c85e6462182ec44b565da", null ],
-      [ "ERR_FILTER_SEV", "group__err.html#gga602bd59ba72bb49f23ccace76777a3fdaeb85b5a14ad86dea1412825f4d274fd5", null ]
+      [ "ERR_FILTER_TYPE_INVALID", "group__err.html#gga602bd59ba72bb49f23ccace76777a3fda28074fc2c38fb934648266a4d3cf6a7c", null ],
+      [ "ERR_FILTER_TYPE_CODE", "group__err.html#gga602bd59ba72bb49f23ccace76777a3fda12ae9cb1c022e3f7f4fa0595a64557f2", null ],
+      [ "ERR_FILTER_TYPE_SEV", "group__err.html#gga602bd59ba72bb49f23ccace76777a3fdab77829f00ae294460241fae305108524", null ]
     ] ],
     [ "err_sev", "group__err.html#ga62bf75f148b9a5c4167dcdef27d10b0a", [
       [ "ERR_SEV_INFO", "group__err.html#gga62bf75f148b9a5c4167dcdef27d10b0aa805db7a2df0314826a7654be3ba24402", null ],

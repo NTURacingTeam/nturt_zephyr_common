@@ -19,7 +19,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Doc Implementation" href="../../doc.html" />
+    <link rel="next" title="API Reference" href="../../doxygen.html" />
     <link rel="prev" title="VCU Library" href="index.html" /> 
 </head>
 
@@ -52,15 +52,29 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Common Library</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">VCU Library</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">State Machine</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">State Machine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core-concepts">Core Concepts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runtime-behavior">Runtime Behavior</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#requesting-state-transitions">Requesting State Transitions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#handling-state-transitions">Handling State Transitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developing</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../doc.html">Doc Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doxygen.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../test.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../notes/index.html">Developer’s Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc.html">Doc Implementation</a></li>
 </ul>
 
         </div>
@@ -90,6 +104,83 @@
              
   <section id="state-machine">
 <span id="library-vcu-states"></span><h1>State Machine<a class="headerlink" href="#state-machine" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The state machine is part of the control system that manages the various states
+of the system. It provides a way to handle the transition of states using
+callback functions.</p>
+<p>The state machine is defined as a <a class="reference external" href="https://en.wikipedia.org/wiki/UML_state_machine#Hierarchically_nested_states">Hierarchical state machine</a>,
+where the black filled circles represent the initial state and the initial state
+transition of the state machine, meaning which substate to enter when
+transitioning to the parent state. So the initial state of the VCU is
+<code class="docutils literal notranslate"><span class="pre">RTD_BLINK</span></code>.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../../_images/state_transition_diagram.svg"><img alt="../../_images/state_transition_diagram.svg" src="../../_images/state_transition_diagram.svg" style="width: 90%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><a class="reference external" href="https://sparxsystems.com/resources/tutorials/uml2/state-diagram.html">UML state diagram</a> of
+the VCU.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>State machine can be added to VCU by enabling the <code class="docutils literal notranslate"><span class="pre">CONFIG_VCU_STATES</span></code> Kconfig
+option.</p>
+<section id="core-concepts">
+<h3>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>States</strong>: Each state is represented by a bit in the <code class="xref c c-enum docutils literal notranslate"><span class="pre">states_state</span></code>
+and can be queried using <code class="xref c c-func docutils literal notranslate"><span class="pre">states_get()</span></code>.</p></li>
+<li><p><strong>State Transitions</strong>: State transitions are requested using
+<code class="xref c c-func docutils literal notranslate"><span class="pre">states_transition()</span></code> with a command from the
+<code class="xref c c-enum docutils literal notranslate"><span class="pre">states_trans_cmd</span></code>. However, the command is only executed if the
+source state of the command matches the current state. The validity can be
+checked using <code class="xref c c-func docutils literal notranslate"><span class="pre">states_valid_transition()</span></code> or get the information of the
+command from <code class="xref c c-func docutils literal notranslate"><span class="pre">states_transition_info()</span></code>.</p></li>
+<li><p><strong>Callbacks</strong>: Modules can register callbacks via
+<code class="xref c c-macro docutils literal notranslate"><span class="pre">STATES_CALLBACK_DEFINE</span></code> to be called when entering or exiting a
+state.</p></li>
+</ul>
+</section>
+<section id="runtime-behavior">
+<h3>Runtime Behavior<a class="headerlink" href="#runtime-behavior" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Execution Context</strong>: State transition callbacks are executed in the same
+context as the thread requesting the transition, ensuring thread safety.</p></li>
+</ul>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<section id="requesting-state-transitions">
+<h3>Requesting State Transitions<a class="headerlink" href="#requesting-state-transitions" title="Link to this heading"></a></h3>
+<p>Use <code class="xref c c-func docutils literal notranslate"><span class="pre">states_transition()</span></code> to request a state transition:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">states_transition</span><span class="p">(</span><span class="n">TRANS_CMD_DISABLE</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="handling-state-transitions">
+<h3>Handling State Transitions<a class="headerlink" href="#handling-state-transitions" title="Link to this heading"></a></h3>
+<p>Define callbacks for state transitions using <code class="xref c c-macro docutils literal notranslate"><span class="pre">STATES_CALLBACK_DEFINE</span></code>.
+For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">my_callback</span><span class="p">(</span><span class="k">enum</span><span class="w"> </span><span class="n">states_state</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_entry</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_entry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Entered state: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">states_state_str</span><span class="p">(</span><span class="n">state</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Exited state: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">states_state_str</span><span class="p">(</span><span class="n">state</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">STATES_CALLBACK_DEFINE</span><span class="p">(</span><span class="n">STATE_RUNNING</span><span class="p">,</span><span class="w"> </span><span class="n">my_callback</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “stat” in doxygen xml output for project “NTURT Zephyr Common Library” from directory: _build/xml/doxygen</p>
+</div>
+</section>
 </section>
 
 
@@ -97,7 +188,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="VCU Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../../doc.html" class="btn btn-neutral float-right" title="Doc Implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../../doxygen.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
