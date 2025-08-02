@@ -9,16 +9,20 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/__assert.h>
 
+// nturt includes
+#include <nturt/sys/util.h>
+
 LOG_MODULE_DECLARE(nturt_msg, CONFIG_NTURT_MSG_LOG_LEVEL);
 
 /* function definition -------------------------------------------------------*/
 void agg_update(struct agg *agg, int idx) {
-  K_SPINLOCK(&agg->lock) {
-    uint8_t flag = agg->member_flags[idx];
+  uint8_t flag = agg->member_flags[idx];
+  if (flag & AGG_MEMBER_FLAG_IGNORED) {
+    return;
+  }
 
-    if (!(flag & AGG_MEMBER_FLAG_OPTIONAL)) {
-      agg->updated |= BIT(idx);
-    }
+  K_SPINLOCK(&agg->lock) {
+    agg->updated |= BIT(idx);
 
     // cold start
     if (k_timer_remaining_ticks(&agg->period_timer) == 0 &&
@@ -26,9 +30,9 @@ void agg_update(struct agg *agg, int idx) {
       k_work_schedule(&agg->work, agg->watermark);
     }
 
-    // fully updated after minimum separation time
+    // fully updated after minimum separation time has elapsed
     if (k_timer_remaining_ticks(&agg->early_timer) == 0 &&
-        agg->updated == agg->fully_updated) {
+        IS_MASK_SET(agg->updated, agg->fully_updated)) {
       k_timer_start(&agg->period_timer, agg->period, K_FOREVER);
       k_timer_start(&agg->early_timer, agg->min_separation, K_FOREVER);
 
@@ -51,7 +55,8 @@ void agg_early_timer_cb(struct k_timer *timer) {
   struct agg *agg = CONTAINER_OF(timer, struct agg, early_timer);
 
   K_SPINLOCK(&agg->lock) {
-    if (agg->updated == agg->fully_updated) {
+    // early publish
+    if (IS_MASK_SET(agg->updated, agg->fully_updated)) {
       k_timer_start(&agg->period_timer, agg->period, K_FOREVER);
       k_timer_start(&agg->early_timer, agg->min_separation, K_FOREVER);
       int ret = k_work_reschedule(&agg->work, K_NO_WAIT);
@@ -76,10 +81,10 @@ void agg_work_cb(struct k_work *work) {
     LOG_DBG("No member has been updated, stop publishing %s", agg->name);
     return;
 
-  } else if (agg->updated != agg->fully_updated) {
+  } else if (!IS_MASK_SET(agg->updated, agg->fully_updated)) {
     // not fully updated means this is late publishing
-    // timers are not started right after watermark due to the inevitable
-    // delay of work queue
+    // timers may not be started right after watermark has elapsed due to the
+    // inevitable delay of workqueue
     k_timer_start(&agg->period_timer, agg->period, K_FOREVER);
     k_timer_start(&agg->early_timer, agg->min_separation, K_FOREVER);
 

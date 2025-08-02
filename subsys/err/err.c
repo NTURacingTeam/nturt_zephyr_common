@@ -101,7 +101,7 @@ static struct err *err_get(uint32_t errcode) {
     __ASSERT(0, "Error code 0x%X does not exist", errcode);
   }
 
-  return (struct err *)(uintptr_t)value;
+  return UINT_TO_POINTER(value);
 }
 
 static void err_notify(struct err *err) {
@@ -172,7 +172,8 @@ static int init() {
     __ASSERT(IS_POWER_OF_TWO(err->flags & ERR_FLAG_SEV_MASK),
              "Error must have one and only one severity.");
 
-    ret = sys_hashmap_insert(&g_err_map, err->errcode, (uintptr_t)err, NULL);
+    ret = sys_hashmap_insert(&g_err_map, err->errcode, POINTER_TO_UINT(err),
+                             NULL);
 
     __ASSERT(ret != 0, "Errors must not have the same error code: 0x%X",
              err->errcode);

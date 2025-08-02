@@ -42,8 +42,8 @@ that time some data items are still not updated, the aggregated data will be
 published anyway, using the last known values of those data items.
 
 If the updates of specific data items are not necessary,
-:c:macro:`AGG_MEMBER_FLAG_OPTIONAL` flag can be set in :c:macro:`AGG_MEMBER`
-to mark a member as optional.
+:c:macro:`AGG_MEMBER_FLAG_IGNORED` or :c:macro:`AGG_MEMBER_FLAG_OPTIONAL` flags
+can be set in :c:macro:`AGG_MEMBER` to mark a member as ignored or optional.
 
 Since the data aggregation module is designed to be used for processing
 real-time data, aggregated data is published immediately after all data items
@@ -54,12 +54,13 @@ in the **Publish Interval**.
 Dormant and Cold Start
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If after **Period** plus **Watermark** time has elapsed and no data items are
-updated, the aggregation will be dormant, meaning it will stop publishing until
-any one of its data items is updated again. This is useful to stop unnecessary
-publication when the source modules are not active or the data is not changing.
+If after **Period** plus **Watermark** time has elapsed and no data items were
+updated, the aggregation will be **dormant**, meaning it will stop publishing
+until any one of its data items is updated again. This is useful to stop
+unnecessary publication when the source modules are not active or the data is
+not changing.
 
-After the aggregation is cold started by an update of a data item (including
+After the aggregation is **cold started** by an update of a data item (including
 data marked by :c:macro:`AGG_MEMBER_FLAG_OPTIONAL`), it will only wait
 **Watermark** time for other data items to be updated before publishing.
 
@@ -82,6 +83,14 @@ If one data item is updated multiple times before next publication, only the
 latest value will be published. This is to ensure that the aggregated data
 reflects the most recent state of the system. If a data item is not updated
 before the next publication, its last known value will be used.
+
+Runtime Behavior
+----------------
+
+- **Execution Contex**: Publishing the aggregated data is done in Zephyr
+  ``System Work Queue``, which is a high-priority thread designed for bottom-
+  half of interrupt handlers. Hence the publish function should be non-blocking
+  and fast to avoid blocking the system.
 
 Usage
 =====

@@ -16,7 +16,7 @@
 #include <zephyr/sys/hash_map.h>
 #include <zephyr/sys/iterable_sections.h>
 
-LOG_MODULE_REGISTER(nturt_tm2, CONFIG_NTURT_LOG_LEVEL);
+LOG_MODULE_REGISTER(nturt_tm, CONFIG_NTURT_LOG_LEVEL);
 
 /* static function declaration -----------------------------------------------*/
 static struct tm_data *data_get(uint32_t addr);
@@ -93,14 +93,15 @@ static struct tm_data *data_get(uint32_t addr) {
     return NULL;
   }
 
-  return (struct tm_data *)(uintptr_t)value;
+  return UINT_TO_POINTER(value);
 }
 
 static int init() {
   int ret;
 
   STRUCT_SECTION_FOREACH(tm_data, data) {
-    ret = sys_hashmap_insert(&data_map, data->addr, (uintptr_t)data, NULL);
+    ret =
+        sys_hashmap_insert(&data_map, data->addr, POINTER_TO_UINT(data), NULL);
 
     __ASSERT(ret != 0, "Data must not have same address: 0x%x", data->addr);
 
