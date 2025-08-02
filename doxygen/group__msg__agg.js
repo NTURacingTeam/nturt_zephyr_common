@@ -31,6 +31,7 @@ var group__msg__agg =
     [ "AGG_FLAG_ALWAYS_PUBLISH", "group__msg__agg.html#ga74b5436be26677a7d64b9d847ea799f4", null ],
     [ "AGG_INITIALIZER", "group__msg__agg.html#gad4e61905f12b2495203ff5735dda29fa", null ],
     [ "AGG_MEMBER", "group__msg__agg.html#ga784151f612f43be94fabff2a822ec4cb", null ],
+    [ "AGG_MEMBER_FLAG_IGNORED", "group__msg__agg.html#ga3df94998b0bdc90162890b575adbc212", null ],
     [ "AGG_MEMBER_FLAG_OPTIONAL", "group__msg__agg.html#gaf14750a4e9037a3243f74039e1eb3ec7", null ],
     [ "AGG_TYPED_DEFINE", "group__msg__agg.html#ga190039420aa8359fcdb561d53cdc8522", null ],
     [ "AGG_TYPED_UPDATE", "group__msg__agg.html#ga9eb0ad8d3f070100f9c06d1fb151a3a3", null ],

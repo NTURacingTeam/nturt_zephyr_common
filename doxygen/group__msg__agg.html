@@ -145,8 +145,11 @@ Macros</h2></td></tr>
 <tr class="memitem:ga74b5436be26677a7d64b9d847ea799f4" id="r_ga74b5436be26677a7d64b9d847ea799f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga74b5436be26677a7d64b9d847ea799f4">AGG_FLAG_ALWAYS_PUBLISH</a>&#160;&#160;&#160;BIT(0)</td></tr>
 <tr class="memdesc:ga74b5436be26677a7d64b9d847ea799f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating the aggregation will always publish the data, even if no members are updated.  <br /></td></tr>
 <tr class="separator:ga74b5436be26677a7d64b9d847ea799f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf14750a4e9037a3243f74039e1eb3ec7" id="r_gaf14750a4e9037a3243f74039e1eb3ec7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaf14750a4e9037a3243f74039e1eb3ec7">AGG_MEMBER_FLAG_OPTIONAL</a>&#160;&#160;&#160;BIT(0)</td></tr>
-<tr class="memdesc:gaf14750a4e9037a3243f74039e1eb3ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating the aggregation will not wait for the member to be updated before publishing.  <br /></td></tr>
+<tr class="memitem:ga3df94998b0bdc90162890b575adbc212" id="r_ga3df94998b0bdc90162890b575adbc212"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga3df94998b0bdc90162890b575adbc212">AGG_MEMBER_FLAG_IGNORED</a>&#160;&#160;&#160;BIT(0)</td></tr>
+<tr class="memdesc:ga3df94998b0bdc90162890b575adbc212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating the aggregation will not monitor the update of the member.  <br /></td></tr>
+<tr class="separator:ga3df94998b0bdc90162890b575adbc212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf14750a4e9037a3243f74039e1eb3ec7" id="r_gaf14750a4e9037a3243f74039e1eb3ec7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaf14750a4e9037a3243f74039e1eb3ec7">AGG_MEMBER_FLAG_OPTIONAL</a>&#160;&#160;&#160;BIT(1)</td></tr>
+<tr class="memdesc:gaf14750a4e9037a3243f74039e1eb3ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating the aggregation will not wait for the member to be updated before publishing. However, updates to the member will cold start the aggregation from dormant.  <br /></td></tr>
 <tr class="separator:gaf14750a4e9037a3243f74039e1eb3ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad4e61905f12b2495203ff5735dda29fa" id="r_gad4e61905f12b2495203ff5735dda29fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad4e61905f12b2495203ff5735dda29fa">AGG_INITIALIZER</a>(_obj,  _name,  _period,  _min_separation,  _watermark,  _flag,  _publish,  _user_data, ...)</td></tr>
 <tr class="memdesc:gad4e61905f12b2495203ff5735dda29fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static initializer for a dataa aggregation. Refer to <a class="el" href="#gacea980b7e48de0678a3a8d7c60829f4a">AGG_DEFINE</a> for detailed parameter descriptions.  <br /></td></tr>
@@ -283,14 +286,14 @@ Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">struct </span><a class="code hl_struct" href="structagg.html">agg</a> <a class="code hl_variable" href="structagg.html#a5b847f6063e7b0c602545f473f1aee0c">name</a> =                                                        \</div>
 <div class="line">      AGG_INITIALIZER(<a class="code hl_variable" href="structagg.html#a5b847f6063e7b0c602545f473f1aee0c">name</a>, <a class="code hl_variable" href="structagg.html#a5b847f6063e7b0c602545f473f1aee0c">name</a>, <a class="code hl_variable" href="structagg.html#aafd7c922f7c403f32b5b7f929de67401">period</a>, <a class="code hl_variable" href="structagg.html#ac712ee6dc390e204d33ab0bea3e7bebf">min_separation</a>, <a class="code hl_variable" href="structagg.html#a444a593931f1f4bfcb135dedde1c6bce">watermark</a>, <a class="code hl_variable" href="structagg.html#ae7dc121c6b4a58693e0f7e4a77358360">flag</a>, \</div>
 <div class="line">                      <a class="code hl_variable" href="structagg.html#a10fd80be5db2e39abff635d517dd438f">publish</a>, <a class="code hl_variable" href="structagg.html#aa47f76f6f29e6b1f01c459e43265b590">user_data</a>, __VA_ARGS__)</div>
-<div class="ttc" id="astructagg_html"><div class="ttname"><a href="structagg.html">agg</a></div><div class="ttdoc">Data aggregation.</div><div class="ttdef"><b>Definition</b> aggregation.h:208</div></div>
-<div class="ttc" id="astructagg_html_a10fd80be5db2e39abff635d517dd438f"><div class="ttname"><a href="structagg.html#a10fd80be5db2e39abff635d517dd438f">agg::publish</a></div><div class="ttdeci">const agg_publish_t publish</div><div class="ttdef"><b>Definition</b> aggregation.h:234</div></div>
-<div class="ttc" id="astructagg_html_a444a593931f1f4bfcb135dedde1c6bce"><div class="ttname"><a href="structagg.html#a444a593931f1f4bfcb135dedde1c6bce">agg::watermark</a></div><div class="ttdeci">const k_timeout_t watermark</div><div class="ttdef"><b>Definition</b> aggregation.h:231</div></div>
-<div class="ttc" id="astructagg_html_a5b847f6063e7b0c602545f473f1aee0c"><div class="ttname"><a href="structagg.html#a5b847f6063e7b0c602545f473f1aee0c">agg::name</a></div><div class="ttdeci">const char * name</div><div class="ttdef"><b>Definition</b> aggregation.h:210</div></div>
-<div class="ttc" id="astructagg_html_aa47f76f6f29e6b1f01c459e43265b590"><div class="ttname"><a href="structagg.html#aa47f76f6f29e6b1f01c459e43265b590">agg::user_data</a></div><div class="ttdeci">void *const user_data</div><div class="ttdef"><b>Definition</b> aggregation.h:237</div></div>
-<div class="ttc" id="astructagg_html_aafd7c922f7c403f32b5b7f929de67401"><div class="ttname"><a href="structagg.html#aafd7c922f7c403f32b5b7f929de67401">agg::period</a></div><div class="ttdeci">const k_timeout_t period</div><div class="ttdef"><b>Definition</b> aggregation.h:225</div></div>
-<div class="ttc" id="astructagg_html_ac712ee6dc390e204d33ab0bea3e7bebf"><div class="ttname"><a href="structagg.html#ac712ee6dc390e204d33ab0bea3e7bebf">agg::min_separation</a></div><div class="ttdeci">const k_timeout_t min_separation</div><div class="ttdef"><b>Definition</b> aggregation.h:228</div></div>
-<div class="ttc" id="astructagg_html_ae7dc121c6b4a58693e0f7e4a77358360"><div class="ttname"><a href="structagg.html#ae7dc121c6b4a58693e0f7e4a77358360">agg::flag</a></div><div class="ttdeci">const int flag</div><div class="ttdef"><b>Definition</b> aggregation.h:213</div></div>
+<div class="ttc" id="astructagg_html"><div class="ttname"><a href="structagg.html">agg</a></div><div class="ttdoc">Data aggregation.</div><div class="ttdef"><b>Definition</b> aggregation.h:213</div></div>
+<div class="ttc" id="astructagg_html_a10fd80be5db2e39abff635d517dd438f"><div class="ttname"><a href="structagg.html#a10fd80be5db2e39abff635d517dd438f">agg::publish</a></div><div class="ttdeci">const agg_publish_t publish</div><div class="ttdef"><b>Definition</b> aggregation.h:239</div></div>
+<div class="ttc" id="astructagg_html_a444a593931f1f4bfcb135dedde1c6bce"><div class="ttname"><a href="structagg.html#a444a593931f1f4bfcb135dedde1c6bce">agg::watermark</a></div><div class="ttdeci">const k_timeout_t watermark</div><div class="ttdef"><b>Definition</b> aggregation.h:236</div></div>
+<div class="ttc" id="astructagg_html_a5b847f6063e7b0c602545f473f1aee0c"><div class="ttname"><a href="structagg.html#a5b847f6063e7b0c602545f473f1aee0c">agg::name</a></div><div class="ttdeci">const char * name</div><div class="ttdef"><b>Definition</b> aggregation.h:215</div></div>
+<div class="ttc" id="astructagg_html_aa47f76f6f29e6b1f01c459e43265b590"><div class="ttname"><a href="structagg.html#aa47f76f6f29e6b1f01c459e43265b590">agg::user_data</a></div><div class="ttdeci">void *const user_data</div><div class="ttdef"><b>Definition</b> aggregation.h:242</div></div>
+<div class="ttc" id="astructagg_html_aafd7c922f7c403f32b5b7f929de67401"><div class="ttname"><a href="structagg.html#aafd7c922f7c403f32b5b7f929de67401">agg::period</a></div><div class="ttdeci">const k_timeout_t period</div><div class="ttdef"><b>Definition</b> aggregation.h:230</div></div>
+<div class="ttc" id="astructagg_html_ac712ee6dc390e204d33ab0bea3e7bebf"><div class="ttname"><a href="structagg.html#ac712ee6dc390e204d33ab0bea3e7bebf">agg::min_separation</a></div><div class="ttdeci">const k_timeout_t min_separation</div><div class="ttdef"><b>Definition</b> aggregation.h:233</div></div>
+<div class="ttc" id="astructagg_html_ae7dc121c6b4a58693e0f7e4a77358360"><div class="ttname"><a href="structagg.html#ae7dc121c6b4a58693e0f7e4a77358360">agg::flag</a></div><div class="ttdeci">const int flag</div><div class="ttdef"><b>Definition</b> aggregation.h:218</div></div>
 </div><!-- fragment -->
 <p>Define a data aggregation named <code>_name</code> to monitor the update of data. May be specified as <code>static</code> to limit the scope of the aggregation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -450,6 +453,24 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga3df94998b0bdc90162890b575adbc212" name="ga3df94998b0bdc90162890b575adbc212"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3df94998b0bdc90162890b575adbc212">&#9670;&#160;</a></span>AGG_MEMBER_FLAG_IGNORED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define AGG_MEMBER_FLAG_IGNORED&#160;&#160;&#160;BIT(0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="aggregation_8h.html">nturt/msg/aggregation.h</a>&gt;</code></p>
+
+<p>Flag indicating the aggregation will not monitor the update of the member. </p>
+
+</div>
+</div>
 <a id="gaf14750a4e9037a3243f74039e1eb3ec7" name="gaf14750a4e9037a3243f74039e1eb3ec7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf14750a4e9037a3243f74039e1eb3ec7">&#9670;&#160;</a></span>AGG_MEMBER_FLAG_OPTIONAL</h2>
 
@@ -457,14 +478,14 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define AGG_MEMBER_FLAG_OPTIONAL&#160;&#160;&#160;BIT(0)</td>
+          <td class="memname">#define AGG_MEMBER_FLAG_OPTIONAL&#160;&#160;&#160;BIT(1)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="aggregation_8h.html">nturt/msg/aggregation.h</a>&gt;</code></p>
 
-<p>Flag indicating the aggregation will not wait for the member to be updated before publishing. </p>
+<p>Flag indicating the aggregation will not wait for the member to be updated before publishing. However, updates to the member will cold start the aggregation from dormant. </p>
 
 </div>
 </div>
@@ -544,11 +565,11 @@ Functions</h2></td></tr>
 <div class="line">      .<a class="code hl_variable" href="structagg__typed.html#a72660e854b9459bc6576f90ce5873cef">pub_data</a> = &amp;(_type){},                                                  \</div>
 <div class="line">  }</div>
 <div class="ttc" id="agroup__msg__agg_html_ga68e2e4263568ba3b1d0a133accf23eb8"><div class="ttname"><a href="#ga68e2e4263568ba3b1d0a133accf23eb8">agg_typed_publish</a></div><div class="ttdeci">void agg_typed_publish(struct agg *agg, void *user_data)</div><div class="ttdoc">Publish function for data aggregation.</div></div>
-<div class="ttc" id="agroup__msg__agg_html_gad4e61905f12b2495203ff5735dda29fa"><div class="ttname"><a href="#gad4e61905f12b2495203ff5735dda29fa">AGG_INITIALIZER</a></div><div class="ttdeci">#define AGG_INITIALIZER(_obj, _name, _period, _min_separation, _watermark, _flag, _publish, _user_data,...)</div><div class="ttdoc">Static initializer for a dataa aggregation. Refer to AGG_DEFINE for detailed parameter descriptions.</div><div class="ttdef"><b>Definition</b> aggregation.h:53</div></div>
-<div class="ttc" id="astructagg__typed_html"><div class="ttname"><a href="structagg__typed.html">agg_typed</a></div><div class="ttdoc">Data aggregation for a specific type.</div><div class="ttdef"><b>Definition</b> aggregation.h:256</div></div>
-<div class="ttc" id="astructagg__typed_html_a72660e854b9459bc6576f90ce5873cef"><div class="ttname"><a href="structagg__typed.html#a72660e854b9459bc6576f90ce5873cef">agg_typed::pub_data</a></div><div class="ttdeci">void *const pub_data</div><div class="ttdef"><b>Definition</b> aggregation.h:278</div></div>
-<div class="ttc" id="astructagg__typed_html_ab1d138fc976644b87c9595c7bbb2ca31"><div class="ttname"><a href="structagg__typed.html#ab1d138fc976644b87c9595c7bbb2ca31">agg_typed::map</a></div><div class="ttdeci">const uint8_t *const map</div><div class="ttdef"><b>Definition</b> aggregation.h:263</div></div>
-<div class="ttc" id="astructagg__typed_html_ac4698de76acb4131be068b7eeda6826f"><div class="ttname"><a href="structagg__typed.html#ac4698de76acb4131be068b7eeda6826f">agg_typed::agg</a></div><div class="ttdeci">struct agg agg</div><div class="ttdef"><b>Definition</b> aggregation.h:272</div></div>
+<div class="ttc" id="agroup__msg__agg_html_gad4e61905f12b2495203ff5735dda29fa"><div class="ttname"><a href="#gad4e61905f12b2495203ff5735dda29fa">AGG_INITIALIZER</a></div><div class="ttdeci">#define AGG_INITIALIZER(_obj, _name, _period, _min_separation, _watermark, _flag, _publish, _user_data,...)</div><div class="ttdoc">Static initializer for a dataa aggregation. Refer to AGG_DEFINE for detailed parameter descriptions.</div><div class="ttdef"><b>Definition</b> aggregation.h:58</div></div>
+<div class="ttc" id="astructagg__typed_html"><div class="ttname"><a href="structagg__typed.html">agg_typed</a></div><div class="ttdoc">Data aggregation for a specific type.</div><div class="ttdef"><b>Definition</b> aggregation.h:261</div></div>
+<div class="ttc" id="astructagg__typed_html_a72660e854b9459bc6576f90ce5873cef"><div class="ttname"><a href="structagg__typed.html#a72660e854b9459bc6576f90ce5873cef">agg_typed::pub_data</a></div><div class="ttdeci">void *const pub_data</div><div class="ttdef"><b>Definition</b> aggregation.h:283</div></div>
+<div class="ttc" id="astructagg__typed_html_ab1d138fc976644b87c9595c7bbb2ca31"><div class="ttname"><a href="structagg__typed.html#ab1d138fc976644b87c9595c7bbb2ca31">agg_typed::map</a></div><div class="ttdeci">const uint8_t *const map</div><div class="ttdef"><b>Definition</b> aggregation.h:268</div></div>
+<div class="ttc" id="astructagg__typed_html_ac4698de76acb4131be068b7eeda6826f"><div class="ttname"><a href="structagg__typed.html#ac4698de76acb4131be068b7eeda6826f">agg_typed::agg</a></div><div class="ttdeci">struct agg agg</div><div class="ttdef"><b>Definition</b> aggregation.h:277</div></div>
 </div><!-- fragment -->
 <p>Define a data aggregation named <code>_name</code> to monitor the update of members within a data type. May be specified as <code>static</code> to limit the scope of the aggregation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -822,7 +843,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Aug 1 2025 09:43:10 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sat Aug 2 2025 13:46:31 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

@@ -65,6 +65,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#c.AGG_FLAG_ALWAYS_PUBLISH"><code class="docutils literal notranslate"><span class="pre">AGG_FLAG_ALWAYS_PUBLISH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.AGG_MEMBER_FLAG_IGNORED"><code class="docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_IGNORED</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL"><code class="docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.AGG_INITIALIZER"><code class="docutils literal notranslate"><span class="pre">AGG_INITIALIZER</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.AGG_DEFINE"><code class="docutils literal notranslate"><span class="pre">AGG_DEFINE</span></code></a></li>
@@ -160,8 +161,8 @@ additional <strong>Watermark</strong> time will be waited for late-arriving data
 that time some data items are still not updated, the aggregated data will be
 published anyway, using the last known values of those data items.</p>
 <p>If the updates of specific data items are not necessary,
-<a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL" title="AGG_MEMBER_FLAG_OPTIONAL"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a> flag can be set in <a class="reference internal" href="#c.AGG_MEMBER" title="AGG_MEMBER"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER</span></code></a>
-to mark a member as optional.</p>
+<code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_IGNORE</span></code> or <a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL" title="AGG_MEMBER_FLAG_OPTIONAL"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a> flags
+can be set in <a class="reference internal" href="#c.AGG_MEMBER" title="AGG_MEMBER"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER</span></code></a> to mark a member as ignored or optional.</p>
 <p>Since the data aggregation module is designed to be used for processing
 real-time data, aggregated data is published immediately after all data items
 are updated. And <strong>Minimum Separation</strong> is used to ensure that the publication
@@ -170,11 +171,12 @@ in the <strong>Publish Interval</strong>.</p>
 </section>
 <section id="dormant-and-cold-start">
 <h4>Dormant and Cold Start<a class="headerlink" href="#dormant-and-cold-start" title="Link to this heading"></a></h4>
-<p>If after <strong>Period</strong> plus <strong>Watermark</strong> time has elapsed and no data items are
-updated, the aggregation will be dormant, meaning it will stop publishing until
-any one of its data items is updated again. This is useful to stop unnecessary
-publication when the source modules are not active or the data is not changing.</p>
-<p>After the aggregation is cold started by an update of a data item (including
+<p>If after <strong>Period</strong> plus <strong>Watermark</strong> time has elapsed and no data items were
+updated, the aggregation will be <strong>dormant</strong>, meaning it will stop publishing
+until any one of its data items is updated again. This is useful to stop
+unnecessary publication when the source modules are not active or the data is
+not changing.</p>
+<p>After the aggregation is <strong>cold started</strong> by an update of a data item (including
 data marked by <a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL" title="AGG_MEMBER_FLAG_OPTIONAL"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a>), it will only wait
 <strong>Watermark</strong> time for other data items to be updated before publishing.</p>
 <p>Dormant can be turned off by setting <a class="reference internal" href="#c.AGG_FLAG_ALWAYS_PUBLISH" title="AGG_FLAG_ALWAYS_PUBLISH"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_FLAG_ALWAYS_PUBLISH</span></code></a> flag in
@@ -288,9 +290,15 @@ publish function of type <a class="reference internal" href="#c.agg_publish_t" t
 </dd></dl>
 
 <dl class="c macro">
+<dt class="sig sig-object c" id="c.AGG_MEMBER_FLAG_IGNORED">
+<span class="target" id="group__msg__agg_1ga3df94998b0bdc90162890b575adbc212"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_MEMBER_FLAG_IGNORED</span></span></span><a class="headerlink" href="#c.AGG_MEMBER_FLAG_IGNORED" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag indicating the aggregation will not monitor the update of the member. </p>
+</dd></dl>
+
+<dl class="c macro">
 <dt class="sig sig-object c" id="c.AGG_MEMBER_FLAG_OPTIONAL">
 <span class="target" id="group__msg__agg_1gaf14750a4e9037a3243f74039e1eb3ec7"></span><span class="sig-name descname"><span class="n"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></span></span><a class="headerlink" href="#c.AGG_MEMBER_FLAG_OPTIONAL" title="Link to this definition"></a><br /></dt>
-<dd><p>Flag indicating the aggregation will not wait for the member to be updated before publishing. </p>
+<dd><p>Flag indicating the aggregation will not wait for the member to be updated before publishing. However, updates to the member will cold start the aggregation from dormant. </p>
 </dd></dl>
 
 <dl class="c macro">

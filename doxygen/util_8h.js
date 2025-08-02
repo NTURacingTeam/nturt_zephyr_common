@@ -5,6 +5,7 @@ var util_8h =
     [ "DISCARD", "group__util.html#ga9d833dc7be0c839a63f4da3dec99a7c4", null ],
     [ "FLAG_SET_AND_CLEAR", "group__util.html#ga1438bcfb0e681201bb3d50e2c1dffe46", null ],
     [ "GET_ARG_N_FIXED", "group__util.html#gac84802ad894bd2c65dd3c80c867400ff", null ],
+    [ "IS_MASK_SET", "group__util.html#ga22cb1b3da6b4a3466f849b66fcf50a41", null ],
     [ "LOG_DBG_THROTTLE", "group__util.html#gaef8aa0365e532c025d5911a1e295a136", null ],
     [ "LOG_ERR_THROTTLE", "group__util.html#ga4b95009fbe6957eb1883c2d9b98c8ef2", null ],
     [ "LOG_INF_THROTTLE", "group__util.html#ga55d426efeae3576a597bd4a25b020db2", null ],

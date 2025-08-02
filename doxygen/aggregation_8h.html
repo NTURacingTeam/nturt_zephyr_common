@@ -185,8 +185,11 @@ Macros</h2></td></tr>
 <tr class="memitem:ga74b5436be26677a7d64b9d847ea799f4" id="r_ga74b5436be26677a7d64b9d847ea799f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__agg.html#ga74b5436be26677a7d64b9d847ea799f4">AGG_FLAG_ALWAYS_PUBLISH</a>&#160;&#160;&#160;BIT(0)</td></tr>
 <tr class="memdesc:ga74b5436be26677a7d64b9d847ea799f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating the aggregation will always publish the data, even if no members are updated.  <br /></td></tr>
 <tr class="separator:ga74b5436be26677a7d64b9d847ea799f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf14750a4e9037a3243f74039e1eb3ec7" id="r_gaf14750a4e9037a3243f74039e1eb3ec7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__agg.html#gaf14750a4e9037a3243f74039e1eb3ec7">AGG_MEMBER_FLAG_OPTIONAL</a>&#160;&#160;&#160;BIT(0)</td></tr>
-<tr class="memdesc:gaf14750a4e9037a3243f74039e1eb3ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating the aggregation will not wait for the member to be updated before publishing.  <br /></td></tr>
+<tr class="memitem:ga3df94998b0bdc90162890b575adbc212" id="r_ga3df94998b0bdc90162890b575adbc212"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__agg.html#ga3df94998b0bdc90162890b575adbc212">AGG_MEMBER_FLAG_IGNORED</a>&#160;&#160;&#160;BIT(0)</td></tr>
+<tr class="memdesc:ga3df94998b0bdc90162890b575adbc212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating the aggregation will not monitor the update of the member.  <br /></td></tr>
+<tr class="separator:ga3df94998b0bdc90162890b575adbc212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf14750a4e9037a3243f74039e1eb3ec7" id="r_gaf14750a4e9037a3243f74039e1eb3ec7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__agg.html#gaf14750a4e9037a3243f74039e1eb3ec7">AGG_MEMBER_FLAG_OPTIONAL</a>&#160;&#160;&#160;BIT(1)</td></tr>
+<tr class="memdesc:gaf14750a4e9037a3243f74039e1eb3ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating the aggregation will not wait for the member to be updated before publishing. However, updates to the member will cold start the aggregation from dormant.  <br /></td></tr>
 <tr class="separator:gaf14750a4e9037a3243f74039e1eb3ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad4e61905f12b2495203ff5735dda29fa" id="r_gad4e61905f12b2495203ff5735dda29fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__agg.html#gad4e61905f12b2495203ff5735dda29fa">AGG_INITIALIZER</a>(_obj,  _name,  _period,  _min_separation,  _watermark,  _flag,  _publish,  _user_data, ...)</td></tr>
 <tr class="memdesc:gad4e61905f12b2495203ff5735dda29fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static initializer for a dataa aggregation. Refer to <a class="el" href="group__msg__agg.html#gacea980b7e48de0678a3a8d7c60829f4a">AGG_DEFINE</a> for detailed parameter descriptions.  <br /></td></tr>
@@ -246,7 +249,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_41af1b08bcf548b44c26155efe0f36a8.html">nturt</a></li><li class="navelem"><a class="el" href="dir_bfdb0c8bf6655ed50a7064a4579a274b.html">msg</a></li><li class="navelem"><a class="el" href="aggregation_8h.html">aggregation.h</a></li>
-    <li class="footer">Generated on Fri Aug 1 2025 09:43:10 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sat Aug 2 2025 13:46:31 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

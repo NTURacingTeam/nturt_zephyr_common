@@ -168,6 +168,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gaf68c93838d750937b129e406f849ed94" id="r_gaf68c93838d750937b129e406f849ed94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaf68c93838d750937b129e406f849ed94">XOR</a>(a,  b)</td></tr>
 <tr class="memdesc:gaf68c93838d750937b129e406f849ed94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logical XOR.  <br /></td></tr>
 <tr class="separator:gaf68c93838d750937b129e406f849ed94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22cb1b3da6b4a3466f849b66fcf50a41" id="r_ga22cb1b3da6b4a3466f849b66fcf50a41"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga22cb1b3da6b4a3466f849b66fcf50a41">IS_MASK_SET</a>(value,  mask)</td></tr>
+<tr class="memdesc:ga22cb1b3da6b4a3466f849b66fcf50a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if all bits in <code>mask</code> are set in <code>value</code> .  <br /></td></tr>
+<tr class="separator:ga22cb1b3da6b4a3466f849b66fcf50a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1438bcfb0e681201bb3d50e2c1dffe46" id="r_ga1438bcfb0e681201bb3d50e2c1dffe46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga1438bcfb0e681201bb3d50e2c1dffe46">FLAG_SET_AND_CLEAR</a>(num,  flag)</td></tr>
 <tr class="memdesc:ga1438bcfb0e681201bb3d50e2c1dffe46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a flag is set and clear that flag if it so.  <br /></td></tr>
 <tr class="separator:ga1438bcfb0e681201bb3d50e2c1dffe46"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -226,7 +229,7 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="#ga1438bcfb0e681201bb3d50e2c1dffe46">FLAG_SET_AND_CLEAR</a>(num, BIT(bit))</div>
-<div class="ttc" id="agroup__util_html_ga1438bcfb0e681201bb3d50e2c1dffe46"><div class="ttname"><a href="#ga1438bcfb0e681201bb3d50e2c1dffe46">FLAG_SET_AND_CLEAR</a></div><div class="ttdeci">#define FLAG_SET_AND_CLEAR(num, flag)</div><div class="ttdoc">Check if a flag is set and clear that flag if it so.</div><div class="ttdef"><b>Definition</b> util.h:128</div></div>
+<div class="ttc" id="agroup__util_html_ga1438bcfb0e681201bb3d50e2c1dffe46"><div class="ttname"><a href="#ga1438bcfb0e681201bb3d50e2c1dffe46">FLAG_SET_AND_CLEAR</a></div><div class="ttdeci">#define FLAG_SET_AND_CLEAR(num, flag)</div><div class="ttdoc">Check if a flag is set and clear that flag if it so.</div><div class="ttdef"><b>Definition</b> util.h:137</div></div>
 </div><!-- fragment -->
 <p>Check if a bit is set and clear that bit if it is so. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -369,6 +372,40 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Nth argument. </dd></dl>
+
+</div>
+</div>
+<a id="ga22cb1b3da6b4a3466f849b66fcf50a41" name="ga22cb1b3da6b4a3466f849b66fcf50a41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga22cb1b3da6b4a3466f849b66fcf50a41">&#9670;&#160;</a></span>IS_MASK_SET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IS_MASK_SET</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>mask</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">(((value) &amp; (mask)) == (mask))</div>
+</div><!-- fragment -->
+<p>Check if all bits in <code>mask</code> are set in <code>value</code> . </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to check. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Mask to check against. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if all bits in <code>mask</code> are set in <code>value</code> . </dd></dl>
 
 </div>
 </div>
@@ -693,8 +730,8 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  (((<span class="keyword">struct </span><a class="code hl_struct" href="structwork__ctx.html">work_ctx</a>*)CONTAINER_OF(_work, <span class="keyword">struct</span> <a class="code hl_struct" href="structwork__ctx.html">work_ctx</a>, <a class="code hl_variable" href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work</a>))-&gt;ctx)</div>
-<div class="ttc" id="astructwork__ctx_html"><div class="ttname"><a href="structwork__ctx.html">work_ctx</a></div><div class="ttdoc">Work context.</div><div class="ttdef"><b>Definition</b> util.h:224</div></div>
-<div class="ttc" id="astructwork__ctx_html_afa7a3d02898de6f5b9015f70da3ed91c"><div class="ttname"><a href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work_ctx::work</a></div><div class="ttdeci">struct k_work work</div><div class="ttdoc">Work.</div><div class="ttdef"><b>Definition</b> util.h:226</div></div>
+<div class="ttc" id="astructwork__ctx_html"><div class="ttname"><a href="structwork__ctx.html">work_ctx</a></div><div class="ttdoc">Work context.</div><div class="ttdef"><b>Definition</b> util.h:233</div></div>
+<div class="ttc" id="astructwork__ctx_html_afa7a3d02898de6f5b9015f70da3ed91c"><div class="ttname"><a href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work_ctx::work</a></div><div class="ttdeci">struct k_work work</div><div class="ttdoc">Work.</div><div class="ttdef"><b>Definition</b> util.h:235</div></div>
 </div><!-- fragment -->
 <p>Get the context of the work. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -780,7 +817,7 @@ Functions</h2></td></tr>
 <div class="line">      .size = _size,                                                       \</div>
 <div class="line">      .work_ctxs = CONCAT(_name, _work_ctx),                               \</div>
 <div class="line">  }</div>
-<div class="ttc" id="astructwork__ctx__buf_html"><div class="ttname"><a href="structwork__ctx__buf.html">work_ctx_buf</a></div><div class="ttdoc">Work context buffer.</div><div class="ttdef"><b>Definition</b> util.h:236</div></div>
+<div class="ttc" id="astructwork__ctx__buf_html"><div class="ttname"><a href="structwork__ctx__buf.html">work_ctx_buf</a></div><div class="ttdoc">Work context buffer.</div><div class="ttdef"><b>Definition</b> util.h:245</div></div>
 </div><!-- fragment -->
 <p>Define work context buffer for the bottom half of an ISR. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -864,7 +901,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Aug 1 2025 09:43:10 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sat Aug 2 2025 13:46:31 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

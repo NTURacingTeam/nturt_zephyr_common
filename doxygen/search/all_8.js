@@ -27,5 +27,6 @@ var searchData=
   ['inv_5ftemp_24',['inv_temp',['../structmsg__ts__inv.html#a71c2d1682d4d32789f7d329712f9fc43',1,'msg_ts_inv']]],
   ['inv_5ftemp_5fcan_5fto_5fphy_25',['INV_TEMP_CAN_TO_PHY',['../group__can__convert.html#gabad635ee9170b3f22da40a54973d7ed9',1,'convert.h']]],
   ['inv_5ftorque_5fcan_5fto_5fphy_26',['INV_TORQUE_CAN_TO_PHY',['../group__can__convert.html#gaebb19feee7c812dd257f7b0bfedc6dfc',1,'convert.h']]],
-  ['inv_5fvolt_5fcan_5fto_5fphy_27',['INV_VOLT_CAN_TO_PHY',['../group__can__convert.html#ga427c2e5abeb802a8c06e8e2df7716049',1,'convert.h']]]
+  ['inv_5fvolt_5fcan_5fto_5fphy_27',['INV_VOLT_CAN_TO_PHY',['../group__can__convert.html#ga427c2e5abeb802a8c06e8e2df7716049',1,'convert.h']]],
+  ['is_5fmask_5fset_28',['IS_MASK_SET',['../group__util.html#ga22cb1b3da6b4a3466f849b66fcf50a41',1,'util.h']]]
 ];

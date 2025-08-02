@@ -42,8 +42,8 @@ that time some data items are still not updated, the aggregated data will be
 published anyway, using the last known values of those data items.
 
 If the updates of specific data items are not necessary,
-:c:macro:`AGG_MEMBER_FLAG_OPTIONAL` flag can be set in :c:macro:`AGG_MEMBER`
-to mark a member as optional.
+:c:macro:`AGG_MEMBER_FLAG_IGNORE` or :c:macro:`AGG_MEMBER_FLAG_OPTIONAL` flags
+can be set in :c:macro:`AGG_MEMBER` to mark a member as ignored or optional.
 
 Since the data aggregation module is designed to be used for processing
 real-time data, aggregated data is published immediately after all data items
@@ -54,12 +54,13 @@ in the **Publish Interval**.
 Dormant and Cold Start
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If after **Period** plus **Watermark** time has elapsed and no data items are
-updated, the aggregation will be dormant, meaning it will stop publishing until
-any one of its data items is updated again. This is useful to stop unnecessary
-publication when the source modules are not active or the data is not changing.
+If after **Period** plus **Watermark** time has elapsed and no data items were
+updated, the aggregation will be **dormant**, meaning it will stop publishing
+until any one of its data items is updated again. This is useful to stop
+unnecessary publication when the source modules are not active or the data is
+not changing.
 
-After the aggregation is cold started by an update of a data item (including
+After the aggregation is **cold started** by an update of a data item (including
 data marked by :c:macro:`AGG_MEMBER_FLAG_OPTIONAL`), it will only wait
 **Watermark** time for other data items to be updated before publishing.
 
