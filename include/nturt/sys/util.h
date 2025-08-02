@@ -118,6 +118,15 @@
 #define XOR(a, b) (!(a) ^ !(b))
 
 /**
+ * @brief Check if all bits in @p mask are set in @p value .
+ * 
+ * @param[in] value Value to check.
+ * @param[in] mask Mask to check against.
+ * @return True if all bits in @p mask are set in @p value . 
+ */
+#define IS_MASK_SET(value, mask) (((value) & (mask)) == (mask))
+
+/**
  * @brief Check if a flag is set and clear that flag if it so.
  *
  * @param[in] num Number to check.

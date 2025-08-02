@@ -36,12 +36,17 @@
 /// no members are updated.
 #define AGG_FLAG_ALWAYS_PUBLISH BIT(0)
 
+/// @brief Flag indicating the aggregation will not monitor the update of the
+/// member.
+#define AGG_MEMBER_FLAG_IGNORED BIT(0)
+
 /// @brief Flag indicating the aggregation will not wait for the member to be
-/// updated before publishing.
-#define AGG_MEMBER_FLAG_OPTIONAL BIT(0)
+/// updated before publishing. However, updates to the member will cold start
+/// the aggregation from dormant.
+#define AGG_MEMBER_FLAG_OPTIONAL BIT(1)
 
 #define _ARG_FULLY_UPDATED(idx, flags) \
-  (flags & AGG_MEMBER_FLAG_OPTIONAL ? 0 : BIT(idx))
+  (flags & (AGG_MEMBER_FLAG_IGNORED | AGG_MEMBER_FLAG_OPTIONAL) ? 0 : BIT(idx))
 
 /**
  * @brief Static initializer for a dataa aggregation. Refer to @ref AGG_DEFINE
