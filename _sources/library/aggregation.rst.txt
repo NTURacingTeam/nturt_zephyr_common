@@ -42,7 +42,7 @@ that time some data items are still not updated, the aggregated data will be
 published anyway, using the last known values of those data items.
 
 If the updates of specific data items are not necessary,
-:c:macro:`AGG_MEMBER_FLAG_IGNORE` or :c:macro:`AGG_MEMBER_FLAG_OPTIONAL` flags
+:c:macro:`AGG_MEMBER_FLAG_IGNORED` or :c:macro:`AGG_MEMBER_FLAG_OPTIONAL` flags
 can be set in :c:macro:`AGG_MEMBER` to mark a member as ignored or optional.
 
 Since the data aggregation module is designed to be used for processing

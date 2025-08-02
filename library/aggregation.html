@@ -161,7 +161,7 @@ additional <strong>Watermark</strong> time will be waited for late-arriving data
 that time some data items are still not updated, the aggregated data will be
 published anyway, using the last known values of those data items.</p>
 <p>If the updates of specific data items are not necessary,
-<code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_IGNORE</span></code> or <a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL" title="AGG_MEMBER_FLAG_OPTIONAL"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a> flags
+<a class="reference internal" href="#c.AGG_MEMBER_FLAG_IGNORED" title="AGG_MEMBER_FLAG_IGNORED"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_IGNORED</span></code></a> or <a class="reference internal" href="#c.AGG_MEMBER_FLAG_OPTIONAL" title="AGG_MEMBER_FLAG_OPTIONAL"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER_FLAG_OPTIONAL</span></code></a> flags
 can be set in <a class="reference internal" href="#c.AGG_MEMBER" title="AGG_MEMBER"><code class="xref c c-macro docutils literal notranslate"><span class="pre">AGG_MEMBER</span></code></a> to mark a member as ignored or optional.</p>
 <p>Since the data aggregation module is designed to be used for processing
 real-time data, aggregated data is published immediately after all data items
