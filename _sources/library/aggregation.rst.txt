@@ -84,6 +84,14 @@ latest value will be published. This is to ensure that the aggregated data
 reflects the most recent state of the system. If a data item is not updated
 before the next publication, its last known value will be used.
 
+Runtime Behavior
+----------------
+
+- **Execution Contex**: Publishing the aggregated data is done in Zephyr
+  ``System Work Queue``, which is a high-priority thread designed for bottom-
+  half of interrupt handlers. Hence the publish function should be non-blocking
+  and fast to avoid blocking the system.
+
 Usage
 =====
 

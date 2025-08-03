@@ -55,6 +55,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Data Aggregation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#core-concepts">Core concepts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runtime-behavior">Runtime Behavior</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a><ul>
@@ -198,6 +199,15 @@ latest value will be published. This is to ensure that the aggregated data
 reflects the most recent state of the system. If a data item is not updated
 before the next publication, its last known value will be used.</p>
 </section>
+</section>
+<section id="runtime-behavior">
+<h3>Runtime Behavior<a class="headerlink" href="#runtime-behavior" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Execution Contex</strong>: Publishing the aggregated data is done in Zephyr
+<code class="docutils literal notranslate"><span class="pre">System</span> <span class="pre">Work</span> <span class="pre">Queue</span></code>, which is a high-priority thread designed for bottom-
+half of interrupt handlers. Hence the publish function should be non-blocking
+and fast to avoid blocking the system.</p></li>
+</ul>
 </section>
 </section>
 <section id="usage">
