@@ -16,24 +16,30 @@
 
 // zephyr includes
 #include <zephyr/kernel.h>
+#include <zephyr/sys/util.h>
 
 /**
- * @addtogroup msg_interface
+ * @addtogroup msg_if
  * @{
  */
 
 /* macro ---------------------------------------------------------------------*/
+/**
+ * @addtogroup msg_if_pri
+ * @{
+ */
+
 /// @brief Insert @ref msg_header format string.
 #define PRImsg_header "s%llu.%06llu s"
 
 /**
  * @brief Insert @ref msg_header arguments to print format.
  *
- * @param[in] header The message header.
+ * @param[in] data The message header.
  */
-#define PRImsg_header_arg(header)                    \
-  "timestamp: ", (header).timestamp_ns / 1000000000, \
-      ((header).timestamp_ns % 1000000000) / 1000
+#define PRImsg_header_arg(data)                    \
+  "timestamp: ", (data).timestamp_ns / 1000000000, \
+      ((data).timestamp_ns % 1000000000) / 1000
 
 /// @brief Insert @ref msg_3d_data format string.
 #define PRImsg_3d_data "s(%g, %g, %g)"
@@ -43,9 +49,8 @@
  *
  * @param[in] data The 3D data.
  */
-#define PRImsg_3d_data_arg(data)                          \
-  "", (double)(data).values[0], (double)(data).values[1], \
-      (double)(data).values[2]
+#define PRImsg_3d_data_arg(data) \
+  "", (double)(data).x, (double)(data).y, (double)(data).z
 
 /// @brief Insert @ref msg_4wheel_data format string.
 #define PRImsg_4wheel_data "s(%g, %g, %g, %g)"
@@ -55,9 +60,8 @@
  *
  * @param[in] data The 4-wheel data.
  */
-#define PRImsg_4wheel_data_arg(data)                      \
-  "", (double)(data).values[0], (double)(data).values[1], \
-      (double)(data).values[2], (double)(data).values[3]
+#define PRImsg_4wheel_data_arg(data) \
+  "", (double)(data).fl, (double)(data).fr, (double)(data).rl, (double)(data).rr
 
 /// @brief Insert @ref msg_4wheel_flags format string.
 #define PRImsg_4wheel_flags "s(0x%X, 0x%X, 0x%X, 0x%X)"
@@ -65,10 +69,97 @@
 /**
  * @brief Insert @ref msg_4wheel_flags arguments to print format.
  *
- * @param[in] flags The 4-wheel flags.
+ * @param[in] data The 4-wheel flags.
  */
-#define PRImsg_4wheel_flags_arg(flags) \
-  "", (flags).values[0], (flags).values[1], (flags).values[2], (flags).values[3]
+#define PRImsg_4wheel_flags_arg(data) \
+  "", (data).fl, (data).fr, (data).rl, (data).rr
+
+/**
+ * @} // msg_if_pri
+ */
+
+/**
+ * @addtogroup msg_if_csv
+ * @{
+ */
+
+/// @brief CSV header for @ref msg_header.
+#define CSV_PRImsg_header_header "timestamp"
+
+/// @brief Insert @ref msg_header CSV format string.
+#define CSV_PRImsg_header "llu.%06llu"
+
+/**
+ * @brief Insert @ref msg_header arguments to CSV print format.
+ *
+ * @param[in] data The message header.
+ */
+#define CSV_PRImsg_header_arg(data) \
+  (data).timestamp_ns / 1000000000, ((data).timestamp_ns % 1000000000) / 1000
+
+/** @brief CSV header for @ref msg_3d_data.
+ *
+ * @param[in] data The 3D data.
+ */
+#define CSV_PRImsg_3d_data_header(data) \
+  STRINGIFY(data)                       \
+  STRINGIFY(_x)                         \
+  "," STRINGIFY(data) STRINGIFY(_y) "," STRINGIFY(data) STRINGIFY(_z)
+
+/// @brief Insert @ref msg_3d_data CSV format string.
+#define CSV_PRImsg_3d_data ".f,%.f,%.f"
+
+/**
+ * @brief Insert @ref msg_3d_data arguments to CSV print format.
+ *
+ * @param[in] data The 3D data.
+ */
+#define CSV_PRImsg_3d_data_arg(data) \
+  (double)(data).x, (double)(data).y, (double)(data).z
+
+/** @brief CSV header for @ref msg_4wheel_data.
+ *
+ * @param[in] data The 4-wheel data.
+ */
+#define CSV_PRImsg_4wheel_data_header(data)                             \
+  STRINGIFY(data)                                                       \
+  STRINGIFY(_fl) "," STRINGIFY(data) STRINGIFY(_fr) "," STRINGIFY(data) \
+      STRINGIFY(_rl) "," STRINGIFY(data) STRINGIFY(_rr)
+
+/// @brief Insert @ref msg_4wheel_data CSV format string.
+#define CSV_PRImsg_4wheel_data ".f,%.f,%.f,%.f"
+
+/**
+ * @brief Insert @ref msg_4wheel_data arguments to CSV print format.
+ *
+ * @param[in] data The 4-wheel data.
+ */
+#define CSV_PRImsg_4wheel_data_arg(data) \
+  (double)(data).fl, (double)(data).fr, (double)(data).rl, (double)(data).rr
+
+/** @brief CSV header for @ref msg_4wheel_flags.
+ *
+ * @param[in] data The 4-wheel flags.
+ */
+#define CSV_PRImsg_4wheel_flags_header(data)      \
+  STRINGIFY(CONCAT(data, _fl))                    \
+  "," STRINGIFY(CONCAT(data, _fr)) "," STRINGIFY( \
+      CONCAT(data, _rl)) "," STRINGIFY(CONCAT(data, _rr))
+
+/// @brief Insert @ref msg_4wheel_flags CSV format string.
+#define CSV_PRImsg_4wheel_flags "u,%u,%u,%u"
+
+/**
+ * @brief Insert @ref msg_4wheel_flags arguments to CSV print format.
+ *
+ * @param[in] data The 4-wheel flags.
+ */
+#define CSV_PRImsg_4wheel_flags_arg(data) \
+  (data).fl, (data).fr, (data).rl, (data).rr
+
+/**
+ * @} // msg_if_csv
+ */
 
 /* type ----------------------------------------------------------------------*/
 /// @brief Message header.
@@ -148,7 +239,7 @@ union msg_4wheel_flags {
 void msg_header_init(struct msg_header *header);
 
 /**
- * @} // msg_interface
+ * @} // msg_if
  */
 
 #endif  // NTURT_MSG_INTERFACES_COMMON_H_

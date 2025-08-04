@@ -22,7 +22,7 @@
 #include "nturt/msg/interfaces/tractive.h"
 
 /**
- * @defgroup msg_interface Message Interface
+ * @defgroup msg_if Message Interface
  * @brief Message type definitions.
  *
  * @ingroup msg
@@ -30,7 +30,31 @@
  */
 
 /**
- * @} // msg_interface
+ * @defgroup msg_if_pri Message Printing
+ * @brief Message printing format strings.
+ *
+ * @ingroup msg_if
+ * @{
+ */
+
+/**
+ * @} // msg_if_pri
+ */
+
+/**
+ * @defgroup msg_if_csv Message CSV
+ * @brief Message CSV format strings.
+ *
+ * @ingroup msg_if
+ *  @{
+ */
+
+/**
+ * @} // msg_if_csv
+ */
+
+/**
+ * @} // msg_if
  */
 
 #endif  // NTURT_MSG_INTERFACES_INTERFACES_H_
