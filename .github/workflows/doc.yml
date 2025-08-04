@@ -36,6 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Clone nturt_vcu
+      run: git clone --depth 1 https://github.com/NTURacingTeam/nturt_vcu
+      working-directory: ..
+
     - name: Checkout
       uses: actions/checkout@v4
 
@@ -48,13 +52,11 @@ jobs:
         echo "/opt/doxygen-${DOXYGEN_VERSION}/bin" >> $GITHUB_PATH
 
     - name: Install Python Packages
-      run: |
-        pip3 install -r doc/requirements.txt
+      run: pip3 install -r doc/requirements.txt
 
     - name: Build documentation
-      run: |
-        cd doc
-        make html
+      run: make html
+      working-directory: doc
 
     - name: Publish to github pages
       uses: peaceiris/actions-gh-pages@v4
