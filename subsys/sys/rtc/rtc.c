@@ -1,5 +1,4 @@
 // glibc includes
-#include <errno.h>
 #include <string.h>
 #include <time.h>
 
@@ -9,7 +8,7 @@
 #include <zephyr/drivers/rtc.h>
 #include <zephyr/init.h>
 #include <zephyr/logging/log.h>
-#include <zephyr/posix/time.h>
+#include <zephyr/sys/clock.h>
 
 // project includes
 #include "nturt/sys/sys.h"
@@ -32,15 +31,16 @@ int sys_set_time(time_t time) {
       .tv_sec = time,
       .tv_nsec = 0,
   };
-  ret = clock_settime(CLOCK_REALTIME, &ts);
+
+  ret = sys_clock_settime(SYS_CLOCK_REALTIME, &ts);
   if (ret < 0) {
-    LOG_ERR("Fail to set posix real-time clock time: %s", strerror(errno));
-    return -errno;
+    LOG_ERR("sys_clock_settime failed: %s", strerror(-ret));
+    return ret;
   }
 
   ret = rtc_set_time(rtc, (struct rtc_time*)gmtime(&time));
   if (ret < 0) {
-    LOG_ERR("Fail to set RTC time: %s", strerror(-ret));
+    LOG_ERR("rtc_set_time failed: %s", strerror(-ret));
     return ret;
   }
 
@@ -72,7 +72,7 @@ static int init() {
 
     ret = rtc_set_time(rtc, &dummy_time);
     if (ret < 0) {
-      LOG_ERR("Fail to set RTC time: %s", strerror(-ret));
+      LOG_ERR("rtc_set_time failed: %s", strerror(-ret));
       return ret;
     }
 
@@ -81,7 +81,7 @@ static int init() {
   }
 
   if (ret < 0) {
-    LOG_ERR("Fail to get RTC time: %s", strerror(-ret));
+    LOG_ERR("rtc_get_time failed: %s", strerror(-ret));
     return ret;
   }
 
@@ -95,10 +95,10 @@ static int init() {
   LOG_INF("Set posix real-time clock to %lld.%06ld (%s)", ts.tv_sec, ts.tv_nsec,
           time_str);
 
-  ret = clock_settime(CLOCK_REALTIME, &ts);
+  ret = sys_clock_settime(SYS_CLOCK_REALTIME, &ts);
   if (ret < 0) {
-    LOG_ERR("Fail to set posix real-time clock time: %s", strerror(errno));
-    return errno;
+    LOG_ERR("sys_clock_settime failed: %s", strerror(-ret));
+    return ret;
   }
 
   return 0;

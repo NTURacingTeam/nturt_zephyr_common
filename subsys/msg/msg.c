@@ -7,7 +7,8 @@
 // zephyr includes
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-#include <zephyr/posix/time.h>
+#include <zephyr/sys/__assert.h>
+#include <zephyr/sys/clock.h>
 #include <zephyr/zbus/zbus.h>
 
 BUILD_ASSERT(CONFIG_NTURT_MSG_INIT_PRIORITY >
@@ -23,7 +24,7 @@ MSG_SHELL_DEFINE(MSG_LIST);
 void msg_header_init(struct msg_header *header) {
   if (IS_ENABLED(CONFIG_NTURT_RTC)) {
     struct timespec ts;
-    clock_gettime(CLOCK_REALTIME, &ts);
+    sys_clock_gettime(SYS_CLOCK_REALTIME, &ts);
     header->timestamp_ns = (uint64_t)ts.tv_sec * 1000000000 + ts.tv_nsec;
   } else {
     header->timestamp_ns = k_ticks_to_ns_floor64(k_uptime_ticks());

@@ -1,38 +1,85 @@
 // glibc includes
 #include <stdint.h>
+#include <string.h>
+#include <time.h>
 
 // zephyr includes
 #include <zephyr/fs/fs.h>
 #include <zephyr/init.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/settings/settings.h>
+#include <zephyr/sys/clock.h>
 
-#ifdef CONFIG_NTURT_FS_FAT_FS
-#include <ff.h>
-#ifdef CONFIG_NTURT_FS_FAT_FS_HAS_RTC
-#include <zephyr/posix/time.h>
-#endif
-#elif defined(CONFIG_NTURT_FS_LITTLE_FS)
-#include <zephyr/fs/littlefs.h>
-#endif
+// project includes
+#include "nturt/sys/fs.h"
 
 LOG_MODULE_REGISTER(nturt_fs, CONFIG_NTURT_SYS_LOG_LEVEL);
 
 /* function definition -------------------------------------------------------*/
+// copied from zephyr/subsys/logging/backends/log_backend_fs.c create_log_dir()
+int mkdir_p(const char *path) {
+  const char *next;
+  const char *last = path + (strlen(path) - 1);
+  char w_path[MAX_PATH_LEN];
+  int rc, len;
+  struct fs_dir_t dir;
+
+  fs_dir_t_init(&dir);
+
+  /* the fist directory name is the mount point*/
+  /* the firs path's letter might be meaningless `/`, let's skip it */
+  next = strchr(path + 1, '/');
+  if (!next) {
+    return 0;
+  }
+
+  while (true) {
+    next++;
+    if (next > last) {
+      return 0;
+    }
+    next = strchr(next, '/');
+    if (!next) {
+      next = last;
+      len = last - path + 1;
+    } else {
+      len = next - path;
+    }
+
+    memcpy(w_path, path, len);
+    w_path[len] = 0;
+
+    rc = fs_opendir(&dir, w_path);
+    if (rc) {
+      /* assume directory doesn't exist */
+      rc = fs_mkdir(w_path);
+      if (rc) {
+        break;
+      }
+    }
+    rc = fs_closedir(&dir);
+    if (rc) {
+      break;
+    }
+  }
+
+  return rc;
+}
+
 #ifdef CONFIG_NTURT_FS_FAT_FS_HAS_RTC
+
 /// @brief Get the current time in FAT file system format, declared in ff.h.
 uint32_t get_fattime() {
   struct timespec ts;
-  clock_gettime(CLOCK_REALTIME, &ts);
+  sys_clock_gettime(SYS_CLOCK_REALTIME, &ts);
 
-  struct tm tm;
-  localtime_r(&ts.tv_sec, &tm);
-
-  return ((tm.tm_year - 80) << 25) | ((tm.tm_mon + 1) << 21) |
-         (tm.tm_mday << 16) | (tm.tm_hour << 11) | (tm.tm_min << 5) |
-         (tm.tm_sec / 2);
+  struct tm *tm = gmtime(&ts.tv_sec);
+  return ((tm->tm_year - 80) << 25) | ((tm->tm_mon + 1) << 21) |
+         (tm->tm_mday << 16) | (tm->tm_hour << 11) | (tm->tm_min << 5) |
+         (tm->tm_sec / 2);
 }
-#endif
+
+#endif  // CONFIG_NTURT_FS_FAT_FS_HAS_RTC
 
 #ifdef CONFIG_SETTINGS
 

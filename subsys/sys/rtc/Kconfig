@@ -5,7 +5,6 @@ menuconfig NTURT_RTC
 	depends on $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_RTC))
 	default y
 	select RTC
-	select POSIX_TIMERS
 	help
 	  Initialize RTC time to dummy time if power had lost and set posix realtime
 	  clock time to RTC time. Implements function to set system time through
