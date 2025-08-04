@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['tm_5fpublish_5ft_0',['tm_publish_t',['../group__tm.html#ga3ae02eab3d38e1ad87ad3a5e206cc5e8',1,'telemetry.h']]]
+  ['sensor_5faxis_5fsensor_5fraw_5fcb_5ft_0',['sensor_axis_sensor_raw_cb_t',['../group__input__sensor__axis.html#gab4fa31f180de839ee7a9e8710d061be8',1,'sensor_axis.h']]],
+  ['states_5fhandler_5ft_1',['states_handler_t',['../group__stat.html#ga2d8afe0901d99e922325e65ba3a0d88c',1,'states.h']]],
+  ['states_5ft_2',['states_t',['../group__stat.html#ga1a1c242a0935e17b2a9df357c6419a08',1,'states.h']]]
 ];

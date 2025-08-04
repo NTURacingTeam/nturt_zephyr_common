@@ -1,0 +1,32 @@
+<map id="vcu/telemetry.h" name="vcu/telemetry.h">
+<area shape="rect" id="Node000001" title="Telemetry support." alt="" coords="554,5,677,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="853,240,924,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="645,28,736,74,788,109,836,150,864,188,882,226,877,228,859,191,832,154,785,113,733,79,643,33"/>
+<area shape="rect" id="Node000003" href="$nturt__zephyr__common_2include_2nturt_2telemetry_8h.html" title="Telemetry support." alt="" coords="299,79,430,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="576,33,419,77,418,72,574,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="737,313,811,339"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="430,93,483,99,543,110,605,126,664,150,700,167,726,184,748,206,768,239,778,269,779,299,774,299,772,270,764,241,744,209,723,188,697,172,662,154,603,131,542,115,482,105,430,99"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,159,105,185"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="315,107,119,155,106,158,104,153,117,149,313,101"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="253,313,375,339"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="363,105,349,153,331,233,320,300,315,299,326,232,343,151,358,104"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="130,152,277,192"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="342,106,256,148,253,144,340,102"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="400,313,529,339"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="372,103,457,299,452,302,367,106"/>
+<area shape="rect" id="Node000009" href="$aggregation_8h.html" title="Data aggregation." alt="" coords="473,159,651,185"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="394,102,522,152,520,157,392,106"/>
+<area shape="poly" id="edge11_Node000009_Node000002" title=" " alt="" coords="610,182,841,237,839,242,609,187"/>
+<area shape="poly" id="edge10_Node000009_Node000004" title=" " alt="" coords="629,182,687,203,716,218,741,238,761,268,772,299,767,301,756,270,737,242,713,223,685,207,628,187"/>
+<area shape="poly" id="edge12_Node000009_Node000006" title=" " alt="" coords="545,187,346,308,343,304,542,182"/>
+<area shape="poly" id="edge13_Node000009_Node000008" title=" " alt="" coords="548,187,521,210,495,241,481,271,472,301,467,299,476,269,490,239,517,207,544,183"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="645,240,727,265"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="582,183,658,230,655,235,579,187"/>
+<area shape="rect" id="Node000011" href="$util_8h.html" title="Utility macros and functions." alt="" coords="504,240,620,265"/>
+<area shape="poly" id="edge14_Node000009_Node000011" title=" " alt="" coords="565,185,565,226,559,226,559,185"/>
+<area shape="poly" id="edge15_Node000011_Node000004" title=" " alt="" coords="597,263,728,306,726,311,595,268"/>
+<area shape="poly" id="edge16_Node000011_Node000006" title=" " alt="" coords="523,268,368,312,367,307,521,263"/>
+<area shape="poly" id="edge17_Node000011_Node000008" title=" " alt="" coords="548,268,493,307,490,303,545,263"/>
+<area shape="rect" id="Node000012" href="$util__loops_8h.html" title=" " alt="" coords="553,313,712,339"/>
+<area shape="poly" id="edge18_Node000011_Node000012" title=" " alt="" coords="576,264,614,302,610,306,572,268"/>
+</map>

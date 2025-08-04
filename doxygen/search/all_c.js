@@ -71,7 +71,7 @@ var searchData=
   ['n_5ffor_5floop_5f8_68',['N_FOR_LOOP_8',['../util__loops_8h.html#affbb2512749a93e9188e9d7a021d36ea',1,'util_loops.h']]],
   ['n_5ffor_5floop_5f9_69',['N_FOR_LOOP_9',['../util__loops_8h.html#a5d8323d88d2715cd13ed964844c2249f',1,'util_loops.h']]],
   ['n_5ffor_5floop_5fget_5farg_70',['N_FOR_LOOP_GET_ARG',['../util__loops_8h.html#a2386a3a50a9c2693bce5fb81aa168828',1,'util_loops.h']]],
-  ['name_71',['name',['../structerr.html#ad7c3ab9cb69fd99c63623e9d0be010bc',1,'err::name'],['../structagg.html#a5b847f6063e7b0c602545f473f1aee0c',1,'agg::name'],['../structtm__data.html#a2ed9232a99f3b0417490e1ad6a681c53',1,'tm_data::name']]],
+  ['name_71',['name',['../structerr.html#ad7c3ab9cb69fd99c63623e9d0be010bc',1,'err::name'],['../structagg.html#a5b847f6063e7b0c602545f473f1aee0c',1,'agg::name'],['../structtm__data.html#a2ed9232a99f3b0417490e1ad6a681c53',1,'tm_data::name'],['../structstates__trans__cmd__info.html#ae620c742c9fc7f325723891fcb13811b',1,'states_trans_cmd_info::name'],['../structdashboard__mode__info.html#a831a25ded02f45159427fd93c6c3b893',1,'dashboard_mode_info::name']]],
   ['node_5fid_5facc_72',['NODE_ID_ACC',['../group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960af9aacb3e58bcbffaadc28aeafac3a6ca',1,'canopen.h']]],
   ['node_5fid_5fgps_73',['NODE_ID_GPS',['../group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960ab43f1925bb070a35a13986e44504cebd',1,'canopen.h']]],
   ['node_5fid_5fimu_74',['NODE_ID_IMU',['../group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960ac2df563f12024afc47050de9547f5804',1,'canopen.h']]],
@@ -82,6 +82,11 @@ var searchData=
   ['node_5fid_5frpi_79',['NODE_ID_RPI',['../group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a518fc3c666e04c63d0d553a4cfbb0690',1,'canopen.h']]],
   ['node_5fid_5fvcu_80',['NODE_ID_VCU',['../group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a4e4a1d7fd2499f441c18ba3f8f19e8ff',1,'canopen.h']]],
   ['ntu_20racing_20team_20zephyr_20common_20library_81',['NTU Racing Team Zephyr Common Library',['../index.html',1,'']]],
-  ['num_5fdata_82',['num_data',['../structtm__group.html#afa2e83d8d28d5d822f652f3657885df0',1,'tm_group']]],
-  ['num_5fmember_83',['num_member',['../structagg.html#ab88877513aead5b21803d0dea66b01d9',1,'agg']]]
+  ['num_5fdashboard_5fdisplay_82',['NUM_DASHBOARD_DISPLAY',['../group__dashboard.html#ggaf16343cb157ded78eb9c7c6f90879eb1aedec21ef0703a57e0569b83966577082',1,'dashboard.h']]],
+  ['num_5fdashboard_5fmode_83',['NUM_DASHBOARD_MODE',['../group__dashboard.html#gga4bfe54d32c9c89dc36538cfa2b81246ea8c215a54bd9b205f820ba61af738e730',1,'dashboard.h']]],
+  ['num_5fdata_84',['num_data',['../structtm__group.html#afa2e83d8d28d5d822f652f3657885df0',1,'tm_group']]],
+  ['num_5fled_85',['NUM_LED',['../group__dashboard.html#gaf12d11b2a7bf6be75f23d7bcc3e3a80e',1,'dashboard.h']]],
+  ['num_5fmember_86',['num_member',['../structagg.html#ab88877513aead5b21803d0dea66b01d9',1,'agg']]],
+  ['num_5fstate_87',['NUM_STATE',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a69f2e4c341a631b2553a755d312b6836',1,'states.h']]],
+  ['num_5ftrans_5fcmd_88',['NUM_TRANS_CMD',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87ac53b97a968e8f562b634ac23ef6ccd33',1,'states.h']]]
 ];

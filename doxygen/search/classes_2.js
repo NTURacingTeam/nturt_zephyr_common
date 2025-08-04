@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['err_0',['err',['../structerr.html',1,'']]],
-  ['err_5fcallback_1',['err_callback',['../structerr__callback.html',1,'']]],
-  ['err_5ffilter_2',['err_filter',['../structerr__filter.html',1,'']]]
+  ['dashboard_5fmode_5finfo_0',['dashboard_mode_info',['../structdashboard__mode__info.html',1,'']]]
 ];

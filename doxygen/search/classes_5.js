@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['tm_5fdata_0',['tm_data',['../structtm__data.html',1,'']]],
-  ['tm_5fgroup_1',['tm_group',['../structtm__group.html',1,'']]],
-  ['tm_5fgroup_5fdata_2',['tm_group_data',['../structtm__group__data.html',1,'']]]
+  ['sensor_5ftol_0',['sensor_tol',['../structsensor__tol.html',1,'']]],
+  ['states_5fcallback_1',['states_callback',['../structstates__callback.html',1,'']]],
+  ['states_5ftrans_5fcmd_5finfo_2',['states_trans_cmd_info',['../structstates__trans__cmd__info.html',1,'']]]
 ];

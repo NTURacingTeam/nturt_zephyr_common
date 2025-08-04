@@ -1,6 +1,8 @@
 var group__msg__if__csv =
 [
+    [ "Control Message CSV", "group__msg__if__csv__ctrl.html", "group__msg__if__csv__ctrl" ],
     [ "Sensor Message CSV", "group__msg__if__csv__sensor.html", "group__msg__if__csv__sensor" ],
+    [ "State Machine Message CSV", "group__msg__if__csv__states.html", "group__msg__if__csv__states" ],
     [ "Tractive System Message CSV", "group__msg__if__csv__tractive.html", "group__msg__if__csv__tractive" ],
     [ "CSV_PRImsg_3d_data", "group__msg__if__csv.html#gac989015b1571e15ef1300b61c14a8068", null ],
     [ "CSV_PRImsg_3d_data_arg", "group__msg__if__csv.html#ga9b2dc0a79790f83bfbea8e94ef4e3f03", null ],

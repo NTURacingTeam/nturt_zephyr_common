@@ -4,6 +4,7 @@ var searchData=
   ['data_5fsize_1',['data_size',['../structagg__typed.html#a54942a658a6453cf1600e8abb5ee3589',1,'agg_typed']]],
   ['datas_2',['datas',['../structtm__group.html#adb7f5b0a8df9c93c0bc65220f8b4a077',1,'tm_group']]],
   ['deffered_3',['deffered',['../structcmd.html#aafbfe9d1ba72e361261bd5794cc55f48',1,'cmd']]],
-  ['desc_4',['desc',['../structerr.html#af6d7662402623b857eb5cc11fa09dca0',1,'err']]],
-  ['dev_5',['dev',['../structsensor__tol.html#ab9191418023b027be4343d9b7d9b18fc',1,'sensor_tol']]]
+  ['desc_4',['desc',['../structerr.html#af6d7662402623b857eb5cc11fa09dca0',1,'err::desc'],['../structstates__trans__cmd__info.html#a4f734557b10349f43c3215afca315797',1,'states_trans_cmd_info::desc'],['../structdashboard__mode__info.html#a4e084f94f706d3530eb5b3ba82c99cd0',1,'dashboard_mode_info::desc']]],
+  ['dev_5',['dev',['../structsensor__tol.html#ab9191418023b027be4343d9b7d9b18fc',1,'sensor_tol']]],
+  ['dst_6',['dst',['../structstates__trans__cmd__info.html#acd87d0e273af8fc611e6cbbb9a501839',1,'states_trans_cmd_info']]]
 ];

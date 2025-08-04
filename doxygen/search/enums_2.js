@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['err_5fcode_0',['err_code',['../group__err__code.html#ga08b18ac8af0f3462354240d9732f3852',1,'errcode.h']]],
-  ['err_5ffilter_5ftype_1',['err_filter_type',['../group__err.html#ga602bd59ba72bb49f23ccace76777a3fd',1,'err.h']]],
-  ['err_5fsev_2',['err_sev',['../group__err.html#ga62bf75f148b9a5c4167dcdef27d10b0a',1,'err.h']]]
+  ['dashboard_5fcomponent_0',['dashboard_component',['../group__dashboard.html#gaf16343cb157ded78eb9c7c6f90879eb1',1,'dashboard.h']]],
+  ['dashboard_5fmode_1',['dashboard_mode',['../group__dashboard.html#ga4bfe54d32c9c89dc36538cfa2b81246e',1,'dashboard.h']]]
 ];

@@ -1,6 +1,8 @@
 <map id="Message Printing" name="Message Printing">
-<area shape="rect" id="Node000002" href="$group__msg__if.html" title="Message type definitions." alt="" coords="5,35,148,60"/>
-<area shape="rect" id="Node000001" title="Message printing format strings." alt="" coords="196,35,331,60"/>
-<area shape="rect" id="Node000003" href="$group__msg__if__pri__sensor.html" title="Sensor message printing format strings." alt="" coords="381,5,564,31"/>
-<area shape="rect" id="Node000004" href="$group__msg__if__tractive__pri.html" title="Tractive system message printing format strings." alt="" coords="379,55,567,95"/>
+<area shape="rect" id="Node000002" href="$group__msg__if.html" title="Message type definitions." alt="" coords="5,84,148,109"/>
+<area shape="rect" id="Node000001" title="Message printing format strings." alt="" coords="196,84,331,109"/>
+<area shape="rect" id="Node000003" href="$group__msg__if__pri__ctrl.html" title="Control message printing format strings." alt="" coords="380,5,565,31"/>
+<area shape="rect" id="Node000004" href="$group__msg__if__pri__sensor.html" title="Sensor message printing format strings." alt="" coords="381,55,564,80"/>
+<area shape="rect" id="Node000005" href="$group__msg__if__pri__states.html" title="State machine message printing format strings." alt="" coords="384,105,561,145"/>
+<area shape="rect" id="Node000006" href="$group__msg__if__tractive__pri.html" title="Tractive system message printing format strings." alt="" coords="379,169,567,209"/>
 </map>

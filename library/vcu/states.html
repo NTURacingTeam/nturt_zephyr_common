@@ -63,7 +63,23 @@
 <li class="toctree-l4"><a class="reference internal" href="#handling-state-transitions">Handling State Transitions</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#c.STATES_CALLBACK_DEFINE_NAMED"><code class="docutils literal notranslate"><span class="pre">STATES_CALLBACK_DEFINE_NAMED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.STATES_CALLBACK_DEFINE"><code class="docutils literal notranslate"><span class="pre">STATES_CALLBACK_DEFINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_t"><code class="docutils literal notranslate"><span class="pre">states_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_handler_t"><code class="docutils literal notranslate"><span class="pre">states_handler_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_state"><code class="docutils literal notranslate"><span class="pre">states_state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_trans_cmd"><code class="docutils literal notranslate"><span class="pre">states_trans_cmd</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_get"><code class="docutils literal notranslate"><span class="pre">states_get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_valid_transition"><code class="docutils literal notranslate"><span class="pre">states_valid_transition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_transition"><code class="docutils literal notranslate"><span class="pre">states_transition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_state_str"><code class="docutils literal notranslate"><span class="pre">states_state_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_states_str"><code class="docutils literal notranslate"><span class="pre">states_states_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_transition_info"><code class="docutils literal notranslate"><span class="pre">states_transition_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_trans_cmd_info"><code class="docutils literal notranslate"><span class="pre">states_trans_cmd_info</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_callback"><code class="docutils literal notranslate"><span class="pre">states_callback</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -127,16 +143,16 @@ option.</p>
 <section id="core-concepts">
 <h3>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>States</strong>: Each state is represented by a bit in the <code class="xref c c-enum docutils literal notranslate"><span class="pre">states_state</span></code>
-and can be queried using <code class="xref c c-func docutils literal notranslate"><span class="pre">states_get()</span></code>.</p></li>
+<li><p><strong>States</strong>: Each state is represented by a bit in the <a class="reference internal" href="#c.states_state" title="states_state"><code class="xref c c-enum docutils literal notranslate"><span class="pre">states_state</span></code></a>
+and can be queried using <a class="reference internal" href="#c.states_get" title="states_get"><code class="xref c c-func docutils literal notranslate"><span class="pre">states_get()</span></code></a>.</p></li>
 <li><p><strong>State Transitions</strong>: State transitions are requested using
-<code class="xref c c-func docutils literal notranslate"><span class="pre">states_transition()</span></code> with a command from the
-<code class="xref c c-enum docutils literal notranslate"><span class="pre">states_trans_cmd</span></code>. However, the command is only executed if the
+<a class="reference internal" href="#c.states_transition" title="states_transition"><code class="xref c c-func docutils literal notranslate"><span class="pre">states_transition()</span></code></a> with a command from the
+<a class="reference internal" href="#c.states_trans_cmd" title="states_trans_cmd"><code class="xref c c-enum docutils literal notranslate"><span class="pre">states_trans_cmd</span></code></a>. However, the command is only executed if the
 source state of the command matches the current state. The validity can be
-checked using <code class="xref c c-func docutils literal notranslate"><span class="pre">states_valid_transition()</span></code> or get the information of the
-command from <code class="xref c c-func docutils literal notranslate"><span class="pre">states_transition_info()</span></code>.</p></li>
+checked using <a class="reference internal" href="#c.states_valid_transition" title="states_valid_transition"><code class="xref c c-func docutils literal notranslate"><span class="pre">states_valid_transition()</span></code></a> or get the information of the
+command from <a class="reference internal" href="#c.states_transition_info" title="states_transition_info"><code class="xref c c-func docutils literal notranslate"><span class="pre">states_transition_info()</span></code></a>.</p></li>
 <li><p><strong>Callbacks</strong>: Modules can register callbacks via
-<code class="xref c c-macro docutils literal notranslate"><span class="pre">STATES_CALLBACK_DEFINE</span></code> to be called when entering or exiting a
+<a class="reference internal" href="#c.STATES_CALLBACK_DEFINE" title="STATES_CALLBACK_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">STATES_CALLBACK_DEFINE</span></code></a> to be called when entering or exiting a
 state.</p></li>
 </ul>
 </section>
@@ -152,14 +168,14 @@ context as the thread requesting the transition, ensuring thread safety.</p></li
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
 <section id="requesting-state-transitions">
 <h3>Requesting State Transitions<a class="headerlink" href="#requesting-state-transitions" title="Link to this heading"></a></h3>
-<p>Use <code class="xref c c-func docutils literal notranslate"><span class="pre">states_transition()</span></code> to request a state transition:</p>
+<p>Use <a class="reference internal" href="#c.states_transition" title="states_transition"><code class="xref c c-func docutils literal notranslate"><span class="pre">states_transition()</span></code></a> to request a state transition:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">states_transition</span><span class="p">(</span><span class="n">TRANS_CMD_DISABLE</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="handling-state-transitions">
 <h3>Handling State Transitions<a class="headerlink" href="#handling-state-transitions" title="Link to this heading"></a></h3>
-<p>Define callbacks for state transitions using <code class="xref c c-macro docutils literal notranslate"><span class="pre">STATES_CALLBACK_DEFINE</span></code>.
+<p>Define callbacks for state transitions using <a class="reference internal" href="#c.STATES_CALLBACK_DEFINE" title="STATES_CALLBACK_DEFINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">STATES_CALLBACK_DEFINE</span></code></a>.
 For example:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">my_callback</span><span class="p">(</span><span class="k">enum</span><span class="w"> </span><span class="n">states_state</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_entry</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_entry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -176,10 +192,347 @@ For example:</p>
 </section>
 <section id="api-reference">
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__stat"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">States</span></span></dt>
+<dd><p>Control system state machine. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.STATES_CALLBACK_DEFINE_NAMED">
+<span class="target" id="group__stat_1ga62d13572e933c3648ebe80c58873d744"></span><span class="sig-name descname"><span class="n"><span class="pre">STATES_CALLBACK_DEFINE_NAMED</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">_name</span></span>, <span class="n"><span class="pre">_states</span></span>, <span class="n"><span class="pre">_handler</span></span>, <span class="n"><span class="pre">_user_data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.STATES_CALLBACK_DEFINE_NAMED" title="Link to this definition"></a><br /></dt>
+<dd><p>Same as <a class="reference internal" href="#group__stat_1ga0f2c22bf86ea931607d2369eb2821789"><span class="std std-ref">STATES_CALLBACK_DEFINE</span></a>, but with a custom name for the callback. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.STATES_CALLBACK_DEFINE">
+<span class="target" id="group__stat_1ga0f2c22bf86ea931607d2369eb2821789"></span><span class="sig-name descname"><span class="n"><span class="pre">STATES_CALLBACK_DEFINE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">states</span></span>, <span class="n"><span class="pre">handler</span></span>, <span class="n"><span class="pre">user_data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.STATES_CALLBACK_DEFINE" title="Link to this definition"></a><br /></dt>
+<dd><p>Define a callback for state transition. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the name of the callback is derived from the name of <code class="docutils literal notranslate"><span class="pre">handler</span></code> , if the same handler is used for multiple callbacks, <a class="reference internal" href="#group__stat_1ga62d13572e933c3648ebe80c58873d744"><span class="std std-ref">STATES_CALLBACK_DEFINE_NAMED</span></a> can be used instead to prevent linker errors. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>states</strong> – <strong>[in]</strong> When transition from/to what states to call the callback. Multiple <a class="reference internal" href="#group__stat_1gae70dc85d406e951d17890605c02aa7d5"><span class="std std-ref">states_state</span></a> can be specified using bitwise OR operator (|). </p></li>
+<li><p><strong>handler</strong> – <strong>[in]</strong> Handler of the state transition. </p></li>
+<li><p><strong>user_data</strong> – <strong>[in]</strong> Pointer to custom data for the callback.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.states_t">
+<span class="target" id="group__stat_1ga1a1c242a0935e17b2a9df357c6419a08"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_t</span></span></span><a class="headerlink" href="#c.states_t" title="Link to this definition"></a><br /></dt>
+<dd><p>State machine states type, where each bit represents a state defined in <a class="reference internal" href="#group__stat_1gae70dc85d406e951d17890605c02aa7d5"><span class="std std-ref">states_state</span></a>. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.states_handler_t">
+<span class="target" id="group__stat_1ga2d8afe0901d99e922325e65ba3a0d88c"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">states_handler_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.states_state" title="states_state"><span class="n"><span class="pre">states_state</span></span></a><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">is_entry</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.states_handler_t" title="Link to this definition"></a><br /></dt>
+<dd><p>State transition handler type. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param state<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> to transition from/to. </p>
+</dd>
+<dt class="field-even">Param is_entry<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> True when transitioning to the state. False when transition from. </p>
+</dd>
+<dt class="field-odd">Param user_data<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[inout]</strong> Pointer to custom data for the callback provided by <a class="reference internal" href="#group__stat_1ga0f2c22bf86ea931607d2369eb2821789"><span class="std std-ref">STATES_CALLBACK_DEFINE</span></a>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.states_state">
+<span class="target" id="group__stat_1gae70dc85d406e951d17890605c02aa7d5"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_state</span></span></span><a class="headerlink" href="#c.states_state" title="Link to this definition"></a><br /></dt>
+<dd><p>State machine states. </p>
+<p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_INVALID">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5a56285fc9e39dbb4dd2f0a34e561a79fd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_INVALID</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.states_state.STATE_INVALID" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_ERR_FREE">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5a7a8306048031f70cbb979d888d5e5f56"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_ERR_FREE</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.states_state.STATE_ERR_FREE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_READY">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5a5ae0bbfe1a737c76e53253b05168b56b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_READY</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.states_state.STATE_READY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_RTD_BLINK">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5ac1f842601f5eada4a18a081986996955"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_RTD_BLINK</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.states_state.STATE_RTD_BLINK" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_RTD_STEADY">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5a8de0832aee41d2ac2cbb1997a3d3fbb8"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_RTD_STEADY</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.states_state.STATE_RTD_STEADY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_RTD_READY">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5a1059cfa20ce6a6c6d78a069ea68665b1"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_RTD_READY</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.states_state.STATE_RTD_READY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_RTD_SOUND">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5a783a1604eb534051f8a6fe9b24bf0517"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_RTD_SOUND</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">5</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.states_state.STATE_RTD_SOUND" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_RUNNING">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5addfe11c6d06c4e27bd6efc18cc4862a6"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_RUNNING</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">6</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.states_state.STATE_RUNNING" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_ERR">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5adceebbc176186b2bbeb1b53731478bcd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_ERR</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">BIT</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">7</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.states_state.STATE_ERR" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.STATE_ALL">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5aa47c3639be1fe073620c78a64eeaeae7"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_ALL</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">UINT32_MAX</span></span><a class="headerlink" href="#c.states_state.STATE_ALL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_state.NUM_STATE">
+<span class="target" id="group__stat_1ggae70dc85d406e951d17890605c02aa7d5a69f2e4c341a631b2553a755d312b6836"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NUM_STATE</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">8</span></span><a class="headerlink" href="#c.states_state.NUM_STATE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.states_trans_cmd">
+<span class="target" id="group__stat_1ga40fbd3fbed5f5054e6eadb75d8244d87"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_trans_cmd</span></span></span><a class="headerlink" href="#c.states_trans_cmd" title="Link to this definition"></a><br /></dt>
+<dd><p>State transition commands. </p>
+<p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_trans_cmd.TRANS_CMD_INVALID">
+<span class="target" id="group__stat_1gga40fbd3fbed5f5054e6eadb75d8244d87af6c2800833faedd0a4f3c226356977ab"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TRANS_CMD_INVALID</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.states_trans_cmd.TRANS_CMD_INVALID" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_trans_cmd.TRANS_CMD_ERR">
+<span class="target" id="group__stat_1gga40fbd3fbed5f5054e6eadb75d8244d87a720cbf3ed5db32344f86f13a01322cd5"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TRANS_CMD_ERR</span></span></span><a class="headerlink" href="#c.states_trans_cmd.TRANS_CMD_ERR" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_trans_cmd.TRANS_CMD_ERR_CLEAR">
+<span class="target" id="group__stat_1gga40fbd3fbed5f5054e6eadb75d8244d87a7c8681ce7b2b0cf39a4a3bcb70dda686"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TRANS_CMD_ERR_CLEAR</span></span></span><a class="headerlink" href="#c.states_trans_cmd.TRANS_CMD_ERR_CLEAR" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_trans_cmd.TRANS_CMD_PEDAL">
+<span class="target" id="group__stat_1gga40fbd3fbed5f5054e6eadb75d8244d87a6c80917201d181d8547846cc1f077f22"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TRANS_CMD_PEDAL</span></span></span><a class="headerlink" href="#c.states_trans_cmd.TRANS_CMD_PEDAL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_trans_cmd.TRANS_CMD_PEDAL_CLEAR">
+<span class="target" id="group__stat_1gga40fbd3fbed5f5054e6eadb75d8244d87afc70fb00a331c2b156700dd16ec49c3e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TRANS_CMD_PEDAL_CLEAR</span></span></span><a class="headerlink" href="#c.states_trans_cmd.TRANS_CMD_PEDAL_CLEAR" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_trans_cmd.TRANS_CMD_RTD">
+<span class="target" id="group__stat_1gga40fbd3fbed5f5054e6eadb75d8244d87a292ac14fee909dec25dea23a961de521"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TRANS_CMD_RTD</span></span></span><a class="headerlink" href="#c.states_trans_cmd.TRANS_CMD_RTD" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_trans_cmd.TRANS_CMD_RTD_FINISH">
+<span class="target" id="group__stat_1gga40fbd3fbed5f5054e6eadb75d8244d87a8dde6e422f8b076d0e970540da804b3a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TRANS_CMD_RTD_FINISH</span></span></span><a class="headerlink" href="#c.states_trans_cmd.TRANS_CMD_RTD_FINISH" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_trans_cmd.TRANS_CMD_DISABLE">
+<span class="target" id="group__stat_1gga40fbd3fbed5f5054e6eadb75d8244d87ad1b45973197b6639de506385bc31b6cf"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TRANS_CMD_DISABLE</span></span></span><a class="headerlink" href="#c.states_trans_cmd.TRANS_CMD_DISABLE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.states_trans_cmd.NUM_TRANS_CMD">
+<span class="target" id="group__stat_1gga40fbd3fbed5f5054e6eadb75d8244d87ac53b97a968e8f562b634ac23ef6ccd33"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NUM_TRANS_CMD</span></span></span><a class="headerlink" href="#c.states_trans_cmd.NUM_TRANS_CMD" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.states_get">
+<span class="target" id="group__stat_1ga40244f4e272d6c9426aa695a50dbb65d"></span><a class="reference internal" href="#c.states_t" title="states_t"><span class="n"><span class="pre">states_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_get</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.states_get" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the current states. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>states_t Current states. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.states_valid_transition">
+<span class="target" id="group__stat_1gad926cf2d1b8f0c52696abd6065efbbc8"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_valid_transition</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.states_trans_cmd" title="states_trans_cmd"><span class="n"><span class="pre">states_trans_cmd</span></span></a><span class="w"> </span><span class="n"><span class="pre">cmd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.states_valid_transition" title="Link to this definition"></a><br /></dt>
+<dd><p>Test if a state transition command is valid. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – <strong>[in]</strong> State transition command.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return values<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>true</strong> – If the command can be executed. </p></li>
+<li><p><strong>false</strong> – If the command cannot be executed. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.states_transition">
+<span class="target" id="group__stat_1ga2741efd1ed6e0d4b1725a9659276326d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_transition</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.states_trans_cmd" title="states_trans_cmd"><span class="n"><span class="pre">states_trans_cmd</span></span></a><span class="w"> </span><span class="n"><span class="pre">cmd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.states_transition" title="Link to this definition"></a><br /></dt>
+<dd><p>Execute a state transition command to transition to a new state. </p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>doxygengroup: Cannot find group “stat” in doxygen xml output for project “NTURT Zephyr Common Library” from directory: _build/xml/doxygen</p>
+<p>Must not be called from an ISR or within a state transition callback. </p>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – <strong>[in]</strong> State transition command.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.states_state_str">
+<span class="target" id="group__stat_1gaddd049eb968cccd1395788dc37c49bc2"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">states_state_str</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.states_state" title="states_state"><span class="n"><span class="pre">states_state</span></span></a><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.states_state_str" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the string representation of a state. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – <strong>[in]</strong> State. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>const char* String representation. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.states_states_str">
+<span class="target" id="group__stat_1gaefbb301e6cf2e6fa45cef3b7d895d2ea"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_states_str</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <a class="reference internal" href="#c.states_t" title="states_t"><span class="n"><span class="pre">states_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">states</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.states_states_str" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the string representation of states separated by commas in the same semantic as snprintf. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> – <strong>[out]</strong> Buffer to store the string representation. </p></li>
+<li><p><strong>size</strong> – <strong>[in]</strong> Size of the buffer. </p></li>
+<li><p><strong>states</strong> – <strong>[in]</strong> States. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>int Number of bytes written to the buffer, excluding the null terminator which would be written if the buffer is large enough. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.states_transition_info">
+<span class="target" id="group__stat_1ga92af485e8d00a86a1e6f1874b89f3930"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.states_trans_cmd_info" title="states_trans_cmd_info"><span class="n"><span class="pre">states_trans_cmd_info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">states_transition_info</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.states_trans_cmd" title="states_trans_cmd"><span class="n"><span class="pre">states_trans_cmd</span></span></a><span class="w"> </span><span class="n"><span class="pre">cmd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.states_transition_info" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the information of a state transition. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – <strong>[in]</strong> State transition command. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>const struct states_trans_cmd_info* Pointer to the state transition command information. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.states_trans_cmd_info">
+<span class="target" id="structstates__trans__cmd__info"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_trans_cmd_info</span></span></span><a class="headerlink" href="#c.states_trans_cmd_info" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;vcu/ctrl/states.h&gt;</em></div>
+<p>State transition command information. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.states_trans_cmd_info.src">
+<span class="target" id="structstates__trans__cmd__info_1a24e78f78512ad5d27230db3e206f533c"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.states_state" title="states_state"><span class="n"><span class="pre">states_state</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">src</span></span></span><a class="headerlink" href="#c.states_trans_cmd_info.src" title="Link to this definition"></a><br /></dt>
+<dd><p>Source state to transition from. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.states_trans_cmd_info.dst">
+<span class="target" id="structstates__trans__cmd__info_1acd87d0e273af8fc611e6cbbb9a501839"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.states_state" title="states_state"><span class="n"><span class="pre">states_state</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dst</span></span></span><a class="headerlink" href="#c.states_trans_cmd_info.dst" title="Link to this definition"></a><br /></dt>
+<dd><p>Destination state to transition to. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.states_trans_cmd_info.name">
+<span class="target" id="structstates__trans__cmd__info_1ae620c742c9fc7f325723891fcb13811b"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><a class="headerlink" href="#c.states_trans_cmd_info.name" title="Link to this definition"></a><br /></dt>
+<dd><p>String representation of the command. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.states_trans_cmd_info.desc">
+<span class="target" id="structstates__trans__cmd__info_1a4f734557b10349f43c3215afca315797"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">desc</span></span></span><a class="headerlink" href="#c.states_trans_cmd_info.desc" title="Link to this definition"></a><br /></dt>
+<dd><p>Description of the command. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.states_callback">
+<span class="target" id="structstates__callback"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_callback</span></span></span><a class="headerlink" href="#c.states_callback" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;vcu/ctrl/states.h&gt;</em></div>
+<p>State transition callback. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.states_callback.states">
+<span class="target" id="structstates__callback_1a8d8a4f1375b6913cbd5631a85ed4452c"></span><a class="reference internal" href="#c.states_t" title="states_t"><span class="n"><span class="pre">states_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states</span></span></span><a class="headerlink" href="#c.states_callback.states" title="Link to this definition"></a><br /></dt>
+<dd><p>When transition from/to what states to call the callback. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.states_callback.handler">
+<span class="target" id="structstates__callback_1a05107fc684d2eca044d387dc97976682"></span><a class="reference internal" href="#c.states_handler_t" title="states_handler_t"><span class="n"><span class="pre">states_handler_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handler</span></span></span><a class="headerlink" href="#c.states_callback.handler" title="Link to this definition"></a><br /></dt>
+<dd><p>State transition handler. </p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.states_callback.user_data">
+<span class="target" id="structstates__callback_1aee14ce7ac0679339453baa0ae4c40dd9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">user_data</span></span></span><a class="headerlink" href="#c.states_callback.user_data" title="Link to this definition"></a><br /></dt>
+<dd><p>User data for the callback functions. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 

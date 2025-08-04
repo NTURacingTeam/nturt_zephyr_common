@@ -1,8 +1,10 @@
 var group__msg__if =
 [
+    [ "Control Message", "group__msg__if__ctrl.html", "group__msg__if__ctrl" ],
     [ "Message CSV", "group__msg__if__csv.html", "group__msg__if__csv" ],
     [ "Message Printing", "group__msg__if__pri.html", "group__msg__if__pri" ],
     [ "Sensor Message", "group__msg__if__sensor.html", "group__msg__if__sensor" ],
+    [ "State Machine Messages", "group__msg__if__states.html", "group__msg__if__states" ],
     [ "Tractive System Message", "group__msg__if__tractive.html", "group__msg__if__tractive" ],
     [ "msg_header", "structmsg__header.html", [
       [ "timestamp_ns", "structmsg__header.html#a149e87c80efea835c380ed38d8b629f3", null ]

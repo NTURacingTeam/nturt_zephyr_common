@@ -162,6 +162,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gad5c000ad38793801dabedeba52880be9" id="r_gad5c000ad38793801dabedeba52880be9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad5c000ad38793801dabedeba52880be9">MSG_SHELL_DEFINE</a>(list)</td></tr>
 <tr class="memdesc:gad5c000ad38793801dabedeba52880be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define one message shell support for every message in <code>list</code> .  <br /></td></tr>
 <tr class="separator:gad5c000ad38793801dabedeba52880be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58512d178f5fc7ee151c4f96e70f3237" id="r_ga58512d178f5fc7ee151c4f96e70f3237"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga58512d178f5fc7ee151c4f96e70f3237">MSG_VCU_LIST</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__ctrl.html#gac03ae99c27b10f620f8fdaa33e002f73">MSG_CTRL_LIST</a>, <a class="el" href="group__msg__if__states.html#gad24688e8caded23df9b2a35cfd851c5c">MSG_STATES_LIST</a></td></tr>
+<tr class="memdesc:ga58512d178f5fc7ee151c4f96e70f3237"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all VCU messages.  <br /></td></tr>
+<tr class="separator:ga58512d178f5fc7ee151c4f96e70f3237"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -173,6 +176,8 @@ Typedefs</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:gac17dc23ec5f0e283e65cae450608b6da" id="r_gac17dc23ec5f0e283e65cae450608b6da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gac17dc23ec5f0e283e65cae450608b6da">MSG_ZBUS_CHAN_DECLARE</a> (<a class="el" href="#ga9df39e3eba7bc2233e1a1797dede6101">MSG_LIST</a>)</td></tr>
 <tr class="separator:gac17dc23ec5f0e283e65cae450608b6da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga160a344155bb268d4a8a64e1b23cc14c" id="r_ga160a344155bb268d4a8a64e1b23cc14c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga160a344155bb268d4a8a64e1b23cc14c">MSG_ZBUS_CHAN_DECLARE</a> (<a class="el" href="#ga58512d178f5fc7ee151c4f96e70f3237">MSG_VCU_LIST</a>)</td></tr>
+<tr class="separator:ga160a344155bb268d4a8a64e1b23cc14c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Inter-thread communication support. </p>
@@ -189,7 +194,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
 
 <p>List of all messages. </p>
 
@@ -210,7 +215,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="group__util.html#ga27a11a8f516253b210e435220c448f18">N_FOR_EACH</a>(_MSG_SHELL_DEFINE, (;), list)</div>
 <div class="ttc" id="agroup__util_html_ga27a11a8f516253b210e435220c448f18"><div class="ttname"><a href="group__util.html#ga27a11a8f516253b210e435220c448f18">N_FOR_EACH</a></div><div class="ttdeci">#define N_FOR_EACH(F, sep,...)</div><div class="ttdoc">Same as Zephyr FOR_EACH, useful for nested FOR_EACH macros.</div><div class="ttdef"><b>Definition</b> util.h:83</div></div>
 </div><!-- fragment -->
@@ -222,6 +227,24 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The messages are printed using logging, so a log module must be registered or declared before using this macro. </dd></dl>
+
+</div>
+</div>
+<a id="ga58512d178f5fc7ee151c4f96e70f3237" name="ga58512d178f5fc7ee151c4f96e70f3237"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga58512d178f5fc7ee151c4f96e70f3237">&#9670;&#160;</a></span>MSG_VCU_LIST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MSG_VCU_LIST&#160;&#160;&#160;<a class="el" href="group__msg__if__ctrl.html#gac03ae99c27b10f620f8fdaa33e002f73">MSG_CTRL_LIST</a>, <a class="el" href="group__msg__if__states.html#gad24688e8caded23df9b2a35cfd851c5c">MSG_STATES_LIST</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__vcu_2include_2vcu_2msg_2msg_8h.html">vcu/msg/msg.h</a>&gt;</code></p>
+
+<p>List of all VCU messages. </p>
 
 </div>
 </div>
@@ -240,7 +263,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  ZBUS_CHAN_DECLARE(FOR_EACH(_MSG_CHAN_NAME, (, ), list))</div>
 </div><!-- fragment -->
 <p>Declare one message channel for every message in <code>list</code> . </p>
@@ -268,7 +291,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">FOR_EACH(_MSG_ZBUS_CHAN_DEFINE, (;), list)</div>
 </div><!-- fragment -->
 <p>Define one message channel for every message in <code>list</code> . </p>
@@ -294,7 +317,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
 
 <p>Print function of a message. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -309,7 +332,7 @@ Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gac17dc23ec5f0e283e65cae450608b6da" name="gac17dc23ec5f0e283e65cae450608b6da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac17dc23ec5f0e283e65cae450608b6da">&#9670;&#160;</a></span>MSG_ZBUS_CHAN_DECLARE()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gac17dc23ec5f0e283e65cae450608b6da">&#9670;&#160;</a></span>MSG_ZBUS_CHAN_DECLARE() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -323,7 +346,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+
+</div>
+</div>
+<a id="ga160a344155bb268d4a8a64e1b23cc14c" name="ga160a344155bb268d4a8a64e1b23cc14c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga160a344155bb268d4a8a64e1b23cc14c">&#9670;&#160;</a></span>MSG_ZBUS_CHAN_DECLARE() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MSG_ZBUS_CHAN_DECLARE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ga58512d178f5fc7ee151c4f96e70f3237">MSG_VCU_LIST</a></td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__vcu_2include_2vcu_2msg_2msg_8h.html">vcu/msg/msg.h</a>&gt;</code></p>
 
 </div>
 </div>
@@ -332,7 +374,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Aug 4 2025 08:22:09 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Mon Aug 4 2025 08:35:24 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

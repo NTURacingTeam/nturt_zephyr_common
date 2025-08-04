@@ -1,0 +1,7 @@
+<map id="vcu/msg/interfaces/states.h" name="vcu/msg/interfaces/states.h">
+<area shape="rect" id="Node000001" title="Control system state machine message type definitions." alt="" coords="5,5,152,45"/>
+<area shape="rect" id="Node000002" href="$nturt__vcu_2include_2vcu_2msg_2interfaces_2interfaces_8h.html" title="Message type definitions." alt="" coords="5,93,152,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,59,81,93,76,93,76,59"/>
+<area shape="rect" id="Node000003" href="$nturt__vcu_2include_2vcu_2msg_2msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="18,181,139,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="81,147,81,181,76,181,76,147"/>
+</map>

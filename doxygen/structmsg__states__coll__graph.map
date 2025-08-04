@@ -1,0 +1,5 @@
+<map id="msg_states" name="msg_states">
+<area shape="rect" id="Node000001" title="VCU control system state message." alt="" coords="8,93,105,119"/>
+<area shape="rect" id="Node000002" href="$structmsg__header.html" title="Message header." alt="" coords="5,5,108,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,45,59,93,54,93,54,45"/>
+</map>

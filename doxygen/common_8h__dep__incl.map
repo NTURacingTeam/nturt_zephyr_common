@@ -1,14 +1,24 @@
 <map id="nturt/msg/interfaces/common.h" name="nturt/msg/interfaces/common.h">
-<area shape="rect" id="Node000001" title="Common message type definitions." alt="" coords="95,5,249,45"/>
+<area shape="rect" id="Node000001" title="Common message type definitions." alt="" coords="271,5,425,45"/>
 <area shape="rect" id="Node000002" href="$sensor_8h.html" title="Sensor message type definitions." alt="" coords="5,93,160,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,57,104,95,101,91,140,53"/>
-<area shape="rect" id="Node000006" href="$tractive_8h.html" title="Tractive system message type definitions." alt="" coords="184,93,339,133"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="204,53,243,91,240,95,200,57"/>
-<area shape="rect" id="Node000003" href="$interfaces_8h.html" title="Message type definitions." alt="" coords="95,181,249,221"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="114,141,154,179,150,183,111,145"/>
-<area shape="rect" id="Node000004" href="$msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="107,269,237,295"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="175,235,175,269,169,269,169,235"/>
-<area shape="rect" id="Node000005" href="$canopen_8h.html" title="CANopen support." alt="" coords="85,343,259,368"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="175,308,175,343,169,343,169,308"/>
-<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="233,145,194,183,190,179,230,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="278,52,142,96,140,91,276,47"/>
+<area shape="rect" id="Node000007" href="$tractive_8h.html" title="Tractive system message type definitions." alt="" coords="184,93,339,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="321,57,282,95,279,91,317,53"/>
+<area shape="rect" id="Node000008" href="$msg_2interfaces_2ctrl_8h.html" title="Control message type definitions." alt="" coords="363,93,509,133"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="379,53,418,91,415,95,376,57"/>
+<area shape="rect" id="Node000010" href="$msg_2interfaces_2states_8h.html" title="Control system state machine message type definitions." alt="" coords="533,93,680,133"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="419,47,551,91,549,96,417,52"/>
+<area shape="rect" id="Node000003" href="$nturt__zephyr__common_2include_2nturt_2msg_2interfaces_2interfaces_8h.html" title="Message type definitions." alt="" coords="184,181,339,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="135,137,223,179,221,184,133,142"/>
+<area shape="rect" id="Node000004" href="$nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="198,269,327,295"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="265,235,265,269,260,269,259,235"/>
+<area shape="rect" id="Node000005" href="$canopen_8h.html" title="CANopen support." alt="" coords="175,343,350,368"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="265,308,265,343,260,343,260,308"/>
+<area shape="rect" id="Node000006" href="$nturt__vcu_2include_2vcu_2msg_2msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="374,343,495,368"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="304,297,408,340,406,345,302,302"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="264,147,264,181,259,181,259,147"/>
+<area shape="rect" id="Node000009" href="$nturt__vcu_2include_2vcu_2msg_2interfaces_2interfaces_8h.html" title="Message type definitions." alt="" coords="363,181,509,221"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="439,147,439,181,433,181,433,147"/>
+<area shape="poly" id="edge10_Node000009_Node000006" title=" " alt="" coords="438,236,437,342,432,342,433,236"/>
+<area shape="poly" id="edge12_Node000010_Node000009" title=" " alt="" coords="558,142,475,184,472,179,556,137"/>
 </map>

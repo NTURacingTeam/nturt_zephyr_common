@@ -1,0 +1,5 @@
+<map id="Control Message CSV" name="Control Message CSV">
+<area shape="rect" id="Node000003" href="$group__msg__if__csv.html" title="Message CSV format strings." alt="" coords="15,5,126,31"/>
+<area shape="rect" id="Node000001" title="Control message CSV format strings." alt="" coords="184,31,345,56"/>
+<area shape="rect" id="Node000002" href="$group__msg__if__ctrl.html" title="Control message type definitions." alt="" coords="5,55,136,80"/>
+</map>

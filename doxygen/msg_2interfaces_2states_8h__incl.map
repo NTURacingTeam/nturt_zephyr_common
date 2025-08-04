@@ -1,0 +1,19 @@
+<map id="vcu/msg/interfaces/states.h" name="vcu/msg/interfaces/states.h">
+<area shape="rect" id="Node000001" title="Control system state machine message type definitions." alt="" coords="227,5,373,45"/>
+<area shape="rect" id="Node000002" href="$common_8h.html" title="Common message type definitions." alt="" coords="140,93,295,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="284,47,247,85,243,81,280,44"/>
+<area shape="rect" id="Node000006" href="$ctrl_2states_8h.html" title="Control system state machine." alt="" coords="319,101,446,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="320,44,364,89,360,92,316,47"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="306,189,377,214"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="246,131,315,179,312,183,243,136"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,189,128,214"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="186,136,100,184,97,180,183,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="153,189,282,214"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="220,134,220,175,215,175,215,134"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="379,127,355,177,351,175,375,125"/>
+<area shape="poly" id="edge9_Node000006_Node000005" title=" " alt="" coords="362,129,253,185,251,180,359,124"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="572,189,655,214"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="415,124,571,181,569,186,413,129"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="401,181,548,221"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="397,124,446,170,443,174,393,128"/>
+</map>

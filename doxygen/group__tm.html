@@ -109,6 +109,7 @@ $(function(){initNavTree('group__tm.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
+<a href="#groups">Topics</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
@@ -120,7 +121,24 @@ $(function(){initNavTree('group__tm.html',''); initResizable(true); });
 
 <p>Telemetry support.  
 <a href="#details">More...</a></p>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for Telemetry:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="group__tm.png" border="0" usemap="#agroup____tm" alt=""/></div>
+<map name="agroup____tm" id="agroup____tm">
+<area shape="rect" title="Telemetry support." alt="" coords="5,5,92,31"/>
+<area shape="rect" href="group__tm__vcu.html" title="VCU telemetry support." alt="" coords="140,5,259,31"/>
+</map>
+</div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
+Topics</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__tm__vcu.html">VCU Telemetry</a></td></tr>
+<tr class="memdesc:group__tm__vcu"><td class="mdescLeft">&#160;</td><td class="mdescRight">VCU telemetry support. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtm__group__data.html">tm_group_data</a></td></tr>
@@ -211,7 +229,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">typedef</span> _TM_DATA_TYPE(alias) _TM_DATA_TYPE(name); \</div>
 <div class="line">  <span class="keyword">extern</span> <span class="keyword">struct </span><a class="code hl_struct" href="structtm__data.html">tm_data</a> <a class="code hl_variable" href="structtm__data.html#a2ed9232a99f3b0417490e1ad6a681c53">name</a></div>
 <div class="ttc" id="astructtm__data_html"><div class="ttname"><a href="structtm__data.html">tm_data</a></div><div class="ttdoc">Telemetry data.</div><div class="ttdef"><b>Definition</b> telemetry.h:251</div></div>
@@ -252,7 +270,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="#ga0082df7d3496a658557c224eee4ab487">TM_ALIAS_DECLARE</a>(_name, _alias);            \</div>
 <div class="line">                                              \</div>
 <div class="line">  STRUCT_SECTION_ITERABLE(<a class="code hl_struct" href="structtm__data.html">tm_data</a>, _name) = { \</div>
@@ -294,7 +312,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">typedef</span> type _TM_DATA_TYPE(name); \</div>
 <div class="line">  <span class="keyword">extern</span> <span class="keyword">struct </span><a class="code hl_struct" href="structtm__data.html">tm_data</a> <a class="code hl_variable" href="structtm__data.html#a2ed9232a99f3b0417490e1ad6a681c53">name</a></div>
 </div><!-- fragment -->
@@ -333,7 +351,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="#ga22d652b7cb9f15b56b505f43c9e4ab5c">TM_DATA_DECLARE</a>(_name, _type);              \</div>
 <div class="line">                                              \</div>
 <div class="line">  STRUCT_SECTION_ITERABLE(<a class="code hl_struct" href="structtm__data.html">tm_data</a>, _name) = { \</div>
@@ -373,7 +391,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  ({                                                                      \</div>
 <div class="line">    <span class="keyword">struct </span><a class="code hl_struct" href="structtm__data.html">tm_data</a> *__data = &amp;<a class="code hl_variable" href="structtm__data.html#a2ed9232a99f3b0417490e1ad6a681c53">name</a>;                                       \</div>
 <div class="line">    if (__data-&gt;<a class="code hl_variable" href="structtm__data.html#abd24d8501d0ac47c14ea74df1c6cf176">type</a> == <a class="code hl_enumvalue" href="#gga4aec1e6524cbaecbbb4bf39cc49ca50faf82d8ea13aa8785f6494f561f4b4a5cc">TM_DATA_TYPE_ALIAS</a>) {                             \</div>
@@ -421,7 +439,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span> {                                                \</div>
 <div class="line">    <span class="keyword">struct </span><a class="code hl_struct" href="structtm__data.html">tm_data</a> *__data = &amp;<a class="code hl_variable" href="structtm__data.html#a2ed9232a99f3b0417490e1ad6a681c53">name</a>;                   \</div>
 <div class="line">    if (__data-&gt;<a class="code hl_variable" href="structtm__data.html#abd24d8501d0ac47c14ea74df1c6cf176">type</a> == <a class="code hl_enumvalue" href="#gga4aec1e6524cbaecbbb4bf39cc49ca50faf82d8ea13aa8785f6494f561f4b4a5cc">TM_DATA_TYPE_ALIAS</a>) {         \</div>
@@ -465,7 +483,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  (data, (COND_CODE_1(__VA_OPT__(1), (__VA_ARGS__), (0))))</div>
 </div><!-- fragment -->
 <p>Specify a telemetry data to be aggregated and published by a telemetry group. Used in <a class="el" href="#ga281537f150bdc4d872e3c068d30671bf">TM_GROUP_DEFINE</a>. </p>
@@ -528,7 +546,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  _TM_AGG_PUBLISH_DEFINE(_name,                                             \</div>
 <div class="line">                         FOR_EACH(_TM_GROUP_DATA_DATA, (, ), __VA_ARGS__)); \</div>
 <div class="line">                                                                            \</div>
@@ -580,7 +598,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 
 <p>Function to publish the data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -608,7 +626,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 
 <p>Telemetry data type. </p>
 <table class="fieldtable">
@@ -638,7 +656,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 
 <p>Get telemetry data using its address and pointer to value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -673,7 +691,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 
 <p>Notify the telemetry groups that this data has been updated. Must be called while holding the lock. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -705,7 +723,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 
 <p>Update telemetry data using its address and pointer to value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -740,7 +758,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;<a class="el" href="telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2telemetry_8h.html">nturt/telemetry.h</a>&gt;</code></p>
 
 <p>Copy the data in the telemetry data to the group's publishing buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -758,7 +776,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Aug 4 2025 08:22:09 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Mon Aug 4 2025 08:35:24 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

@@ -1,6 +1,8 @@
 <map id="Message CSV" name="Message CSV">
-<area shape="rect" id="Node000002" href="$group__msg__if.html" title="Message type definitions." alt="" coords="5,31,148,56"/>
-<area shape="rect" id="Node000001" title="Message CSV format strings." alt="" coords="196,31,307,56"/>
-<area shape="rect" id="Node000003" href="$group__msg__if__csv__sensor.html" title="Sensor message CSV format strings." alt="" coords="385,5,543,31"/>
-<area shape="rect" id="Node000004" href="$group__msg__if__csv__tractive.html" title="Tractive system message CSV format strings." alt="" coords="355,55,573,80"/>
+<area shape="rect" id="Node000002" href="$group__msg__if.html" title="Message type definitions." alt="" coords="5,80,148,105"/>
+<area shape="rect" id="Node000001" title="Message CSV format strings." alt="" coords="196,80,307,105"/>
+<area shape="rect" id="Node000003" href="$group__msg__if__csv__ctrl.html" title="Control message CSV format strings." alt="" coords="383,5,545,31"/>
+<area shape="rect" id="Node000004" href="$group__msg__if__csv__sensor.html" title="Sensor message CSV format strings." alt="" coords="385,55,543,80"/>
+<area shape="rect" id="Node000005" href="$group__msg__if__csv__states.html" title="State machine message CSV format strings." alt="" coords="361,104,567,129"/>
+<area shape="rect" id="Node000006" href="$group__msg__if__csv__tractive.html" title="Tractive system message CSV format strings." alt="" coords="355,153,573,179"/>
 </map>

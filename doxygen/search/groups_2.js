@@ -5,6 +5,10 @@ var searchData=
   ['canopen_2',['CANopen',['../group__can__open.html',1,'']]],
   ['codes_3',['Error Codes',['../group__err__code.html',1,'']]],
   ['command_4',['Command',['../group__cmd.html',1,'']]],
-  ['conversion_5',['CAN bus data conversion.',['../group__can__convert.html',1,'']]],
-  ['csv_6',['CSV',['../group__msg__if__csv.html',1,'Message CSV'],['../group__msg__if__csv__sensor.html',1,'Sensor Message CSV'],['../group__msg__if__csv__tractive.html',1,'Tractive System Message CSV']]]
+  ['control_5',['Control',['../group__ctrl.html',1,'Control'],['../group__ctrl__inv.html',1,'Inverter Control']]],
+  ['control_20message_6',['Control Message',['../group__msg__if__ctrl.html',1,'']]],
+  ['control_20message_20csv_7',['Control Message CSV',['../group__msg__if__csv__ctrl.html',1,'']]],
+  ['control_20message_20printing_8',['Control Message Printing',['../group__msg__if__pri__ctrl.html',1,'']]],
+  ['conversion_9',['CAN bus data conversion.',['../group__can__convert.html',1,'']]],
+  ['csv_10',['CSV',['../group__msg__if__csv__ctrl.html',1,'Control Message CSV'],['../group__msg__if__csv.html',1,'Message CSV'],['../group__msg__if__csv__sensor.html',1,'Sensor Message CSV'],['../group__msg__if__csv__states.html',1,'State Machine Message CSV'],['../group__msg__if__csv__tractive.html',1,'Tractive System Message CSV']]]
 ];

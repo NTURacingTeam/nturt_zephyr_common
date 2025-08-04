@@ -1,17 +1,21 @@
 <map id="nturt/sys/util_loops.h" name="nturt/sys/util_loops.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="65,5,224,31"/>
-<area shape="rect" id="Node000002" href="$util_8h.html" title="Utility macros and functions." alt="" coords="87,79,203,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="147,44,147,79,142,79,142,44"/>
-<area shape="rect" id="Node000003" href="$canopen_8h.html" title="CANopen support." alt="" coords="5,299,180,324"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="96,112,67,129,46,153,38,172,37,192,47,233,66,270,85,297,81,300,62,273,42,235,32,193,33,171,41,151,64,125,93,107"/>
-<area shape="rect" id="Node000004" href="$aggregation_8h.html" title="Data aggregation." alt="" coords="55,152,234,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="147,118,147,152,142,152,142,118"/>
-<area shape="rect" id="Node000005" href="$msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="235,225,364,251"/>
-<area shape="poly" id="edge9_Node000002_Node000005" title=" " alt="" coords="185,108,217,126,248,150,278,189,297,224,292,226,273,192,244,154,214,131,183,112"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="110,186,87,204,70,226,66,245,69,264,86,297,82,300,64,266,61,245,65,224,83,200,107,182"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="183,181,275,223,273,228,181,185"/>
-<area shape="rect" id="Node000006" href="$telemetry_8h.html" title="Telemetry support." alt="" coords="79,225,210,251"/>
-<area shape="poly" id="edge7_Node000004_Node000006" title=" " alt="" coords="147,191,147,225,142,225,142,191"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="254,258,127,301,125,296,252,253"/>
-<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="130,263,103,300,99,297,126,260"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="171,5,330,31"/>
+<area shape="rect" id="Node000002" href="$util_8h.html" title="Utility macros and functions." alt="" coords="193,79,309,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="253,44,253,79,248,79,248,44"/>
+<area shape="rect" id="Node000003" href="$canopen_8h.html" title="CANopen support." alt="" coords="153,299,327,324"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="213,113,181,131,147,157,117,188,97,226,95,239,98,251,114,271,142,286,175,296,173,301,140,290,111,275,93,253,90,240,92,224,113,185,143,153,178,127,211,108"/>
+<area shape="rect" id="Node000004" href="$aggregation_8h.html" title="Data aggregation." alt="" coords="161,152,340,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="253,118,253,152,248,152,248,118"/>
+<area shape="rect" id="Node000005" href="$nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="313,225,442,251"/>
+<area shape="poly" id="edge11_Node000002_Node000005" title=" " alt="" coords="297,108,327,125,354,150,365,169,373,189,379,225,374,226,368,191,360,171,350,154,324,130,294,112"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="254,191,252,251,245,299,240,298,247,250,249,191"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="284,182,358,223,355,227,282,186"/>
+<area shape="rect" id="Node000007" href="$nturt__zephyr__common_2include_2nturt_2telemetry_8h.html" title="Telemetry support." alt="" coords="107,225,237,251"/>
+<area shape="poly" id="edge8_Node000004_Node000007" title=" " alt="" coords="230,189,187,227,183,223,226,185"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="345,259,264,301,261,296,342,254"/>
+<area shape="rect" id="Node000006" href="$nturt__vcu_2include_2vcu_2msg_2msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="351,299,473,324"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="391,262,409,297,404,300,387,264"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="194,259,231,297,227,300,191,262"/>
+<area shape="rect" id="Node000008" href="$nturt__vcu_2include_2vcu_2telemetry_8h.html" title="Telemetry support." alt="" coords="5,299,128,324"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="145,261,85,301,82,296,142,256"/>
 </map>

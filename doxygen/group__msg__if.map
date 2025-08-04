@@ -1,8 +1,10 @@
 <map id="Message Interface" name="Message Interface">
-<area shape="rect" id="Node000002" href="$group__msg.html" title="Inter&#45;thread communication support." alt="" coords="5,80,85,105"/>
-<area shape="rect" id="Node000001" title="Message type definitions." alt="" coords="133,80,276,105"/>
-<area shape="rect" id="Node000003" href="$group__msg__if__csv.html" title="Message CSV format strings." alt="" coords="363,5,473,31"/>
-<area shape="rect" id="Node000004" href="$group__msg__if__pri.html" title="Message printing format strings." alt="" coords="351,55,485,80"/>
-<area shape="rect" id="Node000005" href="$group__msg__if__sensor.html" title="Sensor message type definitions." alt="" coords="354,104,482,129"/>
-<area shape="rect" id="Node000006" href="$group__msg__if__tractive.html" title="Tractive system message type definitions." alt="" coords="324,153,512,179"/>
+<area shape="rect" id="Node000002" href="$group__msg.html" title="Inter&#45;thread communication support." alt="" coords="5,129,85,155"/>
+<area shape="rect" id="Node000001" title="Message type definitions." alt="" coords="133,129,276,155"/>
+<area shape="rect" id="Node000004" href="$group__msg__if__csv.html" title="Message CSV format strings." alt="" coords="363,5,473,31"/>
+<area shape="rect" id="Node000003" href="$group__msg__if__ctrl.html" title="Control message type definitions." alt="" coords="353,55,483,80"/>
+<area shape="rect" id="Node000005" href="$group__msg__if__pri.html" title="Message printing format strings." alt="" coords="351,104,485,129"/>
+<area shape="rect" id="Node000006" href="$group__msg__if__sensor.html" title="Sensor message type definitions." alt="" coords="354,153,482,179"/>
+<area shape="rect" id="Node000007" href="$group__msg__if__states.html" title="Control system state machine message type definitions." alt="" coords="326,203,510,228"/>
+<area shape="rect" id="Node000008" href="$group__msg__if__tractive.html" title="Tractive system message type definitions." alt="" coords="324,252,512,277"/>
 </map>

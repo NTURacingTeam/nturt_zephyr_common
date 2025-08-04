@@ -1,6 +1,8 @@
 var group__msg__if__pri =
 [
+    [ "Control Message Printing", "group__msg__if__pri__ctrl.html", "group__msg__if__pri__ctrl" ],
     [ "Sensor Message Printing", "group__msg__if__pri__sensor.html", "group__msg__if__pri__sensor" ],
+    [ "State Machine Message Printing", "group__msg__if__pri__states.html", "group__msg__if__pri__states" ],
     [ "Tractive System Message Printing", "group__msg__if__tractive__pri.html", "group__msg__if__tractive__pri" ],
     [ "PRImsg_3d_data", "group__msg__if__pri.html#gaa9496b9305421a141ab31d719b2a962d", null ],
     [ "PRImsg_3d_data_arg", "group__msg__if__pri.html#ga5faa5fb2e611a6f362483cc8a8f2aa23", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tm_5fdata_5ftype_0',['tm_data_type',['../group__tm.html#ga4aec1e6524cbaecbbb4bf39cc49ca50f',1,'telemetry.h']]]
+  ['jy901b_5fchannel_0',['jy901b_channel',['../jy901b_8h.html#a9595cb04ae406394cba4a3d6ff17eb36',1,'jy901b.h']]]
 ];
