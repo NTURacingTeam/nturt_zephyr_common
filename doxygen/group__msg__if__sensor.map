@@ -1,0 +1,6 @@
+<map id="Sensor Message" name="Sensor Message">
+<area shape="rect" id="Node000002" href="$group__msg__if.html" title="Message type definitions." alt="" coords="5,31,148,56"/>
+<area shape="rect" id="Node000001" title="Sensor message type definitions." alt="" coords="196,31,324,56"/>
+<area shape="rect" id="Node000003" href="$group__msg__if__csv__sensor.html" title="Sensor message CSV format strings." alt="" coords="384,5,543,31"/>
+<area shape="rect" id="Node000004" href="$group__msg__if__pri__sensor.html" title="Sensor message printing format strings." alt="" coords="372,55,555,80"/>
+</map>

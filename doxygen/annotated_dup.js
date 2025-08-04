@@ -15,7 +15,6 @@ var annotated_dup =
     [ "msg_sensor_gps", "structmsg__sensor__gps.html", "structmsg__sensor__gps" ],
     [ "msg_sensor_imu", "structmsg__sensor__imu.html", "structmsg__sensor__imu" ],
     [ "msg_sensor_pow", "structmsg__sensor__pow.html", "structmsg__sensor__pow" ],
-    [ "msg_sensor_susp", "structmsg__sensor__susp.html", "structmsg__sensor__susp" ],
     [ "msg_sensor_wheel", "structmsg__sensor__wheel.html", "structmsg__sensor__wheel" ],
     [ "msg_shell", "structmsg__shell.html", "structmsg__shell" ],
     [ "msg_ts_acc", "structmsg__ts__acc.html", "structmsg__ts__acc" ],

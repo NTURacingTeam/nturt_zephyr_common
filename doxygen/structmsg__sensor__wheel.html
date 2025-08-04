@@ -110,7 +110,7 @@ $(function(){initNavTree('structmsg__sensor__wheel.html',''); initResizable(true
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">msg_sensor_wheel Struct Reference<div class="ingroups"><a class="el" href="group__msg.html">Message</a> &raquo; <a class="el" href="group__msg__interface.html">Message Interface</a> &raquo; <a class="el" href="group__msg__interface__sensor.html">Sensor Message</a></div></div></div>
+  <div class="headertitle"><div class="title">msg_sensor_wheel Struct Reference<div class="ingroups"><a class="el" href="group__msg.html">Message</a> &raquo; <a class="el" href="group__msg__if.html">Message Interface</a> &raquo; <a class="el" href="group__msg__if__sensor.html">Sensor Message</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -125,11 +125,11 @@ $(function(){initNavTree('structmsg__sensor__wheel.html',''); initResizable(true
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="structmsg__sensor__wheel__coll__graph.png" border="0" usemap="#amsg__sensor__wheel_coll__map" alt="Collaboration graph"/></div>
 <map name="amsg__sensor__wheel_coll__map" id="amsg__sensor__wheel_coll__map">
-<area shape="rect" title="Wheel sensors message." alt="" coords="55,123,202,148"/>
+<area shape="rect" title="Wheel sensors message." alt="" coords="55,137,202,163"/>
 <area shape="rect" href="structmsg__header.html" title="Message header." alt="" coords="5,5,108,31"/>
-<area shape="poly" title=" " alt="" coords="73,41,124,121,119,124,69,44"/>
+<area shape="poly" title=" " alt="" coords="72,41,125,136,120,138,67,44"/>
 <area shape="rect" href="unionmsg__4wheel__data.html" title="4&#45;wheel data." alt="" coords="132,5,272,31"/>
-<area shape="poly" title=" " alt="" coords="194,45,163,100,143,124,139,121,158,97,189,42"/>
+<area shape="poly" title=" " alt="" coords="197,45,184,79,166,115,144,139,140,135,161,112,179,77,192,43"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -143,6 +143,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a4db0e8b9d986bf7474afcacf75cfffa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53e4aab8e999508be59553a000cb9323" id="r_a53e4aab8e999508be59553a000cb9323"><td class="memItemLeft" align="right" valign="top">union <a class="el" href="unionmsg__4wheel__data.html">msg_4wheel_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53e4aab8e999508be59553a000cb9323">tire_temp</a></td></tr>
 <tr class="separator:a53e4aab8e999508be59553a000cb9323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6327b01dea863b5a7fad4f69de7cd343" id="r_a6327b01dea863b5a7fad4f69de7cd343"><td class="memItemLeft" align="right" valign="top">union <a class="el" href="unionmsg__4wheel__data.html">msg_4wheel_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6327b01dea863b5a7fad4f69de7cd343">susp_travel</a></td></tr>
+<tr class="separator:a6327b01dea863b5a7fad4f69de7cd343"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wheel sensors message. </p>
@@ -174,6 +176,21 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Wheel speed. Unit: rpm </p>
+
+</div>
+</div>
+<a id="a6327b01dea863b5a7fad4f69de7cd343" name="a6327b01dea863b5a7fad4f69de7cd343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6327b01dea863b5a7fad4f69de7cd343">&#9670;&#160;</a></span>susp_travel</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union <a class="el" href="unionmsg__4wheel__data.html">msg_4wheel_data</a> msg_sensor_wheel::susp_travel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Suspension travel. Postive for compression, negative for expansion. Unit: m. </p>
 
 </div>
 </div>
@@ -216,7 +233,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structmsg__sensor__wheel.html">msg_sensor_wheel</a></li>
-    <li class="footer">Generated on Sun Aug 3 2025 01:36:24 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Mon Aug 4 2025 06:30:09 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

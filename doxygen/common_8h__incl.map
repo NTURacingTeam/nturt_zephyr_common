@@ -1,7 +1,9 @@
 <map id="nturt/msg/interfaces/common.h" name="nturt/msg/interfaces/common.h">
-<area shape="rect" id="Node000001" title="Common message type definitions." alt="" coords="23,5,178,45"/>
+<area shape="rect" id="Node000001" title="Common message type definitions." alt="" coords="85,5,239,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,93,76,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,47,60,84,56,81,84,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,48,71,88,69,84,131,43"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="101,93,223,119"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="118,44,147,81,142,84,113,47"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="165,46,165,79,159,79,159,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="248,93,377,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="199,43,279,84,277,89,197,48"/>
 </map>

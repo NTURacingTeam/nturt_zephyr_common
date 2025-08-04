@@ -120,6 +120,7 @@ $(function(){initNavTree('common_8h.html',''); initResizable(true); });
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;zephyr/kernel.h&gt;</code><br />
+<code>#include &lt;zephyr/sys/util.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for common.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -127,11 +128,13 @@ $(function(){initNavTree('common_8h.html',''); initResizable(true); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="common_8h__incl.png" border="0" usemap="#anturt_2msg_2interfaces_2common_8h" alt=""/></div>
 <map name="anturt_2msg_2interfaces_2common_8h" id="anturt_2msg_2interfaces_2common_8h">
-<area shape="rect" title="Common message type definitions." alt="" coords="23,5,178,45"/>
+<area shape="rect" title="Common message type definitions." alt="" coords="85,5,239,45"/>
 <area shape="rect" title=" " alt="" coords="5,93,76,119"/>
-<area shape="poly" title=" " alt="" coords="88,47,60,84,56,81,84,44"/>
+<area shape="poly" title=" " alt="" coords="134,48,71,88,69,84,131,43"/>
 <area shape="rect" title=" " alt="" coords="101,93,223,119"/>
-<area shape="poly" title=" " alt="" coords="118,44,147,81,142,84,113,47"/>
+<area shape="poly" title=" " alt="" coords="165,46,165,79,159,79,159,46"/>
+<area shape="rect" title=" " alt="" coords="248,93,377,119"/>
+<area shape="poly" title=" " alt="" coords="199,43,279,84,277,89,197,48"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -173,34 +176,70 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga4abb496d8bf5b7fb2b9d33a7362d06f7" id="r_ga4abb496d8bf5b7fb2b9d33a7362d06f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__interface.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a>&#160;&#160;&#160;&quot;s%llu.%06llu s&quot;</td></tr>
+<tr class="memitem:ga4abb496d8bf5b7fb2b9d33a7362d06f7" id="r_ga4abb496d8bf5b7fb2b9d33a7362d06f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a>&#160;&#160;&#160;&quot;s%llu.%06llu s&quot;</td></tr>
 <tr class="memdesc:ga4abb496d8bf5b7fb2b9d33a7362d06f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__header.html">msg_header</a> format string.  <br /></td></tr>
 <tr class="separator:ga4abb496d8bf5b7fb2b9d33a7362d06f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga367830ef6cfea1fc9723e1f6add32529" id="r_ga367830ef6cfea1fc9723e1f6add32529"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__interface.html#ga367830ef6cfea1fc9723e1f6add32529">PRImsg_header_arg</a>(header)</td></tr>
-<tr class="memdesc:ga367830ef6cfea1fc9723e1f6add32529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__header.html">msg_header</a> arguments to print format.  <br /></td></tr>
-<tr class="separator:ga367830ef6cfea1fc9723e1f6add32529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9496b9305421a141ab31d719b2a962d" id="r_gaa9496b9305421a141ab31d719b2a962d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__interface.html#gaa9496b9305421a141ab31d719b2a962d">PRImsg_3d_data</a>&#160;&#160;&#160;&quot;s(%g, %g, %g)&quot;</td></tr>
+<tr class="memitem:ga62bc45b20f45b7ad6cb0a6c2aeb93aa7" id="r_ga62bc45b20f45b7ad6cb0a6c2aeb93aa7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a>(data)</td></tr>
+<tr class="memdesc:ga62bc45b20f45b7ad6cb0a6c2aeb93aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__header.html">msg_header</a> arguments to print format.  <br /></td></tr>
+<tr class="separator:ga62bc45b20f45b7ad6cb0a6c2aeb93aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9496b9305421a141ab31d719b2a962d" id="r_gaa9496b9305421a141ab31d719b2a962d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__pri.html#gaa9496b9305421a141ab31d719b2a962d">PRImsg_3d_data</a>&#160;&#160;&#160;&quot;s(%g, %g, %g)&quot;</td></tr>
 <tr class="memdesc:gaa9496b9305421a141ab31d719b2a962d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__3d__data.html">msg_3d_data</a> format string.  <br /></td></tr>
 <tr class="separator:gaa9496b9305421a141ab31d719b2a962d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5faa5fb2e611a6f362483cc8a8f2aa23" id="r_ga5faa5fb2e611a6f362483cc8a8f2aa23"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__interface.html#ga5faa5fb2e611a6f362483cc8a8f2aa23">PRImsg_3d_data_arg</a>(data)</td></tr>
+<tr class="memitem:ga5faa5fb2e611a6f362483cc8a8f2aa23" id="r_ga5faa5fb2e611a6f362483cc8a8f2aa23"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__pri.html#ga5faa5fb2e611a6f362483cc8a8f2aa23">PRImsg_3d_data_arg</a>(data)</td></tr>
 <tr class="memdesc:ga5faa5fb2e611a6f362483cc8a8f2aa23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__3d__data.html">msg_3d_data</a> arguments to print format.  <br /></td></tr>
 <tr class="separator:ga5faa5fb2e611a6f362483cc8a8f2aa23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b695efa25bb85aed9c7061a17dfc17d" id="r_ga2b695efa25bb85aed9c7061a17dfc17d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__interface.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a>&#160;&#160;&#160;&quot;s(%g, %g, %g, %g)&quot;</td></tr>
+<tr class="memitem:ga2b695efa25bb85aed9c7061a17dfc17d" id="r_ga2b695efa25bb85aed9c7061a17dfc17d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a>&#160;&#160;&#160;&quot;s(%g, %g, %g, %g)&quot;</td></tr>
 <tr class="memdesc:ga2b695efa25bb85aed9c7061a17dfc17d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__4wheel__data.html">msg_4wheel_data</a> format string.  <br /></td></tr>
 <tr class="separator:ga2b695efa25bb85aed9c7061a17dfc17d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0700155d223f615de6f90ea9573bce8c" id="r_ga0700155d223f615de6f90ea9573bce8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__interface.html#ga0700155d223f615de6f90ea9573bce8c">PRImsg_4wheel_data_arg</a>(data)</td></tr>
+<tr class="memitem:ga0700155d223f615de6f90ea9573bce8c" id="r_ga0700155d223f615de6f90ea9573bce8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__pri.html#ga0700155d223f615de6f90ea9573bce8c">PRImsg_4wheel_data_arg</a>(data)</td></tr>
 <tr class="memdesc:ga0700155d223f615de6f90ea9573bce8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__4wheel__data.html">msg_4wheel_data</a> arguments to print format.  <br /></td></tr>
 <tr class="separator:ga0700155d223f615de6f90ea9573bce8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae0f3b3594443ee8d2ea54ed1201c1493" id="r_gae0f3b3594443ee8d2ea54ed1201c1493"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__interface.html#gae0f3b3594443ee8d2ea54ed1201c1493">PRImsg_4wheel_flags</a>&#160;&#160;&#160;&quot;s(0x%X, 0x%X, 0x%X, 0x%X)&quot;</td></tr>
+<tr class="memitem:gae0f3b3594443ee8d2ea54ed1201c1493" id="r_gae0f3b3594443ee8d2ea54ed1201c1493"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__pri.html#gae0f3b3594443ee8d2ea54ed1201c1493">PRImsg_4wheel_flags</a>&#160;&#160;&#160;&quot;s(0x%X, 0x%X, 0x%X, 0x%X)&quot;</td></tr>
 <tr class="memdesc:gae0f3b3594443ee8d2ea54ed1201c1493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__4wheel__flags.html">msg_4wheel_flags</a> format string.  <br /></td></tr>
 <tr class="separator:gae0f3b3594443ee8d2ea54ed1201c1493"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4eabc6bf00e70480c0fbada9170538c" id="r_gab4eabc6bf00e70480c0fbada9170538c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__interface.html#gab4eabc6bf00e70480c0fbada9170538c">PRImsg_4wheel_flags_arg</a>(flags)</td></tr>
-<tr class="memdesc:gab4eabc6bf00e70480c0fbada9170538c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__4wheel__flags.html">msg_4wheel_flags</a> arguments to print format.  <br /></td></tr>
-<tr class="separator:gab4eabc6bf00e70480c0fbada9170538c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c6e1cae56c97116cd800793afd6d462" id="r_ga1c6e1cae56c97116cd800793afd6d462"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__pri.html#ga1c6e1cae56c97116cd800793afd6d462">PRImsg_4wheel_flags_arg</a>(data)</td></tr>
+<tr class="memdesc:ga1c6e1cae56c97116cd800793afd6d462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__4wheel__flags.html">msg_4wheel_flags</a> arguments to print format.  <br /></td></tr>
+<tr class="separator:ga1c6e1cae56c97116cd800793afd6d462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga534bf19705bcc855c5c72daae12cd934" id="r_ga534bf19705bcc855c5c72daae12cd934"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#ga534bf19705bcc855c5c72daae12cd934">CSV_PRImsg_header_header</a>&#160;&#160;&#160;&quot;timestamp&quot;</td></tr>
+<tr class="memdesc:ga534bf19705bcc855c5c72daae12cd934"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSV header for <a class="el" href="structmsg__header.html">msg_header</a>.  <br /></td></tr>
+<tr class="separator:ga534bf19705bcc855c5c72daae12cd934"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d328fe2f26185bf61988ae2b7b8d600" id="r_ga2d328fe2f26185bf61988ae2b7b8d600"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#ga2d328fe2f26185bf61988ae2b7b8d600">CSV_PRImsg_header</a>&#160;&#160;&#160;&quot;llu.%06llu&quot;</td></tr>
+<tr class="memdesc:ga2d328fe2f26185bf61988ae2b7b8d600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__header.html">msg_header</a> CSV format string.  <br /></td></tr>
+<tr class="separator:ga2d328fe2f26185bf61988ae2b7b8d600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabec03bf9a03d54b7b3a806a8ec07ad2d" id="r_gabec03bf9a03d54b7b3a806a8ec07ad2d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#gabec03bf9a03d54b7b3a806a8ec07ad2d">CSV_PRImsg_header_arg</a>(data)</td></tr>
+<tr class="memdesc:gabec03bf9a03d54b7b3a806a8ec07ad2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__header.html">msg_header</a> arguments to CSV print format.  <br /></td></tr>
+<tr class="separator:gabec03bf9a03d54b7b3a806a8ec07ad2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae71ece8b23e241a713f38c0fce20669e" id="r_gae71ece8b23e241a713f38c0fce20669e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#gae71ece8b23e241a713f38c0fce20669e">CSV_PRImsg_3d_data_header</a>(data)</td></tr>
+<tr class="memdesc:gae71ece8b23e241a713f38c0fce20669e"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSV header for <a class="el" href="unionmsg__3d__data.html">msg_3d_data</a>.  <br /></td></tr>
+<tr class="separator:gae71ece8b23e241a713f38c0fce20669e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac989015b1571e15ef1300b61c14a8068" id="r_gac989015b1571e15ef1300b61c14a8068"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#gac989015b1571e15ef1300b61c14a8068">CSV_PRImsg_3d_data</a>&#160;&#160;&#160;&quot;.f,%.f,%.f&quot;</td></tr>
+<tr class="memdesc:gac989015b1571e15ef1300b61c14a8068"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__3d__data.html">msg_3d_data</a> CSV format string.  <br /></td></tr>
+<tr class="separator:gac989015b1571e15ef1300b61c14a8068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b2dc0a79790f83bfbea8e94ef4e3f03" id="r_ga9b2dc0a79790f83bfbea8e94ef4e3f03"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#ga9b2dc0a79790f83bfbea8e94ef4e3f03">CSV_PRImsg_3d_data_arg</a>(data)</td></tr>
+<tr class="memdesc:ga9b2dc0a79790f83bfbea8e94ef4e3f03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__3d__data.html">msg_3d_data</a> arguments to CSV print format.  <br /></td></tr>
+<tr class="separator:ga9b2dc0a79790f83bfbea8e94ef4e3f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b5c3cd268eacbbb77c189addeba6c9f" id="r_ga9b5c3cd268eacbbb77c189addeba6c9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#ga9b5c3cd268eacbbb77c189addeba6c9f">CSV_PRImsg_4wheel_data_header</a>(data)</td></tr>
+<tr class="memdesc:ga9b5c3cd268eacbbb77c189addeba6c9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSV header for <a class="el" href="unionmsg__4wheel__data.html">msg_4wheel_data</a>.  <br /></td></tr>
+<tr class="separator:ga9b5c3cd268eacbbb77c189addeba6c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa80c09d85e871a9857d2454a9be74d75" id="r_gaa80c09d85e871a9857d2454a9be74d75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#gaa80c09d85e871a9857d2454a9be74d75">CSV_PRImsg_4wheel_data</a>&#160;&#160;&#160;&quot;.f,%.f,%.f,%.f&quot;</td></tr>
+<tr class="memdesc:gaa80c09d85e871a9857d2454a9be74d75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__4wheel__data.html">msg_4wheel_data</a> CSV format string.  <br /></td></tr>
+<tr class="separator:gaa80c09d85e871a9857d2454a9be74d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa754e18e341d13352638d8fa8c1bca4e" id="r_gaa754e18e341d13352638d8fa8c1bca4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#gaa754e18e341d13352638d8fa8c1bca4e">CSV_PRImsg_4wheel_data_arg</a>(data)</td></tr>
+<tr class="memdesc:gaa754e18e341d13352638d8fa8c1bca4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__4wheel__data.html">msg_4wheel_data</a> arguments to CSV print format.  <br /></td></tr>
+<tr class="separator:gaa754e18e341d13352638d8fa8c1bca4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17fa11413074c5ffb60032875c2c88ed" id="r_ga17fa11413074c5ffb60032875c2c88ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#ga17fa11413074c5ffb60032875c2c88ed">CSV_PRImsg_4wheel_flags_header</a>(data)</td></tr>
+<tr class="memdesc:ga17fa11413074c5ffb60032875c2c88ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSV header for <a class="el" href="unionmsg__4wheel__flags.html">msg_4wheel_flags</a>.  <br /></td></tr>
+<tr class="separator:ga17fa11413074c5ffb60032875c2c88ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f713750262c03cfc04d161874f8c5a5" id="r_ga3f713750262c03cfc04d161874f8c5a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#ga3f713750262c03cfc04d161874f8c5a5">CSV_PRImsg_4wheel_flags</a>&#160;&#160;&#160;&quot;u,%u,%u,%u&quot;</td></tr>
+<tr class="memdesc:ga3f713750262c03cfc04d161874f8c5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__4wheel__flags.html">msg_4wheel_flags</a> CSV format string.  <br /></td></tr>
+<tr class="separator:ga3f713750262c03cfc04d161874f8c5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ffb7eef8713eb45edff2f431ad4a246" id="r_ga3ffb7eef8713eb45edff2f431ad4a246"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if__csv.html#ga3ffb7eef8713eb45edff2f431ad4a246">CSV_PRImsg_4wheel_flags_arg</a>(data)</td></tr>
+<tr class="memdesc:ga3ffb7eef8713eb45edff2f431ad4a246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="unionmsg__4wheel__flags.html">msg_4wheel_flags</a> arguments to CSV print format.  <br /></td></tr>
+<tr class="separator:ga3ffb7eef8713eb45edff2f431ad4a246"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga441b1113671fb5d80d6e80009d600eec" id="r_ga441b1113671fb5d80d6e80009d600eec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__interface.html#ga441b1113671fb5d80d6e80009d600eec">msg_header_init</a> (struct <a class="el" href="structmsg__header.html">msg_header</a> *header)</td></tr>
+<tr class="memitem:ga441b1113671fb5d80d6e80009d600eec" id="r_ga441b1113671fb5d80d6e80009d600eec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg__if.html#ga441b1113671fb5d80d6e80009d600eec">msg_header_init</a> (struct <a class="el" href="structmsg__header.html">msg_header</a> *header)</td></tr>
 <tr class="memdesc:ga441b1113671fb5d80d6e80009d600eec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a message header.  <br /></td></tr>
 <tr class="separator:ga441b1113671fb5d80d6e80009d600eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -216,7 +255,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_41af1b08bcf548b44c26155efe0f36a8.html">nturt</a></li><li class="navelem"><a class="el" href="dir_bfdb0c8bf6655ed50a7064a4579a274b.html">msg</a></li><li class="navelem"><a class="el" href="dir_af033d2bb8189dc01152afd4a6acebbb.html">interfaces</a></li><li class="navelem"><a class="el" href="common_8h.html">common.h</a></li>
-    <li class="footer">Generated on Sun Aug 3 2025 01:36:24 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Mon Aug 4 2025 06:30:09 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

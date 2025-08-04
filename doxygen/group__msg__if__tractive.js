@@ -1,5 +1,7 @@
-var group__msg__interface__tractive =
+var group__msg__if__tractive =
 [
+    [ "Tractive System Message CSV", "group__msg__if__csv__tractive.html", "group__msg__if__csv__tractive" ],
+    [ "Tractive System Message Printing", "group__msg__if__tractive__pri.html", "group__msg__if__tractive__pri" ],
     [ "msg_ts_acc", "structmsg__ts__acc.html", [
       [ "capacity", "structmsg__ts__acc.html#a8a4263b40fc7382cab3ed2aa879f991c", null ],
       [ "current", "structmsg__ts__acc.html#aa2e89263640b713f7d038ddf2b73c714", null ],
@@ -18,9 +20,5 @@ var group__msg__interface__tractive =
       [ "status", "structmsg__ts__inv.html#ac2c97b22b5bdecf4bb0e149fda7b11db", null ],
       [ "volt", "structmsg__ts__inv.html#a18c262e4a534a33840ffd6dcdd0f9d55", null ]
     ] ],
-    [ "MSG_TRACTIVE_LIST", "group__msg__interface__tractive.html#ga6c1a082289b5eb2de4e44b214d646990", null ],
-    [ "PRImsg_ts_acc", "group__msg__interface__tractive.html#gac06cefca6e16a39ed54e9b37ef6ab333", null ],
-    [ "PRImsg_ts_acc_arg", "group__msg__interface__tractive.html#ga2225871f59f28a1b3f9d16b9620827b1", null ],
-    [ "PRImsg_ts_inv", "group__msg__interface__tractive.html#gab080daa91f73dd45e57b850cf430c48b", null ],
-    [ "PRImsg_ts_inv_arg", "group__msg__interface__tractive.html#ga346336ce168bad8dd586bdcea21e3455", null ]
+    [ "MSG_TRACTIVE_LIST", "group__msg__if__tractive.html#ga6c1a082289b5eb2de4e44b214d646990", null ]
 ];

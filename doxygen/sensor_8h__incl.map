@@ -1,9 +1,11 @@
 <map id="nturt/msg/interfaces/sensor.h" name="nturt/msg/interfaces/sensor.h">
-<area shape="rect" id="Node000001" title="Sensor message type definitions." alt="" coords="23,5,178,45"/>
-<area shape="rect" id="Node000002" href="$common_8h.html" title="Common message type definitions." alt="" coords="23,93,178,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,46,103,79,98,79,98,46"/>
+<area shape="rect" id="Node000001" title="Sensor message type definitions." alt="" coords="85,5,239,45"/>
+<area shape="rect" id="Node000002" href="$common_8h.html" title="Common message type definitions." alt="" coords="85,93,239,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,46,165,79,159,79,159,46"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,181,76,207"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="88,135,60,172,56,169,84,132"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="134,136,71,176,69,172,131,131"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="101,181,223,207"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="118,132,147,169,142,172,113,135"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="165,134,165,167,159,167,159,134"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="248,181,377,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="199,131,279,172,277,177,197,136"/>
 </map>

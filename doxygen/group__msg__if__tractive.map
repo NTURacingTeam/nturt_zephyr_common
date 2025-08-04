@@ -1,0 +1,6 @@
+<map id="Tractive System Message" name="Tractive System Message">
+<area shape="rect" id="Node000002" href="$group__msg__if.html" title="Message type definitions." alt="" coords="5,35,148,60"/>
+<area shape="rect" id="Node000001" title="Tractive system message type definitions." alt="" coords="196,35,384,60"/>
+<area shape="rect" id="Node000003" href="$group__msg__if__csv__tractive.html" title="Tractive system message CSV format strings." alt="" coords="432,5,651,31"/>
+<area shape="rect" id="Node000004" href="$group__msg__if__tractive__pri.html" title="Tractive system message printing format strings." alt="" coords="447,55,635,95"/>
+</map>

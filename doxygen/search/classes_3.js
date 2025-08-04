@@ -8,9 +8,8 @@ var searchData=
   ['msg_5fsensor_5fgps_5',['msg_sensor_gps',['../structmsg__sensor__gps.html',1,'']]],
   ['msg_5fsensor_5fimu_6',['msg_sensor_imu',['../structmsg__sensor__imu.html',1,'']]],
   ['msg_5fsensor_5fpow_7',['msg_sensor_pow',['../structmsg__sensor__pow.html',1,'']]],
-  ['msg_5fsensor_5fsusp_8',['msg_sensor_susp',['../structmsg__sensor__susp.html',1,'']]],
-  ['msg_5fsensor_5fwheel_9',['msg_sensor_wheel',['../structmsg__sensor__wheel.html',1,'']]],
-  ['msg_5fshell_10',['msg_shell',['../structmsg__shell.html',1,'']]],
-  ['msg_5fts_5facc_11',['msg_ts_acc',['../structmsg__ts__acc.html',1,'']]],
-  ['msg_5fts_5finv_12',['msg_ts_inv',['../structmsg__ts__inv.html',1,'']]]
+  ['msg_5fsensor_5fwheel_8',['msg_sensor_wheel',['../structmsg__sensor__wheel.html',1,'']]],
+  ['msg_5fshell_9',['msg_shell',['../structmsg__shell.html',1,'']]],
+  ['msg_5fts_5facc_10',['msg_ts_acc',['../structmsg__ts__acc.html',1,'']]],
+  ['msg_5fts_5finv_11',['msg_ts_inv',['../structmsg__ts__inv.html',1,'']]]
 ];

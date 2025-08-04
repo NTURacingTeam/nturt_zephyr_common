@@ -2,11 +2,13 @@
 <area shape="rect" id="Node000001" title="Tractive system message type definitions." alt="" coords="48,5,203,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,101,88,126"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,47,69,92,65,88,106,44"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="90,181,161,207"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="128,46,128,168,123,168,123,46"/>
-<area shape="rect" id="Node000004" href="$common_8h.html" title="Common message type definitions." alt="" coords="163,93,317,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="152,43,205,83,202,87,149,48"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="214,136,155,176,152,171,211,131"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="185,181,308,207"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="244,133,247,167,242,168,239,134"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="87,181,158,207"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="128,46,126,168,120,168,122,46"/>
+<area shape="rect" id="Node000004" href="$common_8h.html" title="Common message type definitions." alt="" coords="165,93,320,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="153,43,207,83,204,87,150,48"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="215,136,153,176,150,172,212,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="183,181,305,207"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="246,134,246,167,241,167,240,134"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="330,181,459,207"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="280,131,361,172,358,177,278,136"/>
 </map>

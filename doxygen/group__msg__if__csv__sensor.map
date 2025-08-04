@@ -1,0 +1,5 @@
+<map id="Sensor Message CSV" name="Sensor Message CSV">
+<area shape="rect" id="Node000003" href="$group__msg__if__csv.html" title="Message CSV format strings." alt="" coords="14,5,125,31"/>
+<area shape="rect" id="Node000001" title="Sensor message CSV format strings." alt="" coords="181,31,340,56"/>
+<area shape="rect" id="Node000002" href="$group__msg__if__sensor.html" title="Sensor message type definitions." alt="" coords="5,55,133,80"/>
+</map>

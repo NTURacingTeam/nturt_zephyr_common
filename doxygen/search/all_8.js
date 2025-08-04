@@ -19,7 +19,7 @@ var searchData=
   ['input_5ferror_5fpedal_5fplaus_16',['INPUT_ERROR_PEDAL_PLAUS',['../input-error-codes_8h.html#a198b90c06f04fc50f8e1bbd8d9b21835',1,'input-error-codes.h']]],
   ['input_5ferror_5funder_17',['INPUT_ERROR_UNDER',['../input-error-codes_8h.html#a7ee1b345154695b25809e40e14fee6de',1,'input-error-codes.h']]],
   ['input_5fev_5ferror_18',['INPUT_EV_ERROR',['../input-error-codes_8h.html#a790a73f5e920ae66b09a8b06ef1832b2',1,'input-error-codes.h']]],
-  ['interface_19',['Interface',['../group__input__interface.html',1,'Input Interface'],['../group__msg__interface.html',1,'Message Interface']]],
+  ['interface_19',['Interface',['../group__input__interface.html',1,'Input Interface'],['../group__msg__if.html',1,'Message Interface']]],
   ['interfaces_2eh_20',['interfaces.h',['../interfaces_8h.html',1,'']]],
   ['inv_5fcurrent_5fcan_5fto_5fphy_21',['INV_CURRENT_CAN_TO_PHY',['../group__can__convert.html#ga02ff23dc7d5cccc3b2213e09c06d6a27',1,'convert.h']]],
   ['inv_5frated_5ftorque_22',['INV_RATED_TORQUE',['../group__can__convert.html#ga18eed08e2447eed966f67d23aacabf37',1,'convert.h']]],
