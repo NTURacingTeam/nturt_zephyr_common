@@ -1,0 +1,188 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; NTU Racing Team Zephyr Common Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="doxygen.html" />
+    <link rel="prev" title="State Machine" href="../library/vcu/states.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/decisions/index.html">Architecture Decision Records</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">Common Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/vcu/index.html">VCU Library</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developing</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-zephyr">Setting up Zephyr</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#including-this-project">Including this Project</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#learning-resources">Learning Resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#zephyr">Zephyr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#real-time-operating-systems-rtos">Real-Time Operating Systems (RTOS)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doxygen.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/index.html">Developer’s Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">Doc Implementation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NTU Racing Team Zephyr Common</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/develop/getting_started.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<span id="develop-getting-started"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<section id="setting-up-zephyr">
+<h2>Setting up Zephyr<a class="headerlink" href="#setting-up-zephyr" title="Link to this heading"></a></h2>
+<p>The Zephyr environment used to develop this project is based on the <a class="reference external" href="https://github.com/NTURacingTeam/zephyr_workspace">Zephyr
+Workspace</a> also developed
+by us. Please follow the instructions there to set up the Zephyr
+environment.</p>
+<section id="including-this-project">
+<h3>Including this Project<a class="headerlink" href="#including-this-project" title="Link to this heading"></a></h3>
+<p>To include this project in your Zephyr application, you can add the following
+to your <code class="docutils literal notranslate"><span class="pre">west.yml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">manifest</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">remotes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nturt</span>
+<span class="w">      </span><span class="nt">url-base</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/NTURacingTeam</span>
+
+<span class="w">  </span><span class="nt">projects</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nturt_zephyr_common</span>
+<span class="w">      </span><span class="nt">remote</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nturt</span>
+<span class="w">      </span><span class="nt">revision</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span>
+</pre></div>
+</div>
+<p>After another <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">update</span></code> that pull this project into your Zephyr workspace,
+you can include it in your application by enabling the <code class="docutils literal notranslate"><span class="pre">CONFIG_NTURT</span></code> Kconfig
+option.</p>
+</section>
+</section>
+<section id="learning-resources">
+<h2>Learning Resources<a class="headerlink" href="#learning-resources" title="Link to this heading"></a></h2>
+<section id="zephyr">
+<h3>Zephyr<a class="headerlink" href="#zephyr" title="Link to this heading"></a></h3>
+<p>Zephyr itself is a very involved system that has a deep learning curve.
+Fortunately, there are plenty of resources available to help you get started:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/playlist?list=PLEBQazB0HUyTmK2zdwhaf8bLwuEaDH-52">Introduction to Zephyr</a>
+from the DigiKey YouTube channel is a great place to start.</p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/playlist?list=PLJKv3qSDEE-lYuq5hMpJ_sSHQcuhO1S-P">Zephyr 101</a>
+from Circuit Dojo YouTube channel is another good resource for step-by-step
+tutorials on specific topics.</p></li>
+</ul>
+</section>
+<section id="real-time-operating-systems-rtos">
+<h3>Real-Time Operating Systems (RTOS)<a class="headerlink" href="#real-time-operating-systems-rtos" title="Link to this heading"></a></h3>
+<p>An operating system is almost imperative for an embedded system to scale up.
+Real-Time operating systems (RTOS) are designed to handle real-time tasks
+typically found in embedded systems. Here are some resources to help you
+understand RTOS concepts:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/playlist?list=PLEBQazB0HUyQ4hAPU1cJED6t3DU0h34bz">Introduction to RTOS</a>
+from the DigiKey YouTube channel provides a good overview of RTOS concepts
+based on another open-source RTOS, <a class="reference external" href="https://www.freertos.org/">FreeRTOS</a>.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../library/vcu/states.html" class="btn btn-neutral float-left" title="State Machine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doxygen.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, NTU Racing Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

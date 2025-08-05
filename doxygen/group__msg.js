@@ -18,6 +18,6 @@ var group__msg =
     [ "msg_chan_csv_header", "group__msg.html#ga88c0cd5d249c4d5007c9e3de4e01abb1", null ],
     [ "msg_chan_csv_write", "group__msg.html#ga4f9b11a2c2e146701386cb00040ac1d9", null ],
     [ "MSG_CHAN_DECLARE", "group__msg.html#gad1091f98fd581ebc22b3ed5036e2f220", null ],
-    [ "msg_chan_print", "group__msg.html#gab04f9f5b6c72f995d5123da2fed991f2", null ],
-    [ "MSG_ZBUS_CHAN_DECLARE", "group__msg.html#ga160a344155bb268d4a8a64e1b23cc14c", null ]
+    [ "MSG_CHAN_DECLARE", "group__msg.html#ga7bb769f1de6d91640b64981c9c65f86c", null ],
+    [ "msg_chan_print", "group__msg.html#gab04f9f5b6c72f995d5123da2fed991f2", null ]
 ];

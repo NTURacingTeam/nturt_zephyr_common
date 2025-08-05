@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CANopenNode &mdash; NTU Racing Team Zephyr Common Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Doc Implementation" href="../doc.html" />
+    <link rel="prev" title="Testing in Zephyr" href="test.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture/index.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture/decisions/index.html">Architecture Decision Records</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Common Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/vcu/index.html">VCU Library</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doxygen.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">Testing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer’s Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="common.html">Common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Zephyr Configuration System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html">Zephyr Kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drivers.html">Zephyr Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emulation.html">Zephyr Device Emulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Zephyr Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Testing in Zephyr</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CANopenNode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#can-reception">CAN Reception</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#filters">Filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#object-dictionary-od">Object Dictionary (OD)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#process-data-objectss-pdos">Process Data Objectss (PDOs)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#receive-pdos-rpdos">Receive PDOs (RPDOs)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transmit-pdos-tpdos">Transmit PDOs (TPDOs)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#error-handling">Error Handling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#error-status-bits">Error status bits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error-register">Error register</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#emcy-write">EMCY write</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pre-defined-error-fields">Pre-defined error fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../doc.html">Doc Implementation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">NTU Racing Team Zephyr Common</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Developer’s Note</a></li>
+      <li class="breadcrumb-item active">CANopenNode</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/develop/notes/canopennode.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="canopennode">
+<span id="develop-notes-canopennode"></span><h1>CANopenNode<a class="headerlink" href="#canopennode" title="Link to this heading"></a></h1>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/canopennode">Zephyr’s branch on CANopenNode</a> is currently outdated
+comapring to the latest version of <a class="reference external" href="https://github.com/CANopenNode/CANopenNode">CANopenNode</a>, and the <a class="reference external" href="https://github.com/CANopenNode/CANopenEditor">CANopenEditor</a> does not support this legacy
+version of CANopenNode (it has a legacy exporter, but the generated code lacks
+some type definitions that it can’t compile).</p>
+<p>Also, CANopen itself as a protocol controlled by <a class="reference external" href="https://www.can-cia.org">CAN in Automation (CiA)</a> is not that really that open as a lot of the
+specifications are not free. For example, now I need CiA 302 and it costs 512
+Euros.</p>
+<p>However, since CANopen provides the necessary application layer over the
+original CAN protocol that only covers the transmission layer, with the legacy
+Zephyr integration of CANopenNode available, it’s too good to not use it. We
+maintain <a class="reference external" href="https://github.com/NTURacingTeam/zephyr">a fork of Zephyr</a> that
+contains the modifications necessary to use the latest version of CANopenNode.</p>
+<p>Here are some notes for using the latest version of CANopenNode in Zephyr:</p>
+<section id="can-reception">
+<h2>CAN Reception<a class="headerlink" href="#can-reception" title="Link to this heading"></a></h2>
+<section id="callbacks">
+<h3>Callbacks<a class="headerlink" href="#callbacks" title="Link to this heading"></a></h3>
+<p>CAN bus driver in Zephyr uses hardware filters to filter out messages, and only
+messages that pass the filter will be received by the application using callback
+functions from an interrupt context <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Since callbacks are called from ISR,
+caution must be taken when setting callbacks related to CAN bus reception in
+CANopenNode. For example, <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_initCallbackRx()</span></code> and
+<code class="xref c c-func docutils literal notranslate"><span class="pre">CO_NMT_initCallback()</span></code> both execute in the ISR context, please
+investigate the source code to see what context the callback is executed.</p>
+</section>
+<section id="filters">
+<h3>Filters<a class="headerlink" href="#filters" title="Link to this heading"></a></h3>
+<p>Filters are added using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_CANrxBufferInit()</span></code> defined in <code class="docutils literal notranslate"><span class="pre">CO_driver.c</span></code>.
+The following is a list of filters added by CANopenNode:</p>
+<ul class="simple">
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_init()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_Emergency.c</span></code></p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_HBcons_monitoredNodeConfig()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_HBconsumer.c</span></code>, one for each
+monitored node</p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_LSSmaster_init()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_LSSmaster.c</span></code> <em>number not investigated</em></p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_LSSslave_init()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_LSSslave.c</span></code> <em>number not investigated</em></p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_NMT_init()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_NMT_Heartbeat.c</span></code></p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_RPDO_init()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_PDO.c</span></code>, called once for each RPDO by
+<code class="xref c c-func docutils literal notranslate"><span class="pre">CO_CANopenInitPDO()</span></code> in <code class="docutils literal notranslate"><span class="pre">CANopen.c</span></code></p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_SDO_init()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_SDO.c</span></code></p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_SDOclient_setup()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_SDOmaster.c</span></code>, one for each SDO client</p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_SYNC_init()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_SYNC.c</span></code></p></li>
+<li><p><code class="xref c c-func docutils literal notranslate"><span class="pre">CO_TIME_init()</span></code> in <code class="docutils literal notranslate"><span class="pre">CO_TIME.c</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since STM32 series with FDCAN only supports up to 28 standard and 8 extended
+ID filters <a class="footnote-reference brackets" href="#id5" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, caution must be taken when configuring CANopenNode.</p>
+</div>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/can/controller.html#receiving">Zephyr CAN bus driver documentation</a>
+on receiving messages</p>
+</aside>
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/arm/st/h7/stm32h7.dtsi#L533">STM32H7 FDCAN device tree source code</a>,
+where the device tree binding for <code class="docutils literal notranslate"><span class="pre">bosch,mram-cfg</span></code> is defined in
+<a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml">https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/dts/bindings/can/bosch%2Cm_can-base.yaml</a></p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="object-dictionary-od">
+<h2>Object Dictionary (OD)<a class="headerlink" href="#object-dictionary-od" title="Link to this heading"></a></h2>
+<p>Each OD entry can be read/written by SDO via a callback function registered by
+<a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__ODinterface.html#ga41c96feee5da30cd9117a35a307b96e1">OD_extension_init()</a>
+instead of straightforwardly from/to the memory. However,
+<a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9">CO_CONFIG_PDO_OD_IO_ACCESS</a>
+should be set to enable the same behavior for PDOs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SDO and PDO internally get the OD entry read/write APIs are via
+<code class="xref c c-func docutils literal notranslate"><span class="pre">OD_getSub()</span></code>. However, SDO calls <code class="xref c c-func docutils literal notranslate"><span class="pre">OD_getSub()</span></code> everytime a
+request is processed <a class="footnote-reference brackets" href="#id9" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, so the newly registered callback functions will
+be used. On the other hand, PDOs only call <code class="xref c c-func docutils literal notranslate"><span class="pre">OD_getSub()</span></code> once when
+initialized <a class="footnote-reference brackets" href="#id10" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. So in order to make PDO use the callback functions to
+access OD entries, the callbacks should be registered before PDOs are
+initialized.</p>
+</div>
+<p>CANopenNode already registered some common OD entries to provide functionalities
+according to the CiA 301 standard. The following is a list of registered ODs:</p>
+<ul class="simple">
+<li><p>0x1003: Pre-defined error field</p></li>
+<li><p>0x1005: COB-ID SYNC message</p></li>
+<li><p>0x100C: Guard time</p></li>
+<li><p>0x100D: Life time factor</p></li>
+<li><p>0x1010: Store parameters</p></li>
+<li><p>0x1011: Restore default parameters</p></li>
+<li><p>0x1012: COB-ID time stamp object</p></li>
+<li><p>0x1014: COB-ID EMCY</p></li>
+<li><p>0x1015: Inhibit time EMCY</p></li>
+<li><p>0x1016: Consumer heartbeat time</p></li>
+<li><p>0x1017: Producer heartbeat time</p></li>
+<li><p>0x1019: Synchronous counter overflow value</p></li>
+<li><p>0x1200: SDO server parameter</p></li>
+<li><p>0x1400 to 0x15FF: RPDO communication parameter</p></li>
+<li><p>0x1600 to 0x17FF: RPDO mapping parameter</p></li>
+<li><p>0x1800 to 0x19FF TPDO communication parameter</p></li>
+<li><p>0x1A00 to 0x1BFF TPDO mapping parameter</p></li>
+</ul>
+<section id="id8">
+<h3>References<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id9" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_SDOserver.c#L644">CO_SDOserver_process() source code</a>
+that calls <code class="xref c c-func docutils literal notranslate"><span class="pre">OD_getSub()</span></code> to get the read/write APIs.</p>
+</aside>
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_PDO.c#L108">PDOconfigMap() source code</a>
+that is called when TPDOs and RPDOs are initialized.</p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="process-data-objectss-pdos">
+<h2>Process Data Objectss (PDOs)<a class="headerlink" href="#process-data-objectss-pdos" title="Link to this heading"></a></h2>
+<section id="receive-pdos-rpdos">
+<h3>Receive PDOs (RPDOs)<a class="headerlink" href="#receive-pdos-rpdos" title="Link to this heading"></a></h3>
+<p>OD 0x1400 to 0x15FF define the communication parameters of RPDOs, here are the
+overview of them and the implementation of CANopenNode:</p>
+<ul>
+<li><p><strong>Transmission type (sub-index 0x02)</strong>: There are two types of reception;</p>
+<ul class="simple">
+<li><p><strong>Synchronous (0x00 to 0xF0)</strong>: The received data will be <em>actuated</em> after a
+SYNC message is received.</p></li>
+<li><p><strong>Event-Driven (0xFE, 0xFF)</strong>: The received data will be <em>actuated</em>
+immediately.</p></li>
+</ul>
+<p>Here <em>actuated</em> means the received data will be copied to the mapped OD
+entries defined in the RPDO mapping parameter (OD 0x1600 to 0x17FF) or the
+registered callback function will be called to process the received data.</p>
+</li>
+<li><p><strong>Event-timer (sub-index 0x05)</strong>: Define the deadline for the reception of
+RPDOs. If the RPDO is not received before the event-timer expires, CANopen
+error <code class="docutils literal notranslate"><span class="pre">RPDO</span> <span class="pre">timeout</span> <span class="pre">(0x8250)</span></code> will be reported. And if the RPDO is
+received after the event-timer expires, the error will be cleared and the
+timer will be reset.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9">CO_CONFIG_PDO_SYNC_ENABLE</a>
+is not set, the received synchronous RPDOs will be actuated immediately.</p>
+</div>
+</section>
+<section id="transmit-pdos-tpdos">
+<h3>Transmit PDOs (TPDOs)<a class="headerlink" href="#transmit-pdos-tpdos" title="Link to this heading"></a></h3>
+<p>OD 0x1800 to 0x19FF define the communication parameters of TPDOs, here are the
+overview of them and the implementation of CANopenNode:</p>
+<ul>
+<li><p><strong>Transmission type (sub-index 0x02)</strong>: There are two types of transmission;</p>
+<ul class="simple">
+<li><p><strong>Synchronous (0x00 to 0xF0)</strong>: Transmitted after a SYNC message is
+received. There are also two sub-types of synchronous transmission;</p>
+<ul>
+<li><p><strong>Acyclic (0x00)</strong>: Transmitted when receiving the next SYNC message after
+requested by an <em>event</em>.</p></li>
+<li><p><strong>Cyclic (0x01 to 0xF0)</strong>: Transmitted after Nth SYNC message is received,
+where N is the value of the transmission type.</p></li>
+</ul>
+</li>
+<li><p><strong>Event-Driven (0xFE, 0xFF)</strong>: Transmitted by an <em>event</em>.</p></li>
+</ul>
+<p>Here <em>event</em> means transmission is requested by the application via
+<code class="xref c c-func docutils literal notranslate"><span class="pre">CO_TPDOsendRequest()</span></code> or <code class="xref c c-func docutils literal notranslate"><span class="pre">OD_requestTPDO()</span></code> or when the event
+timer (sub-index 0x05) expires.</p>
+</li>
+<li><p><strong>Inhibit time (sub-index 0x03)</strong>: Define the minimum time between two
+consecutive transmissions of event-driven TPDOs.</p></li>
+<li><p><strong>SYNC start value (sub-index 0x06)</strong>: Define when the TPDO will start being
+transmitted after the SYNC counter is equal to the SYNC start value.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__SYNC__PDO.html#gaa20d1b49249b7f5a15963cc1a4611be9">CO_CONFIG_PDO_SYNC_ENABLE</a>
+is not set, synchronous and cyclic TPDOs will not be transmitted.</p>
+</div>
+</section>
+</section>
+<section id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h2>
+<section id="error-status-bits">
+<h3>Error status bits<a class="headerlink" href="#error-status-bits" title="Link to this heading"></a></h3>
+<p>In addition to the standard CANopen error codes defined in CiA 301, CANopenNode
+defines a set of <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__EM__errorStatusBits__t.html">error status bits</a>
+that can be used to indicate what errors are currently happening in the node.
+When an error is reported or cleared using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_error()</span></code>, the error status
+bits will be set or cleared accordingly and if the same bit is already set or
+cleared, no processing will happen. Such mutually exclusivity effectively making
+the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> the real error being tracked of and the CANopen error
+codes being the additional information of the error. The number of error status
+bits is defined by <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#gab87776d4802748671b234112263760af">CO_CONFIG_EM_ERR_STATUS_BITS_COUNT</a>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> are needed to be accessed via the object dictionary,
+<a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62">CO_CONFIG_EM_STATUS_BITS</a>
+should be set as well as define a OD entry <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">status</span> <span class="pre">bits</span></code> of type
+<code class="docutils literal notranslate"><span class="pre">OCTET_STRING</span></code> with length of <cite>CO_CONFIG_EM_ERR_STATUS_BITS_COUNT / 4</cite>. You
+are responsible for defining the OD entry and register it to CANopenNode using
+<code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_init()</span></code>.</p>
+</section>
+<section id="error-register">
+<h3>Error register<a class="headerlink" href="#error-register" title="Link to this heading"></a></h3>
+<p>CANopenNode also manages <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">register</span></code> of OD 0x1001 via a set of
+<a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html">CO_CONFIG_ERR_CONDITION_*</a>
+macros based on the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code>. However, the default behavior only
+sets the generic bit when <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> between <code class="docutils literal notranslate"><span class="pre">0x28</span></code> to <code class="docutils literal notranslate"><span class="pre">0x2F</span></code> are
+set, which does <strong>NOT</strong> adhere to the CANopen specification stating that: “The
+generic error shall be signaled at any error situation <a class="footnote-reference brackets" href="#id17" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.”</p>
+</section>
+<section id="emcy-write">
+<h3>EMCY write<a class="headerlink" href="#emcy-write" title="Link to this heading"></a></h3>
+<p>In order to transmit the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> in the Emergency (EMCY) object,
+the first byte of the manufacturer-specific error code is used to store the
+<code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bit</span></code> currently reported, <strong>NOT</strong> the <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bits</span></code> that
+are currently set.</p>
+<p>The standard CANopen EMCY write payload has the following format <a class="footnote-reference brackets" href="#id18" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  0        1          2         3                              7
++------------+----------------+----------------------------------+
+| error code | error register | manufacturer-specific error code |
++------------+----------------+----------------------------------+
+</pre></div>
+</div>
+<p>And CANopenNode uses the first byte of manufacturer-specific error code (the
+byte of index 3) to transmit the reported <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bit</span></code>, so the payload
+becomes:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  0        1         2                  3           4                              7
++------------+----------------+------------------------------------------------------+
+| error code | error register | error status bits | manufacturer-specific error code |
++------------+----------------+------------------------------------------------------+
+</pre></div>
+</div>
+<p>CANopenNode also recognizes the first byte of manufacturer-specific error code
+as <code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">status</span> <span class="pre">bit</span></code> when receiving EMCY messages from other nodes. The
+callback for receiving EMCY registered using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_EM_initCallbackRx()</span></code> has
+the prototype:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">pFunctSignalRx</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">ident</span><span class="p">,</span>
+<span class="w">                    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">errorCode</span><span class="p">,</span>
+<span class="w">                    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">errorRegister</span><span class="p">,</span>
+<span class="w">                    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">errorBit</span><span class="p">,</span>
+<span class="w">                    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">infoCode</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">infoCode</span></code> is the rest of the manufacturer-specific error code.</p>
+</section>
+<section id="pre-defined-error-fields">
+<h3>Pre-defined error fields<a class="headerlink" href="#pre-defined-error-fields" title="Link to this heading"></a></h3>
+<p>CANopenNode also helps to maintain <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> of OD 0x1003 for
+recording errors that happened if <a class="reference external" href="https://canopennode.github.io/CANopenNode/group__CO__STACK__CONFIG__EMERGENCY.html#ga16aa1479ffd52a627d1053c20f844b62">CO_CONFIG_EM_HISTORY</a>
+is set. Once an error is reported using <code class="xref c c-func docutils literal notranslate"><span class="pre">CO_error()</span></code>, it will be recorded
+to <code class="docutils literal notranslate"><span class="pre">Pre-defined</span> <span class="pre">error</span> <span class="pre">fields</span></code> in the following format <a class="footnote-reference brackets" href="#id19" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>32               24     16           0
++----------------+------+------------+
+| error register | 0x00 | error code |
++----------------+------+------------+
+MSB                                LSB
+</pre></div>
+</div>
+</section>
+<section id="id16">
+<h3>References<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id17" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">5</a><span class="fn-bracket">]</span></span>
+<p>CiA 301, section 7.5.2.2 Error register</p>
+</aside>
+<aside class="footnote brackets" id="id18" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">6</a><span class="fn-bracket">]</span></span>
+<p>CiA 301, section 7.2.7.3.1 Protocol EMCY write</p>
+</aside>
+<aside class="footnote brackets" id="id19" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">7</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/CANopenNode/CANopenNode/blob/master/301/CO_Emergency.c#L673C14-L673C21">CO_err() source code</a></p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="test.html" class="btn btn-neutral float-left" title="Testing in Zephyr" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../doc.html" class="btn btn-neutral float-right" title="Doc Implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, NTU Racing Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

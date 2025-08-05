@@ -45,7 +45,7 @@
               <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="architecture/index.html">Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="decisions/index.html">Architecture Decision Records</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/decisions/index.html">Architecture Decision Records</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
@@ -54,10 +54,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developing</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="doxygen.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="test.html">Testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notes/index.html">Developer’s Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc.html">Doc Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/doxygen.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/test.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/notes/index.html">Developer’s Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/doc.html">Doc Implementation</a></li>
 </ul>
 
         </div>
@@ -87,12 +88,25 @@
   <section id="ntu-racing-team-zephyr-documentation">
 <h1>NTU Racing Team Zephyr Documentation<a class="headerlink" href="#ntu-racing-team-zephyr-documentation" title="Link to this heading"></a></h1>
 <p><strong>Welcome to the NTU Racing Team Zephyr documentation.</strong></p>
+<section id="project-overview">
+<h2>Project Overview<a class="headerlink" href="#project-overview" title="Link to this heading"></a></h2>
+<p>In NTU Racing Team we build embedded controllers for racing vehicles, including
+inverters to drive the motors, battery management systems to monitor and control
+the batteries, and vehicle control unit to manage the overall vehicle operations
+and run the control algorithms.</p>
+<p>This project contains the common codebase and utilities for the Zephyr
+RTOS-based embedded controllers used by the NTU Racing Team. It is designed to
+be modular and reusable across different systems, providing a foundation for
+developing high-performance, real-time applications in the context of
+motorsport. Though it is currently primarily used for the vehicle control unit,
+it should also be extended to support other controllers of the race car.</p>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
+</section>
 <section id="indices-and-tables">
 <h2>Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h2>
 <ul class="simple">

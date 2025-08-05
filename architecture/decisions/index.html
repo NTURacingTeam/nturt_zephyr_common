@@ -1,0 +1,150 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture Decision Records &mdash; NTU Racing Team Zephyr Common Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="File Structure" href="01_file_structure.html" />
+    <link rel="prev" title="Sensing System" href="../sensing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture Decision Records</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_file_structure.html">File Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_inter_thread_comm.html">Inter-Thread Communcation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Common Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/vcu/index.html">VCU Library</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../develop/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../develop/doxygen.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../develop/test.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../develop/notes/index.html">Developer’s Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../develop/doc.html">Doc Implementation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">NTU Racing Team Zephyr Common</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Architecture Decision Records</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/architecture/decisions/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="architecture-decision-records">
+<span id="architecture-decisions"></span><h1>Architecture Decision Records<a class="headerlink" href="#architecture-decision-records" title="Link to this heading"></a></h1>
+<p>The following documents the architecture decision records (ADRs) when developing
+this project. ADRs are a way to capture architectural decisions made during the
+development of a software project. More details can be found in the
+<a class="reference internal" href="#architecture-decisions-references"><span class="std std-ref">References</span></a> section.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_file_structure.html">File Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_inter_thread_comm.html">Inter-Thread Communcation</a></li>
+</ul>
+</div>
+<p>A template for ADR is provided at <code class="docutils literal notranslate"><span class="pre">templates/decisions.tmpl</span></code> for adding new
+ADRs.</p>
+<section id="references">
+<span id="architecture-decisions-references"></span><h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Blog: <a class="reference external" href="https://okorkmaz.medium.com/adr-deep-dive-into-architecture-decision-records-8c110ce7d74e">ADR: Deep Dive into Architecture Decision Records</a></p></li>
+<li><p>GitHib: <a class="reference external" href="https://github.com/joelparkerhenderson/architecture-decision-record">joelparkerhenderson/architecture-decision-record</a></p></li>
+<li><p>Template: <a class="reference external" href="https://github.com/joelparkerhenderson/architecture-decision-record/tree/main/locales/en/templates/decision-record-template-by-jeff-tyree-and-art-akerman">Template by Jeff Tyree and Art Akerman</a></p></li>
+<li><p>Examples: <a class="reference external" href="https://github.com/joelparkerhenderson/architecture-decision-record/tree/main/locales/en/examples">Examples</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../sensing.html" class="btn btn-neutral float-left" title="Sensing System" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="01_file_structure.html" class="btn btn-neutral float-right" title="File Structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, NTU Racing Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zephyr Drivers &mdash; NTU Racing Team Zephyr Common Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Zephyr Device Emulation" href="emulation.html" />
+    <link rel="prev" title="Zephyr Kernel" href="kernel.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture/index.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture/decisions/index.html">Architecture Decision Records</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Common Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/vcu/index.html">VCU Library</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doxygen.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">Testing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer’s Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="common.html">Common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Zephyr Configuration System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html">Zephyr Kernel</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Zephyr Drivers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#device-initialization">Device Initialization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#device-dependency">Device Dependency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#clock-control">Clock control</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stm32-domain-clocks">STM32 domain clocks</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#direct-memory-access-dma">Direct Memory Access (DMA)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dma-in-stm32">DMA in STM32</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dam-with-data-cache">DAM with data cache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#general-purpose-input-output-gpio">General Purpose Input/Output (GPIO)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#light-emitting-diode-led">Light Emitting Diode (LED)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#input">Input</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exit-in-stm32">EXIT in STM32</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pulse-width-modulation-pwm">Pulse Width Modulation (PWM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#universal-asynchronous-receiver-transmitter-uart">Universal Asynchronous Receiver/Transmitter (UART)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id15">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#can-bus">CAN Bus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#error-behaviors">Error behaviors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#secure-digital-input-output-sdio">Secure Digital Input Output (SDIO)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#real-time-i-o-rtio">Real Time I/O (RTIO)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#work-request">Work Request</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id25">References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sensors">Sensors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#asynchronous-api">Asynchronous API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id30">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="emulation.html">Zephyr Device Emulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Zephyr Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Testing in Zephyr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canopennode.html">CANopenNode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../doc.html">Doc Implementation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">NTU Racing Team Zephyr Common</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Developer’s Note</a></li>
+      <li class="breadcrumb-item active">Zephyr Drivers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/develop/notes/drivers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="zephyr-drivers">
+<span id="develop-notes-drivers"></span><h1>Zephyr Drivers<a class="headerlink" href="#zephyr-drivers" title="Link to this heading"></a></h1>
+<section id="device-initialization">
+<h2>Device Initialization<a class="headerlink" href="#device-initialization" title="Link to this heading"></a></h2>
+<p>Each device are initialized at boot time by their initialization functions with
+<a class="reference external" href="https://docs.zephyrproject.org/4.0.0/kernel/drivers/index.html#initialization-levels">different initialization levels and priorities</a>.
+The initialization functions with the same level and priorities are called in
+their dependency order. And devices that depend on other devices cannot be
+initialized before the devices they depend on are initialized.</p>
+<section id="device-dependency">
+<h3>Device Dependency<a class="headerlink" href="#device-dependency" title="Link to this heading"></a></h3>
+<p>The dependency of each node in the device tree is determined by:</p>
+<ul class="simple">
+<li><p>The child is dependent on the parent node.</p></li>
+<li><p>The node that references another node (using phandle) is dependent on the
+referenced node.</p></li>
+</ul>
+<p>And the final order is listed in
+<code class="docutils literal notranslate"><span class="pre">zephyr/include/generated/zephyr/devicetree_generated.h</span></code> of the build
+directory <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://docs.zephyrproject.org/4.0.0/build/dts/howtos.html#get-your-devicetree-and-generated-header">Zephyr Device Tree HOWTOs</a></p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="clock-control">
+<h2>Clock control<a class="headerlink" href="#clock-control" title="Link to this heading"></a></h2>
+<section id="stm32-domain-clocks">
+<h3>STM32 domain clocks<a class="headerlink" href="#stm32-domain-clocks" title="Link to this heading"></a></h3>
+<p>However, for peripherals that support domain clocks, clock source macros
+<code class="docutils literal notranslate"><span class="pre">STM32_SRC_*</span></code> and clock selection macros <code class="docutils literal notranslate"><span class="pre">*_SEL(X)</span></code> are used to determine
+the clock source for the domain.</p>
+<p>For example, to configure FDCAN1 for STM32G474RE to use PLLQ as the clock
+source, the following code snippet is used:</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">fdcan1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">clocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="na">rcc</span><span class="w"> </span><span class="na">STM32_CLOCK_BUS_APB1</span><span class="w"> </span><span class="mh">0x02000000</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">             </span><span class="o">&lt;&amp;</span><span class="na">rcc</span><span class="w"> </span><span class="na">STM32_SRC_PLL_Q</span><span class="w"> </span><span class="na">FDCAN_SEL</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">STM32_SRC_*</span></code> is easy to determine, but <code class="docutils literal notranslate"><span class="pre">*_SEL(X)</span></code> is not. To determine it,
+you have to refer to the clock configuration register (CCIPR) of the reset and
+clock control (RCC) section in the reference manual, where the value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is
+listed in the table.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default configurations in <code class="docutils literal notranslate"><span class="pre">stm32*.dtsi</span></code> may only define bus clock
+source, but you still have to copy it to your own device tree and add the
+domain clock of your choice.</p>
+</div>
+</section>
+</section>
+<section id="direct-memory-access-dma">
+<h2>Direct Memory Access (DMA)<a class="headerlink" href="#direct-memory-access-dma" title="Link to this heading"></a></h2>
+<p>Direct memory access (DMA) sees very limited support in Zephyr, especially in
+documentation and samples. Currently only UART and SPI drivers has wide support
+for DMA, throuth <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/reference/peripherals/uart.html#uart-async-api">UART async API</a>
+and SPI vendor specific Kconfig options <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/kconfig.html#!CONFIG_SPI_.*DMA">CONFIG_SPI_.*_DMA</a> (“wider”
+support of eight vendors), and limited two vendors support for I<sup>2</sup>C
+through <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/kconfig.html#!CONFIG_I2C_.*DMA">CONFIG_I2C_.*_DMA</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support for UART async API can be checked by Kconfig option
+<a class="reference external" href="https://docs.zephyrproject.org/3.7.0/kconfig.html#CONFIG_SERIAL_SUPPORT_ASYNC">CONFIG_SERIAL_SUPPORT_ASYNC</a>.</p>
+</div>
+<p>Since unlike UART has native API support for DMA, SPI and I<sup>2</sup>C drivers
+may have some creative ways to utilize DMA. For example, for STM32 SPI, DMA is
+used in sychronous API <code class="xref c c-func docutils literal notranslate"><span class="pre">spi_transceive()</span></code> (but not in async ones) to
+context switch out current thread and let DMA handle the data transfer <a class="footnote-reference brackets" href="#id5" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<section id="dma-in-stm32">
+<h3>DMA in STM32<a class="headerlink" href="#dma-in-stm32" title="Link to this heading"></a></h3>
+<p>Since STM32 series come with 4 iterations of DMA controllers, their
+configurations will vary quite a lot. To use DMA, first we have to figure out
+which DMA channel is connected to the peripheral that we want to enable DAM in
+the DMA sections in the reference manual. Or for newer STM32 series that has DMA
+multiplexers, please refer to the DMAMUX section such as table 91 for STM32G4
+series.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The device tree configurations for DMA can be referenced from
+<a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/tree/v4.0.0/tests/drivers/uart/uart_async_api/boards">zephyr/tests/drivers/uart/uart_async_api/boards</a>.</p>
+</div>
+</section>
+<section id="dam-with-data-cache">
+<h3>DAM with data cache<a class="headerlink" href="#dam-with-data-cache" title="Link to this heading"></a></h3>
+<p>High performance microcontrollers that have cache such as Cortex-M7 may cause
+data inconsistency when using DMA since the CPU may read the data from the cache
+whereas the DMA writes to the memory directly. This is typically resolved by
+setting the memory region used for DMA buffer to non-cacheable in MPU or simply
+turning the data cache off (setting <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/kconfig.html#!CONFIG_DCACHE">CONFIG_DCACHE</a>=n).</p>
+<p>In Zephyr, you can get global non-cacheable memory using <code class="docutils literal notranslate"><span class="pre">__nocache</span></code> macro
+defined in <code class="docutils literal notranslate"><span class="pre">zephyr/include/zephyr/linker/section_tags.h</span></code> after enabling the
+<a class="reference external" href="https://docs.zephyrproject.org/4.0.0/kconfig.html#!CONFIG_NOCACHE_MEMORY">CONFIG_NOCACHE_MEMORY</a>
+Kconfig option. Or allocate non-cacheable memory using
+<code class="xref c c-func docutils literal notranslate"><span class="pre">mem_attr_heap_alloc()</span></code> as described in <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/services/mem_mgmt/index.html">Zephyr Memory Attributes</a></p>
+<p>In STM32 driver implementation, memory buffer used to store data to
+transmit/receive is directly used as DMA buffer <a class="footnote-reference brackets" href="#id6" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, it requires changing the
+application to ensure the memory buffer is non-cacheable. If the performance is
+not a concern, turning the data cache off is a simpler solution.</p>
+<p>The use of DMA is advised, but care must be taken to ensure the espected
+behaviors.</p>
+</section>
+<section id="reference">
+<h3>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.6.0/drivers/spi/spi_ll_stm32.c#L1080">Zephyr STM32 SPI driver source code</a>
+that uses DMA in synchronous API</p>
+</aside>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/serial/uart_stm32.c#L1580">Zephyr SMT32 UART driver source code</a>
+that set the DMA source address in async mode to the buffer</p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="general-purpose-input-output-gpio">
+<h2>General Purpose Input/Output (GPIO)<a class="headerlink" href="#general-purpose-input-output-gpio" title="Link to this heading"></a></h2>
+<p>Zephyr provides basic GPIO driver using the <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/gpio.html">GPIO API</a> that can
+perform basic operations such as digital read, write, and interrupt trigger.
+However, for more advanced features such as LED effects and button debouncing,
+you have to rely on higher-level drivers and subsystems. Below are two drivers
+and subsystems that just do that:</p>
+<section id="light-emitting-diode-led">
+<h3>Light Emitting Diode (LED)<a class="headerlink" href="#light-emitting-diode-led" title="Link to this heading"></a></h3>
+<p>Zephyr provides special <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/led.html">LED API</a> that
+controls various kinds of LEDs such as RGB LEDs and LED strips. Through
+<code class="docutils literal notranslate"><span class="pre">gpio-leds</span></code> device binding, you can control LEDs connected to GPIOs using the
+LED API.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since there may be multiple LEDs defined under the same <code class="docutils literal notranslate"><span class="pre">gpio-leds</span></code> device,
+the LED API requires <code class="docutils literal notranslate"><span class="pre">LED</span> <span class="pre">number</span></code> to specify which LED to control. And the
+<code class="docutils literal notranslate"><span class="pre">LED</span> <span class="pre">number</span></code> of a specific LED is the order it is defined in the
+<code class="docutils literal notranslate"><span class="pre">gpio-leds</span></code> device, <strong>no matter if the LED is disabled or not</strong> <a class="footnote-reference brackets" href="#id11" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
+</div>
+</section>
+<section id="input">
+<h3>Input<a class="headerlink" href="#input" title="Link to this heading"></a></h3>
+<p>Zephyr provides special input subsystem designed for various kinds of inputs
+such as key triggers, movement, etc through <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/services/input/index.html">Input API</a>. It can also
+be used for debouncing buttons through <code class="docutils literal notranslate"><span class="pre">gpio-keys</span></code> device binding. However,
+currently it only supports callbacks APIs with no polling support.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Every children of <code class="docutils literal notranslate"><span class="pre">gpio-keys</span></code> devices must have a unique <code class="docutils literal notranslate"><span class="pre">zephyr,code</span></code>
+property to identify the key. Available options start from <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/services/input/index.html#c.INPUT_KEY_RESERVED">INPUT_KEY_RESERVED</a>.</p>
+</div>
+</section>
+<section id="exit-in-stm32">
+<h3>EXIT in STM32<a class="headerlink" href="#exit-in-stm32" title="Link to this heading"></a></h3>
+<p>The extended interrupt and event controller (EXIT) in STM32 is used for handling
+interrupt events from GPIOs. Since every pin number is connected to a specific
+EXIT line, only one GPIO with the same pin numbers can be used for external
+interrupt triggers at a time <a class="footnote-reference brackets" href="#id12" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. For example, since PA0 and PB0 share the same
+pin number, only one of them can be used for external interrupt triggers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Though EXIT input 0~15 for GPIOs does not map to NVIC IRQ numbers one-to-one
+(whcih means that they may share the same ISR), when the driver handlers the
+interrupt, it will check registers of EXIT to determine which pin triggered
+the interrupt and handle them accordingly <a class="footnote-reference brackets" href="#id13" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
+</div>
+</section>
+<section id="id10">
+<h3>Reference<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id11" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/led/led_gpio.c#L88">Zephyr GPIO LED driver source code that enumerates LEDs</a></p>
+</aside>
+<aside class="footnote brackets" id="id12" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">5</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/drivers/interrupt_controller/intc_exti_stm32.c#L245">Zephyr EXIT driver source code</a></p>
+</aside>
+<aside class="footnote brackets" id="id13" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">6</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.7.0/drivers/interrupt_controller/intc_exti_stm32.c#L170">Zephyr EXIT driver ISR source code</a></p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="pulse-width-modulation-pwm">
+<h2>Pulse Width Modulation (PWM)<a class="headerlink" href="#pulse-width-modulation-pwm" title="Link to this heading"></a></h2>
+<p>For STM32 timers that support PWM generation using complementary output pins
+(CHxN), STM32_PWM_COMPLEMENTARY flag must be set for that PWM channel in the
+device tree. For example, to enable complementary output for TIM1 channel 1 in
+STM32G4 series, the following code snippet is used:</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cm"> </span><span class="cpf">&lt;dt-bindings/pwm/stm32_pwm.h&gt;</span>
+
+<span class="o">&amp;</span><span class="na">tim1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+
+<span class="w">    </span><span class="nl">pwm1</span><span class="p">:</span><span class="w"> </span><span class="nf">pwm1</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">pinctrl-0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="na">tim1_ch1n_pa7</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">pinctrl-names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;default&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="kr">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;okay&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">};</span>
+<span class="p">...</span>
+
+<span class="o">&amp;</span><span class="nf">pwmleds</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kr">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;pwm-leds&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">...</span>
+
+<span class="w">    </span><span class="nf">pwmled</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">pwms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="na">pwm1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="na">PWM_MSEC</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="na">STM32_PWM_COMPLEMENTARY</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="universal-asynchronous-receiver-transmitter-uart">
+<h2>Universal Asynchronous Receiver/Transmitter (UART)<a class="headerlink" href="#universal-asynchronous-receiver-transmitter-uart" title="Link to this heading"></a></h2>
+<p>STM32 UART provides hardware flow control for both RS232 and RS485 transceivers
+(using <code class="docutils literal notranslate"><span class="pre">CTS</span></code>, <code class="docutils literal notranslate"><span class="pre">RTS</span></code> pins for RS232 and <code class="docutils literal notranslate"><span class="pre">DE</span></code> pins for RS485). Since the
+activation / deactivation time of the transceiver takes time, STM32 UART driver
+provides a feature to delay the transmission of the first bit after toggling the
+pins. For RS458 transceiver <code class="docutils literal notranslate"><span class="pre">MAX487E</span></code> that we used, it takes up to 3000ns to
+finish the transaction <a class="footnote-reference brackets" href="#id16" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>. So for a baud rate of 115200, it will take 0.35 bit
+time. With over sampling of 16 times per bit, it’s 5.5 or minimum 6 sample time,
+which cooresponds to <code class="docutils literal notranslate"><span class="pre">de-assert-time</span></code> and <code class="docutils literal notranslate"><span class="pre">de-deassert-time</span></code> in the device
+tree.</p>
+<section id="id15">
+<h3>Reference<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id16" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">7</a><span class="fn-bracket">]</span></span>
+<p>MAX487E Datasheet, Switching Characteristics, Driver Disable Time from
+Low</p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="can-bus">
+<h2>CAN Bus<a class="headerlink" href="#can-bus" title="Link to this heading"></a></h2>
+<p>The driver for controller area network (CAN) driver provides a nice feature of
+figuring out the sync jump width and other parameters for the bus automatically,
+you only need to provide the baud rate and the sampling point.</p>
+<section id="error-behaviors">
+<h3>Error behaviors<a class="headerlink" href="#error-behaviors" title="Link to this heading"></a></h3>
+<p>In the overview section of the <a class="reference external" href="https://docs.zephyrproject.org/4.1.0/hardware/peripherals/can/controller.html">Zephyr CAN controller documentation</a>,
+it mententioned the error behaviors of the CAN controller according to the ISO
+11898-1. For CAN controllers that utilizes the <a class="reference external" href="https://www.bosch-semiconductors.com/products/ip-modules/can-ip-modules/m-can/">Bosch’s M_CAN</a>
+(incluing STM32’s FDCAN controllers), when not in <a class="reference external" href="https://docs.zephyrproject.org/4.1.0/doxygen/html/group__can__interface.html#ga3d8675253125b2af2bd22f0b2cc60cdd">CAN_MANUAL_RECOVERY</a>
+mode, the driver will automatically request the controller to recover from
+bus-off state <a class="footnote-reference brackets" href="#id20" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.</p>
+<p>Since the receive error counter (<code class="docutils literal notranslate"><span class="pre">REC</span></code>) and the transmit error counter
+(<code class="docutils literal notranslate"><span class="pre">TEC</span></code>) fields of the error counter register (<code class="docutils literal notranslate"><span class="pre">ECR</span></code>) are only up to 127 and
+255 respectively <a class="footnote-reference brackets" href="#id21" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>, they should not be used to determine the error-passive
+and bus-off states since those states are entered when the counter values exceed
+127 and 255 respectively. Instead, the warning status (<code class="docutils literal notranslate"><span class="pre">EW</span></code>), error passive
+(<code class="docutils literal notranslate"><span class="pre">EP</span></code>), and bus-off status (<code class="docutils literal notranslate"><span class="pre">BO</span></code>) bits of the protocol status register
+(<code class="docutils literal notranslate"><span class="pre">PSR</span></code>) should be used to determine the error states. All of the above can be
+accessed via <code class="xref c c-func docutils literal notranslate"><span class="pre">can_get_state()</span></code>.</p>
+</section>
+<section id="id19">
+<h3>Reference<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id20" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">8</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.1.0/drivers/can/can_mcan.c#L493">Zephyr M_CAN driver source code</a>
+that automatically recovers from bus-off state</p>
+</aside>
+<aside class="footnote brackets" id="id21" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">9</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.bosch-semiconductors.com/media/ip_modules/pdf_2/m_can/mcan_users_manual_v331.pdf">M_CAN user manual</a>
+where the error counter register (<code class="docutils literal notranslate"><span class="pre">ECR</span></code>) is described in section 2.3.13</p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="secure-digital-input-output-sdio">
+<h2>Secure Digital Input Output (SDIO)<a class="headerlink" href="#secure-digital-input-output-sdio" title="Link to this heading"></a></h2>
+<p>Typically, microcontrollers provide SDIO bus controllers to connect SD cards or
+MultiMedia cards such as <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/sdhc/espressif%2Cesp32-sdhc-slot.html#dtbinding-espressif-esp32-sdhc-slot">espressif,esp32-sdhc-slot</a>
+native SDIO controller or SDIO in SPI mode <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/sdhc/zephyr%2Csdhc-spi-slot.html#dtbinding-zephyr-sdhc-spi-slot">zephyr,sdhc-spi-slot</a>
+device bindings and they are marked as <code class="docutils literal notranslate"><span class="pre">sd</span> <span class="pre">bus</span></code> in Zephyr and implements the
+<a class="reference external" href="https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sdhc.html">SDHC API</a>. Such
+API can then be used to connect to SD card using <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/sd/zephyr%2Csdmmc-disk.html#dtbinding-zephyr-sdmmc-disk">zephyr,sdmmc-disk</a>
+or MMC using <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/sd/zephyr%2Cmmc-disk.html#dtbinding-zephyr-mmc-disk">zephyr,mmc-disk</a>
+device bindings that implements <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__disk__access__interface.html">disk access API</a>
+for file system.</p>
+<p>However, currently STM32 drivers for SDIO does not expose the SDHC API, but
+rather directly defines <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/build/dts/api/bindings/mmc/st%2Cstm32-sdmmc.html#dtbinding-st-stm32-sdmmc">st,stm32-sdmmc</a>
+device binging that directly implements the disk access API. This means that
+STM32 microcontrollers are not able to connect other devices such as WiFi
+modules that uses SDIO and cannot be tested by tests for SDHC controllers such
+as <code class="docutils literal notranslate"><span class="pre">tests/drivers/sdhc</span></code> or <code class="docutils literal notranslate"><span class="pre">tests/subsys/sd/sdmmc</span></code> which requires generic
+<code class="docutils literal notranslate"><span class="pre">zephyr,sdmmc-disk</span></code> binding.</p>
+<p>Battery Backed RAM (BBRAM)</p>
+<hr class="docutils" />
+<p>Zephyr provides a battery backed RAM (BBRAM) driver that allows you to store
+data across system resets through <a class="reference external" href="https://docs.zephyrproject.org/3.6.0/hardware/peripherals/bbram.html">BBRAM API</a>.
+Depending on the hardware, the data may be persisted even if the main power is
+lost, being kept by the dedicated battery, hence the name.</p>
+<p>However, not all STM32 serise device tree include <code class="docutils literal notranslate"><span class="pre">st,stm32-bbram</span></code> device that
+corrsepond to BBRAM. To use it, add it to <code class="docutils literal notranslate"><span class="pre">st,stm32-rtc</span></code> device in the device
+tree overlay like so:</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">rtc</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nl">bbram</span><span class="p">:</span><span class="w"> </span><span class="nf">backup_regs</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kr">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;st,stm32-bbram&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">st</span><span class="p">,</span><span class="n">backup-regs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">        </span><span class="kr">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;okay&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">st,backup-regs</span></code> is the number of backup register of the STM32 and
+the exact values should refer to the reference manuals.</p>
+</section>
+<section id="real-time-i-o-rtio">
+<h2>Real Time I/O (RTIO)<a class="headerlink" href="#real-time-i-o-rtio" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://docs.zephyrproject.org/4.0.0/services/rtio/index.html">RTIO</a> is a set
+of interfaces inspired by Linux’s <code class="docutils literal notranslate"><span class="pre">io_uring</span></code> that facilitates multiplexed
+asynchronous I/O operations. After its adoption in 3.4.0, it has quickly become
+the norm for defining new APIs for asynchronous I/O operations in Zephyr but
+currently only includes I2C, SPI, and sensor drivers. Today still very few
+drivers natively support RTIO (i.e. use DMA or other coprocessors for true
+asynchronous transaction), threre are fallbacks that wraps the synchronous API
+to RTIO API for the above three drivers <a class="footnote-reference brackets" href="#id26" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id27" id="id23" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id28" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>.</p>
+<p>The official documentation does not provide much information about the use of
+RTIO, but you can refer to the code and comments in <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/samples/drivers/i2c/rtio_loopback/README.html#i2c-rtio-loopback">I2C lookpack sample</a>
+for a sample usage of RTIO and <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/group__rtio.html">RTIO reference</a> for API
+documentation.</p>
+<section id="work-request">
+<h3>Work Request<a class="headerlink" href="#work-request" title="Link to this heading"></a></h3>
+<p>Aside from relaying on interrupts to achieve non-blocking operations, RTIO also
+provides work request API to dispatch work that requires blocking operations
+such as the aforementioned fallbacks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The work request API is neither documented in RTIO documentation nor in a
+doxygen group that can be referenced from the RTIO group. It’s only available
+in <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/doxygen/html/work_8h.html">its file reference</a>.</p>
+</div>
+</section>
+<section id="id25">
+<h3>References<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id26" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">10</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/spi/spi_rtio.c">SPI driver source code</a>
+for RTIO fallback</p>
+</aside>
+<aside class="footnote brackets" id="id27" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">11</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/i2c/i2c_rtio_default.c">I2C driver source code</a>
+for RTIO fallback</p>
+</aside>
+<aside class="footnote brackets" id="id28" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">12</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c">Sensor driver source code</a>
+for RTIO fallback</p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="sensors">
+<h2>Sensors<a class="headerlink" href="#sensors" title="Link to this heading"></a></h2>
+<section id="asynchronous-api">
+<h3>Asynchronous API<a class="headerlink" href="#asynchronous-api" title="Link to this heading"></a></h3>
+<p>Sensor asynchronous driver API is built on top of RTIO, and its usage can be
+referenced from the <a class="reference external" href="https://docs.zephyrproject.org/4.0.0/hardware/peripherals/sensor/read_and_decode.html">sensor read and decode</a>
+documentation.</p>
+<p>To create a new sensor driver that support asynchronous API, both the decoder
+API and the async read initialization (<code class="xref c c-member docutils literal notranslate"><span class="pre">sensor_driver_api.submit</span></code>) can
+be referenced from <a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c">default_rtio_sensor.c</a>.
+And since default implementation for <code class="docutils literal notranslate"><span class="pre">submit</span></code> does not support streaming <a class="footnote-reference brackets" href="#id31" id="id29" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a>,
+the implementation of it can be referenced from existing drivers such as
+<a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/adi/adxl345/adxl345_stream.c">adxl345_stream.c</a>.</p>
+</section>
+<section id="id30">
+<h3>References<a class="headerlink" href="#id30" title="Link to this heading"></a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id31" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id29">13</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v4.0.0/drivers/sensor/default_rtio_sensor.c#L25">sensor_iodev_submit() source code</a>
+that does not support streaming</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kernel.html" class="btn btn-neutral float-left" title="Zephyr Kernel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="emulation.html" class="btn btn-neutral float-right" title="Zephyr Device Emulation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, NTU Racing Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
