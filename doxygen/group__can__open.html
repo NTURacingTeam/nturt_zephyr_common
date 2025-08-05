@@ -236,8 +236,7 @@ Functions</h2></td></tr>
 <p><code>#include &lt;<a class="el" href="canopen_8h.html">nturt/canbus/canopen.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__agg.html#ga190039420aa8359fcdb561d53cdc8522">AGG_TYPED_DEFINE</a>(_OD_AGG_NAME(_name), <span class="keyword">struct</span> _name, _init_val, _period,      \</div>
 <div class="line">                   _min_separation, _watermark, _flag, <a class="code hl_function" href="#ga92332a1f165d569b035943a25ae24d07">canopen_od_agg_publish</a>, \</div>
-<div class="line">                   (<span class="keywordtype">void</span> *)&amp;_MSG_CHAN_NAME(_name),                             \</div>
-<div class="line">                   _OD_AGG_MEMBERS(__VA_ARGS__));                              \</div>
+<div class="line">                   (<span class="keywordtype">void</span> *)&amp;_MSG_CHAN(_name), _OD_AGG_MEMBERS(__VA_ARGS__));   \</div>
 <div class="line">                                                                               \</div>
 <div class="line">  FOR_EACH_FIXED_ARG(_OD_AGG_WRITE_DEFINE, (;), _name, __VA_ARGS__);</div>
 <div class="ttc" id="agroup__can__open_html_ga92332a1f165d569b035943a25ae24d07"><div class="ttname"><a href="#ga92332a1f165d569b035943a25ae24d07">canopen_od_agg_publish</a></div><div class="ttdeci">void canopen_od_agg_publish(const void *data, void *user_data)</div><div class="ttdoc">Publishing function for CANOPEN_OD_AGG_TO_MSG_DEFINE.</div></div>
@@ -560,7 +559,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Aug 4 2025 08:35:24 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Tue Aug 5 2025 01:50:06 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

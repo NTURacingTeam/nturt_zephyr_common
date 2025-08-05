@@ -144,8 +144,8 @@ Topics</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmsg__shell.html">msg_shell</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message shell support.  <a href="structmsg__shell.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmsg__chan__data.html">msg_chan_data</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message channel data.  <a href="structmsg__chan__data.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -153,35 +153,108 @@ Macros</h2></td></tr>
 <tr class="memitem:ga9df39e3eba7bc2233e1a1797dede6101" id="r_ga9df39e3eba7bc2233e1a1797dede6101"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga9df39e3eba7bc2233e1a1797dede6101">MSG_LIST</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__sensor.html#ga9dbf5ed2d27147d0244187e0418bc534">MSG_SENSOR_LIST</a>, <a class="el" href="group__msg__if__tractive.html#ga6c1a082289b5eb2de4e44b214d646990">MSG_TRACTIVE_LIST</a></td></tr>
 <tr class="memdesc:ga9df39e3eba7bc2233e1a1797dede6101"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all messages.  <br /></td></tr>
 <tr class="separator:ga9df39e3eba7bc2233e1a1797dede6101"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3082f81fdf4204523459201f54d26f59" id="r_ga3082f81fdf4204523459201f54d26f59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga3082f81fdf4204523459201f54d26f59">MSG_ZBUS_CHAN_DEFINE</a>(list)</td></tr>
-<tr class="memdesc:ga3082f81fdf4204523459201f54d26f59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define one message channel for every message in <code>list</code> .  <br /></td></tr>
-<tr class="separator:ga3082f81fdf4204523459201f54d26f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4d05c92f2e07941f5267d8705506360e" id="r_ga4d05c92f2e07941f5267d8705506360e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga4d05c92f2e07941f5267d8705506360e">MSG_ZBUS_CHAN_DECLARE</a>(list)</td></tr>
-<tr class="memdesc:ga4d05c92f2e07941f5267d8705506360e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare one message channel for every message in <code>list</code> .  <br /></td></tr>
-<tr class="separator:ga4d05c92f2e07941f5267d8705506360e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5c000ad38793801dabedeba52880be9" id="r_gad5c000ad38793801dabedeba52880be9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad5c000ad38793801dabedeba52880be9">MSG_SHELL_DEFINE</a>(list)</td></tr>
-<tr class="memdesc:gad5c000ad38793801dabedeba52880be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define one message shell support for every message in <code>list</code> .  <br /></td></tr>
-<tr class="separator:gad5c000ad38793801dabedeba52880be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7833f3b978eb279a584d10629d33b35" id="r_gac7833f3b978eb279a584d10629d33b35"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gac7833f3b978eb279a584d10629d33b35">MSG_CHAN_DEFINE</a>(list)</td></tr>
+<tr class="memdesc:gac7833f3b978eb279a584d10629d33b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define one message channel for every message in <code>list</code> .  <br /></td></tr>
+<tr class="separator:gac7833f3b978eb279a584d10629d33b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47d681092061e9234aaef9901abae107" id="r_ga47d681092061e9234aaef9901abae107"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga47d681092061e9234aaef9901abae107">MSG_CHAN_DECLARE</a>(list)</td></tr>
+<tr class="memdesc:ga47d681092061e9234aaef9901abae107"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare one message channel for every message in <code>list</code> .  <br /></td></tr>
+<tr class="separator:ga47d681092061e9234aaef9901abae107"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga58512d178f5fc7ee151c4f96e70f3237" id="r_ga58512d178f5fc7ee151c4f96e70f3237"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga58512d178f5fc7ee151c4f96e70f3237">MSG_VCU_LIST</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__ctrl.html#gac03ae99c27b10f620f8fdaa33e002f73">MSG_CTRL_LIST</a>, <a class="el" href="group__msg__if__states.html#gad24688e8caded23df9b2a35cfd851c5c">MSG_STATES_LIST</a></td></tr>
 <tr class="memdesc:ga58512d178f5fc7ee151c4f96e70f3237"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all VCU messages.  <br /></td></tr>
 <tr class="separator:ga58512d178f5fc7ee151c4f96e70f3237"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga97b2da63f938305115e67964ba601110" id="r_ga97b2da63f938305115e67964ba601110"><td class="memItemLeft" align="right" valign="top">typedef bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga97b2da63f938305115e67964ba601110">msg_print_t</a>) (const struct zbus_channel *chan)</td></tr>
-<tr class="memdesc:ga97b2da63f938305115e67964ba601110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print function of a message.  <br /></td></tr>
-<tr class="separator:ga97b2da63f938305115e67964ba601110"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea97a273001ced830cc059f78332caad" id="r_gaea97a273001ced830cc059f78332caad"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaea97a273001ced830cc059f78332caad">msg_print_t</a>) (const void *data)</td></tr>
+<tr class="memdesc:gaea97a273001ced830cc059f78332caad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print function of a message.  <br /></td></tr>
+<tr class="separator:gaea97a273001ced830cc059f78332caad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf805a81f58247de4ca462cb86ba0a525" id="r_gaf805a81f58247de4ca462cb86ba0a525"><td class="memItemLeft" align="right" valign="top">typedef const char *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaf805a81f58247de4ca462cb86ba0a525">msg_csv_header_t</a>) ()</td></tr>
+<tr class="memdesc:gaf805a81f58247de4ca462cb86ba0a525"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the CSV header of a message.  <br /></td></tr>
+<tr class="separator:gaf805a81f58247de4ca462cb86ba0a525"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c2eb53e5a9603fad97a6559a8dc89e3" id="r_ga8c2eb53e5a9603fad97a6559a8dc89e3"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga8c2eb53e5a9603fad97a6559a8dc89e3">msg_csv_write_t</a>) (char *buf, size_t len, const void *data)</td></tr>
+<tr class="memdesc:ga8c2eb53e5a9603fad97a6559a8dc89e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to write a message to a CSV format.  <br /></td></tr>
+<tr class="separator:ga8c2eb53e5a9603fad97a6559a8dc89e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gac17dc23ec5f0e283e65cae450608b6da" id="r_gac17dc23ec5f0e283e65cae450608b6da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gac17dc23ec5f0e283e65cae450608b6da">MSG_ZBUS_CHAN_DECLARE</a> (<a class="el" href="#ga9df39e3eba7bc2233e1a1797dede6101">MSG_LIST</a>)</td></tr>
-<tr class="separator:gac17dc23ec5f0e283e65cae450608b6da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1091f98fd581ebc22b3ed5036e2f220" id="r_gad1091f98fd581ebc22b3ed5036e2f220"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad1091f98fd581ebc22b3ed5036e2f220">MSG_CHAN_DECLARE</a> (<a class="el" href="#ga9df39e3eba7bc2233e1a1797dede6101">MSG_LIST</a>)</td></tr>
+<tr class="separator:gad1091f98fd581ebc22b3ed5036e2f220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f450e3caa0947d3c62106cc456407cb" id="r_ga7f450e3caa0947d3c62106cc456407cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga7f450e3caa0947d3c62106cc456407cb">is_msg_chan</a> (const struct zbus_channel *chan)</td></tr>
+<tr class="memdesc:ga7f450e3caa0947d3c62106cc456407cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the given zbus channel is a message channel.  <br /></td></tr>
+<tr class="separator:ga7f450e3caa0947d3c62106cc456407cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab04f9f5b6c72f995d5123da2fed991f2" id="r_gab04f9f5b6c72f995d5123da2fed991f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab04f9f5b6c72f995d5123da2fed991f2">msg_chan_print</a> (const struct zbus_channel *chan, const void *data)</td></tr>
+<tr class="memdesc:gab04f9f5b6c72f995d5123da2fed991f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a message based on the channel.  <br /></td></tr>
+<tr class="separator:gab04f9f5b6c72f995d5123da2fed991f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga88c0cd5d249c4d5007c9e3de4e01abb1" id="r_ga88c0cd5d249c4d5007c9e3de4e01abb1"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga88c0cd5d249c4d5007c9e3de4e01abb1">msg_chan_csv_header</a> (const struct zbus_channel *chan)</td></tr>
+<tr class="memdesc:ga88c0cd5d249c4d5007c9e3de4e01abb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the CSV header of a message channel.  <br /></td></tr>
+<tr class="separator:ga88c0cd5d249c4d5007c9e3de4e01abb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f9b11a2c2e146701386cb00040ac1d9" id="r_ga4f9b11a2c2e146701386cb00040ac1d9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga4f9b11a2c2e146701386cb00040ac1d9">msg_chan_csv_write</a> (const struct zbus_channel *chan, const void *data, char *buf, size_t len)</td></tr>
+<tr class="memdesc:ga4f9b11a2c2e146701386cb00040ac1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a message in CSV format to a buffer based on the channel.  <br /></td></tr>
+<tr class="separator:ga4f9b11a2c2e146701386cb00040ac1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga160a344155bb268d4a8a64e1b23cc14c" id="r_ga160a344155bb268d4a8a64e1b23cc14c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga160a344155bb268d4a8a64e1b23cc14c">MSG_ZBUS_CHAN_DECLARE</a> (<a class="el" href="#ga58512d178f5fc7ee151c4f96e70f3237">MSG_VCU_LIST</a>)</td></tr>
 <tr class="separator:ga160a344155bb268d4a8a64e1b23cc14c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Inter-thread communication support. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga47d681092061e9234aaef9901abae107" name="ga47d681092061e9234aaef9901abae107"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47d681092061e9234aaef9901abae107">&#9670;&#160;</a></span>MSG_CHAN_DECLARE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MSG_CHAN_DECLARE</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>list</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">  ZBUS_CHAN_DECLARE(FOR_EACH(_MSG_CHAN, (, ), list))</div>
+</div><!-- fragment -->
+<p>Declare one message channel for every message in <code>list</code> . </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>List of messages to define channels. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac7833f3b978eb279a584d10629d33b35" name="gac7833f3b978eb279a584d10629d33b35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac7833f3b978eb279a584d10629d33b35">&#9670;&#160;</a></span>MSG_CHAN_DEFINE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MSG_CHAN_DEFINE</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>list</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="group__util.html#ga27a11a8f516253b210e435220c448f18">N_FOR_EACH</a>(_MSG_CHAN_DEFINE, (;), list)</div>
+<div class="ttc" id="agroup__util_html_ga27a11a8f516253b210e435220c448f18"><div class="ttname"><a href="group__util.html#ga27a11a8f516253b210e435220c448f18">N_FOR_EACH</a></div><div class="ttdeci">#define N_FOR_EACH(F, sep,...)</div><div class="ttdoc">Same as Zephyr FOR_EACH, useful for nested FOR_EACH macros.</div><div class="ttdef"><b>Definition</b> util.h:83</div></div>
+</div><!-- fragment -->
+<p>Define one message channel for every message in <code>list</code> . </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>List of messages to define channels.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This macro uses logging to print messages, so a log module must be registered or declared before using this macro. </dd></dl>
+
+</div>
+</div>
 <a id="ga9df39e3eba7bc2233e1a1797dede6101" name="ga9df39e3eba7bc2233e1a1797dede6101"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga9df39e3eba7bc2233e1a1797dede6101">&#9670;&#160;</a></span>MSG_LIST</h2>
 
@@ -197,36 +270,6 @@ Functions</h2></td></tr>
 <p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
 
 <p>List of all messages. </p>
-
-</div>
-</div>
-<a id="gad5c000ad38793801dabedeba52880be9" name="gad5c000ad38793801dabedeba52880be9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad5c000ad38793801dabedeba52880be9">&#9670;&#160;</a></span>MSG_SHELL_DEFINE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MSG_SHELL_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>list</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="group__util.html#ga27a11a8f516253b210e435220c448f18">N_FOR_EACH</a>(_MSG_SHELL_DEFINE, (;), list)</div>
-<div class="ttc" id="agroup__util_html_ga27a11a8f516253b210e435220c448f18"><div class="ttname"><a href="group__util.html#ga27a11a8f516253b210e435220c448f18">N_FOR_EACH</a></div><div class="ttdeci">#define N_FOR_EACH(F, sep,...)</div><div class="ttdoc">Same as Zephyr FOR_EACH, useful for nested FOR_EACH macros.</div><div class="ttdef"><b>Definition</b> util.h:83</div></div>
-</div><!-- fragment -->
-<p>Define one message shell support for every message in <code>list</code> . </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>List of messages to define shell support.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>The messages are printed using logging, so a log module must be registered or declared before using this macro. </dd></dl>
 
 </div>
 </div>
@@ -248,71 +291,61 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga4d05c92f2e07941f5267d8705506360e" name="ga4d05c92f2e07941f5267d8705506360e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4d05c92f2e07941f5267d8705506360e">&#9670;&#160;</a></span>MSG_ZBUS_CHAN_DECLARE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MSG_ZBUS_CHAN_DECLARE</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>list</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  ZBUS_CHAN_DECLARE(FOR_EACH(_MSG_CHAN_NAME, (, ), list))</div>
-</div><!-- fragment -->
-<p>Declare one message channel for every message in <code>list</code> . </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>List of messages to define channels. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga3082f81fdf4204523459201f54d26f59" name="ga3082f81fdf4204523459201f54d26f59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3082f81fdf4204523459201f54d26f59">&#9670;&#160;</a></span>MSG_ZBUS_CHAN_DEFINE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MSG_ZBUS_CHAN_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>list</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">FOR_EACH(_MSG_ZBUS_CHAN_DEFINE, (;), list)</div>
-</div><!-- fragment -->
-<p>Define one message channel for every message in <code>list</code> . </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>List of messages to define channels. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="ga97b2da63f938305115e67964ba601110" name="ga97b2da63f938305115e67964ba601110"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga97b2da63f938305115e67964ba601110">&#9670;&#160;</a></span>msg_print_t</h2>
+<a id="gaf805a81f58247de4ca462cb86ba0a525" name="gaf805a81f58247de4ca462cb86ba0a525"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf805a81f58247de4ca462cb86ba0a525">&#9670;&#160;</a></span>msg_csv_header_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef bool(* msg_print_t) (const struct zbus_channel *chan)</td>
+          <td class="memname">typedef const char *(* msg_csv_header_t) ()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+
+<p>Function to get the CSV header of a message. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the CSV header string. </dd></dl>
+
+</div>
+</div>
+<a id="ga8c2eb53e5a9603fad97a6559a8dc89e3" name="ga8c2eb53e5a9603fad97a6559a8dc89e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8c2eb53e5a9603fad97a6559a8dc89e3">&#9670;&#160;</a></span>msg_csv_write_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef int(* msg_csv_write_t) (char *buf, size_t len, const void *data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+
+<p>Function to write a message to a CSV format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Buffer to write the CSV data to. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of the buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to the message data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes that would be written to the buffer if it were large enough, excluding the null terminator. </dd></dl>
+
+</div>
+</div>
+<a id="gaea97a273001ced830cc059f78332caad" name="gaea97a273001ced830cc059f78332caad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaea97a273001ced830cc059f78332caad">&#9670;&#160;</a></span>msg_print_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* msg_print_t) (const void *data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -322,23 +355,125 @@ Functions</h2></td></tr>
 <p>Print function of a message. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">chan</td><td>Message channel.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to the message data. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the message was printed, false otherwise. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gac17dc23ec5f0e283e65cae450608b6da" name="gac17dc23ec5f0e283e65cae450608b6da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac17dc23ec5f0e283e65cae450608b6da">&#9670;&#160;</a></span>MSG_ZBUS_CHAN_DECLARE() <span class="overload">[1/2]</span></h2>
+<a id="ga7f450e3caa0947d3c62106cc456407cb" name="ga7f450e3caa0947d3c62106cc456407cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7f450e3caa0947d3c62106cc456407cb">&#9670;&#160;</a></span>is_msg_chan()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">MSG_ZBUS_CHAN_DECLARE </td>
+          <td class="memname">bool is_msg_chan </td>
+          <td>(</td>
+          <td class="paramtype">const struct zbus_channel *</td>          <td class="paramname"><span class="paramname"><em>chan</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+
+<p>Check if the given zbus channel is a message channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chan</td><td>Zbus channel to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the channel is a message channel, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="ga88c0cd5d249c4d5007c9e3de4e01abb1" name="ga88c0cd5d249c4d5007c9e3de4e01abb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga88c0cd5d249c4d5007c9e3de4e01abb1">&#9670;&#160;</a></span>msg_chan_csv_header()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * msg_chan_csv_header </td>
+          <td>(</td>
+          <td class="paramtype">const struct zbus_channel *</td>          <td class="paramname"><span class="paramname"><em>chan</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+
+<p>Get the CSV header of a message channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">chan</td><td>Message channel. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the CSV header string.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Only zbus channels defined with <a class="el" href="#gac7833f3b978eb279a584d10629d33b35">MSG_CHAN_DEFINE</a> can be used with this function. </dd></dl>
+
+</div>
+</div>
+<a id="ga4f9b11a2c2e146701386cb00040ac1d9" name="ga4f9b11a2c2e146701386cb00040ac1d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4f9b11a2c2e146701386cb00040ac1d9">&#9670;&#160;</a></span>msg_chan_csv_write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int msg_chan_csv_write </td>
+          <td>(</td>
+          <td class="paramtype">const struct zbus_channel *</td>          <td class="paramname"><span class="paramname"><em>chan</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>buf</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+
+<p>Write a message in CSV format to a buffer based on the channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">chan</td><td>Message channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to the message data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Buffer to write the CSV data to. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of the buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes that would be written to the buffer if it were large enough, excluding the null terminator.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Only zbus channels defined with <a class="el" href="#gac7833f3b978eb279a584d10629d33b35">MSG_CHAN_DEFINE</a> can be used with this function. </dd></dl>
+
+</div>
+</div>
+<a id="gad1091f98fd581ebc22b3ed5036e2f220" name="gad1091f98fd581ebc22b3ed5036e2f220"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad1091f98fd581ebc22b3ed5036e2f220">&#9670;&#160;</a></span>MSG_CHAN_DECLARE()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MSG_CHAN_DECLARE </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="#ga9df39e3eba7bc2233e1a1797dede6101">MSG_LIST</a></td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -350,8 +485,41 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="gab04f9f5b6c72f995d5123da2fed991f2" name="gab04f9f5b6c72f995d5123da2fed991f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab04f9f5b6c72f995d5123da2fed991f2">&#9670;&#160;</a></span>msg_chan_print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void msg_chan_print </td>
+          <td>(</td>
+          <td class="paramtype">const struct zbus_channel *</td>          <td class="paramname"><span class="paramname"><em>chan</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+
+<p>Print a message based on the channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">chan</td><td>Message channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to the message data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Only zbus channels defined with <a class="el" href="#gac7833f3b978eb279a584d10629d33b35">MSG_CHAN_DEFINE</a> can be used with this function. </dd></dl>
+
+</div>
+</div>
 <a id="ga160a344155bb268d4a8a64e1b23cc14c" name="ga160a344155bb268d4a8a64e1b23cc14c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga160a344155bb268d4a8a64e1b23cc14c">&#9670;&#160;</a></span>MSG_ZBUS_CHAN_DECLARE() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga160a344155bb268d4a8a64e1b23cc14c">&#9670;&#160;</a></span>MSG_ZBUS_CHAN_DECLARE()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -374,7 +542,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Aug 4 2025 08:35:24 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Tue Aug 5 2025 01:50:06 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

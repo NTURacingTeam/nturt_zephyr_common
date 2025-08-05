@@ -31,7 +31,7 @@ var searchData=
   ['primsg_5fts_5facc_5farg_28',['PRImsg_ts_acc_arg',['../group__msg__if__tractive__pri.html#ga2225871f59f28a1b3f9d16b9620827b1',1,'tractive.h']]],
   ['primsg_5fts_5finv_29',['PRImsg_ts_inv',['../group__msg__if__tractive__pri.html#gab080daa91f73dd45e57b850cf430c48b',1,'tractive.h']]],
   ['primsg_5fts_5finv_5farg_30',['PRImsg_ts_inv_arg',['../group__msg__if__tractive__pri.html#ga346336ce168bad8dd586bdcea21e3455',1,'tractive.h']]],
-  ['print_31',['print',['../structmsg__shell.html#a9c6fc229b1f4685b93bcfcbf6ca43223',1,'msg_shell']]],
+  ['print_31',['print',['../structmsg__chan__data.html#a2fa82ee4041987b7d1b220a88558eb30',1,'msg_chan_data']]],
   ['printing_32',['Printing',['../group__msg__if__pri__ctrl.html',1,'Control Message Printing'],['../group__msg__if__pri.html',1,'Message Printing'],['../group__msg__if__pri__sensor.html',1,'Sensor Message Printing'],['../group__msg__if__pri__states.html',1,'State Machine Message Printing'],['../group__msg__if__tractive__pri.html',1,'Tractive System Message Printing']]],
   ['pub_5fdata_33',['pub_data',['../structagg__typed.html#a72660e854b9459bc6576f90ce5873cef',1,'agg_typed::pub_data'],['../structtm__group__data.html#ad32781c33f072c9e8ce89a696d231660',1,'tm_group_data::pub_data']]],
   ['publish_34',['publish',['../structagg.html#a10fd80be5db2e39abff635d517dd438f',1,'agg::publish'],['../structagg__typed.html#a98d33b151e8de66c6f1955c598364a73',1,'agg_typed::publish'],['../structtm__group.html#a908afc760945c2e5699c3e45e8218b1d',1,'tm_group::publish']]]
