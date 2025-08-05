@@ -9,6 +9,7 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/__assert.h>
 #include <zephyr/sys/clock.h>
+#include <zephyr/sys/iterable_sections.h>
 #include <zephyr/zbus/zbus.h>
 
 BUILD_ASSERT(CONFIG_NTURT_MSG_INIT_PRIORITY >
@@ -17,10 +18,44 @@ BUILD_ASSERT(CONFIG_NTURT_MSG_INIT_PRIORITY >
 LOG_MODULE_REGISTER(nturt_msg, CONFIG_NTURT_MSG_LOG_LEVEL);
 
 /* static variable -----------------------------------------------------------*/
-MSG_ZBUS_CHAN_DEFINE(MSG_LIST);
-MSG_SHELL_DEFINE(MSG_LIST);
+MSG_CHAN_DEFINE(MSG_LIST);
 
 /* function definition -------------------------------------------------------*/
+bool is_msg_chan(const struct zbus_channel *chan) {
+  STRUCT_SECTION_START_EXTERN(msg_chan_data);
+  STRUCT_SECTION_END_EXTERN(msg_chan_data);
+
+  void *data = zbus_chan_user_data(chan);
+
+  return data >= (void *)STRUCT_SECTION_START(msg_chan_data) &&
+         data < (void *)STRUCT_SECTION_END(msg_chan_data);
+}
+
+void msg_chan_print(const struct zbus_channel *chan, const void *data) {
+  __ASSERT(is_msg_chan(chan), "chan must be a message channel");
+
+  struct msg_chan_data *chan_data = zbus_chan_user_data(chan);
+
+  chan_data->print(data);
+}
+
+const char *msg_chan_csv_header(const struct zbus_channel *chan) {
+  __ASSERT(is_msg_chan(chan), "chan must be a message channel");
+
+  struct msg_chan_data *chan_data = zbus_chan_user_data(chan);
+
+  return chan_data->csv_header();
+}
+
+int msg_chan_csv_write(const struct zbus_channel *chan, const void *data,
+                       char *buf, size_t len) {
+  __ASSERT(is_msg_chan(chan), "chan must be a message channel");
+
+  struct msg_chan_data *chan_data = zbus_chan_user_data(chan);
+
+  return chan_data->csv_write(buf, len, data);
+}
+
 void msg_header_init(struct msg_header *header) {
   if (IS_ENABLED(CONFIG_NTURT_RTC)) {
     struct timespec ts;

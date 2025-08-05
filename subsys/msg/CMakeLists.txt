@@ -10,7 +10,11 @@ zephyr_library_sources_ifdef(CONFIG_NTURT_MSG_SHELL
     shell.c
 )
 
-zephyr_linker_sources_ifdef(CONFIG_NTURT_MSG_SHELL SECTIONS
+zephyr_library_sources_ifdef(CONFIG_NTURT_MSG_LOGGING
+    logging.c
+)
+
+zephyr_linker_sources(DATA_SECTIONS
     iterable_sections.ld
 )
 

@@ -1,3 +1,3 @@
 #include <zephyr/linker/iterable_sections.h>
 
-ITERABLE_SECTION_ROM(msg_shell, Z_LINK_ITERABLE_SUBALIGN)
+ITERABLE_SECTION_RAM(msg_chan_data, Z_LINK_ITERABLE_SUBALIGN)

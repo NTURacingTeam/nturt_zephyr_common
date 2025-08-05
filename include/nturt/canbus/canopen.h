@@ -202,8 +202,7 @@
                                      _min_separation, _watermark, _flag, ...)  \
   AGG_TYPED_DEFINE(_OD_AGG_NAME(_name), struct _name, _init_val, _period,      \
                    _min_separation, _watermark, _flag, canopen_od_agg_publish, \
-                   (void *)&_MSG_CHAN_NAME(_name),                             \
-                   _OD_AGG_MEMBERS(__VA_ARGS__));                              \
+                   (void *)&_MSG_CHAN(_name), _OD_AGG_MEMBERS(__VA_ARGS__));   \
                                                                                \
   FOR_EACH_FIXED_ARG(_OD_AGG_WRITE_DEFINE, (;), _name, __VA_ARGS__);
 
