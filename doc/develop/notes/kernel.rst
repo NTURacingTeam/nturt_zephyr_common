@@ -1,4 +1,4 @@
-.. _notes_kernel:
+.. _develop_notes_kernel:
 
 =============
 Zephyr Kernel
@@ -14,19 +14,19 @@ as well as `its slides
 
 Basically, the boot sequence is as follows:
 
-.. figure:: ../_static/images/notes/startup_early_driver.jpg
+.. figure:: /_static/images/notes/startup_early_driver.jpg
    :width: 60%
    :align: center
 
    Early driver initialization.
 
-.. figure:: ../_static/images/notes/startup_kernel.jpg
+.. figure:: /_static/images/notes/startup_kernel.jpg
    :width: 100%
    :align: center
 
    Kernel initialization.
 
-.. figure:: ../_static/images/notes/startup_post_kernel.jpg
+.. figure:: /_static/images/notes/startup_post_kernel.jpg
    :width: 60%
    :align: center
 

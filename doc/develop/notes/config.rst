@@ -1,4 +1,4 @@
-.. _notes_config:
+.. _develop_notes_config:
 
 ===========================
 Zephyr Configuration System

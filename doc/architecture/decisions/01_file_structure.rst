@@ -1,4 +1,4 @@
-.. _decisions_file_structure:
+.. _architecture_decisions_file_structure:
 
 ==============
 File Structure
@@ -10,11 +10,19 @@ Summary
 Issue
 -----
 
+A consistent file structure is essential for the readability and maintainability
+of the codebase. It helps developers quickly locate relevant parts of the code
+within a file.
+
 Decision
 --------
 
+The declaration order of a source file is proposed.
+
 Status
 ------
+
+- **PROPOSED** on Feb. 25, 2025
 
 Details
 =======
@@ -22,7 +30,7 @@ Details
 Assumption
 ----------
 
-* `Clang-Format <https://clang.llvm.org/docs/index.html>`__ is used as the
+- `Clang-Format <https://clang.llvm.org/docs/index.html>`__ is used as the
   formatter based on `Google style
   <https://clang.llvm.org/docs/ClangFormatStyleOptions.html#basedonstyle>`__.
 
@@ -41,7 +49,7 @@ The structure of source file (.c) should be as follows:
 
 1. ``#include`` directives that follow;
 
-   * Order of includes from the `Google Guide
+   - Order of includes from the `Google Guide
      <https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes>`__
 
      .. note::
@@ -49,7 +57,7 @@ The structure of source file (.c) should be as follows:
         Since Clang-Format will remove blink lines between includes, use
         comments to separate includes form different categories.
 
-   * Avoid transitive includes as mentioned in the `Google Guide
+   - Avoid transitive includes as mentioned in the `Google Guide
      <https://google.github.io/styleguide/cppguide.html#Include_What_You_Use>`__
 
 2. ``#define`` directives for macros and constants
@@ -87,8 +95,8 @@ Implications
 Notes
 =====
 
-* `Google C++ Style Guide <https://google.github.io/styleguide/cppguide.html>`__
-* `Zephyr Coding Style Guidelines
+- `Google C++ Style Guide <https://google.github.io/styleguide/cppguide.html>`__
+- `Zephyr Coding Style Guidelines
   <https://docs.zephyrproject.org/latest/contribute/style/index.html>`__
-* `Linux Kernel Coding Style
+- `Linux Kernel Coding Style
   <https://kernel.org/doc/html/latest/process/coding-style.html>`__

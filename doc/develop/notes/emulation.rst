@@ -1,4 +1,4 @@
-.. _notes_emulation:
+.. _develop_notes_emulation:
 
 =======================
 Zephyr Device Emulation

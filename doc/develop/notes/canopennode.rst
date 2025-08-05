@@ -1,4 +1,4 @@
-.. _notes_canopennode:
+.. _develop_notes_canopennode:
 
 ===========
 CANopenNode

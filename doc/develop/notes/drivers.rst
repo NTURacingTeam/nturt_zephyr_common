@@ -1,4 +1,4 @@
-.. _notes_drivers:
+.. _develop_notes_drivers:
 
 ==============
 Zephyr Drivers

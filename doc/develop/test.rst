@@ -1,8 +1,14 @@
-.. _test:
+.. _develop_test:
 
 =======
 Testing
 =======
+
+.. todo::
+
+   Finish this section.
+
+Here list some commands to run tests in this project.
 
 .. code-block:: bash
 
@@ -18,3 +24,4 @@ Testing
 
    # in <nturt_zephyr_common_root/tests>
    west twister --device-testing --hardware-map hardware_map.yaml -T .
+

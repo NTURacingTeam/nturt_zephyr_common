@@ -1,4 +1,4 @@
-.. _notes_common:
+.. _develop_notes_common:
 
 ======
 Common

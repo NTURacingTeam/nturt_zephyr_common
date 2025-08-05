@@ -1,4 +1,4 @@
-.. _notes_services:
+.. _develop_notes_services:
 
 ===============
 Zephyr Services
@@ -296,7 +296,7 @@ References
 .. [#] `Settings ZMS backend source code
    <https://github.com/zephyrproject-rtos/zephyr/blob/main/subsys/settings/src/settings_zms.c#L24>`_
 
-.. _notes_services_sensing_subsystem:
+.. _develop_notes_services_sensing_subsystem:
 
 Sensing Subsystem
 =================

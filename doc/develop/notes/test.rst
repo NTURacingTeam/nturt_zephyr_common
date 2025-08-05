@@ -1,4 +1,4 @@
-.. _notes_tests:
+.. _develop_notes_tests:
 
 =================
 Testing in Zephyr

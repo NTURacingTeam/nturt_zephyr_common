@@ -1,4 +1,4 @@
-.. _doc:
+.. _develop_doc:
 
 ==================
 Doc Implementation
@@ -40,7 +40,7 @@ APT packages
 pip modules
 ~~~~~~~~~~~
 
-.. literalinclude:: requirements.txt
+.. literalinclude:: /requirements.txt
    :language: none
 
 Building the Documentation
