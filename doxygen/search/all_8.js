@@ -42,6 +42,7 @@ var searchData=
   ['inv_5ftorque_5fcan_5fto_5fphy_39',['INV_TORQUE_CAN_TO_PHY',['../group__can__convert.html#gaebb19feee7c812dd257f7b0bfedc6dfc',1,'convert.h']]],
   ['inv_5fvolt_5fcan_5fto_5fphy_40',['INV_VOLT_CAN_TO_PHY',['../group__can__convert.html#ga427c2e5abeb802a8c06e8e2df7716049',1,'convert.h']]],
   ['inverter_20control_41',['Inverter Control',['../group__ctrl__inv.html',1,'']]],
-  ['is_5fmask_5fset_42',['IS_MASK_SET',['../group__util.html#ga22cb1b3da6b4a3466f849b66fcf50a41',1,'util.h']]],
-  ['is_5fmsg_5fchan_43',['is_msg_chan',['../group__msg.html#ga7f450e3caa0947d3c62106cc456407cb',1,'msg.h']]]
+  ['is_5flogging_42',['is_logging',['../structmsg__logging.html#a34346a86f6a27e36de9368857520fd06',1,'msg_logging']]],
+  ['is_5fmask_5fset_43',['IS_MASK_SET',['../group__util.html#ga22cb1b3da6b4a3466f849b66fcf50a41',1,'util.h']]],
+  ['is_5fmsg_5fchan_44',['is_msg_chan',['../group__msg.html#ga7f450e3caa0947d3c62106cc456407cb',1,'msg.h']]]
 ];

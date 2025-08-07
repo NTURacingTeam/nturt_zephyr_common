@@ -7,12 +7,13 @@ var searchData=
   ['msg_5fctrl_5ftorque_4',['msg_ctrl_torque',['../structmsg__ctrl__torque.html',1,'']]],
   ['msg_5fctrl_5fword_5',['msg_ctrl_word',['../structmsg__ctrl__word.html',1,'']]],
   ['msg_5fheader_6',['msg_header',['../structmsg__header.html',1,'']]],
-  ['msg_5fsensor_5fcockpit_7',['msg_sensor_cockpit',['../structmsg__sensor__cockpit.html',1,'']]],
-  ['msg_5fsensor_5fgps_8',['msg_sensor_gps',['../structmsg__sensor__gps.html',1,'']]],
-  ['msg_5fsensor_5fimu_9',['msg_sensor_imu',['../structmsg__sensor__imu.html',1,'']]],
-  ['msg_5fsensor_5fpow_10',['msg_sensor_pow',['../structmsg__sensor__pow.html',1,'']]],
-  ['msg_5fsensor_5fwheel_11',['msg_sensor_wheel',['../structmsg__sensor__wheel.html',1,'']]],
-  ['msg_5fstates_12',['msg_states',['../structmsg__states.html',1,'']]],
-  ['msg_5fts_5facc_13',['msg_ts_acc',['../structmsg__ts__acc.html',1,'']]],
-  ['msg_5fts_5finv_14',['msg_ts_inv',['../structmsg__ts__inv.html',1,'']]]
+  ['msg_5flogging_7',['msg_logging',['../structmsg__logging.html',1,'']]],
+  ['msg_5fsensor_5fcockpit_8',['msg_sensor_cockpit',['../structmsg__sensor__cockpit.html',1,'']]],
+  ['msg_5fsensor_5fgps_9',['msg_sensor_gps',['../structmsg__sensor__gps.html',1,'']]],
+  ['msg_5fsensor_5fimu_10',['msg_sensor_imu',['../structmsg__sensor__imu.html',1,'']]],
+  ['msg_5fsensor_5fpow_11',['msg_sensor_pow',['../structmsg__sensor__pow.html',1,'']]],
+  ['msg_5fsensor_5fwheel_12',['msg_sensor_wheel',['../structmsg__sensor__wheel.html',1,'']]],
+  ['msg_5fstates_13',['msg_states',['../structmsg__states.html',1,'']]],
+  ['msg_5fts_5facc_14',['msg_ts_acc',['../structmsg__ts__acc.html',1,'']]],
+  ['msg_5fts_5finv_15',['msg_ts_inv',['../structmsg__ts__inv.html',1,'']]]
 ];

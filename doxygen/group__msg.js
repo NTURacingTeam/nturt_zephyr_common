@@ -2,6 +2,7 @@ var group__msg =
 [
     [ "Aggregation", "group__msg__agg.html", "group__msg__agg" ],
     [ "Message Interface", "group__msg__if.html", "group__msg__if" ],
+    [ "Message Logging", "group__msg__logging.html", "group__msg__logging" ],
     [ "msg_chan_data", "structmsg__chan__data.html", [
       [ "csv_header", "structmsg__chan__data.html#a0644764143219bf1cb820c72330a8513", null ],
       [ "csv_write", "structmsg__chan__data.html#aba0f644efabb8d70b5a30cd1a53018b9", null ],
