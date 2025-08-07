@@ -93,7 +93,7 @@
   CSV_PRImsg_header_header ",ok,volt,current,temp,soc,capacity"
 
 /// @brief Insert @ref msg_ts_acc CSV format string.
-#define CSV_PRImsg_ts_acc CSV_PRImsg_header ",%i,%.f,%.f,%.f,%d,%.f"
+#define CSV_PRImsg_ts_acc CSV_PRImsg_header ",%i,%f,%f,%f,%d,%f"
 
 /**
  * @brief Insert @ref msg_ts_acc arguments to CSV print format.

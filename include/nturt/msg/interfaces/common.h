@@ -107,7 +107,7 @@
   "," STRINGIFY(data) STRINGIFY(_y) "," STRINGIFY(data) STRINGIFY(_z)
 
 /// @brief Insert @ref msg_3d_data CSV format string.
-#define CSV_PRImsg_3d_data ".f,%.f,%.f"
+#define CSV_PRImsg_3d_data "f,%f,%f"
 
 /**
  * @brief Insert @ref msg_3d_data arguments to CSV print format.
@@ -121,13 +121,14 @@
  *
  * @param[in] data The 4-wheel data.
  */
-#define CSV_PRImsg_4wheel_data_header(data)                             \
-  STRINGIFY(data)                                                       \
-  STRINGIFY(_fl) "," STRINGIFY(data) STRINGIFY(_fr) "," STRINGIFY(data) \
+#define CSV_PRImsg_4wheel_data_header(data)              \
+  STRINGIFY(data)                                        \
+  STRINGIFY(_fl)                                         \
+  "," STRINGIFY(data) STRINGIFY(_fr) "," STRINGIFY(data) \
       STRINGIFY(_rl) "," STRINGIFY(data) STRINGIFY(_rr)
 
 /// @brief Insert @ref msg_4wheel_data CSV format string.
-#define CSV_PRImsg_4wheel_data ".f,%.f,%.f,%.f"
+#define CSV_PRImsg_4wheel_data "f,%f,%f,%f"
 
 /**
  * @brief Insert @ref msg_4wheel_data arguments to CSV print format.

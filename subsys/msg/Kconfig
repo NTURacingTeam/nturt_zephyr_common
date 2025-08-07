@@ -15,6 +15,13 @@ config NTURT_MSG_INIT_PRIORITY
 	help
 	  Inter-thread communication initialization priority.
 
+config NTURT_MSG_MAX_SIZE
+	int "Maximum message size"
+	default 256
+	help
+	  Maximum size of a message used to create buffers of the right size.
+	  Increase when appropriate.
+
 config NTURT_MSG_SHELL
 	bool "Message shell support"
 	depends on NTURT_SHELL
@@ -23,5 +30,27 @@ config NTURT_MSG_SHELL
 	select ZBUS_CHANNEL_NAME
 	select ZBUS_CHANNEL_PUBLISH_STATS
 	select ZBUS_RUNTIME_OBSERVERS
+
+config NTURT_MSG_LOGGING
+	bool "Message logging support"
+	depends on FILE_SYSTEM
+	default y
+	select ZBUS_MSG_SUBSCRIBER
+
+if NTURT_MSG_LOGGING
+
+config NTURT_MSG_LOGGING_THREAD_STACK_SIZE
+	int "Message logging thread stack size"
+	default 4096
+	help
+	  Stack size for the message logging thread.
+
+config NTURT_MSG_LOGGING_THREAD_PRIORITY
+	int "Message logging thread priority"
+	default 10
+	help
+	  Priority for the message logging thread.
+
+endif # NTURT_MSG_LOGGING
 
 endif # NTURT_MSG

@@ -131,8 +131,7 @@
       ",steer,accel,accel_pedal_plaus,apps1,apps2,brake,bse1,bse2"
 
 /// @brief Insert @ref msg_sensor_cockpit CSV format string.
-#define CSV_PRImsg_sensor_cockpit \
-  CSV_PRImsg_header ",%.f,%.f,%.f,%.f,%.f,%.f,%.f,%.f"
+#define CSV_PRImsg_sensor_cockpit CSV_PRImsg_header ",%f,%f,%f,%f,%f,%f,%f,%f"
 
 /**
  * @brief Insert @ref msg_sensor_cockpit arguments to CSV print format.
@@ -209,7 +208,7 @@
   CSV_PRImsg_header_header ",in_volt,v5_curr,v5_rpi_curr"
 
 /// @brief Insert @ref msg_sensor_pow CSV format string.
-#define CSV_PRImsg_sensor_pow CSV_PRImsg_header ",%.f,%.f,%.f"
+#define CSV_PRImsg_sensor_pow CSV_PRImsg_header ",%f,%f,%f"
 
 /**
  * @brief Insert @ref msg_sensor_pow arguments to CSV print format.
