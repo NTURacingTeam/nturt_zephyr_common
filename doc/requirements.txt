@@ -1,3 +1,4 @@
 breathe
 sphinx
+sphinx-copybutton
 sphinx-rtd-theme
