@@ -39,6 +39,9 @@ config NTURT_MSG_LOGGING
 
 if NTURT_MSG_LOGGING
 
+config ZBUS_MSG_SUBSCRIBER_NET_BUF_POOL_SIZE
+	default 64
+
 config NTURT_MSG_LOGGING_THREAD_STACK_SIZE
 	int "Message logging thread stack size"
 	default 4096

@@ -21,6 +21,7 @@
         zephyr,canopen-red-led = &canopen_red_led;
 
         nturt,rtc = &rtc;
+        nturt,fstab = &fstab;
         nturt,buzzer = &buzzer;
         nturt,brake-light = &brake_light;
         nturt,rtd-light = &rtd_light;
@@ -33,6 +34,7 @@
 
     aliases {
         led0 = &canopen_green_led;
+        rtc = &rtc;
     };
 
     mipi_dbi: mipi-dbi-spi {
@@ -42,6 +44,16 @@
         write-only;
         #address-cells = <1>;
         #size-cells = <0>;
+    };
+    
+    fstab: fstab {
+        compatible = "zephyr,fstab";
+        fatfs {
+            compatible = "zephyr,fstab,fatfs";
+            mount-point = "/SD:";
+            disk-access;
+            automount;
+        };
     };
 
     // dummy only to expose node properties to the device tree
@@ -191,16 +203,16 @@
             read-only;
         };
 
-        // application image slot: 768KB
+        // application image slot: 896KB
         slot0_partition: partition@20000 {
             label = "image-0";
-            reg = <0x00020000 DT_SIZE_K(768)>;
+            reg = <0x00020000 DT_SIZE_K(896)>;
         };
 
-        // backup slot: 768KB
+        // backup slot: 896KB
         slot1_partition: partition@100000 {
             label = "image-1";
-            reg = <0x00100000 DT_SIZE_K(768)>;
+            reg = <0x00100000 DT_SIZE_K(896)>;
         };
 
         // swap slot: 128KB
@@ -236,14 +248,14 @@
 };
 
 &rtc {
-    clocks = <&rcc STM32_CLOCK_BUS_APB4 0x00010000>,
+	clocks = <&rcc STM32_CLOCK(APB4, 16U)>,
              <&rcc STM32_SRC_LSE RTC_SEL(1)>;
     status = "okay";
 };
 
 // sync clock from PLL3_R at 64MHz, 4us sampling time with 4 oversampling
 &adc1 {
-    clocks = <&rcc STM32_CLOCK_BUS_AHB1 0x00000020>,
+	clocks = <&rcc STM32_CLOCK(AHB1, 5U)>,
              <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
     pinctrl-0 = <&adc1_inp6_pf12 &adc1_inp14_pa2 &adc1_inp16_pa0 &adc1_inp17_pa1>;
     pinctrl-names = "default";
@@ -292,7 +304,7 @@
 
 // sync clock from PLL3_R at 64MHz, 4us sampling time with 4 oversampling
 &adc2 {
-    clocks = <&rcc STM32_CLOCK_BUS_AHB1 0x00000020>,
+	clocks = <&rcc STM32_CLOCK(AHB1, 5U)>,
              <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
     pinctrl-0 = <&adc2_inp2_pf13>;
     pinctrl-names = "default";
@@ -314,7 +326,7 @@
 
 // sync clock from PLL3_R at 64MHz, 4us sampling time with 4 oversampling
 &adc3 {
-    clocks = <&rcc STM32_CLOCK_BUS_AHB4 0x01000000>,
+	clocks = <&rcc STM32_CLOCK(AHB4, 24U)>,
              <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
     pinctrl-0 = <&adc3_inp2_pf9 &adc3_inp3_pf7 &adc3_inp4_pf5 &adc3_inp5_pf3
                  &adc3_inp7_pf8 &adc3_inp8_pf6 &adc3_inp9_pf4>;
@@ -390,7 +402,7 @@
 };
 
 &usart1 {
-    clocks = <&rcc STM32_CLOCK_BUS_APB2 0x00000010>,
+	clocks = <&rcc STM32_CLOCK(APB2, 4U)>,
              <&rcc STM32_SRC_PLL3_Q USART16_SEL(2)>;
     dmas = <&dmamux1 0 42 STM32_DMA_PERIPH_TX>,
            <&dmamux1 1 41 STM32_DMA_PERIPH_RX>;
@@ -402,7 +414,7 @@
 };
 
 &usart6 {
-    clocks = <&rcc STM32_CLOCK_BUS_APB2 0x00000020>,
+	clocks = <&rcc STM32_CLOCK(APB2, 5U)>,
              <&rcc STM32_SRC_PLL3_Q USART16_SEL(2)>;
     pinctrl-0 = <&usart6_tx_pc6 &usart6_rx_pc7>;
     pinctrl-names = "default";
@@ -411,7 +423,7 @@
 };
 
 &i2c2 {
-    clocks = <&rcc STM32_CLOCK_BUS_APB1 0x00400000>,
+	clocks = <&rcc STM32_CLOCK(APB1, 22U)>,
              <&rcc STM32_SRC_PLL3_R I2C123_SEL(1)>;
     pinctrl-0 = <&i2c2_scl_pf1 &i2c2_sda_pf0>;
     pinctrl-names = "default";
@@ -420,16 +432,16 @@
 };
 
 &i2c4 {
-    clocks = <&rcc STM32_CLOCK_BUS_APB1 0x00400000>,
+	clocks = <&rcc STM32_CLOCK(APB4, 7U)>,
              <&rcc STM32_SRC_PLL3_R I2C4_SEL(1)>;
     pinctrl-0 = <&i2c4_scl_pd12 &i2c4_sda_pd13>;
     pinctrl-names = "default";
     clock-frequency = <I2C_BITRATE_STANDARD>;
     status = "okay";
 
-    imu: lsm6dso@6a {
+    imu: lsm6dso@6b {
         compatible = "st,lsm6dso";
-        reg = <0x6a>;
+        reg = <0x6b>;
         accel-range = <2>; // 4g
         accel-odr = <4>; // 104Hz
         gyro-range = <0>; // 250dps
@@ -438,7 +450,7 @@
 };
 
 &spi1 {
-    clocks = <&rcc STM32_CLOCK_BUS_APB2 0x00001000>,
+	clocks = <&rcc STM32_CLOCK(APB2, 12U)>,
              <&rcc STM32_SRC_PLL3_P SPI123_SEL(2)>;
     dmas = <&dmamux1 2 38 STM32_DMA_PERIPH_TX>,
            <&dmamux1 3 37 STM32_DMA_PERIPH_RX>;
@@ -452,7 +464,7 @@
 // does not use dma since the dma overhead is higher than the transfer time of
 // 11 bytes
 &spi4 {
-    clocks = <&rcc STM32_CLOCK_BUS_APB2 0x00002000>,
+	clocks = <&rcc STM32_CLOCK(APB2, 13U)>,
              <&rcc STM32_SRC_PLL3_Q SPI45_SEL(2)>;
     pinctrl-0 = <&spi4_sck_pe2 &spi4_miso_pe5 &spi4_mosi_pe6>;
     pinctrl-names = "default";
@@ -461,7 +473,7 @@
 };
 
 &spi6 {
-    clocks = <&rcc STM32_CLOCK_BUS_APB4 0x00000020>,
+	clocks = <&rcc STM32_CLOCK(APB4, 5U)>,
              <&rcc STM32_SRC_PLL3_Q SPI6_SEL(2)>;
     pinctrl-0 = <&spi6_sck_pb3 &spi6_miso_pb4 &spi6_mosi_pg14>;
     pinctrl-names = "default";
@@ -470,7 +482,7 @@
 };
 
 &fdcan1 {
-    clocks = <&rcc STM32_CLOCK_BUS_APB1_2 0x00000100>,
+	clocks = <&rcc STM32_CLOCK(APB1_2, 8U)>,
              <&rcc STM32_SRC_PLL2_Q FDCAN_SEL(2)>;
     pinctrl-0 = <&fdcan1_tx_pb9 &fdcan1_rx_pb8>;
     pinctrl-names = "default";
@@ -482,7 +494,7 @@
 };
 
 &fdcan2 {
-    clocks = <&rcc STM32_CLOCK_BUS_APB1_2 0x00000100>,
+	clocks = <&rcc STM32_CLOCK(APB1_2, 8U)>,
              <&rcc STM32_SRC_PLL2_Q FDCAN_SEL(2)>;
     pinctrl-0 = <&fdcan2_tx_pb6 &fdcan2_rx_pb5>;
     pinctrl-names = "default";
@@ -494,7 +506,7 @@
 };
 
 &sdmmc1 {
-    clocks = <&rcc STM32_CLOCK_BUS_AHB3 0x00010000>,
+	clocks = <&rcc STM32_CLOCK(AHB3, 16U)>,
              <&rcc STM32_SRC_PLL1_Q SDMMC_SEL(0)>;
     pinctrl-0 = <&sdmmc1_d0_pc8 &sdmmc1_d1_pc9 &sdmmc1_d2_pc10 &sdmmc1_d3_pc11
                  &sdmmc1_ck_pc12 &sdmmc1_cmd_pd2>;
