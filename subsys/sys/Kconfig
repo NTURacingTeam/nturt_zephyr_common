@@ -18,6 +18,18 @@ config NTURT_SYS_INIT_PRIORITY
 	help
 	  Basic system initialization priority.
 
+config NTURT_WORKQUEUE_STACK_SIZE
+	int "Workqueue thread stack size"
+	default 8192
+	help
+	  Stack size for the workqueue thread.
+
+config NTURT_WORKQUEUE_THREAD_PRIORITY
+	int "Workqueue thread priority"
+	default 5
+	help
+	  Priority for the workqueue thread.
+
 DT_CHOSEN_NTURT_BUZZER := nturt,buzzer
 
 config NTURT_SYS_REBOOT_SOUND

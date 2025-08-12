@@ -17,10 +17,10 @@ LOG_MODULE_REGISTER(nturt_fs, CONFIG_NTURT_SYS_LOG_LEVEL);
 
 /* function definition -------------------------------------------------------*/
 // copied from zephyr/subsys/logging/backends/log_backend_fs.c create_log_dir()
-int mkdir_p(const char *path) {
+int fs_mkdir_p(const char *path) {
   const char *next;
   const char *last = path + (strlen(path) - 1);
-  char w_path[MAX_PATH_LEN];
+  char w_path[FS_MAX_PATH_LEN];
   int rc, len;
   struct fs_dir_t dir;
 

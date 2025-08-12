@@ -68,7 +68,7 @@ static bool msg_dump_get_iter(const struct zbus_channel *chan,
                               void *user_data) {
   struct msg_dump_get_data *data = user_data;
 
-  if (!is_msg_chan(chan)) {
+  if (!msg_chan_is_from_msg(chan)) {
     return true;
   }
 
@@ -99,7 +99,7 @@ static void msg_dump_get_handler(size_t idx, struct shell_static_entry *entry) {
 static bool msg_stats_iter(const struct zbus_channel *chan, void *user_data) {
   const struct shell *sh = user_data;
 
-  if (!is_msg_chan(chan)) {
+  if (!msg_chan_is_from_msg(chan)) {
     return true;
   }
 
@@ -133,7 +133,7 @@ static int msg_stats_cmd_handler(const struct shell *sh, size_t argc,
 static bool msg_dump_iter(const struct zbus_channel *chan, void *user_data) {
   struct msg_dump_data *data = user_data;
 
-  if (!is_msg_chan(chan)) {
+  if (!msg_chan_is_from_msg(chan)) {
     return true;
   }
 

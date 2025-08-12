@@ -15,45 +15,50 @@
 
 LOG_MODULE_REGISTER(nturt_sys, CONFIG_NTURT_SYS_LOG_LEVEL);
 
-#ifdef CONFIG_NTURT_SYS_REBOOT_SOUND
-
-static const struct gpio_dt_spec buzzer =
-    GPIO_DT_SPEC_GET(DT_CHOSEN(nturt_buzzer), gpios);
-
-static int gpio_init() {
-  if (!device_is_ready(buzzer.port)) {
-    LOG_ERR("Buzzer device not ready");
-    return -ENODEV;
-  }
-
-  int ret = gpio_pin_configure_dt(&buzzer, GPIO_OUTPUT_INACTIVE);
-  if (ret < 0) {
-    LOG_ERR("Failed to configure buzzer: %s", strerror(-ret));
-    return ret;
-  }
-
-  return 0;
-}
-
-// use the same init priority as the LEDs since they are used in the same way
-SYS_INIT(gpio_init, POST_KERNEL, CONFIG_LED_INIT_PRIORITY);
-
-#endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
-
 /* macro ---------------------------------------------------------------------*/
 #define RESET_TIMEOUT K_SECONDS(2)
 
 #define RESET_SOUND_COUNT 5
 
-/* static function declaration -----------------------------------------------*/
-static void reset();
+/* type ----------------------------------------------------------------------*/
+struct sys_ctx {
+  struct k_work_q work_q;
+};
 
+/* static function declaration -----------------------------------------------*/
+static int init();
+
+static void reset();
 static void reset_cb(struct k_timer *timer);
 
 /* static variable -----------------------------------------------------------*/
+#ifdef CONFIG_NTURT_SYS_REBOOT_SOUND
+static const struct gpio_dt_spec buzzer =
+    GPIO_DT_SPEC_GET(DT_CHOSEN(nturt_buzzer), gpios);
+#endif
+
+static struct sys_ctx g_ctx;
+
+SYS_INIT(init, APPLICATION, CONFIG_NTURT_SYS_INIT_PRIORITY);
+
+static K_THREAD_STACK_DEFINE(nturt_work_q_stack,
+                             CONFIG_NTURT_WORKQUEUE_STACK_SIZE);
+
 static K_TIMER_DEFINE(reset_timer, reset_cb, NULL);
 
 /* function definition -------------------------------------------------------*/
+int sys_work_submit(struct k_work *work) {
+  return k_work_submit_to_queue(&g_ctx.work_q, work);
+}
+
+int sys_work_schedule(struct k_work_delayable *dwork, k_timeout_t delay) {
+  return k_work_schedule_for_queue(&g_ctx.work_q, dwork, delay);
+}
+
+int sys_work_reschedule(struct k_work_delayable *dwork, k_timeout_t delay) {
+  return k_work_reschedule_for_queue(&g_ctx.work_q, dwork, delay);
+}
+
 void sys_reset() {
   k_timer_start(&reset_timer, RESET_TIMEOUT, K_FOREVER);
 
@@ -66,6 +71,18 @@ void sys_reset() {
 }
 
 /* static function definition ------------------------------------------------*/
+static int init() {
+  struct k_work_queue_config config = {
+      .name = "nturt_work_q",
+  };
+
+  k_work_queue_init(&g_ctx.work_q);
+  k_work_queue_start(&g_ctx.work_q, nturt_work_q_stack,
+                     K_THREAD_STACK_SIZEOF(nturt_work_q_stack),
+                     CONFIG_NTURT_WORKQUEUE_THREAD_PRIORITY, &config);
+  return 0;
+}
+
 static void reset() {
   irq_lock();
 
@@ -89,3 +106,25 @@ static void reset_cb(struct k_timer *timer) {
 
   reset();
 }
+
+#ifdef CONFIG_NTURT_SYS_REBOOT_SOUND
+
+static int gpio_init() {
+  if (!device_is_ready(buzzer.port)) {
+    LOG_ERR("Buzzer device not ready");
+    return -ENODEV;
+  }
+
+  int ret = gpio_pin_configure_dt(&buzzer, GPIO_OUTPUT_INACTIVE);
+  if (ret < 0) {
+    LOG_ERR("Failed to configure buzzer: %s", strerror(-ret));
+    return ret;
+  }
+
+  return 0;
+}
+
+// use the same init priority as the LEDs since they are used in the same way
+SYS_INIT(gpio_init, POST_KERNEL, CONFIG_LED_INIT_PRIORITY);
+
+#endif  // CONFIG_NTURT_SYS_REBOOT_SOUND

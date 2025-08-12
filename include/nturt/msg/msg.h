@@ -141,7 +141,7 @@ MSG_CHAN_DECLARE(MSG_LIST);
  * @param chan Zbus channel to check.
  * @return True if the channel is a message channel, false otherwise.
  */
-bool is_msg_chan(const struct zbus_channel *chan);
+bool msg_chan_is_from_msg(const struct zbus_channel *chan);
 
 /**
  * @brief Print a message based on the channel.

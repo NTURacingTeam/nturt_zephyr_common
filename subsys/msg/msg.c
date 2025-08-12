@@ -21,7 +21,7 @@ LOG_MODULE_REGISTER(nturt_msg, CONFIG_NTURT_MSG_LOG_LEVEL);
 MSG_CHAN_DEFINE(MSG_LIST);
 
 /* function definition -------------------------------------------------------*/
-bool is_msg_chan(const struct zbus_channel *chan) {
+bool msg_chan_is_from_msg(const struct zbus_channel *chan) {
   STRUCT_SECTION_START_EXTERN(msg_chan_data);
   STRUCT_SECTION_END_EXTERN(msg_chan_data);
 
@@ -32,7 +32,7 @@ bool is_msg_chan(const struct zbus_channel *chan) {
 }
 
 void msg_chan_print(const struct zbus_channel *chan, const void *data) {
-  __ASSERT(is_msg_chan(chan), "chan must be a message channel");
+  __ASSERT(msg_chan_is_from_msg(chan), "chan must be a message channel");
 
   struct msg_chan_data *chan_data = zbus_chan_user_data(chan);
 
@@ -40,7 +40,7 @@ void msg_chan_print(const struct zbus_channel *chan, const void *data) {
 }
 
 const char *msg_chan_csv_header(const struct zbus_channel *chan) {
-  __ASSERT(is_msg_chan(chan), "chan must be a message channel");
+  __ASSERT(msg_chan_is_from_msg(chan), "chan must be a message channel");
 
   struct msg_chan_data *chan_data = zbus_chan_user_data(chan);
 
@@ -49,7 +49,7 @@ const char *msg_chan_csv_header(const struct zbus_channel *chan) {
 
 int msg_chan_csv_write(const struct zbus_channel *chan, const void *data,
                        char *buf, size_t len) {
-  __ASSERT(is_msg_chan(chan), "chan must be a message channel");
+  __ASSERT(msg_chan_is_from_msg(chan), "chan must be a message channel");
 
   struct msg_chan_data *chan_data = zbus_chan_user_data(chan);
 

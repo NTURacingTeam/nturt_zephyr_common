@@ -12,7 +12,7 @@
 #define NTURT_SYS_FS_H_
 
 /// @brief Maximum length of a path.
-#define MAX_PATH_LEN 256
+#define FS_MAX_PATH_LEN 256
 
 /* function declaration ------------------------------------------------------*/
 /**
@@ -22,6 +22,6 @@
  * @param path Path to the directory to create.
  * @return 0 on success, negative error code on failure.
  */
-int mkdir_p(const char *path);
+int fs_mkdir_p(const char *path);
 
 #endif  // NTURT_SYS_FS_H_
