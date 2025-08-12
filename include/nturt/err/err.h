@@ -131,10 +131,10 @@
 /**
  * @brief Error handler type.
  *
- * @param errcode Code of the error.
- * @param set True if the error is set, false if the error is cleared.
- * @param user_data Pointer to custom user data for the callback provided by
- * @ref ERR_CALLBACK_DEFINE.
+ * @param[in] errcode Code of the error.
+ * @param[in] set True if the error is set, false if the error is cleared.
+ * @param[in,out] user_data Pointer to custom user data for the callback
+ * provided by @ref ERR_CALLBACK_DEFINE.
  */
 typedef void (*err_handler_t)(uint32_t errcode, bool set, void* user_data);
 

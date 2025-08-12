@@ -8,4 +8,8 @@ zephyr_library_sources(
     sys.c
 )
 
+zephyr_linker_sources(SECTIONS
+    iterable_sections.ld
+)
+
 endif()

@@ -2,6 +2,7 @@ menuconfig NTURT_SYS
 	bool "Basic system support"
 	depends on NTURT
 	select REBOOT
+	imply POWEROFF
 
 if NTURT_SYS
 

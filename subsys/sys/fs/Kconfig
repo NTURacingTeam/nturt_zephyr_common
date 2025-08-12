@@ -7,6 +7,13 @@ menuconfig NTURT_FS
 
 if NTURT_FS
 
+config NTURT_FS_SHUTDOWN_PRIORITY
+	int "Shutdown priority"
+	default 90
+	help
+	  Shutdown priority for file system. Should be the last to unmount
+	  file systems before the system goes down.
+
 choice NTURT_FS_TYPE
 	prompt "Which file system to use"
 	default NTURT_FS_FAT_FS

@@ -1,9 +1,13 @@
+#include "nturt/sys/fs.h"
+
 // glibc includes
+#include <stddef.h>
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
 
 // zephyr includes
+#include <zephyr/devicetree.h>
 #include <zephyr/fs/fs.h>
 #include <zephyr/init.h>
 #include <zephyr/logging/log.h>
@@ -11,9 +15,23 @@
 #include <zephyr/sys/clock.h>
 
 // project includes
-#include "nturt/sys/fs.h"
+#include "nturt/sys/sys.h"
 
 LOG_MODULE_REGISTER(nturt_fs, CONFIG_NTURT_SYS_LOG_LEVEL);
+
+/* macro ---------------------------------------------------------------------*/
+#define FSTAB_UNMOUNT(node_id)            \
+  do {                                    \
+    FS_FSTAB_DECLARE_ENTRY(node_id);      \
+    fs_unmount(&FS_FSTAB_ENTRY(node_id)); \
+  } while (0)
+
+/* static function declaration -----------------------------------------------*/
+static void shutdown_cb(void *user_data);
+
+/* static variable -----------------------------------------------------------*/
+SYS_SHUTDOWN_CALLBACK_DEFINE(shutdown_cb, NULL,
+                             CONFIG_NTURT_FS_SHUTDOWN_PRIORITY);
 
 /* function definition -------------------------------------------------------*/
 // copied from zephyr/subsys/logging/backends/log_backend_fs.c create_log_dir()
@@ -64,6 +82,15 @@ int fs_mkdir_p(const char *path) {
   }
 
   return rc;
+}
+
+/* static function definition ------------------------------------------------*/
+static void shutdown_cb(void *user_data) {
+  (void)user_data;
+
+#if DT_HAS_CHOSEN(nturt_fstab)
+  DT_FOREACH_CHILD_STATUS_OKAY_SEP(DT_CHOSEN(nturt_fstab), FSTAB_UNMOUNT, (;));
+#endif
 }
 
 #ifdef CONFIG_NTURT_FS_FAT_FS_HAS_RTC

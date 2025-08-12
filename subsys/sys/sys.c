@@ -11,7 +11,10 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/logging/log_ctrl.h>
+#include <zephyr/sys/iterable_sections.h>
+#include <zephyr/sys/poweroff.h>
 #include <zephyr/sys/reboot.h>
+#include <zephyr/sys/util.h>
 
 LOG_MODULE_REGISTER(nturt_sys, CONFIG_NTURT_SYS_LOG_LEVEL);
 
@@ -26,9 +29,11 @@ struct sys_ctx {
 };
 
 /* static function declaration -----------------------------------------------*/
+static void shutdown();
+static void reset();
+
 static int init();
 
-static void reset();
 static void reset_cb(struct k_timer *timer);
 
 /* static variable -----------------------------------------------------------*/
@@ -59,11 +64,24 @@ int sys_work_reschedule(struct k_work_delayable *dwork, k_timeout_t delay) {
   return k_work_reschedule_for_queue(&g_ctx.work_q, dwork, delay);
 }
 
+void sys_shutdown() {
+  LOG_INF("system shutdown");
+  shutdown();
+
+  if (IS_ENABLED(CONFIG_POWEROFF)) {
+    sys_poweroff();
+  } else {
+    while (true) {
+      // spin
+    }
+  }
+}
+
 void sys_reset() {
   k_timer_start(&reset_timer, RESET_TIMEOUT, K_FOREVER);
 
   LOG_INF("System reset");
-  log_panic();
+  shutdown();
 
   k_timer_stop(&reset_timer);
 
@@ -71,16 +89,12 @@ void sys_reset() {
 }
 
 /* static function definition ------------------------------------------------*/
-static int init() {
-  struct k_work_queue_config config = {
-      .name = "nturt_work_q",
-  };
+static void shutdown() {
+  STRUCT_SECTION_FOREACH(sys_shutdown_callback, cb) {
+    cb->handler(cb->user_data);
+  }
 
-  k_work_queue_init(&g_ctx.work_q);
-  k_work_queue_start(&g_ctx.work_q, nturt_work_q_stack,
-                     K_THREAD_STACK_SIZEOF(nturt_work_q_stack),
-                     CONFIG_NTURT_WORKQUEUE_THREAD_PRIORITY, &config);
-  return 0;
+  log_panic();
 }
 
 static void reset() {
@@ -99,6 +113,18 @@ static void reset() {
 #endif  // CONFIG_NTURT_SYS_REBOOT_SOUND
 
   sys_reboot(SYS_REBOOT_COLD);
+}
+
+static int init() {
+  struct k_work_queue_config config = {
+      .name = "nturt_work_q",
+  };
+
+  k_work_queue_init(&g_ctx.work_q);
+  k_work_queue_start(&g_ctx.work_q, nturt_work_q_stack,
+                     K_THREAD_STACK_SIZEOF(nturt_work_q_stack),
+                     CONFIG_NTURT_WORKQUEUE_THREAD_PRIORITY, &config);
+  return 0;
 }
 
 static void reset_cb(struct k_timer *timer) {

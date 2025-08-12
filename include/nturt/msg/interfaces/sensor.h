@@ -146,10 +146,10 @@
 
 /// @brief CSV header for @ref msg_sensor_wheel.
 #define CSV_PRImsg_sensor_wheel_header \
-  CSV_PRImsg_header_header ",%"                     \
-      CSV_PRImsg_4wheel_data_header(speed) ",%"     \
-      CSV_PRImsg_4wheel_data_header(torque) ",%"    \
-      CSV_PRImsg_4wheel_data_header(tire_temp) ",%" \
+  CSV_PRImsg_header_header ","                     \
+      CSV_PRImsg_4wheel_data_header(speed) ","     \
+      CSV_PRImsg_4wheel_data_header(torque) ","    \
+      CSV_PRImsg_4wheel_data_header(tire_temp) "," \
       CSV_PRImsg_4wheel_data_header(susp_travel)
 
 /// @brief Insert @ref msg_sensor_wheel CSV format string.

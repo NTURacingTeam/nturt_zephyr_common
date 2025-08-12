@@ -107,12 +107,12 @@
 
 /// @brief CSV header for @ref msg_ts_inv.
 #define CSV_PRImsg_ts_inv_header \
-  CSV_PRImsg_header_header ",%" \
-      CSV_PRImsg_4wheel_flags_header(status) ",%"    \
-      CSV_PRImsg_4wheel_data_header(volt) ",%"       \
-      CSV_PRImsg_4wheel_data_header(current) ",%"    \
-      CSV_PRImsg_4wheel_data_header(inv_temp) ",%"   \
-      CSV_PRImsg_4wheel_data_header(motor_temp) ",%" \
+  CSV_PRImsg_header_header "," \
+      CSV_PRImsg_4wheel_flags_header(status) ","    \
+      CSV_PRImsg_4wheel_data_header(volt) ","       \
+      CSV_PRImsg_4wheel_data_header(current) ","    \
+      CSV_PRImsg_4wheel_data_header(inv_temp) ","   \
+      CSV_PRImsg_4wheel_data_header(motor_temp) "," \
       CSV_PRImsg_4wheel_data_header(mcu_temp)
 
 /// @brief Insert @ref msg_ts_inv CSV format string.

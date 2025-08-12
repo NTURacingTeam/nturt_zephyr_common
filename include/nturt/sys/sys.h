@@ -16,12 +16,60 @@
 
 // zephyr includes
 #include <zephyr/kernel.h>
+#include <zephyr/sys/iterable_sections.h>
 
 /**
  * @addtogroup sys System
  * @brief Basic system support.
  * @{
  */
+
+/* macro ---------------------------------------------------------------------*/
+/**
+ * @brief Same as @ref SYS_SHUTDOWN_CALLBACK_DEFINE, but with a custom name for
+ * the callback.
+ */
+#define SYS_SHUTDOWN_CALLBACK_DEFINE_NAMED(_name, _handler, _user_data, \
+                                           _priority)                   \
+  static const STRUCT_SECTION_ITERABLE(                                 \
+      sys_shutdown_callback,                                            \
+      CONCAT(__sys_shutdown_handler_, _priority, _name)) = {            \
+      .handler = _handler,                                              \
+      .user_data = _user_data,                                          \
+  }
+
+/**
+ * @brief Define a shutdown callback.
+ *
+ * @param[in] handler Handler for shutting down.
+ * @param[in] user_data Pointer to custom data for the callback.
+ * @param[in] _priority Priority of the callback.
+ *
+ * @note Since the name of the callback is derived from the name of @p handler ,
+ * if the same handler is used for multiple callbacks,
+ * @ref SYS_SHUTDOWN_CALLBACK_DEFINE_NAMED can be used instead to prevent linker
+ * errors.
+ */
+#define SYS_SHUTDOWN_CALLBACK_DEFINE(handler, user_data, priority) \
+  SYS_SHUTDOWN_CALLBACK_DEFINE_NAMED(handler, handler, user_data, priority)
+
+/* type ----------------------------------------------------------------------*/
+/**
+ * @brief Shutdown handler type.
+ *
+ * @param[in,out] user_data Pointer to custom user data for the callback
+ * provided by @ref SYS_SHUTDOWN_CALLBACK_DEFINE.
+ */
+typedef void (*sys_shutdown_handler_t)(void *user_data);
+
+/// @brief Shutdown callback.
+struct sys_shutdown_callback {
+  /** Shutdown handler. */
+  sys_shutdown_handler_t handler;
+
+  /** User data for the callback functions. */
+  void *user_data;
+};
 
 /* function declaration ------------------------------------------------------*/
 /**
@@ -64,7 +112,13 @@ int sys_work_schedule(struct k_work_delayable *dwork, k_timeout_t delay);
 int sys_work_reschedule(struct k_work_delayable *dwork, k_timeout_t delay);
 
 /**
- * @brief Reset system.
+ * @brief Shutdown the system.
+ *
+ */
+void sys_shutdown();
+
+/**
+ * @brief Reset the system.
  *
  */
 void sys_reset();
