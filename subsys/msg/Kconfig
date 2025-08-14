@@ -2,6 +2,7 @@ menuconfig NTURT_MSG
 	bool "Inter-thread communication support"
 	depends on NTURT
 	select ZBUS
+	select ZBUS_CHANNEL_NAME
 
 if NTURT_MSG
 
@@ -27,32 +28,22 @@ config NTURT_MSG_SHELL
 	depends on NTURT_SHELL
 	default y
 	select CBPRINTF_FP_SUPPORT
-	select ZBUS_CHANNEL_NAME
 	select ZBUS_CHANNEL_PUBLISH_STATS
 	select ZBUS_RUNTIME_OBSERVERS
 
-config NTURT_MSG_LOGGING
+menuconfig NTURT_MSG_LOGGING
 	bool "Message logging support"
-	depends on FILE_SYSTEM
+	depends on NTURT_FS
 	default y
-	select ZBUS_MSG_SUBSCRIBER
+	select ZBUS_RUNTIME_OBSERVERS
 
 if NTURT_MSG_LOGGING
 
-config ZBUS_MSG_SUBSCRIBER_NET_BUF_POOL_SIZE
-	default 64
-
-config NTURT_MSG_LOGGING_THREAD_STACK_SIZE
-	int "Message logging thread stack size"
-	default 4096
+config NTURT_MSG_LOGGING_BUF_SIZE
+	int "Logging buffer size"
+	default 1024
 	help
-	  Stack size for the message logging thread.
-
-config NTURT_MSG_LOGGING_THREAD_PRIORITY
-	int "Message logging thread priority"
-	default 10
-	help
-	  Priority for the message logging thread.
+	  Size of the buffer used for logging messages in bytes.
 
 endif # NTURT_MSG_LOGGING
 
