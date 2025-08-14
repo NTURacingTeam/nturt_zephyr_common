@@ -1,6 +1,4 @@
-#define DT_DRV_COMPAT sensor_axis
-
-#include <zephyr/drivers/input/sensor_axis.h>
+#include "sensor_axis.h"
 
 // glibc includes
 #include <math.h>
@@ -18,7 +16,6 @@
 #include <zephyr/input/input.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-#include <zephyr/settings/settings.h>
 #include <zephyr/sys/__assert.h>
 #include <zephyr/sys/util.h>
 
@@ -33,74 +30,11 @@ LOG_MODULE_REGISTER(sensor_axis, CONFIG_INPUT_LOG_LEVEL);
 /// should be (1 - RANGE_HYSTERESIS) when out of range.
 #define RANGE_HYSTERESIS 10 / 100
 
-/* type ----------------------------------------------------------------------*/
-struct sensor_axis_sensor_data {
-  /**
-   * Current error value. Not protected by lock since only the sensor-axis
-   * thread will update it.
-   */
-  uint16_t error;
-
-  /** Lock to protect the following members and the underlying sensor. */
-  struct k_mutex lock;
-
-  /** Minimum input value. */
-  struct sensor_value in_min;
-
-  /** Maximum input value. */
-  struct sensor_value in_max;
-
-  /** Callback for raw sensor data. */
-  sensor_axis_sensor_raw_cb_t cb;
-
-  /** User data for the callback. */
-  void* user_data;
-};
-
-struct sensor_axis_sensor_config {
-  const struct device* sensor;
-  enum sensor_channel channel;
-  int32_t range_tolerance;
-};
-
-struct sensor_axis_channel_data {
-  uint16_t error;
-  int32_t prev_out;
-  int accum_error_time;
-};
-
-struct sensor_axis_channel_config {
-  size_t num_sensor;
-  const struct device** sensors;
-  int total_weight;
-  int* weights;
-  int32_t out_min;
-  int32_t out_max;
-  int deadzone_mode;
-  int deadzone_size;
-  int noise;
-  int dev_tolerance;
-  int poll_period;
-  int time_tolerance;
-  int time_tolerance_decay;
-};
-
-struct sensor_axis_data {
-  struct k_timer timer;
-  struct k_thread thread;
-  K_KERNEL_STACK_MEMBER(thread_stack,
-                        CONFIG_INPUT_SENSOR_AXIS_THREAD_STACK_SIZE);
-};
-
-struct sensor_axis_config {
-  size_t num_channel;
-  const struct device** channels;
-  uint16_t* axises;
-  int poll_period;
-};
-
 /* static function declaration -----------------------------------------------*/
 static int sensor_get_raw(const struct device* dev, struct sensor_value* val);
+
+static int sensor_axis_sensor_get_curr(const struct device* dev, int times,
+                                       k_timeout_t period, uint64_t* curr);
 
 /* function definition -------------------------------------------------------*/
 void sensor_axis_sensor_set_raw_cb(const struct device* dev,
@@ -150,14 +84,169 @@ void sensor_axis_sensor_max_set(const struct device* dev,
   k_mutex_unlock(&data->lock);
 }
 
+int sensor_axis_sensor_min_set_curr(const struct device* dev, int times,
+                                    k_timeout_t interval) {
+  uint64_t curr;
+  int ret = sensor_axis_sensor_get_curr(dev, times, interval, &curr);
+  if (ret < 0) {
+    return ret;
+  }
+
+  struct sensor_value val;
+  sensor_value_from_micro(&val, curr);
+  sensor_axis_sensor_min_set(dev, &val);
+
+  return 0;
+}
+
+int sensor_axis_sensor_max_set_curr(const struct device* dev, int times,
+                                    k_timeout_t interval) {
+  uint64_t curr;
+  int ret = sensor_axis_sensor_get_curr(dev, times, interval, &curr);
+  if (ret < 0) {
+    return ret;
+  }
+
+  struct sensor_value val;
+  sensor_value_from_micro(&val, curr);
+  sensor_axis_sensor_max_set(dev, &val);
+
+  return 0;
+}
+
+int sensor_axis_sensor_center_set_curr(const struct device* dev, int times,
+                                       k_timeout_t interval) {
+  struct sensor_axis_sensor_data* data = dev->data;
+
+  uint64_t curr;
+  int ret = sensor_axis_sensor_get_curr(dev, times, interval, &curr);
+  if (ret < 0) {
+    return ret;
+  }
+
+  k_mutex_lock(&data->lock, K_FOREVER);
+
+  int64_t range = (sensor_value_to_micro(&data->in_max) -
+                   sensor_value_to_micro(&data->in_min)) /
+                  2;
+  sensor_value_from_micro(&data->in_min, curr - range);
+  sensor_value_from_micro(&data->in_max, curr + range);
+
+  k_mutex_unlock(&data->lock);
+
+  return 0;
+}
+
+int sensor_axis_sensor_range_set_curr(const struct device* dev, int times,
+                                      k_timeout_t interval, bool is_min) {
+  struct sensor_axis_sensor_data* data = dev->data;
+
+  uint64_t curr;
+  int ret = sensor_axis_sensor_get_curr(dev, times, interval, &curr);
+  if (ret < 0) {
+    return ret;
+  }
+
+  k_mutex_lock(&data->lock, K_FOREVER);
+
+  int64_t center = (sensor_value_to_micro(&data->in_min) +
+                    sensor_value_to_micro(&data->in_max)) /
+                   2;
+  int64_t range = is_min ? center - curr : curr - center;
+  sensor_value_from_micro(&data->in_min, center - range);
+  sensor_value_from_micro(&data->in_max, center + range);
+
+  k_mutex_unlock(&data->lock);
+
+  return 0;
+}
+
+int sensor_axis_channel_min_set_curr(const struct device* dev, int times,
+                                     k_timeout_t interval) {
+  const struct sensor_axis_channel_config* config = dev->config;
+
+  for (int i = 0; i < config->num_sensor; i++) {
+    int ret =
+        sensor_axis_sensor_min_set_curr(config->sensors[i], times, interval);
+    if (ret < 0) {
+      return ret;
+    }
+  }
+
+  return 0;
+}
+
+int sensor_axis_channel_max_set_curr(const struct device* dev, int times,
+                                     k_timeout_t interval) {
+  const struct sensor_axis_channel_config* config = dev->config;
+
+  for (int i = 0; i < config->num_sensor; i++) {
+    int ret =
+        sensor_axis_sensor_max_set_curr(config->sensors[i], times, interval);
+    if (ret < 0) {
+      return ret;
+    }
+  }
+
+  return 0;
+}
+
+int sensor_axis_channel_center_set_curr(const struct device* dev, int times,
+                                        k_timeout_t interval) {
+  const struct sensor_axis_channel_config* config = dev->config;
+
+  for (int i = 0; i < config->num_sensor; i++) {
+    int ret =
+        sensor_axis_sensor_center_set_curr(config->sensors[i], times, interval);
+    if (ret < 0) {
+      return ret;
+    }
+  }
+
+  return 0;
+}
+
+int sensor_axis_channel_range_set_curr(const struct device* dev, int times,
+                                       k_timeout_t interval, bool is_min) {
+  const struct sensor_axis_channel_config* config = dev->config;
+
+  for (int i = 0; i < config->num_sensor; i++) {
+    int ret = sensor_axis_sensor_range_set_curr(config->sensors[i], times,
+                                                interval, is_min);
+    if (ret < 0) {
+      return ret;
+    }
+  }
+
+  return 0;
+}
+
+/* static function definition ------------------------------------------------*/
+static int sensor_get_raw(const struct device* dev, struct sensor_value* val) {
+  const struct sensor_axis_sensor_config* config = dev->config;
+
+  int ret;
+  ret = sensor_sample_fetch(config->sensor);
+  if (ret < 0) {
+    return ret;
+  }
+
+  ret = sensor_channel_get(config->sensor, config->channel, val);
+  return ret;
+}
+
 static int sensor_axis_sensor_get_curr(const struct device* dev, int times,
                                        k_timeout_t period, uint64_t* curr) {
+  struct sensor_axis_sensor_data* data = dev->data;
+
   int64_t accum = 0;
   struct sensor_value val;
 
-  int ret;
   for (int i = 0; i < times; i++) {
-    ret = sensor_get_raw(dev, &val);
+    k_mutex_lock(&data->lock, K_FOREVER);
+    int ret = sensor_get_raw(dev, &val);
+    k_mutex_unlock(&data->lock);
+
     if (ret < 0) {
       LOG_ERR("sensor_get_raw failed: %s", strerror(-ret));
       return ret;
@@ -173,109 +262,6 @@ static int sensor_axis_sensor_get_curr(const struct device* dev, int times,
   *curr = DIV_ROUND_CLOSEST(accum, times);
 
   return 0;
-}
-
-int sensor_axis_sensor_min_set_curr(const struct device* dev, int times,
-                                    k_timeout_t interval) {
-  struct sensor_axis_sensor_data* data = dev->data;
-
-  k_mutex_lock(&data->lock, K_FOREVER);
-
-  int ret = 0;
-  uint64_t curr;
-  ret = sensor_axis_sensor_get_curr(dev, times, interval, &curr);
-  if (ret < 0) {
-    goto err;
-  }
-
-  sensor_value_from_micro(&data->in_min, curr);
-
-err:
-  k_mutex_unlock(&data->lock);
-  return ret;
-}
-
-int sensor_axis_sensor_max_set_curr(const struct device* dev, int times,
-                                    k_timeout_t interval) {
-  struct sensor_axis_sensor_data* data = dev->data;
-
-  k_mutex_lock(&data->lock, K_FOREVER);
-
-  int ret = 0;
-  uint64_t curr;
-  ret = sensor_axis_sensor_get_curr(dev, times, interval, &curr);
-  if (ret < 0) {
-    goto err;
-  }
-
-  sensor_value_from_micro(&data->in_max, curr);
-
-err:
-  k_mutex_unlock(&data->lock);
-  return ret;
-}
-
-int sensor_axis_sensor_center_set_curr(const struct device* dev, int times,
-                                       k_timeout_t interval) {
-  struct sensor_axis_sensor_data* data = dev->data;
-
-  k_mutex_lock(&data->lock, K_FOREVER);
-
-  int ret = 0;
-  uint64_t curr;
-  ret = sensor_axis_sensor_get_curr(dev, times, interval, &curr);
-  if (ret < 0) {
-    goto err;
-  }
-
-  int64_t range = (sensor_value_to_micro(&data->in_max) -
-                   sensor_value_to_micro(&data->in_min)) /
-                  2;
-  sensor_value_from_micro(&data->in_min, curr - range);
-  sensor_value_from_micro(&data->in_max, curr + range);
-
-err:
-  k_mutex_unlock(&data->lock);
-  return ret;
-}
-
-int sensor_axis_sensor_range_set_curr(const struct device* dev, int times,
-                                      k_timeout_t interval, bool is_min) {
-  struct sensor_axis_sensor_data* data = dev->data;
-
-  k_mutex_lock(&data->lock, K_FOREVER);
-
-  int ret = 0;
-  uint64_t curr;
-  ret = sensor_axis_sensor_get_curr(dev, times, interval, &curr);
-  if (ret < 0) {
-    goto err;
-  }
-
-  int64_t center = (sensor_value_to_micro(&data->in_min) +
-                    sensor_value_to_micro(&data->in_max)) /
-                   2;
-  int64_t range = is_min ? center - curr : curr - center;
-  sensor_value_from_micro(&data->in_min, center - range);
-  sensor_value_from_micro(&data->in_max, center + range);
-
-err:
-  k_mutex_unlock(&data->lock);
-  return ret;
-}
-
-/* static function definition ------------------------------------------------*/
-static int sensor_get_raw(const struct device* dev, struct sensor_value* val) {
-  const struct sensor_axis_sensor_config* config = dev->config;
-
-  int ret;
-  ret = sensor_sample_fetch(config->sensor);
-  if (ret < 0) {
-    return ret;
-  }
-
-  ret = sensor_channel_get(config->sensor, config->channel, val);
-  return ret;
 }
 
 /**
@@ -683,93 +669,6 @@ static int sensor_axis_init(const struct device* dev) {
 
   return 0;
 }
-
-#ifdef CONFIG_INPUT_SENSOR_AXIS_SETTINGS
-
-/* macro ---------------------------------------------------------------------*/
-#define SENSOR_AXIS_SETTINGS_ROOT "sensor_axis"
-
-/* static function definition ------------------------------------------------*/
-static int calib_load(const char* key, size_t len_rd, settings_read_cb read_cb,
-                      void* cb_arg);
-
-/* static variable -----------------------------------------------------------*/
-SETTINGS_STATIC_HANDLER_DEFINE(sensor_axis, SENSOR_AXIS_SETTINGS_ROOT, NULL,
-                               calib_load, NULL, NULL);
-
-/* function definition -------------------------------------------------------*/
-int sensor_axis_sensor_calib_save(const struct device* dev) {
-  int ret;
-  struct sensor_value val;
-  char path[SETTINGS_MAX_NAME_LEN + 1];
-  ret = snprintf(path, sizeof(path), SENSOR_AXIS_SETTINGS_ROOT "/%s/in_min",
-                 dev->name);
-  __ASSERT(ret < SETTINGS_MAX_NAME_LEN, "Path too long");
-
-  sensor_axis_sensor_min_get(dev, &val);
-  ret = settings_save_one(path, &val, sizeof(struct sensor_value));
-  if (ret < 0) {
-    goto err_settings;
-  }
-
-  ret = snprintf(path, sizeof(path), SENSOR_AXIS_SETTINGS_ROOT "/%s/in_max",
-                 dev->name);
-  __ASSERT(ret < SETTINGS_MAX_NAME_LEN, "Path too long");
-
-  sensor_axis_sensor_max_get(dev, &val);
-  ret = settings_save_one(path, &val, sizeof(struct sensor_value));
-  if (ret < 0) {
-    goto err_settings;
-  }
-
-  return 0;
-
-err_settings:
-  LOG_ERR("settings_save failed: %d", ret);
-  return ret;
-}
-
-/* static function definition ------------------------------------------------*/
-static int calib_load(const char* key, size_t len, settings_read_cb read_cb,
-                      void* cb_arg) {
-  if (len != sizeof(struct sensor_value)) {
-    return -EINVAL;
-  }
-
-  ssize_t ret;
-  struct sensor_value val;
-  ret = read_cb(cb_arg, &val, sizeof(struct sensor_value));
-  if (ret < 0) {
-    return ret;
-  }
-
-  int nlen;
-  const char* next;
-  nlen = settings_name_next(key, &next);
-
-  char dev_name[Z_DEVICE_MAX_NAME_LEN];
-  memcpy(dev_name, key, nlen);
-  dev_name[nlen] = '\0';
-
-  const struct device* dev = device_get_binding(dev_name);
-  if (dev == NULL) {
-    LOG_ERR("Calibration restore failed: device %s not available", dev_name);
-    return -ENODEV;
-  }
-
-  key = next;
-  if (settings_name_steq(key, "in_min", &next) && !next) {
-    sensor_axis_sensor_min_set(dev, &val);
-  } else if (settings_name_steq(key, "in_max", &next) && !next) {
-    sensor_axis_sensor_max_set(dev, &val);
-  } else {
-    return -ENOENT;
-  }
-
-  return 0;
-}
-
-#endif  // CONFIG_INPUT_SENSOR_AXIS_SETTINGS
 
 #define SENSOR_AXIS_SENSOR_DEFINE(node_id)                                     \
   BUILD_ASSERT(DT_PROP_LEN(node_id, in_min) == 2,                              \

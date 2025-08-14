@@ -102,9 +102,7 @@
  * @param[in] data The 3D data.
  */
 #define CSV_PRImsg_3d_data_header(data) \
-  STRINGIFY(data)                       \
-  STRINGIFY(_x)                         \
-  "," STRINGIFY(data) STRINGIFY(_y) "," STRINGIFY(data) STRINGIFY(_z)
+  STRINGIFY(data) "_x," STRINGIFY(data) "_y," STRINGIFY(data) "_z"
 
 /// @brief Insert @ref msg_3d_data CSV format string.
 #define CSV_PRImsg_3d_data "f,%f,%f"
@@ -121,11 +119,9 @@
  *
  * @param[in] data The 4-wheel data.
  */
-#define CSV_PRImsg_4wheel_data_header(data)              \
-  STRINGIFY(data)                                        \
-  STRINGIFY(_fl)                                         \
-  "," STRINGIFY(data) STRINGIFY(_fr) "," STRINGIFY(data) \
-      STRINGIFY(_rl) "," STRINGIFY(data) STRINGIFY(_rr)
+#define CSV_PRImsg_4wheel_data_header(data) \
+  STRINGIFY(data)                           \
+  "_fl," STRINGIFY(data) "_fr," STRINGIFY(data) "_rl," STRINGIFY(data) "_rr"
 
 /// @brief Insert @ref msg_4wheel_data CSV format string.
 #define CSV_PRImsg_4wheel_data "f,%f,%f,%f"
@@ -142,10 +138,9 @@
  *
  * @param[in] data The 4-wheel flags.
  */
-#define CSV_PRImsg_4wheel_flags_header(data)      \
-  STRINGIFY(CONCAT(data, _fl))                    \
-  "," STRINGIFY(CONCAT(data, _fr)) "," STRINGIFY( \
-      CONCAT(data, _rl)) "," STRINGIFY(CONCAT(data, _rr))
+#define CSV_PRImsg_4wheel_flags_header(data) \
+  STRINGIFY(data)                            \
+  "_fl," STRINGIFY(data) "_fr," STRINGIFY(data) "_rl," STRINGIFY(data) "_rr"
 
 /// @brief Insert @ref msg_4wheel_flags CSV format string.
 #define CSV_PRImsg_4wheel_flags "u,%u,%u,%u"

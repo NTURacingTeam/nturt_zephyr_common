@@ -13,6 +13,10 @@
  * @{
  */
 
+/* macro ---------------------------------------------------------------------*/
+/// @brief Settings root path for sensor_axis.
+#define SENSOR_AXIS_SETTINGS_ROOT "sensor_axis"
+
 /* type ----------------------------------------------------------------------*/
 /**
  * @brief Sensor axis sensor raw callback type.
@@ -99,7 +103,7 @@ int sensor_axis_sensor_max_set_curr(const struct device* dev, int times,
 
 /**
  * @brief Use current sensor value as setpoint that will report center value.
- * Use with `sensor_axis_sensor_range_set_curr()` for setting the center point
+ * Use with @ref sensor_axis_sensor_range_set_curr for setting the center point
  * and the range.
  *
  * @param[in] dev The sensor to set the setpoint.
@@ -113,7 +117,7 @@ int sensor_axis_sensor_center_set_curr(const struct device* dev, int times,
 
 /**
  * @brief Use current sensor value as setpoint that will be used as range. Use
- * with `sensor_axis_sensor_center_set_curr()` for setting the center point and
+ * with @ref sensor_axis_sensor_center_set_curr for setting the center point and
  * the range.
  *
  * @param[in] dev The sensor to set the setpoint.
@@ -127,15 +131,64 @@ int sensor_axis_sensor_center_set_curr(const struct device* dev, int times,
 int sensor_axis_sensor_range_set_curr(const struct device* dev, int times,
                                       k_timeout_t interval, bool is_min);
 
+/**
+ * @brief Similar to @ref sensor_axis_sensor_min_set_curr but applies to all
+ * underlying sensors of a channel.
+ *
+ * @note It takes N times longer where N is the number of sensors of the
+ * channel.
+ */
+int sensor_axis_channel_min_set_curr(const struct device* dev, int times,
+                                     k_timeout_t interval);
+
+/**
+ * @brief Similar to @ref sensor_axis_sensor_max_set_curr but applies to all
+ * underlying sensors of a channel.
+ *
+ * @note It takes N times longer where N is the number of sensors of the
+ * channel.
+ */
+int sensor_axis_channel_max_set_curr(const struct device* dev, int times,
+                                     k_timeout_t interval);
+
+/**
+ * @brief Similar to @ref sensor_axis_sensor_center_set_curr but applies to all
+ * underlying sensors of a channel.
+ *
+ * @note It takes N times longer where N is the number of sensors of the
+ * channel.
+ */
+int sensor_axis_channel_center_set_curr(const struct device* dev, int times,
+                                        k_timeout_t interval);
+
+/**
+ * @brief Similar to @ref sensor_axis_sensor_range_set_curr but applies to all
+ * underlying sensors of a channel.
+ *
+ * @note It takes N times longer where N is the number of sensors of the
+ * channel.
+ */
+int sensor_axis_channel_range_set_curr(const struct device* dev, int times,
+                                       k_timeout_t interval, bool is_min);
+
 #ifdef CONFIG_INPUT_SENSOR_AXIS_SETTINGS
 
 /**
  * @brief Save sensor calibration data to settings.
  *
- * @param[in] dev The device to save the calibration data.
+ * @param[in] dev The sensor to save the calibration data.
  * @return 0 if successful, negative error number otherwise.
  */
 int sensor_axis_sensor_calib_save(const struct device* dev);
+
+/**
+ * @brief Similar to @ref sensor_axis_sensor_calib_save but applies to all
+ * underlying sensors of a channel.
+ *
+ * @param dev The channel to save the calibration data.
+ * @return int 0 if successful, negative error number otherwise.
+ */
+int sensor_axis_channel_calib_save(const struct device* dev);
 
 #endif  // CONFIG_INPUT_SENSOR_AXIS_SETTINGS
 

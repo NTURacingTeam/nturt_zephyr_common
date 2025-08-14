@@ -20,10 +20,14 @@
 LOG_MODULE_REGISTER(nturt_fs, CONFIG_NTURT_SYS_LOG_LEVEL);
 
 /* macro ---------------------------------------------------------------------*/
-#define FSTAB_UNMOUNT(node_id)            \
-  do {                                    \
-    FS_FSTAB_DECLARE_ENTRY(node_id);      \
-    fs_unmount(&FS_FSTAB_ENTRY(node_id)); \
+#define FSTAB_UNMOUNT(node_id)                                               \
+  do {                                                                       \
+    FS_FSTAB_DECLARE_ENTRY(node_id);                                         \
+    int ret = fs_unmount(&FS_FSTAB_ENTRY(node_id));                          \
+    if (ret < 0) {                                                           \
+      LOG_ERR("Failed to unmount %s: %s", FS_FSTAB_ENTRY(node_id).mnt_point, \
+              strerror(-ret));                                               \
+    }                                                                        \
   } while (0)
 
 /* static function declaration -----------------------------------------------*/
