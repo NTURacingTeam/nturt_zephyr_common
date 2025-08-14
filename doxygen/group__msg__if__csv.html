@@ -254,9 +254,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="common_8h.html">nturt/msg/interfaces/common.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  STRINGIFY(data)                       \</div>
-<div class="line">  STRINGIFY(_x)                         \</div>
-<div class="line">  <span class="stringliteral">&quot;,&quot;</span> STRINGIFY(data) STRINGIFY(_y) <span class="stringliteral">&quot;,&quot;</span> STRINGIFY(data) STRINGIFY(_z)</div>
+<b>Value:</b><div class="fragment"><div class="line">  STRINGIFY(data) <span class="stringliteral">&quot;_x,&quot;</span> STRINGIFY(data) <span class="stringliteral">&quot;_y,&quot;</span> STRINGIFY(data) <span class="stringliteral">&quot;_z&quot;</span></div>
 </div><!-- fragment -->
 <p>CSV header for <a class="el" href="unionmsg__3d__data.html">msg_3d_data</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -330,10 +328,8 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="common_8h.html">nturt/msg/interfaces/common.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  STRINGIFY(data)                                        \</div>
-<div class="line">  STRINGIFY(_fl)                                         \</div>
-<div class="line">  <span class="stringliteral">&quot;,&quot;</span> STRINGIFY(data) STRINGIFY(_fr) <span class="stringliteral">&quot;,&quot;</span> STRINGIFY(data) \</div>
-<div class="line">      STRINGIFY(_rl) <span class="stringliteral">&quot;,&quot;</span> STRINGIFY(data) STRINGIFY(_rr)</div>
+<b>Value:</b><div class="fragment"><div class="line">  STRINGIFY(data)                           \</div>
+<div class="line">  <span class="stringliteral">&quot;_fl,&quot;</span> STRINGIFY(data) <span class="stringliteral">&quot;_fr,&quot;</span> STRINGIFY(data) <span class="stringliteral">&quot;_rl,&quot;</span> STRINGIFY(data) <span class="stringliteral">&quot;_rr&quot;</span></div>
 </div><!-- fragment -->
 <p>CSV header for <a class="el" href="unionmsg__4wheel__data.html">msg_4wheel_data</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -407,9 +403,8 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="common_8h.html">nturt/msg/interfaces/common.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  STRINGIFY(CONCAT(data, _fl))                    \</div>
-<div class="line">  <span class="stringliteral">&quot;,&quot;</span> STRINGIFY(CONCAT(data, _fr)) <span class="stringliteral">&quot;,&quot;</span> STRINGIFY( \</div>
-<div class="line">      CONCAT(data, _rl)) <span class="stringliteral">&quot;,&quot;</span> STRINGIFY(CONCAT(data, _rr))</div>
+<b>Value:</b><div class="fragment"><div class="line">  STRINGIFY(data)                            \</div>
+<div class="line">  <span class="stringliteral">&quot;_fl,&quot;</span> STRINGIFY(data) <span class="stringliteral">&quot;_fr,&quot;</span> STRINGIFY(data) <span class="stringliteral">&quot;_rl,&quot;</span> STRINGIFY(data) <span class="stringliteral">&quot;_rr&quot;</span></div>
 </div><!-- fragment -->
 <p>CSV header for <a class="el" href="unionmsg__4wheel__flags.html">msg_4wheel_flags</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -490,7 +485,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Aug 7 2025 01:21:14 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Thu Aug 14 2025 06:38:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

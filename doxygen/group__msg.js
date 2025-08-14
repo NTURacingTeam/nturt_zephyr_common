@@ -15,10 +15,10 @@ var group__msg =
     [ "msg_csv_header_t", "group__msg.html#gaf805a81f58247de4ca462cb86ba0a525", null ],
     [ "msg_csv_write_t", "group__msg.html#ga8c2eb53e5a9603fad97a6559a8dc89e3", null ],
     [ "msg_print_t", "group__msg.html#gaea97a273001ced830cc059f78332caad", null ],
-    [ "is_msg_chan", "group__msg.html#ga7f450e3caa0947d3c62106cc456407cb", null ],
     [ "msg_chan_csv_header", "group__msg.html#ga88c0cd5d249c4d5007c9e3de4e01abb1", null ],
     [ "msg_chan_csv_write", "group__msg.html#ga4f9b11a2c2e146701386cb00040ac1d9", null ],
     [ "MSG_CHAN_DECLARE", "group__msg.html#gad1091f98fd581ebc22b3ed5036e2f220", null ],
     [ "MSG_CHAN_DECLARE", "group__msg.html#ga7bb769f1de6d91640b64981c9c65f86c", null ],
+    [ "msg_chan_is_from_msg", "group__msg.html#ga7105175610eb088a29c93d83e595ba19", null ],
     [ "msg_chan_print", "group__msg.html#gab04f9f5b6c72f995d5123da2fed991f2", null ]
 ];

@@ -109,6 +109,9 @@ $(function(){initNavTree('sys_8h.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">sys.h File Reference</div></div>
 </div><!--header-->
@@ -117,6 +120,8 @@ $(function(){initNavTree('sys_8h.html',''); initResizable(true); });
 <p>Basic system support.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;time.h&gt;</code><br />
+<code>#include &lt;zephyr/kernel.h&gt;</code><br />
+<code>#include &lt;zephyr/sys/iterable_sections.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for sys.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -124,16 +129,53 @@ $(function(){initNavTree('sys_8h.html',''); initResizable(true); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="sys_8h__incl.png" border="0" usemap="#anturt_2sys_2sys_8h" alt=""/></div>
 <map name="anturt_2sys_2sys_8h" id="anturt_2sys_2sys_8h">
-<area shape="rect" title="Basic system support." alt="" coords="5,5,123,31"/>
-<area shape="rect" title=" " alt="" coords="32,79,96,104"/>
-<area shape="poly" title=" " alt="" coords="67,31,67,65,61,65,61,31"/>
+<area shape="rect" title="Basic system support." alt="" coords="96,5,213,31"/>
+<area shape="rect" title=" " alt="" coords="5,86,69,111"/>
+<area shape="poly" title=" " alt="" coords="139,33,68,80,65,76,136,29"/>
+<area shape="rect" title=" " alt="" coords="93,86,216,111"/>
+<area shape="poly" title=" " alt="" coords="157,31,157,72,152,72,152,31"/>
+<area shape="rect" title=" " alt="" coords="240,79,387,119"/>
+<area shape="poly" title=" " alt="" coords="179,28,264,70,261,75,177,33"/>
 </map>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsys__shutdown__callback.html">sys_shutdown_callback</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shutdown callback.  <a href="structsys__shutdown__callback.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga3401655e6203441248ca3649bc91c3d4" id="r_ga3401655e6203441248ca3649bc91c3d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sys.html#ga3401655e6203441248ca3649bc91c3d4">SYS_SHUTDOWN_CALLBACK_DEFINE_NAMED</a>(_name,  _handler,  _user_data,  _priority)</td></tr>
+<tr class="memdesc:ga3401655e6203441248ca3649bc91c3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as <a class="el" href="group__sys.html#ga1d11304390c089933fcd4d03646d26bb">SYS_SHUTDOWN_CALLBACK_DEFINE</a>, but with a custom name for the callback.  <br /></td></tr>
+<tr class="separator:ga3401655e6203441248ca3649bc91c3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d11304390c089933fcd4d03646d26bb" id="r_ga1d11304390c089933fcd4d03646d26bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sys.html#ga1d11304390c089933fcd4d03646d26bb">SYS_SHUTDOWN_CALLBACK_DEFINE</a>(handler,  user_data,  priority)</td></tr>
+<tr class="memdesc:ga1d11304390c089933fcd4d03646d26bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a shutdown callback.  <br /></td></tr>
+<tr class="separator:ga1d11304390c089933fcd4d03646d26bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga1474d153870abb0b21427028c10e8aea" id="r_ga1474d153870abb0b21427028c10e8aea"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sys.html#ga1474d153870abb0b21427028c10e8aea">sys_shutdown_handler_t</a>) (void *user_data)</td></tr>
+<tr class="memdesc:ga1474d153870abb0b21427028c10e8aea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shutdown handler type.  <br /></td></tr>
+<tr class="separator:ga1474d153870abb0b21427028c10e8aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:gaa31ceef5251cd4c733d27ae254bc8332" id="r_gaa31ceef5251cd4c733d27ae254bc8332"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sys.html#gaa31ceef5251cd4c733d27ae254bc8332">sys_work_submit</a> (struct k_work *work)</td></tr>
+<tr class="memdesc:gaa31ceef5251cd4c733d27ae254bc8332"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit a work item to the system work queue.  <br /></td></tr>
+<tr class="separator:gaa31ceef5251cd4c733d27ae254bc8332"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96289f40eb2dfc15500c9defd87638c7" id="r_ga96289f40eb2dfc15500c9defd87638c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sys.html#ga96289f40eb2dfc15500c9defd87638c7">sys_work_schedule</a> (struct k_work_delayable *dwork, k_timeout_t delay)</td></tr>
+<tr class="memdesc:ga96289f40eb2dfc15500c9defd87638c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit an idle work item to the system work queue after a delay.  <br /></td></tr>
+<tr class="separator:ga96289f40eb2dfc15500c9defd87638c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga908db0a2fc07364ba92bcf312d9e7ee4" id="r_ga908db0a2fc07364ba92bcf312d9e7ee4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sys.html#ga908db0a2fc07364ba92bcf312d9e7ee4">sys_work_reschedule</a> (struct k_work_delayable *dwork, k_timeout_t delay)</td></tr>
+<tr class="memdesc:ga908db0a2fc07364ba92bcf312d9e7ee4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reschedule a work item to the system work queue after a delay.  <br /></td></tr>
+<tr class="separator:ga908db0a2fc07364ba92bcf312d9e7ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab947a3d81d282ec75217b14195a237aa" id="r_gab947a3d81d282ec75217b14195a237aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sys.html#gab947a3d81d282ec75217b14195a237aa">sys_shutdown</a> ()</td></tr>
+<tr class="memdesc:gab947a3d81d282ec75217b14195a237aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shutdown the system.  <br /></td></tr>
+<tr class="separator:gab947a3d81d282ec75217b14195a237aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab6b96b3e2ccb8160d8d45dd1d16810f7" id="r_gab6b96b3e2ccb8160d8d45dd1d16810f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sys.html#gab6b96b3e2ccb8160d8d45dd1d16810f7">sys_reset</a> ()</td></tr>
-<tr class="memdesc:gab6b96b3e2ccb8160d8d45dd1d16810f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset system.  <br /></td></tr>
+<tr class="memdesc:gab6b96b3e2ccb8160d8d45dd1d16810f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the system.  <br /></td></tr>
 <tr class="separator:gab6b96b3e2ccb8160d8d45dd1d16810f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga659a090d4105ea9244c19e1dfe4bf814" id="r_ga659a090d4105ea9244c19e1dfe4bf814"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sys.html#ga659a090d4105ea9244c19e1dfe4bf814">sys_set_time</a> (time_t time)</td></tr>
 <tr class="memdesc:ga659a090d4105ea9244c19e1dfe4bf814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set system time.  <br /></td></tr>
@@ -151,7 +193,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3b50b866d123226444b3aee8206a85f.html">nturt</a></li><li class="navelem"><a class="el" href="dir_325f2b8d42a416e6ec0025fc6c9d5abc.html">sys</a></li><li class="navelem"><a class="el" href="sys_8h.html">sys.h</a></li>
-    <li class="footer">Generated on Thu Aug 7 2025 01:21:14 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Thu Aug 14 2025 06:38:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

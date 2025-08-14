@@ -27,6 +27,7 @@ var annotated_dup =
     [ "sensor_tol", "structsensor__tol.html", "structsensor__tol" ],
     [ "states_callback", "structstates__callback.html", "structstates__callback" ],
     [ "states_trans_cmd_info", "structstates__trans__cmd__info.html", "structstates__trans__cmd__info" ],
+    [ "sys_shutdown_callback", "structsys__shutdown__callback.html", "structsys__shutdown__callback" ],
     [ "tm_data", "structtm__data.html", "structtm__data" ],
     [ "tm_group", "structtm__group.html", "structtm__group" ],
     [ "tm_group_data", "structtm__group__data.html", "structtm__group__data" ],

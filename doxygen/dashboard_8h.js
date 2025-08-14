@@ -1,5 +1,6 @@
 var dashboard_8h =
 [
+    [ "HOLD_MODIFY_INTERVAL", "group__dashboard.html#gaebff6bb2dc17b4d1e3cbaa5c288ecd70", null ],
     [ "LED_BLINK_PERIOD", "group__dashboard.html#gaf9178fd58788780a671684ae568dd366", null ],
     [ "LED_STRIP_LEN", "group__dashboard.html#ga847bd7bf6e43ab4eb22cc3fec2ad7b57", null ],
     [ "NUM_LED", "group__dashboard.html#gaf12d11b2a7bf6be75f23d7bcc3e3a80e", null ],

@@ -183,9 +183,9 @@ Typedefs</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:gad1091f98fd581ebc22b3ed5036e2f220" id="r_gad1091f98fd581ebc22b3ed5036e2f220"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad1091f98fd581ebc22b3ed5036e2f220">MSG_CHAN_DECLARE</a> (<a class="el" href="#ga9df39e3eba7bc2233e1a1797dede6101">MSG_LIST</a>)</td></tr>
 <tr class="separator:gad1091f98fd581ebc22b3ed5036e2f220"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f450e3caa0947d3c62106cc456407cb" id="r_ga7f450e3caa0947d3c62106cc456407cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga7f450e3caa0947d3c62106cc456407cb">is_msg_chan</a> (const struct zbus_channel *chan)</td></tr>
-<tr class="memdesc:ga7f450e3caa0947d3c62106cc456407cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the given zbus channel is a message channel.  <br /></td></tr>
-<tr class="separator:ga7f450e3caa0947d3c62106cc456407cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7105175610eb088a29c93d83e595ba19" id="r_ga7105175610eb088a29c93d83e595ba19"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga7105175610eb088a29c93d83e595ba19">msg_chan_is_from_msg</a> (const struct zbus_channel *chan)</td></tr>
+<tr class="memdesc:ga7105175610eb088a29c93d83e595ba19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the given zbus channel is a message channel.  <br /></td></tr>
+<tr class="separator:ga7105175610eb088a29c93d83e595ba19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab04f9f5b6c72f995d5123da2fed991f2" id="r_gab04f9f5b6c72f995d5123da2fed991f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab04f9f5b6c72f995d5123da2fed991f2">msg_chan_print</a> (const struct zbus_channel *chan, const void *data)</td></tr>
 <tr class="memdesc:gab04f9f5b6c72f995d5123da2fed991f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a message based on the channel.  <br /></td></tr>
 <tr class="separator:gab04f9f5b6c72f995d5123da2fed991f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -367,34 +367,6 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga7f450e3caa0947d3c62106cc456407cb" name="ga7f450e3caa0947d3c62106cc456407cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7f450e3caa0947d3c62106cc456407cb">&#9670;&#160;</a></span>is_msg_chan()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool is_msg_chan </td>
-          <td>(</td>
-          <td class="paramtype">const struct zbus_channel *</td>          <td class="paramname"><span class="paramname"><em>chan</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
-
-<p>Check if the given zbus channel is a message channel. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">chan</td><td>Zbus channel to check. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the channel is a message channel, false otherwise. </dd></dl>
-
-</div>
-</div>
 <a id="ga88c0cd5d249c4d5007c9e3de4e01abb1" name="ga88c0cd5d249c4d5007c9e3de4e01abb1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga88c0cd5d249c4d5007c9e3de4e01abb1">&#9670;&#160;</a></span>msg_chan_csv_header()</h2>
 
@@ -508,6 +480,34 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga7105175610eb088a29c93d83e595ba19" name="ga7105175610eb088a29c93d83e595ba19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7105175610eb088a29c93d83e595ba19">&#9670;&#160;</a></span>msg_chan_is_from_msg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool msg_chan_is_from_msg </td>
+          <td>(</td>
+          <td class="paramtype">const struct zbus_channel *</td>          <td class="paramname"><span class="paramname"><em>chan</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+
+<p>Check if the given zbus channel is a message channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chan</td><td>Zbus channel to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the channel is a message channel, false otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="gab04f9f5b6c72f995d5123da2fed991f2" name="gab04f9f5b6c72f995d5123da2fed991f2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab04f9f5b6c72f995d5123da2fed991f2">&#9670;&#160;</a></span>msg_chan_print()</h2>
 
@@ -546,7 +546,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Aug 7 2025 01:21:14 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Thu Aug 14 2025 06:38:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

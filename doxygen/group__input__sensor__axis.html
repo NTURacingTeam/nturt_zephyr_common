@@ -109,6 +109,7 @@ $(function(){initNavTree('group__input__sensor__axis.html',''); initResizable(tr
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Sensor axis API<div class="ingroups"><a class="el" href="group__io__interfaces.html">Device Driver APIs</a> &raquo; <a class="el" href="group__input__interface.html">Input Interface</a></div></div></div>
@@ -129,6 +130,12 @@ $(function(){initNavTree('group__input__sensor__axis.html',''); initResizable(tr
 </map>
 </div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga5658a218676bfa9c1dd8be4aad747172" id="r_ga5658a218676bfa9c1dd8be4aad747172"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga5658a218676bfa9c1dd8be4aad747172">SENSOR_AXIS_SETTINGS_ROOT</a>&#160;&#160;&#160;&quot;sensor_axis&quot;</td></tr>
+<tr class="memdesc:ga5658a218676bfa9c1dd8be4aad747172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Settings root path for sensor_axis.  <br /></td></tr>
+<tr class="separator:ga5658a218676bfa9c1dd8be4aad747172"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:gab4fa31f180de839ee7a9e8710d061be8" id="r_gab4fa31f180de839ee7a9e8710d061be8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab4fa31f180de839ee7a9e8710d061be8">sensor_axis_sensor_raw_cb_t</a>) (const struct device *dev, const struct sensor_value *val, void *user_data)</td></tr>
@@ -159,14 +166,45 @@ Functions</h2></td></tr>
 <tr class="memdesc:gae44c21d1867f8f873304745d655e5218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use current sensor value as setpoint that will report maximum value.  <br /></td></tr>
 <tr class="separator:gae44c21d1867f8f873304745d655e5218"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7aa958a8e63c8766ec9c85f8808dfec6" id="r_ga7aa958a8e63c8766ec9c85f8808dfec6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga7aa958a8e63c8766ec9c85f8808dfec6">sensor_axis_sensor_center_set_curr</a> (const struct device *dev, int times, k_timeout_t interval)</td></tr>
-<tr class="memdesc:ga7aa958a8e63c8766ec9c85f8808dfec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use current sensor value as setpoint that will report center value. Use with <code><a class="el" href="#ga8f2993c73590f2827d4dc1ee6a63fd99" title="Use current sensor value as setpoint that will be used as range. Use with sensor_axis_sensor_center_s...">sensor_axis_sensor_range_set_curr()</a></code> for setting the center point and the range.  <br /></td></tr>
+<tr class="memdesc:ga7aa958a8e63c8766ec9c85f8808dfec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use current sensor value as setpoint that will report center value. Use with <a class="el" href="#ga8f2993c73590f2827d4dc1ee6a63fd99">sensor_axis_sensor_range_set_curr</a> for setting the center point and the range.  <br /></td></tr>
 <tr class="separator:ga7aa958a8e63c8766ec9c85f8808dfec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8f2993c73590f2827d4dc1ee6a63fd99" id="r_ga8f2993c73590f2827d4dc1ee6a63fd99"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga8f2993c73590f2827d4dc1ee6a63fd99">sensor_axis_sensor_range_set_curr</a> (const struct device *dev, int times, k_timeout_t interval, bool is_min)</td></tr>
-<tr class="memdesc:ga8f2993c73590f2827d4dc1ee6a63fd99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use current sensor value as setpoint that will be used as range. Use with <code><a class="el" href="#ga7aa958a8e63c8766ec9c85f8808dfec6" title="Use current sensor value as setpoint that will report center value. Use with sensor_axis_sensor_range...">sensor_axis_sensor_center_set_curr()</a></code> for setting the center point and the range.  <br /></td></tr>
+<tr class="memdesc:ga8f2993c73590f2827d4dc1ee6a63fd99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use current sensor value as setpoint that will be used as range. Use with <a class="el" href="#ga7aa958a8e63c8766ec9c85f8808dfec6">sensor_axis_sensor_center_set_curr</a> for setting the center point and the range.  <br /></td></tr>
 <tr class="separator:ga8f2993c73590f2827d4dc1ee6a63fd99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa15612ba2e3febad45c6c54c8b22dc90" id="r_gaa15612ba2e3febad45c6c54c8b22dc90"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaa15612ba2e3febad45c6c54c8b22dc90">sensor_axis_channel_min_set_curr</a> (const struct device *dev, int times, k_timeout_t interval)</td></tr>
+<tr class="memdesc:gaa15612ba2e3febad45c6c54c8b22dc90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Similar to <a class="el" href="#ga19aff981269bb85027b3fe4cb5f779f3">sensor_axis_sensor_min_set_curr</a> but applies to all underlying sensors of a channel.  <br /></td></tr>
+<tr class="separator:gaa15612ba2e3febad45c6c54c8b22dc90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb21ea46f83465bee0fc943939728ddf" id="r_gabb21ea46f83465bee0fc943939728ddf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gabb21ea46f83465bee0fc943939728ddf">sensor_axis_channel_max_set_curr</a> (const struct device *dev, int times, k_timeout_t interval)</td></tr>
+<tr class="memdesc:gabb21ea46f83465bee0fc943939728ddf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Similar to <a class="el" href="#gae44c21d1867f8f873304745d655e5218">sensor_axis_sensor_max_set_curr</a> but applies to all underlying sensors of a channel.  <br /></td></tr>
+<tr class="separator:gabb21ea46f83465bee0fc943939728ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab73c1562208868102e39ac7f1dd317cd" id="r_gab73c1562208868102e39ac7f1dd317cd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab73c1562208868102e39ac7f1dd317cd">sensor_axis_channel_center_set_curr</a> (const struct device *dev, int times, k_timeout_t interval)</td></tr>
+<tr class="memdesc:gab73c1562208868102e39ac7f1dd317cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Similar to <a class="el" href="#ga7aa958a8e63c8766ec9c85f8808dfec6">sensor_axis_sensor_center_set_curr</a> but applies to all underlying sensors of a channel.  <br /></td></tr>
+<tr class="separator:gab73c1562208868102e39ac7f1dd317cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea7d1239fddf2fb3c5c90a7a5b9bbe24" id="r_gaea7d1239fddf2fb3c5c90a7a5b9bbe24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaea7d1239fddf2fb3c5c90a7a5b9bbe24">sensor_axis_channel_range_set_curr</a> (const struct device *dev, int times, k_timeout_t interval, bool is_min)</td></tr>
+<tr class="memdesc:gaea7d1239fddf2fb3c5c90a7a5b9bbe24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Similar to <a class="el" href="#ga8f2993c73590f2827d4dc1ee6a63fd99">sensor_axis_sensor_range_set_curr</a> but applies to all underlying sensors of a channel.  <br /></td></tr>
+<tr class="separator:gaea7d1239fddf2fb3c5c90a7a5b9bbe24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Sensor axis API  . </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga5658a218676bfa9c1dd8be4aad747172" name="ga5658a218676bfa9c1dd8be4aad747172"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5658a218676bfa9c1dd8be4aad747172">&#9670;&#160;</a></span>SENSOR_AXIS_SETTINGS_ROOT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SENSOR_AXIS_SETTINGS_ROOT&#160;&#160;&#160;&quot;sensor_axis&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="sensor__axis_8h.html">zephyr/drivers/input/sensor_axis.h</a>&gt;</code></p>
+
+<p>Settings root path for sensor_axis. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="gab4fa31f180de839ee7a9e8710d061be8" name="gab4fa31f180de839ee7a9e8710d061be8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab4fa31f180de839ee7a9e8710d061be8">&#9670;&#160;</a></span>sensor_axis_sensor_raw_cb_t</h2>
@@ -195,6 +233,135 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gab73c1562208868102e39ac7f1dd317cd" name="gab73c1562208868102e39ac7f1dd317cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab73c1562208868102e39ac7f1dd317cd">&#9670;&#160;</a></span>sensor_axis_channel_center_set_curr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sensor_axis_channel_center_set_curr </td>
+          <td>(</td>
+          <td class="paramtype">const struct device *</td>          <td class="paramname"><span class="paramname"><em>dev</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>times</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">k_timeout_t</td>          <td class="paramname"><span class="paramname"><em>interval</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="sensor__axis_8h.html">zephyr/drivers/input/sensor_axis.h</a>&gt;</code></p>
+
+<p>Similar to <a class="el" href="#ga7aa958a8e63c8766ec9c85f8808dfec6">sensor_axis_sensor_center_set_curr</a> but applies to all underlying sensors of a channel. </p>
+<dl class="section note"><dt>Note</dt><dd>It takes N times longer where N is the number of sensors of the channel. </dd></dl>
+
+</div>
+</div>
+<a id="gabb21ea46f83465bee0fc943939728ddf" name="gabb21ea46f83465bee0fc943939728ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb21ea46f83465bee0fc943939728ddf">&#9670;&#160;</a></span>sensor_axis_channel_max_set_curr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sensor_axis_channel_max_set_curr </td>
+          <td>(</td>
+          <td class="paramtype">const struct device *</td>          <td class="paramname"><span class="paramname"><em>dev</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>times</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">k_timeout_t</td>          <td class="paramname"><span class="paramname"><em>interval</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="sensor__axis_8h.html">zephyr/drivers/input/sensor_axis.h</a>&gt;</code></p>
+
+<p>Similar to <a class="el" href="#gae44c21d1867f8f873304745d655e5218">sensor_axis_sensor_max_set_curr</a> but applies to all underlying sensors of a channel. </p>
+<dl class="section note"><dt>Note</dt><dd>It takes N times longer where N is the number of sensors of the channel. </dd></dl>
+
+</div>
+</div>
+<a id="gaa15612ba2e3febad45c6c54c8b22dc90" name="gaa15612ba2e3febad45c6c54c8b22dc90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa15612ba2e3febad45c6c54c8b22dc90">&#9670;&#160;</a></span>sensor_axis_channel_min_set_curr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sensor_axis_channel_min_set_curr </td>
+          <td>(</td>
+          <td class="paramtype">const struct device *</td>          <td class="paramname"><span class="paramname"><em>dev</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>times</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">k_timeout_t</td>          <td class="paramname"><span class="paramname"><em>interval</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="sensor__axis_8h.html">zephyr/drivers/input/sensor_axis.h</a>&gt;</code></p>
+
+<p>Similar to <a class="el" href="#ga19aff981269bb85027b3fe4cb5f779f3">sensor_axis_sensor_min_set_curr</a> but applies to all underlying sensors of a channel. </p>
+<dl class="section note"><dt>Note</dt><dd>It takes N times longer where N is the number of sensors of the channel. </dd></dl>
+
+</div>
+</div>
+<a id="gaea7d1239fddf2fb3c5c90a7a5b9bbe24" name="gaea7d1239fddf2fb3c5c90a7a5b9bbe24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaea7d1239fddf2fb3c5c90a7a5b9bbe24">&#9670;&#160;</a></span>sensor_axis_channel_range_set_curr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sensor_axis_channel_range_set_curr </td>
+          <td>(</td>
+          <td class="paramtype">const struct device *</td>          <td class="paramname"><span class="paramname"><em>dev</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>times</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">k_timeout_t</td>          <td class="paramname"><span class="paramname"><em>interval</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>is_min</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="sensor__axis_8h.html">zephyr/drivers/input/sensor_axis.h</a>&gt;</code></p>
+
+<p>Similar to <a class="el" href="#ga8f2993c73590f2827d4dc1ee6a63fd99">sensor_axis_sensor_range_set_curr</a> but applies to all underlying sensors of a channel. </p>
+<dl class="section note"><dt>Note</dt><dd>It takes N times longer where N is the number of sensors of the channel. </dd></dl>
+
+</div>
+</div>
 <a id="ga7aa958a8e63c8766ec9c85f8808dfec6" name="ga7aa958a8e63c8766ec9c85f8808dfec6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga7aa958a8e63c8766ec9c85f8808dfec6">&#9670;&#160;</a></span>sensor_axis_sensor_center_set_curr()</h2>
 
@@ -221,7 +388,7 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="sensor__axis_8h.html">zephyr/drivers/input/sensor_axis.h</a>&gt;</code></p>
 
-<p>Use current sensor value as setpoint that will report center value. Use with <code><a class="el" href="#ga8f2993c73590f2827d4dc1ee6a63fd99" title="Use current sensor value as setpoint that will be used as range. Use with sensor_axis_sensor_center_s...">sensor_axis_sensor_range_set_curr()</a></code> for setting the center point and the range. </p>
+<p>Use current sensor value as setpoint that will report center value. Use with <a class="el" href="#ga8f2993c73590f2827d4dc1ee6a63fd99">sensor_axis_sensor_range_set_curr</a> for setting the center point and the range. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">dev</td><td>The sensor to set the setpoint. </td></tr>
@@ -471,7 +638,7 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="sensor__axis_8h.html">zephyr/drivers/input/sensor_axis.h</a>&gt;</code></p>
 
-<p>Use current sensor value as setpoint that will be used as range. Use with <code><a class="el" href="#ga7aa958a8e63c8766ec9c85f8808dfec6" title="Use current sensor value as setpoint that will report center value. Use with sensor_axis_sensor_range...">sensor_axis_sensor_center_set_curr()</a></code> for setting the center point and the range. </p>
+<p>Use current sensor value as setpoint that will be used as range. Use with <a class="el" href="#ga7aa958a8e63c8766ec9c85f8808dfec6">sensor_axis_sensor_center_set_curr</a> for setting the center point and the range. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">dev</td><td>The sensor to set the setpoint. </td></tr>
@@ -528,7 +695,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Aug 7 2025 01:21:14 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Thu Aug 14 2025 06:38:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

@@ -1,6 +1,11 @@
 var group__input__sensor__axis =
 [
+    [ "SENSOR_AXIS_SETTINGS_ROOT", "group__input__sensor__axis.html#ga5658a218676bfa9c1dd8be4aad747172", null ],
     [ "sensor_axis_sensor_raw_cb_t", "group__input__sensor__axis.html#gab4fa31f180de839ee7a9e8710d061be8", null ],
+    [ "sensor_axis_channel_center_set_curr", "group__input__sensor__axis.html#gab73c1562208868102e39ac7f1dd317cd", null ],
+    [ "sensor_axis_channel_max_set_curr", "group__input__sensor__axis.html#gabb21ea46f83465bee0fc943939728ddf", null ],
+    [ "sensor_axis_channel_min_set_curr", "group__input__sensor__axis.html#gaa15612ba2e3febad45c6c54c8b22dc90", null ],
+    [ "sensor_axis_channel_range_set_curr", "group__input__sensor__axis.html#gaea7d1239fddf2fb3c5c90a7a5b9bbe24", null ],
     [ "sensor_axis_sensor_center_set_curr", "group__input__sensor__axis.html#ga7aa958a8e63c8766ec9c85f8808dfec6", null ],
     [ "sensor_axis_sensor_max_get", "group__input__sensor__axis.html#ga49297d310611a3bd7aa044ccf88edccb", null ],
     [ "sensor_axis_sensor_max_set", "group__input__sensor__axis.html#ga5887c82933457e5292c8626d3fdb25de", null ],
