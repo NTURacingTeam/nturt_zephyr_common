@@ -89,7 +89,22 @@ static int err_list_cmd_handler(const struct shell *sh, size_t argc,
   shell_print(sh, "Registered errors:");
 
   STRUCT_SECTION_FOREACH(err, err) {
-    shell_print(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+    switch (err->flags & ERR_FLAG_SEV_MASK) {
+      case ERR_SEV_INFO:
+        shell_print(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+        break;
+
+      case ERR_SEV_WARN:
+        shell_warn(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+        break;
+
+      case ERR_SEV_FATAL:
+        shell_error(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+        break;
+
+      default:
+        break;
+    }
   }
 
   return 0;
@@ -109,7 +124,22 @@ static int err_get_cmd_handler(const struct shell *sh, size_t argc, char **argv,
       has_error = true;
     }
 
-    shell_print(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+    switch (err->flags & ERR_FLAG_SEV_MASK) {
+      case ERR_SEV_INFO:
+        shell_print(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+        break;
+
+      case ERR_SEV_WARN:
+        shell_warn(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+        break;
+
+      case ERR_SEV_FATAL:
+        shell_error(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+        break;
+
+      default:
+        break;
+    }
   }
 
   if (!has_error) {
