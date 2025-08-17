@@ -223,15 +223,21 @@ Macros</h2></td></tr>
 <tr class="memitem:ga0cfedaf4d86a4003e7f2e280082b0145" id="r_ga0cfedaf4d86a4003e7f2e280082b0145"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#ga0cfedaf4d86a4003e7f2e280082b0145">CANOPEN_TM_TO_TPDO_DEFINE</a>(_name,  _period,  _min_separation,  _watermark,  flag, ...)</td></tr>
 <tr class="memdesc:ga0cfedaf4d86a4003e7f2e280082b0145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a telemetry group that publishes data to TPDOs.  <br /></td></tr>
 <tr class="separator:ga0cfedaf4d86a4003e7f2e280082b0145"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c9c8fc94f42ea12390788affe7ec480" id="r_ga6c9c8fc94f42ea12390788affe7ec480"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#ga6c9c8fc94f42ea12390788affe7ec480">OD_AGG_DATA</a>(subidx,  type,  convert,  member)</td></tr>
-<tr class="memdesc:ga6c9c8fc94f42ea12390788affe7ec480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the data in an OD entry to be aggregated. Used in <a class="el" href="group__can__open.html#gaae9917646b976f5625f3fb7d9f82ccff">OD_AGG_ENTRY</a>.  <br /></td></tr>
-<tr class="separator:ga6c9c8fc94f42ea12390788affe7ec480"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae9917646b976f5625f3fb7d9f82ccff" id="r_gaae9917646b976f5625f3fb7d9f82ccff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#gaae9917646b976f5625f3fb7d9f82ccff">OD_AGG_ENTRY</a>(idx, ...)</td></tr>
-<tr class="memdesc:gaae9917646b976f5625f3fb7d9f82ccff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify an OD entry to be aggregated. Used in <a class="el" href="group__can__open.html#gabe3be84b5978e8b3ffaec3385ba26989">CANOPEN_OD_AGG_TO_MSG_DEFINE</a>.  <br /></td></tr>
-<tr class="separator:gaae9917646b976f5625f3fb7d9f82ccff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe3be84b5978e8b3ffaec3385ba26989" id="r_gabe3be84b5978e8b3ffaec3385ba26989"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#gabe3be84b5978e8b3ffaec3385ba26989">CANOPEN_OD_AGG_TO_MSG_DEFINE</a>(_name,  _init_val,  _period,  _min_separation,  _watermark,  _flag, ...)</td></tr>
-<tr class="memdesc:gabe3be84b5978e8b3ffaec3385ba26989"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a data aggregration for aggregating OD writes (PDO or SDO) to message <code>_name</code> .  <br /></td></tr>
-<tr class="separator:gabe3be84b5978e8b3ffaec3385ba26989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga129cd154f3861fb85cb966b6662d3a15" id="r_ga129cd154f3861fb85cb966b6662d3a15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#ga129cd154f3861fb85cb966b6662d3a15">OD_TO_AGG_DATA</a>(subidx,  type,  convert,  member)</td></tr>
+<tr class="memdesc:ga129cd154f3861fb85cb966b6662d3a15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the data in an OD entry to be aggregated. Used in <a class="el" href="group__can__open.html#ga9741ed191d86e3615cd53e8596ed94e3">OD_TO_MSG_ENTRY</a>.  <br /></td></tr>
+<tr class="separator:ga129cd154f3861fb85cb966b6662d3a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb39fdaf94aa616d1097235ed28bc062" id="r_gacb39fdaf94aa616d1097235ed28bc062"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#gacb39fdaf94aa616d1097235ed28bc062">CANOPEN_OD_TO_AGG_DEFINE</a>(_idx,  _agg,  _agg_type, ...)</td></tr>
+<tr class="memdesc:gacb39fdaf94aa616d1097235ed28bc062"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a mapping from OD writes (PDO or SDO) to updates of typed data aggregation.  <br /></td></tr>
+<tr class="separator:gacb39fdaf94aa616d1097235ed28bc062"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga595cdbc4dd84f101d1228ec0481f3447" id="r_ga595cdbc4dd84f101d1228ec0481f3447"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#ga595cdbc4dd84f101d1228ec0481f3447">OD_TO_MSG_DATA</a>(subidx,  type,  convert,  member)</td></tr>
+<tr class="memdesc:ga595cdbc4dd84f101d1228ec0481f3447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the data in an OD entry to be aggregated. Used in <a class="el" href="group__can__open.html#ga9741ed191d86e3615cd53e8596ed94e3">OD_TO_MSG_ENTRY</a>.  <br /></td></tr>
+<tr class="separator:ga595cdbc4dd84f101d1228ec0481f3447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9741ed191d86e3615cd53e8596ed94e3" id="r_ga9741ed191d86e3615cd53e8596ed94e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#ga9741ed191d86e3615cd53e8596ed94e3">OD_TO_MSG_ENTRY</a>(idx, ...)</td></tr>
+<tr class="memdesc:ga9741ed191d86e3615cd53e8596ed94e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify an OD entry to be aggregated. Used in <a class="el" href="group__can__open.html#gaa439874b95c6b56188a4c20050814dd5">CANOPEN_OD_TO_MSG_DEFINE</a>.  <br /></td></tr>
+<tr class="separator:ga9741ed191d86e3615cd53e8596ed94e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa439874b95c6b56188a4c20050814dd5" id="r_gaa439874b95c6b56188a4c20050814dd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#gaa439874b95c6b56188a4c20050814dd5">CANOPEN_OD_TO_MSG_DEFINE</a>(_msg,  _init_val,  _period,  _min_separation,  _watermark,  _flag, ...)</td></tr>
+<tr class="memdesc:gaa439874b95c6b56188a4c20050814dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a data aggregration for aggregating OD writes (PDO or SDO) to message <code>_msg</code> .  <br /></td></tr>
+<tr class="separator:gaa439874b95c6b56188a4c20050814dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -257,9 +263,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga91c9088c8c5966993b1d49dad1488b2b" id="r_ga91c9088c8c5966993b1d49dad1488b2b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#ga91c9088c8c5966993b1d49dad1488b2b">canopen_tm_publish</a> (uint32_t addr, const void *data, size_t size, void *user_data)</td></tr>
 <tr class="memdesc:ga91c9088c8c5966993b1d49dad1488b2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishing function for <a class="el" href="group__can__open.html#ga0cfedaf4d86a4003e7f2e280082b0145">CANOPEN_TM_TO_TPDO_DEFINE</a>.  <br /></td></tr>
 <tr class="separator:ga91c9088c8c5966993b1d49dad1488b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga92332a1f165d569b035943a25ae24d07" id="r_ga92332a1f165d569b035943a25ae24d07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__open.html#ga92332a1f165d569b035943a25ae24d07">canopen_od_agg_publish</a> (const void *data, void *user_data)</td></tr>
-<tr class="memdesc:ga92332a1f165d569b035943a25ae24d07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishing function for <a class="el" href="group__can__open.html#gabe3be84b5978e8b3ffaec3385ba26989">CANOPEN_OD_AGG_TO_MSG_DEFINE</a>.  <br /></td></tr>
-<tr class="separator:ga92332a1f165d569b035943a25ae24d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>CANopen support. </p>
@@ -273,7 +276,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3b50b866d123226444b3aee8206a85f.html">nturt</a></li><li class="navelem"><a class="el" href="dir_d5c852a901d04001315d99dfa4e754f8.html">canbus</a></li><li class="navelem"><a class="el" href="canopen_8h.html">canopen.h</a></li>
-    <li class="footer">Generated on Thu Aug 14 2025 06:38:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sun Aug 17 2025 07:57:30 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

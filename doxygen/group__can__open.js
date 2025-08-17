@@ -4,11 +4,13 @@ var group__can__open =
       [ "extension", "structcanopen__od__init.html#aeedea8ba6cbbce2c4b070881d989a63c", null ],
       [ "idx", "structcanopen__od__init.html#a22308c1cd8e6bf0cfb24bbffeed42c64", null ]
     ] ],
-    [ "CANOPEN_OD_AGG_TO_MSG_DEFINE", "group__can__open.html#gabe3be84b5978e8b3ffaec3385ba26989", null ],
+    [ "CANOPEN_OD_TO_AGG_DEFINE", "group__can__open.html#gacb39fdaf94aa616d1097235ed28bc062", null ],
+    [ "CANOPEN_OD_TO_MSG_DEFINE", "group__can__open.html#gaa439874b95c6b56188a4c20050814dd5", null ],
     [ "CANOPEN_TM_TO_TPDO_DEFINE", "group__can__open.html#ga0cfedaf4d86a4003e7f2e280082b0145", null ],
     [ "CO_EMC_NTURT", "group__can__open.html#ga6f1c2a4076a505e887d97d65c9d8f73d", null ],
-    [ "OD_AGG_DATA", "group__can__open.html#ga6c9c8fc94f42ea12390788affe7ec480", null ],
-    [ "OD_AGG_ENTRY", "group__can__open.html#gaae9917646b976f5625f3fb7d9f82ccff", null ],
+    [ "OD_TO_AGG_DATA", "group__can__open.html#ga129cd154f3861fb85cb966b6662d3a15", null ],
+    [ "OD_TO_MSG_DATA", "group__can__open.html#ga595cdbc4dd84f101d1228ec0481f3447", null ],
+    [ "OD_TO_MSG_ENTRY", "group__can__open.html#ga9741ed191d86e3615cd53e8596ed94e3", null ],
     [ "TPDO_DATA", "group__can__open.html#ga4ff5298fc8ec4ee5f9b1763d8821c304", null ],
     [ "canopen_node_id", "group__can__open.html#ga2a6b313a05938a780bb0f09b7969f960", [
       [ "NODE_ID_VCU", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a4e4a1d7fd2499f441c18ba3f8f19e8ff", null ],
@@ -21,6 +23,5 @@ var group__can__open =
       [ "NODE_ID_INV_RL", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a76c31be7e7f2b16a9f60b0d16bb2010f", null ],
       [ "NODE_ID_INV_RR", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a71a4cb07c678c6c0a44d157888233270", null ]
     ] ],
-    [ "canopen_od_agg_publish", "group__can__open.html#ga92332a1f165d569b035943a25ae24d07", null ],
     [ "canopen_tm_publish", "group__can__open.html#ga91c9088c8c5966993b1d49dad1488b2b", null ]
 ];

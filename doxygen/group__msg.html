@@ -157,6 +157,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga9df39e3eba7bc2233e1a1797dede6101" id="r_ga9df39e3eba7bc2233e1a1797dede6101"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga9df39e3eba7bc2233e1a1797dede6101">MSG_LIST</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__sensor.html#ga9dbf5ed2d27147d0244187e0418bc534">MSG_SENSOR_LIST</a>, <a class="el" href="group__msg__if__tractive.html#ga6c1a082289b5eb2de4e44b214d646990">MSG_TRACTIVE_LIST</a></td></tr>
 <tr class="memdesc:ga9df39e3eba7bc2233e1a1797dede6101"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all messages.  <br /></td></tr>
 <tr class="separator:ga9df39e3eba7bc2233e1a1797dede6101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac454051790798d987a7af9f7c6b59175" id="r_gac454051790798d987a7af9f7c6b59175"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gac454051790798d987a7af9f7c6b59175">MSG_AGG_TO_MSG_DEFINE</a>(name,  msg,  init_val,  period,  min_separation,  watermark,  flag, ...)</td></tr>
+<tr class="memdesc:gac454051790798d987a7af9f7c6b59175"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a data aggregration for aggregating into message <code>msg</code> . May be specified as <code>static</code> to limit the scope of the aggregation.  <br /></td></tr>
+<tr class="separator:gac454051790798d987a7af9f7c6b59175"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7833f3b978eb279a584d10629d33b35" id="r_gac7833f3b978eb279a584d10629d33b35"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gac7833f3b978eb279a584d10629d33b35">MSG_CHAN_DEFINE</a>(list)</td></tr>
 <tr class="memdesc:gac7833f3b978eb279a584d10629d33b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define one message channel for every message in <code>list</code> .  <br /></td></tr>
 <tr class="separator:gac7833f3b978eb279a584d10629d33b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,12 +198,88 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4f9b11a2c2e146701386cb00040ac1d9" id="r_ga4f9b11a2c2e146701386cb00040ac1d9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga4f9b11a2c2e146701386cb00040ac1d9">msg_chan_csv_write</a> (const struct zbus_channel *chan, const void *data, char *buf, size_t len)</td></tr>
 <tr class="memdesc:ga4f9b11a2c2e146701386cb00040ac1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a message in CSV format to a buffer based on the channel.  <br /></td></tr>
 <tr class="separator:ga4f9b11a2c2e146701386cb00040ac1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1af7c548ef368479c8ee90a75e842f33" id="r_ga1af7c548ef368479c8ee90a75e842f33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga1af7c548ef368479c8ee90a75e842f33">msg_agg_publish</a> (const void *data, void *user_data)</td></tr>
+<tr class="memdesc:ga1af7c548ef368479c8ee90a75e842f33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishing function for MSG_AGG_DEFINE.  <br /></td></tr>
+<tr class="separator:ga1af7c548ef368479c8ee90a75e842f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7bb769f1de6d91640b64981c9c65f86c" id="r_ga7bb769f1de6d91640b64981c9c65f86c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga7bb769f1de6d91640b64981c9c65f86c">MSG_CHAN_DECLARE</a> (<a class="el" href="#ga58512d178f5fc7ee151c4f96e70f3237">MSG_VCU_LIST</a>)</td></tr>
 <tr class="separator:ga7bb769f1de6d91640b64981c9c65f86c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Inter-thread communication support. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gac454051790798d987a7af9f7c6b59175" name="gac454051790798d987a7af9f7c6b59175"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac454051790798d987a7af9f7c6b59175">&#9670;&#160;</a></span>MSG_AGG_TO_MSG_DEFINE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MSG_AGG_TO_MSG_DEFINE</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>msg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>init_val</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>period</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>min_separation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>watermark</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>flag</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__agg.html#ga190039420aa8359fcdb561d53cdc8522">AGG_TYPED_DEFINE</a>(name, <span class="keyword">struct</span> msg, init_val, period, min_separation,        \</div>
+<div class="line">                   watermark, flag, <a class="code hl_function" href="#ga1af7c548ef368479c8ee90a75e842f33">msg_agg_publish</a>, (<span class="keywordtype">void</span> *)&amp;_MSG_CHAN(msg), \</div>
+<div class="line">                   __VA_ARGS__);</div>
+<div class="ttc" id="agroup__msg__agg_html_ga190039420aa8359fcdb561d53cdc8522"><div class="ttname"><a href="group__msg__agg.html#ga190039420aa8359fcdb561d53cdc8522">AGG_TYPED_DEFINE</a></div><div class="ttdeci">#define AGG_TYPED_DEFINE(_name, _type, _init_val, _period, _min_separation, _watermark, _flag, _publish, _user_data,...)</div><div class="ttdoc">Define a data aggregation named _name to monitor the update of members within a data type....</div><div class="ttdef"><b>Definition</b> aggregation.h:153</div></div>
+<div class="ttc" id="agroup__msg_html_ga1af7c548ef368479c8ee90a75e842f33"><div class="ttname"><a href="#ga1af7c548ef368479c8ee90a75e842f33">msg_agg_publish</a></div><div class="ttdeci">void msg_agg_publish(const void *data, void *user_data)</div><div class="ttdoc">Publishing function for MSG_AGG_DEFINE.</div></div>
+</div><!-- fragment -->
+<p>Define a data aggregration for aggregating into message <code>msg</code> . May be specified as <code>static</code> to limit the scope of the aggregation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name of the aggregation. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Message to aggregate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">init_val</td><td>Initial value of the message, must be a specified by <a class="el" href="group__msg__agg.html#ga97f8513bff45f367cc05447c1403cf06">AGG_DATA_INIT</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">period</td><td>Period of data publishing. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">min_separation</td><td>Minimum separation time between two data publishing. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">watermark</td><td>Watermark to wait for late-arriving members. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">flag</td><td>Flag of the aggregation. The same ones and rules as <code>flag</code> in <a class="el" href="group__msg__agg.html#gacea980b7e48de0678a3a8d7c60829f4a">AGG_DEFINE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>Members of <code>msg</code> to be monitored, must be specified by <a class="el" href="group__msg__agg.html#ga784151f612f43be94fabff2a822ec4cb">AGG_MEMBER</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga47d681092061e9234aaef9901abae107" name="ga47d681092061e9234aaef9901abae107"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga47d681092061e9234aaef9901abae107">&#9670;&#160;</a></span>MSG_CHAN_DECLARE</h2>
 
@@ -367,6 +446,32 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga1af7c548ef368479c8ee90a75e842f33" name="ga1af7c548ef368479c8ee90a75e842f33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1af7c548ef368479c8ee90a75e842f33">&#9670;&#160;</a></span>msg_agg_publish()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void msg_agg_publish </td>
+          <td>(</td>
+          <td class="paramtype">const void *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>user_data</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
+
+<p>Publishing function for MSG_AGG_DEFINE. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Internal use only. </dd></dl>
+
+</div>
+</div>
 <a id="ga88c0cd5d249c4d5007c9e3de4e01abb1" name="ga88c0cd5d249c4d5007c9e3de4e01abb1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga88c0cd5d249c4d5007c9e3de4e01abb1">&#9670;&#160;</a></span>msg_chan_csv_header()</h2>
 
@@ -546,7 +651,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Aug 14 2025 06:38:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sun Aug 17 2025 07:57:30 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

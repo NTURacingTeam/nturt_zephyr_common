@@ -1,5 +1,8 @@
 var NAVTREEINDEX3 =
 {
+"structsensor__tol.html#ab9191418023b027be4343d9b7d9b18fc":[3,0,24,0],
+"structsensor__tol.html#ac078154c2acef0a6228296db3e3c008b":[3,0,24,2],
+"structstates__callback.html":[2,2,1,1],
 "structstates__callback.html#a05107fc684d2eca044d387dc97976682":[2,2,1,1,0],
 "structstates__callback.html#a8d8a4f1375b6913cbd5631a85ed4452c":[2,2,1,1,1],
 "structstates__callback.html#aee14ce7ac0679339453baa0ae4c40dd9":[2,2,1,1,2],

@@ -216,6 +216,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga9df39e3eba7bc2233e1a1797dede6101" id="r_ga9df39e3eba7bc2233e1a1797dede6101"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg.html#ga9df39e3eba7bc2233e1a1797dede6101">MSG_LIST</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__sensor.html#ga9dbf5ed2d27147d0244187e0418bc534">MSG_SENSOR_LIST</a>, <a class="el" href="group__msg__if__tractive.html#ga6c1a082289b5eb2de4e44b214d646990">MSG_TRACTIVE_LIST</a></td></tr>
 <tr class="memdesc:ga9df39e3eba7bc2233e1a1797dede6101"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all messages.  <br /></td></tr>
 <tr class="separator:ga9df39e3eba7bc2233e1a1797dede6101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac454051790798d987a7af9f7c6b59175" id="r_gac454051790798d987a7af9f7c6b59175"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg.html#gac454051790798d987a7af9f7c6b59175">MSG_AGG_TO_MSG_DEFINE</a>(name,  msg,  init_val,  period,  min_separation,  watermark,  flag, ...)</td></tr>
+<tr class="memdesc:gac454051790798d987a7af9f7c6b59175"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a data aggregration for aggregating into message <code>msg</code> . May be specified as <code>static</code> to limit the scope of the aggregation.  <br /></td></tr>
+<tr class="separator:gac454051790798d987a7af9f7c6b59175"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7833f3b978eb279a584d10629d33b35" id="r_gac7833f3b978eb279a584d10629d33b35"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg.html#gac7833f3b978eb279a584d10629d33b35">MSG_CHAN_DEFINE</a>(list)</td></tr>
 <tr class="memdesc:gac7833f3b978eb279a584d10629d33b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define one message channel for every message in <code>list</code> .  <br /></td></tr>
 <tr class="separator:gac7833f3b978eb279a584d10629d33b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,6 +254,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4f9b11a2c2e146701386cb00040ac1d9" id="r_ga4f9b11a2c2e146701386cb00040ac1d9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg.html#ga4f9b11a2c2e146701386cb00040ac1d9">msg_chan_csv_write</a> (const struct zbus_channel *chan, const void *data, char *buf, size_t len)</td></tr>
 <tr class="memdesc:ga4f9b11a2c2e146701386cb00040ac1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a message in CSV format to a buffer based on the channel.  <br /></td></tr>
 <tr class="separator:ga4f9b11a2c2e146701386cb00040ac1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1af7c548ef368479c8ee90a75e842f33" id="r_ga1af7c548ef368479c8ee90a75e842f33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__msg.html#ga1af7c548ef368479c8ee90a75e842f33">msg_agg_publish</a> (const void *data, void *user_data)</td></tr>
+<tr class="memdesc:ga1af7c548ef368479c8ee90a75e842f33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishing function for MSG_AGG_DEFINE.  <br /></td></tr>
+<tr class="separator:ga1af7c548ef368479c8ee90a75e842f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Inter-thread communication support. </p>
@@ -264,7 +270,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3b50b866d123226444b3aee8206a85f.html">nturt</a></li><li class="navelem"><a class="el" href="dir_781bc3555bf44cc5a84c2c8cff350a9e.html">msg</a></li><li class="navelem"><a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">msg.h</a></li>
-    <li class="footer">Generated on Thu Aug 14 2025 06:38:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sun Aug 17 2025 07:57:30 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>
