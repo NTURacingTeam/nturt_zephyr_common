@@ -164,7 +164,7 @@ struct msg_header {
    * Timestamp when the msg is generated as attained by
    * `k_ticks_to_ns_floor64(k_uptime_ticks())`. Same convention as sensor
    * drivers. When `CONFIG_NTURT_RTC` is enabled, should be derived from
-   * `clock_gettime()` with `CLOCK_REALTIME`.
+   * `sys_clock_gettime()` with `CLOCK_REALTIME`.
    */
   uint64_t timestamp_ns;
 };
@@ -192,16 +192,16 @@ union msg_4wheel_data {
   float values[4];
 
   struct {
-    /** Front left wheel data */
+    /** Front left wheel data. */
     float fl;
 
-    /** Front right wheel data */
+    /** Front right wheel data. */
     float fr;
 
-    /** Rear left wheel data */
+    /** Rear left wheel data. */
     float rl;
 
-    /** Rear right wheel data */
+    /** Rear right wheel data. */
     float rr;
   };
 };

@@ -65,3 +65,16 @@ void msg_header_init(struct msg_header *header) {
     header->timestamp_ns = k_ticks_to_ns_floor64(k_uptime_ticks());
   }
 }
+
+void msg_agg_publish(const void *data, void *user_data) {
+  const struct zbus_channel *chan = user_data;
+
+  struct msg_header *header = (struct msg_header *)data;
+  msg_header_init(header);
+
+  int ret;
+  ret = zbus_chan_pub(chan, header, K_MSEC(5));
+  if (ret < 0) {
+    LOG_ERR("Failed to publish data: %s", strerror(-ret));
+  }
+}

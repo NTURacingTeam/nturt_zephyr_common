@@ -101,9 +101,78 @@
                   flag, canopen_tm_publish, NULL,                              \
                   FOR_EACH(_TO_TPDO_GROUP_DATA, (, ), __VA_ARGS__))
 
+#define _OD_TO_AGG_WRITE(idx) CONCAT(__od_to_agg_write_, idx)
+
 /**
  * @brief Specify the data in an OD entry to be aggregated. Used
- * in @ref OD_AGG_ENTRY.
+ * in @ref OD_TO_MSG_ENTRY.
+ *
+ * @param[in] subidx Subindex of the data in the OD entry. If the entry is of
+ * type `VAR`, this must be 0.
+ * @param[in] type Type of the data.
+ * @param[in] convert Function to convert the raw data into physical data, which
+ * is useful if the raw data have different scale or offset. If no conversion is
+ * needed, use Zephyr `IDENTITY`.
+ * @param[in] member Member of typed data aggregation to update.
+ */
+#define OD_TO_AGG_DATA(subidx, type, convert, member) \
+  (subidx, type, convert, member)
+
+#define _OD_TO_AGG_DATA_SUBIDX(data) GET_ARG_N(1, __DEBRACKET data)
+#define _OD_TO_AGG_DATA_TYPE(data) GET_ARG_N(2, __DEBRACKET data)
+#define _OD_TO_AGG_DATA_CONVERT(data) GET_ARG_N(3, __DEBRACKET data)
+#define _OD_TO_AGG_DATA_MEMBER(data) GET_ARG_N(4, __DEBRACKET data)
+
+#define _OD_TO_AGG_WRITE_CASE(data, agg)                                     \
+  case _OD_TO_AGG_DATA_SUBIDX(data): {                                       \
+    _OD_TO_AGG_DATA_TYPE(data) __buf;                                        \
+    memcpy(&__buf, stream->dataOrig, stream->dataLength);                    \
+                                                                             \
+    AGG_TYPED_UPDATE(                                                        \
+        GET_ARG_N(1, __DEBRACKET agg), GET_ARG_N(2, __DEBRACKET agg),        \
+        _OD_TO_AGG_DATA_MEMBER(data), _OD_TO_AGG_DATA_CONVERT(data)(__buf)); \
+  } break
+
+/**
+ * @brief Define a mapping from OD writes (PDO or SDO) to updates of typed data
+ * aggregation.
+ *
+ * @param[in] _idx Index of the OD entry.
+ * @param[in] ... Data to be aggregated, must be specified by @ref
+ * OD_TO_AGG_DATA.
+ */
+#define CANOPEN_OD_TO_AGG_DEFINE(_idx, _agg, _agg_type, ...)                 \
+  static ODR_t _OD_TO_AGG_WRITE(_idx)(OD_stream_t * stream, const void *buf, \
+                                      OD_size_t size,                        \
+                                      OD_size_t *size_written) {             \
+    ODR_t ret = OD_writeOriginal(stream, buf, size, size_written);           \
+    if (ret != ODR_OK) {                                                     \
+      return ret;                                                            \
+    }                                                                        \
+                                                                             \
+    switch (stream->subIndex) {                                              \
+      FOR_EACH_FIXED_ARG(_OD_TO_AGG_WRITE_CASE, (;), (_agg, _agg_type),      \
+                         __VA_ARGS__);                                       \
+                                                                             \
+      default:                                                               \
+        break;                                                               \
+    }                                                                        \
+                                                                             \
+    return ODR_OK;                                                           \
+  }                                                                          \
+                                                                             \
+  STRUCT_SECTION_ITERABLE(canopen_od_init, _OD_INIT(_idx)) = {               \
+      .idx = _idx,                                                           \
+      .extension =                                                           \
+          {                                                                  \
+              .read = OD_readOriginal,                                       \
+              .write = _OD_TO_AGG_WRITE(_idx),                               \
+          },                                                                 \
+  }
+
+/**
+ * @brief Specify the data in an OD entry to be aggregated. Used
+ * in @ref OD_TO_MSG_ENTRY.
  *
  * @param[in] subidx Subindex of the data in the OD entry. If the entry is of
  * type `VAR`, this must be 0.
@@ -115,78 +184,80 @@
  * be updated to when the OD data is received, must be specified by
  * @ref AGG_MEMBER.
  */
-#define OD_AGG_DATA(subidx, type, convert, member) \
+#define OD_TO_MSG_DATA(subidx, type, convert, member) \
   (subidx, type, convert, member)
 
-#define _OD_AGG_DATA_SUBIDX(data) GET_ARG_N(1, __DEBRACKET data)
-#define _OD_AGG_DATA_TYPE(data) GET_ARG_N(2, __DEBRACKET data)
-#define _OD_AGG_DATA_CONVERT(data) GET_ARG_N(3, __DEBRACKET data)
-#define _OD_AGG_DATA_MEMBER(data) GET_ARG_N(4, __DEBRACKET data)
+#define _OD_TO_MSG_DATA_SUBIDX(data) GET_ARG_N(1, __DEBRACKET data)
+#define _OD_TO_MSG_DATA_TYPE(data) GET_ARG_N(2, __DEBRACKET data)
+#define _OD_TO_MSG_DATA_CONVERT(data) GET_ARG_N(3, __DEBRACKET data)
+#define _OD_TO_MSG_DATA_MEMBER(data) GET_ARG_N(4, __DEBRACKET data)
 
 /**
  * @brief Specify an OD entry to be aggregated. Used in
- * @ref CANOPEN_OD_AGG_TO_MSG_DEFINE.
+ * @ref CANOPEN_OD_TO_MSG_DEFINE.
  *
  * @param[in] idx Index of the OD entry.
- * @param[in] ... Data to be aggregated, must be specified by @ref OD_AGG_DATA.
+ * @param[in] ... Data to be aggregated, must be specified by @ref
+ * OD_TO_MSG_DATA.
  */
-#define OD_AGG_ENTRY(idx, ...) (idx, __VA_ARGS__)
+#define OD_TO_MSG_ENTRY(idx, ...) (idx, __VA_ARGS__)
 
-#define _OD_AGG_ENTRY_IDX(entry) GET_ARG_N(1, __DEBRACKET entry)
-#define _OD_AGG_ENTRY_DATA(entry) GET_ARGS_LESS_N(1, __DEBRACKET entry)
+#define _OD_TO_MSG_ENTRY_IDX(entry) GET_ARG_N(1, __DEBRACKET entry)
+#define _OD_TO_MSG_ENTRY_DATA(entry) GET_ARGS_LESS_N(1, __DEBRACKET entry)
 
-#define __OD_AGG_MEMBERS(...) FOR_EACH(_OD_AGG_ENTRY_DATA, (, ), __VA_ARGS__)
-#define _OD_AGG_MEMBERS(...) \
-  FOR_EACH(_OD_AGG_DATA_MEMBER, (, ), __OD_AGG_MEMBERS(__VA_ARGS__))
+#define __OD_TO_MSG_MEMBERS(...) \
+  FOR_EACH(_OD_TO_MSG_ENTRY_DATA, (, ), __VA_ARGS__)
+#define _OD_TO_MSG_MEMBERS(...) \
+  FOR_EACH(_OD_TO_MSG_DATA_MEMBER, (, ), __OD_TO_MSG_MEMBERS(__VA_ARGS__))
 
-#define _OD_AGG_NAME(name) CONCAT(__od_agg_, name)
-#define _OD_AGG_WRITE(name) CONCAT(__od_write_, _OD_AGG_NAME(name))
+#define _OD_TO_MSG_AGG(msg) CONCAT(__od_to_msg_agg_, msg)
+#define _OD_TO_MSG_WRITE(idx) CONCAT(__od_to_msg_write_, idx)
 
-#define _OD_WRITE_CASE(data, name)                                  \
-  case _OD_AGG_DATA_SUBIDX(data): {                                 \
-    _OD_AGG_DATA_TYPE(data) __buf;                                  \
-    memcpy(&__buf, stream->dataOrig, stream->dataLength);           \
-                                                                    \
-    AGG_TYPED_UPDATE(&_OD_AGG_NAME(name), struct name,              \
-                     _AGG_MEMBER_MEMBER(_OD_AGG_DATA_MEMBER(data)), \
-                     _OD_AGG_DATA_CONVERT(data)(__buf));            \
+#define _OD_TO_MSG_WRITE_CASE(data, msg)                               \
+  case _OD_TO_MSG_DATA_SUBIDX(data): {                                 \
+    _OD_TO_MSG_DATA_TYPE(data) __buf;                                  \
+    memcpy(&__buf, stream->dataOrig, stream->dataLength);              \
+                                                                       \
+    AGG_TYPED_UPDATE(&_OD_TO_MSG_AGG(msg), struct msg,                 \
+                     _AGG_MEMBER_MEMBER(_OD_TO_MSG_DATA_MEMBER(data)), \
+                     _OD_TO_MSG_DATA_CONVERT(data)(__buf));            \
   } break
 
-#define _OD_AGG_WRITE_DEFINE(entry, name)                          \
-  static ODR_t _OD_AGG_WRITE(_OD_AGG_ENTRY_IDX(entry))(            \
-      OD_stream_t * stream, const void *buf, OD_size_t size,       \
-      OD_size_t *size_written) {                                   \
-    ODR_t ret = OD_writeOriginal(stream, buf, size, size_written); \
-    if (ret != ODR_OK) {                                           \
-      return ret;                                                  \
-    }                                                              \
-                                                                   \
-    switch (stream->subIndex) {                                    \
-      N_FOR_EACH_FIXED_ARG(_OD_WRITE_CASE, (;), name,              \
-                           _OD_AGG_ENTRY_DATA(entry));             \
-                                                                   \
-      default:                                                     \
-        break;                                                     \
-    }                                                              \
-                                                                   \
-    return ODR_OK;                                                 \
-  }                                                                \
-                                                                   \
-  STRUCT_SECTION_ITERABLE(canopen_od_init,                         \
-                          _OD_INIT(_OD_AGG_ENTRY_IDX(entry))) = {  \
-      .idx = _OD_AGG_ENTRY_IDX(entry),                             \
-      .extension =                                                 \
-          {                                                        \
-              .read = OD_readOriginal,                             \
-              .write = _OD_AGG_WRITE(_OD_AGG_ENTRY_IDX(entry)),    \
-          },                                                       \
+#define _OD_TO_MSG_WRITE_DEFINE(entry, msg)                           \
+  static ODR_t _OD_TO_MSG_WRITE(_OD_TO_MSG_ENTRY_IDX(entry))(         \
+      OD_stream_t * stream, const void *buf, OD_size_t size,          \
+      OD_size_t *size_written) {                                      \
+    ODR_t ret = OD_writeOriginal(stream, buf, size, size_written);    \
+    if (ret != ODR_OK) {                                              \
+      return ret;                                                     \
+    }                                                                 \
+                                                                      \
+    switch (stream->subIndex) {                                       \
+      FOR_EACH_FIXED_ARG(_OD_TO_MSG_WRITE_CASE, (;), msg,             \
+                         _OD_TO_MSG_ENTRY_DATA(entry));               \
+                                                                      \
+      default:                                                        \
+        break;                                                        \
+    }                                                                 \
+                                                                      \
+    return ODR_OK;                                                    \
+  }                                                                   \
+                                                                      \
+  STRUCT_SECTION_ITERABLE(canopen_od_init,                            \
+                          _OD_INIT(_OD_TO_MSG_ENTRY_IDX(entry))) = {  \
+      .idx = _OD_TO_MSG_ENTRY_IDX(entry),                             \
+      .extension =                                                    \
+          {                                                           \
+              .read = OD_readOriginal,                                \
+              .write = _OD_TO_MSG_WRITE(_OD_TO_MSG_ENTRY_IDX(entry)), \
+          },                                                          \
   }
 
 /**
  * @brief Define a data aggregration for aggregating OD writes (PDO or SDO) to
- * message @p _name .
+ * message @p _msg .
  *
- * @param[in] _name Name of the message.
+ * @param[in] _msg Message to aggregate.
  * @param[in] _init_val Initial value of the message, must be a specified by
  * @ref AGG_DATA_INIT.
  * @param[in] _period Period of data publishing.
@@ -196,15 +267,15 @@
  * @param[in] _flag Flag of the aggregation. The same ones and rules as @p flag
  * in @ref AGG_DEFINE.
  * @param[in] ... OD entries to be aggregated, must be specified by
- * @ref OD_AGG_ENTRY.
+ * @ref OD_TO_MSG_ENTRY.
  */
-#define CANOPEN_OD_AGG_TO_MSG_DEFINE(_name, _init_val, _period,                \
-                                     _min_separation, _watermark, _flag, ...)  \
-  AGG_TYPED_DEFINE(_OD_AGG_NAME(_name), struct _name, _init_val, _period,      \
-                   _min_separation, _watermark, _flag, canopen_od_agg_publish, \
-                   (void *)&_MSG_CHAN(_name), _OD_AGG_MEMBERS(__VA_ARGS__));   \
-                                                                               \
-  FOR_EACH_FIXED_ARG(_OD_AGG_WRITE_DEFINE, (;), _name, __VA_ARGS__);
+#define CANOPEN_OD_TO_MSG_DEFINE(_msg, _init_val, _period, _min_separation, \
+                                 _watermark, _flag, ...)                    \
+  MSG_AGG_TO_MSG_DEFINE(_OD_TO_MSG_AGG(_msg), _msg, _init_val, _period,     \
+                        _min_separation, _watermark, _flag,                 \
+                        _OD_TO_MSG_MEMBERS(__VA_ARGS__));                   \
+                                                                            \
+  N_FOR_EACH_FIXED_ARG(_OD_TO_MSG_WRITE_DEFINE, (;), _msg, __VA_ARGS__);
 
 /* type ----------------------------------------------------------------------*/
 /// @brief CANopen node ID.
@@ -240,12 +311,6 @@ struct canopen_od_init {
  */
 void canopen_tm_publish(uint32_t addr, const void *data, size_t size,
                         void *user_data);
-/**
- * @brief Publishing function for @ref CANOPEN_OD_AGG_TO_MSG_DEFINE.
- *
- * @warning Internal use only.
- */
-void canopen_od_agg_publish(const void *data, void *user_data);
 
 /**
  * @} // can_open

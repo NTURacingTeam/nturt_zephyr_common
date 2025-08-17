@@ -11,7 +11,7 @@
 
 /* static function declaration -----------------------------------------------*/
 static int msg_stats_cmd_handler(const struct shell *sh, size_t argc,
-                                     char **argv, void *data);
+                                 char **argv, void *data);
 
 /* static variable -----------------------------------------------------------*/
 SHELL_STATIC_SUBCMD_SET_CREATE(canopen_error_cmd,
@@ -32,7 +32,7 @@ SHELL_CMD_REGISTER(canopen, &canopen_cmd,
 
 /* static function definition ------------------------------------------------*/
 static int msg_stats_cmd_handler(const struct shell *sh, size_t argc,
-                                     char **argv, void *data) {
+                                 char **argv, void *data) {
   (void)argc;
   (void)argv;
   (void)data;
@@ -41,19 +41,18 @@ static int msg_stats_cmd_handler(const struct shell *sh, size_t argc,
   for (int i = 0; i < CONFIG_CANOPENNODE_EM_ERR_STATUS_BITS_COUNT; i++) {
     if (CO_isError(CO->em, i)) {
       if (!has_error) {
-        shell_fprintf(sh, SHELL_NORMAL,
-                      "Currently set errors (error register: 0x%X): 0x%X",
-                      CO_getErrorRegister(CO->em), i);
+        shell_print(sh, "Currently set errors (error register: 0x%X): 0x%X",
+                    CO_getErrorRegister(CO->em), i);
         has_error = true;
 
       } else {
-        shell_fprintf(sh, SHELL_NORMAL, ", 0x%X", i);
+        shell_print(sh, ", 0x%X", i);
       }
     }
   }
 
   if (has_error) {
-    shell_fprintf(sh, SHELL_NORMAL, "\n");
+    shell_print(sh, "\n");
 
   } else {
     shell_print(sh, "No errors are currently set");

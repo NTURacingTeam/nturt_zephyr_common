@@ -41,7 +41,7 @@ if NTURT_MSG_LOGGING
 
 config NTURT_MSG_LOGGING_BUF_SIZE
 	int "Logging buffer size"
-	default 1024
+	default 4096
 	help
 	  Size of the buffer used for logging messages in bytes.
 

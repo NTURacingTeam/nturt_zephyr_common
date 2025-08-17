@@ -38,6 +38,30 @@
 #define MSG_LIST MSG_SENSOR_LIST, MSG_TRACTIVE_LIST
 
 #define _MSG_CHAN(msg) CONCAT(msg, _chan)
+
+/**
+ * @brief Define a data aggregration for aggregating into message @p msg .
+ * May be specified as `static` to limit the scope of the aggregation.
+ *
+ * @param[in] name Name of the aggregation.
+ * @param[in] msg Message to aggregate.
+ * @param[in] init_val Initial value of the message, must be a specified by
+ * @ref AGG_DATA_INIT.
+ * @param[in] period Period of data publishing.
+ * @param[in] min_separation Minimum separation time between two data
+ * publishing.
+ * @param[in] watermark Watermark to wait for late-arriving members.
+ * @param[in] flag Flag of the aggregation. The same ones and rules as @p flag
+ * in @ref AGG_DEFINE.
+ * @param[in] ... Members of @p msg to be monitored, must be specified by
+ * @ref AGG_MEMBER.
+ */
+#define MSG_AGG_TO_MSG_DEFINE(name, msg, init_val, period, min_separation,    \
+                              watermark, flag, ...)                           \
+  AGG_TYPED_DEFINE(name, struct msg, init_val, period, min_separation,        \
+                   watermark, flag, msg_agg_publish, (void *)&_MSG_CHAN(msg), \
+                   __VA_ARGS__);
+
 #define _MSG_PRINT(msg) CONCAT(__msg_print_, msg)
 #define _MSG_CSV_HEADER(msg) CONCAT(__msg_csv_header_, msg)
 #define _MSG_CSV_WRITE(msg) CONCAT(__msg_csv_write_, msg)
@@ -180,6 +204,13 @@ const char *msg_chan_csv_header(const struct zbus_channel *chan);
  */
 int msg_chan_csv_write(const struct zbus_channel *chan, const void *data,
                        char *buf, size_t len);
+
+/**
+ * @brief Publishing function for @ref MSG_AGG_DEFINE.
+ *
+ * @warning Internal use only.
+ */
+void msg_agg_publish(const void *data, void *user_data);
 
 /**
  * @} // msg

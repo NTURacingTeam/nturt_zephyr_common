@@ -51,21 +51,6 @@ void canopen_tm_publish(uint32_t addr, const void *data, size_t size,
 }
 #endif  // CONFIG_NTURT_CANOPEN_TM
 
-#ifdef CONFIG_NTURT_CANOPEN_MSG
-void canopen_od_agg_publish(const void *data, void *user_data) {
-  const struct zbus_channel *chan = user_data;
-
-  struct msg_header *header = (struct msg_header *)data;
-  msg_header_init(header);
-
-  int ret;
-  ret = zbus_chan_pub(chan, header, K_MSEC(5));
-  if (ret < 0) {
-    LOG_ERR("Failed to publish data: %s", strerror(-ret));
-  }
-}
-#endif  // CONFIG_NTURT_CANOPEN_MSG
-
 /* static function definition ------------------------------------------------*/
 static int od_init() {
   // Currently TPDOs may define multiple `canopen_od_init` fo the same entry,

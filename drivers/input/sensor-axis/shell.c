@@ -163,9 +163,9 @@ SHELL_CMD_REGISTER(sensor_axis, &sensor_axis_cmd,
 static void shell_print_sensor_value(const struct shell* sh,
                                      const struct sensor_value* val) {
   if (val->val2 >= 0) {
-    shell_fprintf(sh, SHELL_NORMAL, "%d.%06d", val->val1, val->val2);
+    shell_print(sh, "%d.%06d", val->val1, val->val2);
   } else {
-    shell_fprintf(sh, SHELL_NORMAL, "%d.%06d", val->val1, -val->val2);
+    shell_print(sh, "%d.%06d", val->val1, -val->val2);
   }
 }
 
@@ -284,14 +284,14 @@ static int sensor_axis_channel_list_cmd_handler(const struct shell* sh,
     return -ENOENT;
   }
 
-  shell_fprintf(sh, SHELL_NORMAL, "Sensors in %s:", dev->name);
+  shell_print(sh, "Sensors in %s:", dev->name);
 
   const struct sensor_axis_channel_config* config = dev->config;
   for (int i = 0; i < config->num_sensor; i++) {
-    shell_fprintf(sh, SHELL_NORMAL, " %s", config->sensors[i]->name);
+    shell_print(sh, " %s", config->sensors[i]->name);
   }
 
-  shell_fprintf(sh, SHELL_NORMAL, "\n");
+  shell_print(sh, "\n");
 
   return 0;
 }
@@ -362,16 +362,16 @@ static int sensor_axis_sensor_calib_get_cmd_handler(const struct shell* sh,
   if (!strcmp(argv[2], "min")) {
     sensor_axis_sensor_min_get(dev, &val);
 
-    shell_fprintf(sh, SHELL_NORMAL, "%s min value: ", dev->name);
+    shell_print(sh, "%s min value: ", dev->name);
     shell_print_sensor_value(sh, &val);
-    shell_fprintf(sh, SHELL_NORMAL, "\n");
+    shell_print(sh, "\n");
 
   } else if (!strcmp(argv[2], "max")) {
     sensor_axis_sensor_max_get(dev, &val);
 
-    shell_fprintf(sh, SHELL_NORMAL, "%s max value: ", dev->name);
+    shell_print(sh, "%s max value: ", dev->name);
     shell_print_sensor_value(sh, &val);
-    shell_fprintf(sh, SHELL_NORMAL, "\n");
+    shell_print(sh, "\n");
 
   } else {
     shell_error(sh, "Invalid command: %s", argv[2]);

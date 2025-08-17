@@ -256,18 +256,20 @@ static void logging_work(struct k_work *work) {
   struct msg_chan_data *chan_data = zbus_chan_user_data(chan);
   struct msg_logging *logging = &chan_data->logging;
 
-  char buf[512];
-  buf[0] = '\n';
+  if (logging->is_logging) {
+    char buf[512];
+    buf[0] = '\n';
 
-  int size = msg_chan_csv_write(chan, packet->data, buf + 1, sizeof(buf) - 1);
-  if (size >= sizeof(buf) - 1) {
-    LOG_ERR("msg_chan_csv_write(%s) failed: buffer too small",
-            zbus_chan_name(chan));
-    return;
+    int size = msg_chan_csv_write(chan, packet->data, buf + 1, sizeof(buf) - 1);
+    if (size >= sizeof(buf) - 1) {
+      LOG_ERR("msg_chan_csv_write(%s) failed: buffer too small",
+              zbus_chan_name(chan));
+      return;
+    }
+
+    fs_write(&logging->file, buf, size + 1);
+    fs_sync(&logging->file);
   }
-
-  fs_write(&logging->file, buf, size + 1);
-  fs_sync(&logging->file);
 
   mpsc_pbuf_free(&ctx->mpsc_pbuf, _packet);
 

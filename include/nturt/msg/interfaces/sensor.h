@@ -273,7 +273,7 @@ struct msg_sensor_wheel {
 
   /**
    * Suspension travel. Postive for compression, negative for expansion.
-   * Unit: m.
+   * Unit: m
    */
   union msg_4wheel_data susp_travel;
 };
