@@ -413,13 +413,24 @@ static int channel_error_update(const struct device* dev, uint16_t error,
   struct sensor_axis_channel_data* data = dev->data;
   const struct sensor_axis_channel_config* config = dev->config;
 
-  int ret2;
-  if (error != INPUT_ERROR_NONE && data->error == INPUT_ERROR_NONE) {
+  if (error != INPUT_ERROR_NONE &&
+      data->accum_error_time < config->time_tolerance) {
     data->accum_error_time = MIN(data->accum_error_time + config->poll_period,
                                  config->time_tolerance);
     LOG_DBG("Channel %s accumulated error time increases to %d ms", dev->name,
             data->accum_error_time);
 
+  } else if (error == INPUT_ERROR_NONE && data->accum_error_time > 0) {
+    data->accum_error_time =
+        MAX(data->accum_error_time -
+                config->time_tolerance * config->time_tolerance_decay / 100,
+            0);
+    LOG_DBG("Channel %s accumulated error time decreases to %d ms", dev->name,
+            data->accum_error_time);
+  }
+
+  int ret2;
+  if (error != INPUT_ERROR_NONE && data->error == INPUT_ERROR_NONE) {
     if (data->accum_error_time >= config->time_tolerance) {
       ret2 = input_report(dev, INPUT_EV_ERROR, error, true, true, K_NO_WAIT);
       if (ret2 < 0) {
@@ -433,13 +444,6 @@ static int channel_error_update(const struct device* dev, uint16_t error,
     }
 
   } else if (error == INPUT_ERROR_NONE && data->error != INPUT_ERROR_NONE) {
-    data->accum_error_time =
-        MAX(data->accum_error_time -
-                config->time_tolerance * config->time_tolerance_decay / 100,
-            0);
-    LOG_DBG("Channel %s accumulated error time decreases to %d ms", dev->name,
-            data->accum_error_time);
-
     if (data->accum_error_time == 0) {
       ret2 = input_report(dev, INPUT_EV_ERROR, error, false, true, K_NO_WAIT);
       if (ret2 < 0) {
