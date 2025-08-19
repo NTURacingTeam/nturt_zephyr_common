@@ -281,6 +281,7 @@
 /// @brief CANopen node ID.
 enum canopen_node_id {
   NODE_ID_VCU = 0x01,
+  NODE_ID_SENSORS = 0x02,
 
   NODE_ID_RPI = 0x04,
 

@@ -23,15 +23,7 @@ config NTURT_MSG_MAX_SIZE
 	  Maximum size of a message used to create buffers of the right size.
 	  Increase when appropriate.
 
-config NTURT_MSG_SHELL
-	bool "Message shell support"
-	depends on NTURT_SHELL
-	default y
-	select CBPRINTF_FP_SUPPORT
-	select ZBUS_CHANNEL_PUBLISH_STATS
-	select ZBUS_RUNTIME_OBSERVERS
-
-menuconfig NTURT_MSG_LOGGING
+config NTURT_MSG_LOGGING
 	bool "Message logging support"
 	depends on NTURT_FS
 	default y
@@ -46,5 +38,13 @@ config NTURT_MSG_LOGGING_BUF_SIZE
 	  Size of the buffer used for logging messages in bytes.
 
 endif # NTURT_MSG_LOGGING
+
+config NTURT_MSG_SHELL
+	bool "Message shell support"
+	depends on NTURT_SHELL
+	default y
+	select CBPRINTF_FP_SUPPORT
+	select ZBUS_CHANNEL_PUBLISH_STATS
+	select ZBUS_RUNTIME_OBSERVERS
 
 endif # NTURT_MSG

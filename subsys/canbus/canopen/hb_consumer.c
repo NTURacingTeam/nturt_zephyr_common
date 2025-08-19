@@ -35,6 +35,8 @@ SYS_INIT(init, APPLICATION, CONFIG_NTURT_CANOPEN_INIT_PRIORITY);
 
 ERR_DEFINE(hb_vcu, ERR_CODE_HB_VCU, ERR_SEV_FATAL,
            "VCU not operational or heartbeat lost");
+ERR_DEFINE(hb_sensors, ERR_CODE_HB_SENSORS, ERR_SEV_FATAL,
+           "Sensor box not operational or heartbeat lost");
 ERR_DEFINE(hb_rpi, ERR_CODE_HB_RPI, ERR_SEV_WARN,
            "Raspberry Pi not operational or heartbeat lost");
 ERR_DEFINE(hb_imu, ERR_CODE_HB_IMU, ERR_SEV_FATAL,

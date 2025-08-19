@@ -55,10 +55,10 @@
       (double)((data).bse1), (double)((data).bse2)
 
 /// @brief Insert @ref msg_sensor_wheel printf format string.
-#define PRImsg_sensor_wheel                                  \
-  PRImsg_header "\n\r\tspeed (rpm): %" PRImsg_4wheel_data    \
-                "\n\r\ttorque (Nm): %" PRImsg_4wheel_data    \
-                "\n\r\ttire temp (°C): %" PRImsg_4wheel_data \
+#define PRImsg_sensor_wheel                                     \
+  PRImsg_header "\n\r\tspeed (RPM): %" PRImsg_4wheel_data       \
+                "\n\r\ttorque (Nm): %" PRImsg_4wheel_data       \
+                "\n\r\ttire temp (deg C): %" PRImsg_4wheel_data \
                 "\n\r\tsuspension travel (m): %" PRImsg_4wheel_data
 
 /**
@@ -88,14 +88,18 @@
       PRImsg_3d_data_arg((data).gyro), PRImsg_3d_data_arg((data).orient)
 
 /// @brief Insert @ref msg_sensor_gps printf format string.
-#define PRImsg_sensor_gps PRImsg_header "\n\r\tTODO"
+#define PRImsg_sensor_gps           \
+  PRImsg_header                     \
+      "\n\r\tlongitude (deg): %.7f" \
+      "\n\r\tlatitude (deg): %.7f"
 
 /**
  * @brief Insert @ref msg_sensor_gps arguments to printf format.
  *
  * @param[in] data The GPS sensor data.
  */
-#define PRImsg_sensor_gps_arg(data) PRImsg_header_arg((data).header)
+#define PRImsg_sensor_gps_arg(data) \
+  PRImsg_header_arg((data).header), (data).longitude, (data).latitude
 
 /// @brief Insert @ref msg_sensor_pow printf format string.
 #define PRImsg_sensor_pow           \
@@ -191,17 +195,19 @@
       CSV_PRImsg_3d_data_arg((data).orient)
 
 /// @brief CSV header for @ref msg_sensor_gps.
-#define CSV_PRImsg_sensor_gps_header CSV_PRImsg_header_header ",TODO"
+#define CSV_PRImsg_sensor_gps_header \
+  CSV_PRImsg_header_header ",longitude,latitude"
 
 /// @brief Insert @ref msg_sensor_gps CSV format string.
-#define CSV_PRImsg_sensor_gps CSV_PRImsg_header ",TODO"
+#define CSV_PRImsg_sensor_gps CSV_PRImsg_header ",%.7f,%.7f"
 
 /**
  * @brief Insert @ref msg_sensor_gps arguments to CSV print format.
  *
  * @param[in] data The GPS sensor data.
  */
-#define CSV_PRImsg_sensor_gps_arg(data) CSV_PRImsg_header_arg((data).header)
+#define CSV_PRImsg_sensor_gps_arg(data) \
+  CSV_PRImsg_header_arg((data).header), (data).longitude, (data).latitude
 
 /// @brief CSV header for @ref msg_sensor_pow.
 #define CSV_PRImsg_sensor_pow_header \
@@ -259,7 +265,7 @@ struct msg_sensor_wheel {
   /** Message header. */
   struct msg_header header;
 
-  /** Wheel speed. Unit: rpm */
+  /** Wheel speed. Unit: RPM */
   union msg_4wheel_data speed;
 
   /**
@@ -289,18 +295,20 @@ struct msg_sensor_imu {
   /** Angular velocity. Unit: rad/s */
   union msg_3d_data gyro;
 
-  /** Orientation in Eular angles. Unit: angle */
+  /** Orientation in Eular angles. Unit: deg */
   union msg_3d_data orient;
 };
 
-/**
- * @brief GPS message.
- *
- * @todo
- */
+/// @brief GPS message.
 struct msg_sensor_gps {
   /** Message header. */
   struct msg_header header;
+
+  /** Longitude, postive for East, negative for West. Unit: deg */
+  double longitude;
+
+  /** Latitude, postive for North, negative for South. Unit: deg */
+  double latitude;
 };
 
 /// @brief Power sensors message.

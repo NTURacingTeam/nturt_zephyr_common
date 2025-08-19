@@ -67,15 +67,6 @@ config NTURT_CANOPEN_TM
 	  Enable telemetry support for CANopen. This will allow CANopen to publish
 	  telemetry data to TPDOs using `CANOPEN_TM_TO_TPDO_DEFINE`.
 
-config NTURT_CANOPEN_MSG
-	bool "CANopen inter-thread communication support"
-	depends on NTURT_MSG
-	default y
-	help
-	  Enable inter-thread communication support for CANopen. This will allow
-	  CANopen to publish messages using `CANOPEN_OD_AGG_TO_MSG_DEFINE` based on
-	  object dictionary writes.
-
 # config NTURT_CANOPEN_SDO_CLI_BUF_SIZE
 #     int "SDO client buffer size"
 #     default 5
