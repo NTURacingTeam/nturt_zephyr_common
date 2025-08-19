@@ -149,6 +149,15 @@ Macros</h2></td></tr>
 <tr class="memitem:ga46af5ac887392f26c10bd1bb65126590" id="r_ga46af5ac887392f26c10bd1bb65126590"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga46af5ac887392f26c10bd1bb65126590">CSV_PRImsg_ts_inv_arg</a>(data)</td></tr>
 <tr class="memdesc:ga46af5ac887392f26c10bd1bb65126590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__ts__inv.html">msg_ts_inv</a> arguments to CSV print format.  <br /></td></tr>
 <tr class="separator:ga46af5ac887392f26c10bd1bb65126590"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50e19b0afbc87193dbd2fe2d102ef060" id="r_ga50e19b0afbc87193dbd2fe2d102ef060"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga50e19b0afbc87193dbd2fe2d102ef060">CSV_PRImsg_ts_emcy_stop_header</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga534bf19705bcc855c5c72daae12cd934">CSV_PRImsg_header_header</a> &quot;,emcy_stop&quot;</td></tr>
+<tr class="memdesc:ga50e19b0afbc87193dbd2fe2d102ef060"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSV header for <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a>.  <br /></td></tr>
+<tr class="separator:ga50e19b0afbc87193dbd2fe2d102ef060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacee5d98f37160f0c890dcfbcea96150f" id="r_gacee5d98f37160f0c890dcfbcea96150f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gacee5d98f37160f0c890dcfbcea96150f">CSV_PRImsg_ts_emcy_stop</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga2d328fe2f26185bf61988ae2b7b8d600">CSV_PRImsg_header</a> &quot;,%d&quot;</td></tr>
+<tr class="memdesc:gacee5d98f37160f0c890dcfbcea96150f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a> CSV format string.  <br /></td></tr>
+<tr class="separator:gacee5d98f37160f0c890dcfbcea96150f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf17d730a3529bf0e82204941f00f16e2" id="r_gaf17d730a3529bf0e82204941f00f16e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaf17d730a3529bf0e82204941f00f16e2">CSV_PRImsg_ts_emcy_stop_arg</a>(data)</td></tr>
+<tr class="memdesc:gaf17d730a3529bf0e82204941f00f16e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a> arguments to CSV print format.  <br /></td></tr>
+<tr class="separator:gaf17d730a3529bf0e82204941f00f16e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Tractive system message CSV format strings. </p>
@@ -218,6 +227,64 @@ Macros</h2></td></tr>
 <p><code>#include &lt;<a class="el" href="tractive_8h.html">nturt/msg/interfaces/tractive.h</a>&gt;</code></p>
 
 <p>CSV header for <a class="el" href="structmsg__ts__acc.html">msg_ts_acc</a>. </p>
+
+</div>
+</div>
+<a id="gacee5d98f37160f0c890dcfbcea96150f" name="gacee5d98f37160f0c890dcfbcea96150f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacee5d98f37160f0c890dcfbcea96150f">&#9670;&#160;</a></span>CSV_PRImsg_ts_emcy_stop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CSV_PRImsg_ts_emcy_stop&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga2d328fe2f26185bf61988ae2b7b8d600">CSV_PRImsg_header</a> &quot;,%d&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="tractive_8h.html">nturt/msg/interfaces/tractive.h</a>&gt;</code></p>
+
+<p>Insert <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a> CSV format string. </p>
+
+</div>
+</div>
+<a id="gaf17d730a3529bf0e82204941f00f16e2" name="gaf17d730a3529bf0e82204941f00f16e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf17d730a3529bf0e82204941f00f16e2">&#9670;&#160;</a></span>CSV_PRImsg_ts_emcy_stop_arg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CSV_PRImsg_ts_emcy_stop_arg</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="tractive_8h.html">nturt/msg/interfaces/tractive.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__csv.html#gabec03bf9a03d54b7b3a806a8ec07ad2d">CSV_PRImsg_header_arg</a>((data).header), (data).emcy_stop</div>
+</div><!-- fragment -->
+<p>Insert <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a> arguments to CSV print format. </p>
+
+</div>
+</div>
+<a id="ga50e19b0afbc87193dbd2fe2d102ef060" name="ga50e19b0afbc87193dbd2fe2d102ef060"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga50e19b0afbc87193dbd2fe2d102ef060">&#9670;&#160;</a></span>CSV_PRImsg_ts_emcy_stop_header</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CSV_PRImsg_ts_emcy_stop_header&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga534bf19705bcc855c5c72daae12cd934">CSV_PRImsg_header_header</a> &quot;,emcy_stop&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="tractive_8h.html">nturt/msg/interfaces/tractive.h</a>&gt;</code></p>
+
+<p>CSV header for <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a>. </p>
 
 </div>
 </div>
@@ -310,7 +377,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Aug 17 2025 07:57:30 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Tue Aug 19 2025 12:11:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

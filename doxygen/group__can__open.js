@@ -14,6 +14,7 @@ var group__can__open =
     [ "TPDO_DATA", "group__can__open.html#ga4ff5298fc8ec4ee5f9b1763d8821c304", null ],
     [ "canopen_node_id", "group__can__open.html#ga2a6b313a05938a780bb0f09b7969f960", [
       [ "NODE_ID_VCU", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a4e4a1d7fd2499f441c18ba3f8f19e8ff", null ],
+      [ "NODE_ID_SENSORS", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a0209495749b3f54ba6e0b123ab7e5561", null ],
       [ "NODE_ID_RPI", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a518fc3c666e04c63d0d553a4cfbb0690", null ],
       [ "NODE_ID_IMU", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960ac2df563f12024afc47050de9547f5804", null ],
       [ "NODE_ID_GPS", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960ab43f1925bb070a35a13986e44504cebd", null ],

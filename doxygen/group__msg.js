@@ -22,5 +22,6 @@ var group__msg =
     [ "MSG_CHAN_DECLARE", "group__msg.html#gad1091f98fd581ebc22b3ed5036e2f220", null ],
     [ "MSG_CHAN_DECLARE", "group__msg.html#ga7bb769f1de6d91640b64981c9c65f86c", null ],
     [ "msg_chan_is_from_msg", "group__msg.html#ga7105175610eb088a29c93d83e595ba19", null ],
-    [ "msg_chan_print", "group__msg.html#gab04f9f5b6c72f995d5123da2fed991f2", null ]
+    [ "msg_chan_print", "group__msg.html#gab04f9f5b6c72f995d5123da2fed991f2", null ],
+    [ "msg_sensor_wheel_agg", "group__msg.html#ga918e77e7c31e59c2e600f70e2329623b", null ]
 ];

@@ -8,6 +8,7 @@ var nturt__vcu_2include_2vcu_2telemetry_8h =
       [ "TM_BRAKE", "group__tm__vcu.html#ggaa24f1da3d76df81f80e77cd669ebc6cdaef4808ec26670432908f9d0daace95f4", null ],
       [ "TM_BSE1", "group__tm__vcu.html#ggaa24f1da3d76df81f80e77cd669ebc6cda9fabcfffbf2aa991543b3ebb0bcd2081", null ],
       [ "TM_BSE2", "group__tm__vcu.html#ggaa24f1da3d76df81f80e77cd669ebc6cdaa6f44b9985ffe8600fc0a3c704b6e715", null ],
+      [ "TM_VCU_STATES", "group__tm__vcu.html#ggaa24f1da3d76df81f80e77cd669ebc6cda5c890b7b619853b29aecf16d6e1284a4", null ],
       [ "TM_INV_RL_CTRL_WORD", "group__tm__vcu.html#ggaa24f1da3d76df81f80e77cd669ebc6cda3aa27a4c6184a699396d5b3af3ebb873", null ],
       [ "TM_INV_RL_TARGET_TORQUE", "group__tm__vcu.html#ggaa24f1da3d76df81f80e77cd669ebc6cdaa0d2126a1037d79eedd2fcf56026d2ce", null ],
       [ "TM_INV_RR_CTRL_WORD", "group__tm__vcu.html#ggaa24f1da3d76df81f80e77cd669ebc6cdaf4472e0efc9fd07b9483db7fdb4da34e", null ],
@@ -23,5 +24,6 @@ var nturt__vcu_2include_2vcu_2telemetry_8h =
     [ "TM_DATA_DECLARE", "group__tm__vcu.html#gaaf02f2d6e1899f0dc8357711fbec1d7a", null ],
     [ "TM_DATA_DECLARE", "group__tm__vcu.html#ga597cdc4834bb7338ed1841e14e2df091", null ],
     [ "TM_DATA_DECLARE", "group__tm__vcu.html#gaaa0ef0c19e804ebb9ca96cf69662a849", null ],
-    [ "TM_DATA_DECLARE", "group__tm__vcu.html#ga7c51738ef61f0a3252d7b952ca70a210", null ]
+    [ "TM_DATA_DECLARE", "group__tm__vcu.html#ga7c51738ef61f0a3252d7b952ca70a210", null ],
+    [ "TM_DATA_DECLARE", "group__tm__vcu.html#ga816727c36f59dc3734d552a64ff9352f", null ]
 ];

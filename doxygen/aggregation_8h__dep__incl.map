@@ -1,15 +1,16 @@
 <map id="nturt/msg/aggregation.h" name="nturt/msg/aggregation.h">
-<area shape="rect" id="Node000001" title="Data aggregation." alt="" coords="149,5,327,31"/>
-<area shape="rect" id="Node000002" href="$canopen_8h.html" title="CANopen support." alt="" coords="151,152,325,177"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="241,45,241,152,235,152,235,45"/>
-<area shape="rect" id="Node000003" href="$nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="71,79,200,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,41,154,81,151,76,209,36"/>
-<area shape="rect" id="Node000005" href="$nturt__zephyr__common_2include_2nturt_2telemetry_8h.html" title="Telemetry support." alt="" coords="275,79,406,104"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="267,36,325,76,322,81,264,41"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="165,110,223,150,220,154,162,114"/>
-<area shape="rect" id="Node000004" href="$nturt__vcu_2include_2vcu_2msg_2msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="5,152,127,177"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="116,116,79,154,75,150,113,112"/>
-<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="314,114,256,154,253,150,311,110"/>
-<area shape="rect" id="Node000006" href="$nturt__vcu_2include_2vcu_2telemetry_8h.html" title="Telemetry support." alt="" coords="350,152,473,177"/>
-<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="364,112,402,150,398,154,360,116"/>
+<area shape="rect" id="Node000001" title="Data aggregation." alt="" coords="192,5,371,31"/>
+<area shape="rect" id="Node000002" href="$canopen_8h.html" title="CANopen support." alt="" coords="153,152,327,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,44,259,79,244,152,239,151,253,78,267,42"/>
+<area shape="rect" id="Node000003" href="$nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="269,79,398,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="300,40,327,77,323,80,296,43"/>
+<area shape="rect" id="Node000004" href="$nturt__vcu_2include_2vcu_2msg_2msg_8h.html" title="Inter&#45;thread communication support." alt="" coords="367,152,489,177"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="345,33,381,50,411,77,422,96,428,116,431,151,426,152,423,117,417,98,407,80,378,55,342,38"/>
+<area shape="rect" id="Node000005" href="$nturt__zephyr__common_2include_2nturt_2telemetry_8h.html" title="Telemetry support." alt="" coords="63,79,193,104"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="246,39,154,81,152,76,243,34"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="309,114,257,154,254,150,306,110"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="361,110,414,150,411,154,358,114"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="159,109,223,150,220,154,156,114"/>
+<area shape="rect" id="Node000006" href="$nturt__vcu_2include_2vcu_2telemetry_8h.html" title="Telemetry support." alt="" coords="5,152,128,177"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="111,116,79,154,75,150,107,113"/>
 </map>

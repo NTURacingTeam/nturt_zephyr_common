@@ -140,9 +140,10 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cdaef4808ec26670432908f9d0daace95f4">TM_BRAKE</a>
 , <a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cda9fabcfffbf2aa991543b3ebb0bcd2081">TM_BSE1</a>
 , <a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cdaa6f44b9985ffe8600fc0a3c704b6e715">TM_BSE2</a>
-, <a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cda3aa27a4c6184a699396d5b3af3ebb873">TM_INV_RL_CTRL_WORD</a>
+, <a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cda5c890b7b619853b29aecf16d6e1284a4">TM_VCU_STATES</a>
 , <br />
-&#160;&#160;<a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cdaa0d2126a1037d79eedd2fcf56026d2ce">TM_INV_RL_TARGET_TORQUE</a>
+&#160;&#160;<a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cda3aa27a4c6184a699396d5b3af3ebb873">TM_INV_RL_CTRL_WORD</a>
+, <a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cdaa0d2126a1037d79eedd2fcf56026d2ce">TM_INV_RL_TARGET_TORQUE</a>
 , <a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cdaf4472e0efc9fd07b9483db7fdb4da34e">TM_INV_RR_CTRL_WORD</a>
 , <a class="el" href="#ggaa24f1da3d76df81f80e77cd669ebc6cda5507e0ac044caee9f11eab894d51f8f3">TM_INV_RR_TARGET_TORQUE</a>
 <br />
@@ -166,6 +167,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaa7ee8586e567864974391b0b22679df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1e5512f2536869288f02a9fb3830c131" id="r_ga1e5512f2536869288f02a9fb3830c131"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga1e5512f2536869288f02a9fb3830c131">TM_DATA_DECLARE</a> (bse2, uint8_t)</td></tr>
 <tr class="separator:ga1e5512f2536869288f02a9fb3830c131"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga816727c36f59dc3734d552a64ff9352f" id="r_ga816727c36f59dc3734d552a64ff9352f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga816727c36f59dc3734d552a64ff9352f">TM_DATA_DECLARE</a> (vcu_states, uint8_t)</td></tr>
+<tr class="separator:ga816727c36f59dc3734d552a64ff9352f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga19c9f9025b2e1f5f5bf49ccc9342b325" id="r_ga19c9f9025b2e1f5f5bf49ccc9342b325"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga19c9f9025b2e1f5f5bf49ccc9342b325">TM_DATA_DECLARE</a> (inv_rl_ctrl_word, uint16_t)</td></tr>
 <tr class="separator:ga19c9f9025b2e1f5f5bf49ccc9342b325"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaaf02f2d6e1899f0dc8357711fbec1d7a" id="r_gaaf02f2d6e1899f0dc8357711fbec1d7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaaf02f2d6e1899f0dc8357711fbec1d7a">TM_DATA_DECLARE</a> (inv_rl_target_torque, int16_t)</td></tr>
@@ -201,6 +204,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="ggaa24f1da3d76df81f80e77cd669ebc6cdaef4808ec26670432908f9d0daace95f4" name="ggaa24f1da3d76df81f80e77cd669ebc6cdaef4808ec26670432908f9d0daace95f4"></a>TM_BRAKE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggaa24f1da3d76df81f80e77cd669ebc6cda9fabcfffbf2aa991543b3ebb0bcd2081" name="ggaa24f1da3d76df81f80e77cd669ebc6cda9fabcfffbf2aa991543b3ebb0bcd2081"></a>TM_BSE1&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggaa24f1da3d76df81f80e77cd669ebc6cdaa6f44b9985ffe8600fc0a3c704b6e715" name="ggaa24f1da3d76df81f80e77cd669ebc6cdaa6f44b9985ffe8600fc0a3c704b6e715"></a>TM_BSE2&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggaa24f1da3d76df81f80e77cd669ebc6cda5c890b7b619853b29aecf16d6e1284a4" name="ggaa24f1da3d76df81f80e77cd669ebc6cda5c890b7b619853b29aecf16d6e1284a4"></a>TM_VCU_STATES&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggaa24f1da3d76df81f80e77cd669ebc6cda3aa27a4c6184a699396d5b3af3ebb873" name="ggaa24f1da3d76df81f80e77cd669ebc6cda3aa27a4c6184a699396d5b3af3ebb873"></a>TM_INV_RL_CTRL_WORD&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggaa24f1da3d76df81f80e77cd669ebc6cdaa0d2126a1037d79eedd2fcf56026d2ce" name="ggaa24f1da3d76df81f80e77cd669ebc6cdaa0d2126a1037d79eedd2fcf56026d2ce"></a>TM_INV_RL_TARGET_TORQUE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggaa24f1da3d76df81f80e77cd669ebc6cdaf4472e0efc9fd07b9483db7fdb4da34e" name="ggaa24f1da3d76df81f80e77cd669ebc6cdaf4472e0efc9fd07b9483db7fdb4da34e"></a>TM_INV_RR_CTRL_WORD&#160;</td><td class="fielddoc"></td></tr>
@@ -211,7 +215,7 @@ Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga801e90fa606e0c012ad72c688b7e66f2" name="ga801e90fa606e0c012ad72c688b7e66f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga801e90fa606e0c012ad72c688b7e66f2">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[1/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga801e90fa606e0c012ad72c688b7e66f2">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[1/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,7 +238,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="gaf8758cc225d6b0ed38790b5e3db3266f" name="gaf8758cc225d6b0ed38790b5e3db3266f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf8758cc225d6b0ed38790b5e3db3266f">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[2/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf8758cc225d6b0ed38790b5e3db3266f">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[2/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -257,7 +261,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="gad6e8a0f0da3733d318621c6e0b6a2d2f" name="gad6e8a0f0da3733d318621c6e0b6a2d2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad6e8a0f0da3733d318621c6e0b6a2d2f">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[3/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gad6e8a0f0da3733d318621c6e0b6a2d2f">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[3/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -280,7 +284,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="gad09b53f44d5379222b9f49507d25a5e4" name="gad09b53f44d5379222b9f49507d25a5e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad09b53f44d5379222b9f49507d25a5e4">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[4/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gad09b53f44d5379222b9f49507d25a5e4">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[4/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -303,7 +307,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="gaa7ee8586e567864974391b0b22679df1" name="gaa7ee8586e567864974391b0b22679df1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa7ee8586e567864974391b0b22679df1">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[5/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa7ee8586e567864974391b0b22679df1">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[5/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,7 +330,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ga1e5512f2536869288f02a9fb3830c131" name="ga1e5512f2536869288f02a9fb3830c131"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1e5512f2536869288f02a9fb3830c131">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[6/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1e5512f2536869288f02a9fb3830c131">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[6/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,7 +353,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ga19c9f9025b2e1f5f5bf49ccc9342b325" name="ga19c9f9025b2e1f5f5bf49ccc9342b325"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga19c9f9025b2e1f5f5bf49ccc9342b325">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[7/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga19c9f9025b2e1f5f5bf49ccc9342b325">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[7/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -372,7 +376,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="gaaf02f2d6e1899f0dc8357711fbec1d7a" name="gaaf02f2d6e1899f0dc8357711fbec1d7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaf02f2d6e1899f0dc8357711fbec1d7a">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[8/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaf02f2d6e1899f0dc8357711fbec1d7a">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[8/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -395,7 +399,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ga597cdc4834bb7338ed1841e14e2df091" name="ga597cdc4834bb7338ed1841e14e2df091"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga597cdc4834bb7338ed1841e14e2df091">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[9/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga597cdc4834bb7338ed1841e14e2df091">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[9/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -418,7 +422,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="gaaa0ef0c19e804ebb9ca96cf69662a849" name="gaaa0ef0c19e804ebb9ca96cf69662a849"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaa0ef0c19e804ebb9ca96cf69662a849">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[10/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaa0ef0c19e804ebb9ca96cf69662a849">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[10/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -441,7 +445,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ga7c51738ef61f0a3252d7b952ca70a210" name="ga7c51738ef61f0a3252d7b952ca70a210"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7c51738ef61f0a3252d7b952ca70a210">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[11/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7c51738ef61f0a3252d7b952ca70a210">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[11/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -463,12 +467,35 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga816727c36f59dc3734d552a64ff9352f" name="ga816727c36f59dc3734d552a64ff9352f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga816727c36f59dc3734d552a64ff9352f">&#9670;&#160;</a></span>TM_DATA_DECLARE() <span class="overload">[12/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TM_DATA_DECLARE </td>
+          <td>(</td>
+          <td class="paramtype">vcu_states</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__vcu_2include_2vcu_2telemetry_8h.html">vcu/telemetry.h</a>&gt;</code></p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Aug 17 2025 07:57:30 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Tue Aug 19 2025 12:11:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

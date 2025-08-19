@@ -27,7 +27,9 @@ var group__msg__if__sensor =
       [ "orient", "structmsg__sensor__imu.html#a1cfaf40b77d4e52f1931094d9f844206", null ]
     ] ],
     [ "msg_sensor_gps", "structmsg__sensor__gps.html", [
-      [ "header", "structmsg__sensor__gps.html#a3fe2f00a3b3b290cd972264ea16b7172", null ]
+      [ "header", "structmsg__sensor__gps.html#a3fe2f00a3b3b290cd972264ea16b7172", null ],
+      [ "latitude", "structmsg__sensor__gps.html#ad6720a4ec826fc732b18dcc9f89eb78e", null ],
+      [ "longitude", "structmsg__sensor__gps.html#a5d5ad0a9395c8fef414bd3972173ab15", null ]
     ] ],
     [ "msg_sensor_pow", "structmsg__sensor__pow.html", [
       [ "header", "structmsg__sensor__pow.html#a480f24f62b956c1e4c54a1fae5ec7771", null ],

@@ -23,6 +23,7 @@ var annotated_dup =
     [ "msg_sensor_wheel", "structmsg__sensor__wheel.html", "structmsg__sensor__wheel" ],
     [ "msg_states", "structmsg__states.html", "structmsg__states" ],
     [ "msg_ts_acc", "structmsg__ts__acc.html", "structmsg__ts__acc" ],
+    [ "msg_ts_emcy_stop", "structmsg__ts__emcy__stop.html", "structmsg__ts__emcy__stop" ],
     [ "msg_ts_inv", "structmsg__ts__inv.html", "structmsg__ts__inv" ],
     [ "sensor_tol", "structsensor__tol.html", "structsensor__tol" ],
     [ "states_callback", "structstates__callback.html", "structstates__callback" ],

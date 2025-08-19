@@ -15,5 +15,6 @@ var searchData=
   ['msg_5fsensor_5fwheel_12',['msg_sensor_wheel',['../structmsg__sensor__wheel.html',1,'']]],
   ['msg_5fstates_13',['msg_states',['../structmsg__states.html',1,'']]],
   ['msg_5fts_5facc_14',['msg_ts_acc',['../structmsg__ts__acc.html',1,'']]],
-  ['msg_5fts_5finv_15',['msg_ts_inv',['../structmsg__ts__inv.html',1,'']]]
+  ['msg_5fts_5femcy_5fstop_15',['msg_ts_emcy_stop',['../structmsg__ts__emcy__stop.html',1,'']]],
+  ['msg_5fts_5finv_16',['msg_ts_inv',['../structmsg__ts__inv.html',1,'']]]
 ];

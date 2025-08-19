@@ -158,10 +158,10 @@ Macros</h2></td></tr>
 <tr class="memitem:ga3203abcebda160a1c61325a6411a3a50" id="r_ga3203abcebda160a1c61325a6411a3a50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga3203abcebda160a1c61325a6411a3a50">CSV_PRImsg_sensor_imu_arg</a>(data)</td></tr>
 <tr class="memdesc:ga3203abcebda160a1c61325a6411a3a50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__sensor__imu.html">msg_sensor_imu</a> arguments to CSV print format.  <br /></td></tr>
 <tr class="separator:ga3203abcebda160a1c61325a6411a3a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4de3988da7e776503ed2857ace8ab828" id="r_ga4de3988da7e776503ed2857ace8ab828"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga4de3988da7e776503ed2857ace8ab828">CSV_PRImsg_sensor_gps_header</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga534bf19705bcc855c5c72daae12cd934">CSV_PRImsg_header_header</a> &quot;,TODO&quot;</td></tr>
+<tr class="memitem:ga4de3988da7e776503ed2857ace8ab828" id="r_ga4de3988da7e776503ed2857ace8ab828"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga4de3988da7e776503ed2857ace8ab828">CSV_PRImsg_sensor_gps_header</a>&#160;&#160;&#160;  <a class="el" href="group__msg__if__csv.html#ga534bf19705bcc855c5c72daae12cd934">CSV_PRImsg_header_header</a> &quot;,longitude,latitude&quot;</td></tr>
 <tr class="memdesc:ga4de3988da7e776503ed2857ace8ab828"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSV header for <a class="el" href="structmsg__sensor__gps.html">msg_sensor_gps</a>.  <br /></td></tr>
 <tr class="separator:ga4de3988da7e776503ed2857ace8ab828"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf67cbb029c3b582621e8c2d75eb178b" id="r_gaaf67cbb029c3b582621e8c2d75eb178b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaaf67cbb029c3b582621e8c2d75eb178b">CSV_PRImsg_sensor_gps</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga2d328fe2f26185bf61988ae2b7b8d600">CSV_PRImsg_header</a> &quot;,TODO&quot;</td></tr>
+<tr class="memitem:gaaf67cbb029c3b582621e8c2d75eb178b" id="r_gaaf67cbb029c3b582621e8c2d75eb178b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaaf67cbb029c3b582621e8c2d75eb178b">CSV_PRImsg_sensor_gps</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga2d328fe2f26185bf61988ae2b7b8d600">CSV_PRImsg_header</a> &quot;,%.7f,%.7f&quot;</td></tr>
 <tr class="memdesc:gaaf67cbb029c3b582621e8c2d75eb178b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__sensor__gps.html">msg_sensor_gps</a> CSV format string.  <br /></td></tr>
 <tr class="separator:gaaf67cbb029c3b582621e8c2d75eb178b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga55e129281cffd2d146a6e1e2243107a6" id="r_ga55e129281cffd2d146a6e1e2243107a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga55e129281cffd2d146a6e1e2243107a6">CSV_PRImsg_sensor_gps_arg</a>(data)</td></tr>
@@ -259,7 +259,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CSV_PRImsg_sensor_gps&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga2d328fe2f26185bf61988ae2b7b8d600">CSV_PRImsg_header</a> &quot;,TODO&quot;</td>
+          <td class="memname">#define CSV_PRImsg_sensor_gps&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga2d328fe2f26185bf61988ae2b7b8d600">CSV_PRImsg_header</a> &quot;,%.7f,%.7f&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -286,7 +286,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="sensor_8h.html">nturt/msg/interfaces/sensor.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="group__msg__if__csv.html#gabec03bf9a03d54b7b3a806a8ec07ad2d">CSV_PRImsg_header_arg</a>((data).header)</div>
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__csv.html#gabec03bf9a03d54b7b3a806a8ec07ad2d">CSV_PRImsg_header_arg</a>((data).header), (data).longitude, (data).latitude</div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__sensor__gps.html">msg_sensor_gps</a> arguments to CSV print format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -305,7 +305,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CSV_PRImsg_sensor_gps_header&#160;&#160;&#160;<a class="el" href="group__msg__if__csv.html#ga534bf19705bcc855c5c72daae12cd934">CSV_PRImsg_header_header</a> &quot;,TODO&quot;</td>
+          <td class="memname">#define CSV_PRImsg_sensor_gps_header&#160;&#160;&#160;  <a class="el" href="group__msg__if__csv.html#ga534bf19705bcc855c5c72daae12cd934">CSV_PRImsg_header_header</a> &quot;,longitude,latitude&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -537,7 +537,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Aug 17 2025 07:57:30 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Tue Aug 19 2025 12:11:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>
