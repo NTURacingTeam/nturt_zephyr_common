@@ -58,6 +58,9 @@ static uint32_t node_id_to_err_code(enum canopen_node_id id) {
     case NODE_ID_VCU:
       return ERR_CODE_HB_VCU;
 
+    case NODE_ID_SENSORS:
+      return ERR_CODE_HB_SENSORS;
+
     case NODE_ID_RPI:
       return ERR_CODE_HB_RPI;
 
@@ -88,6 +91,10 @@ static int init() {
   // set initial errors for monitored nodes
   for (int i = 0; i < CO->HBcons->numberOfMonitoredNodes; i++) {
     CO_HBconsNode_t *node = &CO->HBcons->monitoredNodes[i];
+    if (node->nodeId == 0 || node->nodeId > 127) {
+      continue;
+    }
+
     uint32_t err_code = node_id_to_err_code(node->nodeId);
     err_report(err_code, true);
   }

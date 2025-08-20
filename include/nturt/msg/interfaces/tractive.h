@@ -217,6 +217,7 @@ struct msg_ts_inv {
 
 /// @brief Emergency stop message.
 struct msg_ts_emcy_stop {
+  /** Message header. */
   struct msg_header header;
 
   /** Emergency stop, 0: inactive, 1: active. */

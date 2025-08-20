@@ -65,7 +65,7 @@
         tolerance = <10>;
     };
 
-    susp_fl: susp_fl {
+    susp_fl: susp-fl {
         compatible = "analog-generic-sensor";
         io-channels = <&adc3 4>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
@@ -75,7 +75,7 @@
         max-value = <0 310000>;
     };
 
-    susp_fr: susp_fr {
+    susp_fr: susp-fr {
         compatible = "analog-generic-sensor";
         io-channels = <&adc3 8>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
@@ -86,7 +86,7 @@
         status = "disabled";
     };
 
-    susp_rl: susp_rl {
+    susp_rl: susp-rl {
         compatible = "analog-generic-sensor";
         io-channels = <&adc3 5>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
@@ -96,7 +96,7 @@
         max-value = <0 330000>;
     };
 
-    susp_rr: susp_rr {
+    susp_rr: susp-rr {
         compatible = "analog-generic-sensor";
         io-channels = <&adc3 9>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;

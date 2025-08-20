@@ -150,7 +150,8 @@ static int gpio_init() {
   return 0;
 }
 
-// use the same init priority as the LEDs since they are used in the same way
-SYS_INIT(gpio_init, POST_KERNEL, CONFIG_LED_INIT_PRIORITY);
+// use the same init priority as the LEDs (CONFIG_LED_INIT_PRIORITY) since they
+// are used in the same way
+SYS_INIT(gpio_init, POST_KERNEL, 90);
 
 #endif  // CONFIG_NTURT_SYS_REBOOT_SOUND

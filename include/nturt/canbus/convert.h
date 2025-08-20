@@ -23,6 +23,7 @@
  */
 
 #define INV_RATED_TORQUE 100.0F
+#define MOTOR_REDUCTION_RATIO 13.1F
 
 /* Physical to CAN -----------------------------------------------------------*/
 /// @brief Steering angle physical data in deg (float), convert to 0.01 deg
@@ -78,6 +79,10 @@
 /// @brief Accumulator capacity CAN data in 10 mAh (int16_t), convert to mAh
 /// (float).
 #define ACC_CAPACITY_CAN_TO_PHY(can) (10.0F * (can))
+
+/// @brief Inverter speed CAN data in RPM (int16_t) before reduction, convert to
+/// RPM (float) after reduction.
+#define INV_SPEED_CAN_TO_PHY(can) ((can) / MOTOR_REDUCTION_RATIO)
 
 /// @brief Inverter torque CAN data in 0.001 rated torque (int16_t), convert to
 /// Nm (float).
