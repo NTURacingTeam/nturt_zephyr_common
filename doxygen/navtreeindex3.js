@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"structmsg__sensor__wheel.html#aa22990532230227d1af4b6dd30f3400e":[2,6,1,3,3,0],
+"structmsg__sensor__wheel.html#aa5cdc0a89a518c689bb2ab8e62f385b7":[2,6,1,3,3,1],
 "structmsg__states.html":[2,6,1,4,2],
 "structmsg__states.html#a48573b0948a27850459c97d4899b5163":[2,6,1,4,2,1],
 "structmsg__states.html#a568e7ed388fb9bd5b8073843a7e08c0f":[2,6,1,4,2,0],

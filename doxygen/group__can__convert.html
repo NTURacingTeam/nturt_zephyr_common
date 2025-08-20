@@ -132,6 +132,8 @@ $(function(){initNavTree('group__can__convert.html',''); initResizable(true); })
 Macros</h2></td></tr>
 <tr class="memitem:ga18eed08e2447eed966f67d23aacabf37" id="r_ga18eed08e2447eed966f67d23aacabf37"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a>&#160;&#160;&#160;100.0F</td></tr>
 <tr class="separator:ga18eed08e2447eed966f67d23aacabf37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeeacb4d03f20e5474ac5ee37e4485203" id="r_gaeeacb4d03f20e5474ac5ee37e4485203"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaeeacb4d03f20e5474ac5ee37e4485203">MOTOR_REDUCTION_RATIO</a>&#160;&#160;&#160;13.1F</td></tr>
+<tr class="separator:gaeeacb4d03f20e5474ac5ee37e4485203"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2de7efcaab1944a5a7f46cf7ea55b6cf" id="r_ga2de7efcaab1944a5a7f46cf7ea55b6cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga2de7efcaab1944a5a7f46cf7ea55b6cf">STEER_PHY_TO_CAN</a>(phy)</td></tr>
 <tr class="memdesc:ga2de7efcaab1944a5a7f46cf7ea55b6cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Steering angle physical data in deg (float), convert to 0.01 deg (int16_t).  <br /></td></tr>
 <tr class="separator:ga2de7efcaab1944a5a7f46cf7ea55b6cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,6 +175,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gad65c5ee324a63794d0e488a4e5e5d4d8" id="r_gad65c5ee324a63794d0e488a4e5e5d4d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad65c5ee324a63794d0e488a4e5e5d4d8">ACC_CAPACITY_CAN_TO_PHY</a>(can)</td></tr>
 <tr class="memdesc:gad65c5ee324a63794d0e488a4e5e5d4d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accumulator capacity CAN data in 10 mAh (int16_t), convert to mAh (float).  <br /></td></tr>
 <tr class="separator:gad65c5ee324a63794d0e488a4e5e5d4d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a37792d6bb835dfc48104cb1ecd50be" id="r_ga0a37792d6bb835dfc48104cb1ecd50be"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga0a37792d6bb835dfc48104cb1ecd50be">INV_SPEED_CAN_TO_PHY</a>(can)</td></tr>
+<tr class="memdesc:ga0a37792d6bb835dfc48104cb1ecd50be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverter speed CAN data in RPM (int16_t) before reduction, convert to RPM (float) after reduction.  <br /></td></tr>
+<tr class="separator:ga0a37792d6bb835dfc48104cb1ecd50be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebb19feee7c812dd257f7b0bfedc6dfc" id="r_gaebb19feee7c812dd257f7b0bfedc6dfc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaebb19feee7c812dd257f7b0bfedc6dfc">INV_TORQUE_CAN_TO_PHY</a>(can)</td></tr>
 <tr class="memdesc:gaebb19feee7c812dd257f7b0bfedc6dfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverter torque CAN data in 0.001 rated torque (int16_t), convert to Nm (float).  <br /></td></tr>
 <tr class="separator:gaebb19feee7c812dd257f7b0bfedc6dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -484,6 +489,29 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="ga0a37792d6bb835dfc48104cb1ecd50be" name="ga0a37792d6bb835dfc48104cb1ecd50be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a37792d6bb835dfc48104cb1ecd50be">&#9670;&#160;</a></span>INV_SPEED_CAN_TO_PHY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INV_SPEED_CAN_TO_PHY</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>can</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">((can) / <a class="code hl_define" href="#gaeeacb4d03f20e5474ac5ee37e4485203">MOTOR_REDUCTION_RATIO</a>)</div>
+<div class="ttc" id="agroup__can__convert_html_gaeeacb4d03f20e5474ac5ee37e4485203"><div class="ttname"><a href="#gaeeacb4d03f20e5474ac5ee37e4485203">MOTOR_REDUCTION_RATIO</a></div><div class="ttdeci">#define MOTOR_REDUCTION_RATIO</div><div class="ttdef"><b>Definition</b> convert.h:26</div></div>
+</div><!-- fragment -->
+<p>Inverter speed CAN data in RPM (int16_t) before reduction, convert to RPM (float) after reduction. </p>
+
+</div>
+</div>
 <a id="gabad635ee9170b3f22da40a54973d7ed9" name="gabad635ee9170b3f22da40a54973d7ed9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gabad635ee9170b3f22da40a54973d7ed9">&#9670;&#160;</a></span>INV_TEMP_CAN_TO_PHY</h2>
 
@@ -570,6 +598,22 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">(0.01F * (can))</div>
 </div><!-- fragment -->
 <p>Inverter voltage CAN data in 0.01 V (uint16_t), convert to V (float). </p>
+
+</div>
+</div>
+<a id="gaeeacb4d03f20e5474ac5ee37e4485203" name="gaeeacb4d03f20e5474ac5ee37e4485203"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeeacb4d03f20e5474ac5ee37e4485203">&#9670;&#160;</a></span>MOTOR_REDUCTION_RATIO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MOTOR_REDUCTION_RATIO&#160;&#160;&#160;13.1F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
 
 </div>
 </div>
@@ -731,7 +775,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Aug 19 2025 12:11:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Wed Aug 20 2025 13:34:47 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>
