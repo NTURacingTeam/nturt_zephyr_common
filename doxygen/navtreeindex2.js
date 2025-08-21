@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__stat.html#ggae70dc85d406e951d17890605c02aa7d5aa47c3639be1fe073620c78a64eeaeae7":[2,2,1,6,9],
 "group__stat.html#ggae70dc85d406e951d17890605c02aa7d5ac1f842601f5eada4a18a081986996955":[2,2,1,6,3],
 "group__stat.html#ggae70dc85d406e951d17890605c02aa7d5adceebbc176186b2bbeb1b53731478bcd":[2,2,1,6,8],
 "group__stat.html#ggae70dc85d406e951d17890605c02aa7d5addfe11c6d06c4e27bd6efc18cc4862a6":[2,2,1,6,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structmsg__sensor__pow.html#a75d6ef74388490f15c3235830761df81":[2,6,1,3,6,3],
 "structmsg__sensor__wheel.html":[2,6,1,3,3],
 "structmsg__sensor__wheel.html#a4db0e8b9d986bf7474afcacf75cfffa5":[2,6,1,3,3,4],
-"structmsg__sensor__wheel.html#a53e4aab8e999508be59553a000cb9323":[2,6,1,3,3,3],
-"structmsg__sensor__wheel.html#a6327b01dea863b5a7fad4f69de7cd343":[2,6,1,3,3,2]
+"structmsg__sensor__wheel.html#a53e4aab8e999508be59553a000cb9323":[2,6,1,3,3,3]
 };

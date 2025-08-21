@@ -38,6 +38,7 @@ var group__err =
     [ "err_sev", "group__err.html#ga62bf75f148b9a5c4167dcdef27d10b0a", [
       [ "ERR_SEV_INFO", "group__err.html#gga62bf75f148b9a5c4167dcdef27d10b0aa805db7a2df0314826a7654be3ba24402", null ],
       [ "ERR_SEV_WARN", "group__err.html#gga62bf75f148b9a5c4167dcdef27d10b0aa0196508b0c4178006b2433586b3726c1", null ],
+      [ "ERR_SEV_ERROR", "group__err.html#gga62bf75f148b9a5c4167dcdef27d10b0aa3ba5b0701279ef186b78b42c2ad7a87c", null ],
       [ "ERR_SEV_FATAL", "group__err.html#gga62bf75f148b9a5c4167dcdef27d10b0aa12bb2b25e289baa08bd64ac4b9a5d3f9", null ]
     ] ],
     [ "err_is_set", "group__err.html#gad191f3c6e31e98e6c62c5483f3226854", null ],
