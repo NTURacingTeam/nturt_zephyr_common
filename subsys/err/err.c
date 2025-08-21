@@ -152,8 +152,13 @@ static void err_log(struct err *err) {
         LOG_WRN("Error 0x%X (%s) set: %s", err->errcode, err->name, err->desc);
         break;
 
-      case ERR_SEV_FATAL:
+      case ERR_SEV_ERROR:
         LOG_ERR("Error 0x%X (%s) set: %s", err->errcode, err->name, err->desc);
+        break;
+
+      case ERR_SEV_FATAL:
+        LOG_ERR(">>> FATAL ERROR 0x%X (%s) set: %s", err->errcode, err->name,
+                err->desc);
         break;
 
       default:

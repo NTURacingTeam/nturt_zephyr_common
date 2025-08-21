@@ -12,6 +12,8 @@
 #include "nturt/sys/util.h"
 
 /* static function declaration -----------------------------------------------*/
+static void print_err(const struct shell *sh, const struct err *err);
+
 static void err_get_handler_impl(size_t idx, struct shell_static_entry *entry,
                                  bool is_set);
 static void err_set_get_handler(size_t idx, struct shell_static_entry *entry);
@@ -51,6 +53,26 @@ SHELL_CMD_REGISTER(err, &canopen_cmd,
                    NULL);
 
 /* static function definition ------------------------------------------------*/
+static void print_err(const struct shell *sh, const struct err *err) {
+  switch (err->flags & ERR_FLAG_SEV_MASK) {
+    case ERR_SEV_INFO:
+      shell_print(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+      break;
+
+    case ERR_SEV_WARN:
+      shell_warn(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+      break;
+
+    case ERR_SEV_ERROR:
+    case ERR_SEV_FATAL:
+      shell_error(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
+      break;
+
+    default:
+      break;
+  }
+}
+
 static void err_get_handler_impl(size_t idx, struct shell_static_entry *entry,
                                  bool is_set) {
   STRUCT_SECTION_FOREACH(err, err) {
@@ -88,24 +110,7 @@ static int err_list_cmd_handler(const struct shell *sh, size_t argc,
 
   shell_print(sh, "Registered errors:");
 
-  STRUCT_SECTION_FOREACH(err, err) {
-    switch (err->flags & ERR_FLAG_SEV_MASK) {
-      case ERR_SEV_INFO:
-        shell_print(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
-        break;
-
-      case ERR_SEV_WARN:
-        shell_warn(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
-        break;
-
-      case ERR_SEV_FATAL:
-        shell_error(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
-        break;
-
-      default:
-        break;
-    }
-  }
+  STRUCT_SECTION_FOREACH(err, err) { print_err(sh, err); }
 
   return 0;
 }
@@ -124,22 +129,7 @@ static int err_get_cmd_handler(const struct shell *sh, size_t argc, char **argv,
       has_error = true;
     }
 
-    switch (err->flags & ERR_FLAG_SEV_MASK) {
-      case ERR_SEV_INFO:
-        shell_print(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
-        break;
-
-      case ERR_SEV_WARN:
-        shell_warn(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
-        break;
-
-      case ERR_SEV_FATAL:
-        shell_error(sh, "\t%s(0x%X): %s", err->name, err->errcode, err->desc);
-        break;
-
-      default:
-        break;
-    }
+    print_err(sh, err);
   }
 
   if (!has_error) {

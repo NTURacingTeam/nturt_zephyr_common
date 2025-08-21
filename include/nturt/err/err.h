@@ -33,14 +33,15 @@
 /* macro ---------------------------------------------------------------------*/
 /// @brief Flag indicating the error is disabled, meaning setting or clearing
 /// the error will not have any effect.
-#define ERR_FLAG_DISABLED BIT(3)
+#define ERR_FLAG_DISABLED BIT(4)
 
 /// @brief Flag indicating the error is set. Can also be used in @ref ERR_DEFINE
 /// to define an error that will be set after initialization.
-#define ERR_FLAG_SET BIT(4)
+#define ERR_FLAG_SET BIT(5)
 
 /// @brief Flag mask indicating the severity of the error.
-#define ERR_FLAG_SEV_MASK (ERR_SEV_INFO | ERR_SEV_WARN | ERR_SEV_FATAL)
+#define ERR_FLAG_SEV_MASK \
+  (ERR_SEV_INFO | ERR_SEV_WARN | ERR_SEV_ERROR | ERR_SEV_FATAL)
 
 /**
  * @brief Define an error.
@@ -146,8 +147,11 @@ enum err_sev {
   /** Warning serverity, the system may continue running. */
   ERR_SEV_WARN = BIT(1),
 
+  /** Error serverity, the system may continue running but must not actuate. */
+  ERR_SEV_ERROR = BIT(2),
+
   /** Fatal serverity, the system must stop. */
-  ERR_SEV_FATAL = BIT(2),
+  ERR_SEV_FATAL = BIT(3),
 };
 
 /// @brief Error filter type.
