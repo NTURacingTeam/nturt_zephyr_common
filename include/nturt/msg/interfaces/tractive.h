@@ -28,7 +28,7 @@
 
 /* macro ---------------------------------------------------------------------*/
 /// @brief List of tractive system messages.
-#define MSG_TRACTIVE_LIST msg_ts_acc, msg_ts_inv, msg_ts_emcy_stop
+#define MSG_TRACTIVE_LIST msg_ts_acc, msg_ts_inv
 
 /**
  * @defgroup msg_if_tractive_pri Tractive System Message Printing
@@ -76,21 +76,6 @@
       PRImsg_4wheel_data_arg((data).inv_temp),                              \
       PRImsg_4wheel_data_arg((data).motor_temp),                            \
       PRImsg_4wheel_data_arg((data).mcu_temp)
-
-/**
- * @brief Insert @ref msg_ts_emcy_stop printf format string.
- *
- * @param[in] data The emergency stop message data.
- */
-#define PRImsg_ts_emcy_stop PRImsg_header "\n\r\temcy_stop: %d"
-
-/**
- * @brief Insert @ref msg_ts_emcy_stop arguments to printf format.
- *
- * @param[in] data The emergency stop message data.
- */
-#define PRImsg_ts_emcy_stop_arg(data) \
-  PRImsg_header_arg((data).header), (data).emcy_stop
 
 /**
  * @} // msg_if_tractive_pri
@@ -151,16 +136,6 @@
       CSV_PRImsg_4wheel_data_arg((data).motor_temp), \
       CSV_PRImsg_4wheel_data_arg((data).mcu_temp)
 
-/// @brief CSV header for @ref msg_ts_emcy_stop.
-#define CSV_PRImsg_ts_emcy_stop_header CSV_PRImsg_header_header ",emcy_stop"
-
-/// @brief Insert @ref msg_ts_emcy_stop CSV format string.
-#define CSV_PRImsg_ts_emcy_stop CSV_PRImsg_header ",%d"
-
-/// @brief Insert @ref msg_ts_emcy_stop arguments to CSV print format.
-#define CSV_PRImsg_ts_emcy_stop_arg(data) \
-  CSV_PRImsg_header_arg((data).header), (data).emcy_stop
-
 /**
  * @} // msg_if_csv_tractive
  */
@@ -213,15 +188,6 @@ struct msg_ts_inv {
 
   /** MCU temperature. Unit: °C. */
   union msg_4wheel_data mcu_temp;
-};
-
-/// @brief Emergency stop message.
-struct msg_ts_emcy_stop {
-  /** Message header. */
-  struct msg_header header;
-
-  /** Emergency stop, 0: inactive, 1: active. */
-  uint8_t emcy_stop;
 };
 
 /**

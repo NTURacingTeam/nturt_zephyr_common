@@ -41,6 +41,16 @@
   "timestamp: ", (data).timestamp_ns / 1000000000, \
       ((data).timestamp_ns % 1000000000) / 1000
 
+/// @brief Insert @ref msg_2d_data format string.
+#define PRImsg_2d_data "s(%g, %g)"
+
+/**
+ * @brief Insert @ref msg_2d_data arguments to print format.
+ *
+ * @param[in] data The 2D data.
+ */
+#define PRImsg_2d_data_arg(data) "", (double)(data).x, (double)(data).y
+
 /// @brief Insert @ref msg_3d_data format string.
 #define PRImsg_3d_data "s(%g, %g, %g)"
 
@@ -96,6 +106,23 @@
  */
 #define CSV_PRImsg_header_arg(data) \
   (data).timestamp_ns / 1000000000, ((data).timestamp_ns % 1000000000) / 1000
+
+/** @brief CSV header for @ref msg_2d_data.
+ *
+ * @param[in] data The 2D data.
+ */
+#define CSV_PRImsg_2d_data_header(data) \
+  STRINGIFY(data) "_x," STRINGIFY(data) "_y"
+
+/// @brief Insert @ref msg_2d_data CSV format string.
+#define CSV_PRImsg_2d_data "f,%f"
+
+/**
+ * @brief Insert @ref msg_2d_data arguments to CSV print format.
+ *
+ * @param[in] data The 2D data.
+ */
+#define CSV_PRImsg_2d_data_arg(data) (double)(data).x, (double)(data).y
 
 /** @brief CSV header for @ref msg_3d_data.
  *
@@ -167,6 +194,20 @@ struct msg_header {
    * `sys_clock_gettime()` with `CLOCK_REALTIME`.
    */
   uint64_t timestamp_ns;
+};
+
+/// @brief 2D data.
+union msg_2d_data {
+  /** 2D data in an array. */
+  float values[2];
+
+  struct {
+    /** X-axis value. */
+    float x;
+
+    /** Y-axis value. */
+    float y;
+  };
 };
 
 /// @brief 3D data.

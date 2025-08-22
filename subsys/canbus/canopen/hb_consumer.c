@@ -39,8 +39,10 @@ ERR_DEFINE(hb_sensors, ERR_CODE_HB_SENSORS, ERR_SEV_FATAL,
            "Sensor box not operational or heartbeat lost");
 ERR_DEFINE(hb_rpi, ERR_CODE_HB_RPI, ERR_SEV_WARN,
            "Raspberry Pi not operational or heartbeat lost");
-ERR_DEFINE(hb_imu, ERR_CODE_HB_IMU, ERR_SEV_FATAL,
+ERR_DEFINE(hb_imu, ERR_CODE_HB_IMU, ERR_SEV_ERROR,
            "IMU not operational or heartbeat lost");
+ERR_DEFINE(hb_gps, ERR_CODE_HB_GPS, ERR_SEV_ERROR,
+           "GPS not operational or heartbeat lost");
 ERR_DEFINE(hb_acc, ERR_CODE_HB_ACC, ERR_SEV_FATAL,
            "Accumulator not operational or heartbeat lost");
 ERR_DEFINE(hb_inv_fl, ERR_CODE_HB_INV_FL, ERR_SEV_FATAL,
@@ -66,6 +68,9 @@ static uint32_t node_id_to_err_code(enum canopen_node_id id) {
 
     case NODE_ID_IMU:
       return ERR_CODE_HB_IMU;
+
+    case NODE_ID_GPS:
+      return ERR_CODE_HB_GPS;
 
     case NODE_ID_ACC:
       return ERR_CODE_HB_ACC;
