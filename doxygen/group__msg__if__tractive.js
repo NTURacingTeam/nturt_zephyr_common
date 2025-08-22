@@ -20,9 +20,5 @@ var group__msg__if__tractive =
       [ "status", "structmsg__ts__inv.html#ac2c97b22b5bdecf4bb0e149fda7b11db", null ],
       [ "volt", "structmsg__ts__inv.html#a18c262e4a534a33840ffd6dcdd0f9d55", null ]
     ] ],
-    [ "msg_ts_emcy_stop", "structmsg__ts__emcy__stop.html", [
-      [ "emcy_stop", "structmsg__ts__emcy__stop.html#a31ceb144640118fac3a47c7a0a835e83", null ],
-      [ "header", "structmsg__ts__emcy__stop.html#a0c53e5ae526ab129347000dfea62e71e", null ]
-    ] ],
     [ "MSG_TRACTIVE_LIST", "group__msg__if__tractive.html#ga6c1a082289b5eb2de4e44b214d646990", null ]
 ];

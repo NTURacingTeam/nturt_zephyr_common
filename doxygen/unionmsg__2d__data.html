@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NTURT Zephyr: msg_ts_emcy_stop Struct Reference</title>
+<title>NTURT Zephyr: msg_2d_data Union Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,7 +82,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('structmsg__ts__emcy__stop.html',''); initResizable(true); });
+$(function(){initNavTree('unionmsg__2d__data.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -110,77 +110,100 @@ $(function(){initNavTree('structmsg__ts__emcy__stop.html',''); initResizable(tru
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">msg_ts_emcy_stop Struct Reference<div class="ingroups"><a class="el" href="group__msg.html">Message</a> &raquo; <a class="el" href="group__msg__if.html">Message Interface</a> &raquo; <a class="el" href="group__msg__if__tractive.html">Tractive System Message</a></div></div></div>
+  <div class="headertitle"><div class="title">msg_2d_data Union Reference<div class="ingroups"><a class="el" href="group__msg.html">Message</a> &raquo; <a class="el" href="group__msg__if.html">Message Interface</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Emergency stop message.  
+<p>2D data.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;nturt/msg/interfaces/tractive.h&gt;</code></p>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for msg_ts_emcy_stop:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="structmsg__ts__emcy__stop__coll__graph.png" border="0" usemap="#amsg__ts__emcy__stop_coll__map" alt="Collaboration graph"/></div>
-<map name="amsg__ts__emcy__stop_coll__map" id="amsg__ts__emcy__stop_coll__map">
-<area shape="rect" title="Emergency stop message." alt="" coords="5,93,152,119"/>
-<area shape="rect" href="structmsg__header.html" title="Message header." alt="" coords="27,5,130,31"/>
-<area shape="poly" title=" " alt="" coords="81,45,81,93,76,93,76,45"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<p><code>#include &lt;nturt/msg/interfaces/common.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0c53e5ae526ab129347000dfea62e71e" id="r_a0c53e5ae526ab129347000dfea62e71e"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structmsg__header.html">msg_header</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c53e5ae526ab129347000dfea62e71e">header</a></td></tr>
-<tr class="separator:a0c53e5ae526ab129347000dfea62e71e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31ceb144640118fac3a47c7a0a835e83" id="r_a31ceb144640118fac3a47c7a0a835e83"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31ceb144640118fac3a47c7a0a835e83">emcy_stop</a></td></tr>
-<tr class="separator:a31ceb144640118fac3a47c7a0a835e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9c8d970ecf97fb710ebc915df7378f0" id="r_af9c8d970ecf97fb710ebc915df7378f0"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9c8d970ecf97fb710ebc915df7378f0">values</a> [2]</td></tr>
+<tr class="separator:af9c8d970ecf97fb710ebc915df7378f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7952a511ae24af0fe55c0f100c8d94b6" id="r_a7952a511ae24af0fe55c0f100c8d94b6"><td class="memItemLeft" >struct {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ede1d6c13a2abbc56e65552b789581b" id="r_a4ede1d6c13a2abbc56e65552b789581b"><td class="memItemLeft" >&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#a1b974ecab4cf04e1d6c1b60c4ff34fd0">x</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a4ede1d6c13a2abbc56e65552b789581b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a205f3570707131ac564f336e2c4c339c" id="r_a205f3570707131ac564f336e2c4c339c"><td class="memItemLeft" >&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#a9b3dc3b664f3fe798223f84b28fc553f">y</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a205f3570707131ac564f336e2c4c339c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7952a511ae24af0fe55c0f100c8d94b6" id="r_a7952a511ae24af0fe55c0f100c8d94b6"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom">&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a7952a511ae24af0fe55c0f100c8d94b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Emergency stop message. </p>
+<div class="textblock"><p>2D data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a31ceb144640118fac3a47c7a0a835e83" name="a31ceb144640118fac3a47c7a0a835e83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31ceb144640118fac3a47c7a0a835e83">&#9670;&#160;</a></span>emcy_stop</h2>
+<a id="a7952a511ae24af0fe55c0f100c8d94b6" name="a7952a511ae24af0fe55c0f100c8d94b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7952a511ae24af0fe55c0f100c8d94b6">&#9670;&#160;</a></span>[struct]</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t msg_ts_emcy_stop::emcy_stop</td>
+          <td class="memname">struct  { ... }  <a class="el" href="unionmsg__2d__data.html">msg_2d_data</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Emergency stop, 0: inactive, 1: active. </p>
 
 </div>
 </div>
-<a id="a0c53e5ae526ab129347000dfea62e71e" name="a0c53e5ae526ab129347000dfea62e71e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c53e5ae526ab129347000dfea62e71e">&#9670;&#160;</a></span>header</h2>
+<a id="af9c8d970ecf97fb710ebc915df7378f0" name="af9c8d970ecf97fb710ebc915df7378f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9c8d970ecf97fb710ebc915df7378f0">&#9670;&#160;</a></span>values</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct <a class="el" href="structmsg__header.html">msg_header</a> msg_ts_emcy_stop::header</td>
+          <td class="memname">float msg_2d_data::values[2]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Message header. </p>
+<p>2D data in an array. </p>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li>nturt/msg/interfaces/<a class="el" href="tractive_8h.html">tractive.h</a></li>
+<a id="a1b974ecab4cf04e1d6c1b60c4ff34fd0" name="a1b974ecab4cf04e1d6c1b60c4ff34fd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b974ecab4cf04e1d6c1b60c4ff34fd0">&#9670;&#160;</a></span>x</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float msg_2d_data::x</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>X-axis value. </p>
+
+</div>
+</div>
+<a id="a9b3dc3b664f3fe798223f84b28fc553f" name="a9b3dc3b664f3fe798223f84b28fc553f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b3dc3b664f3fe798223f84b28fc553f">&#9670;&#160;</a></span>y</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float msg_2d_data::y</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Y-axis value. </p>
+
+</div>
+</div>
+<hr/>The documentation for this union was generated from the following file:<ul>
+<li>nturt/msg/interfaces/<a class="el" href="common_8h.html">common.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a></li>
-    <li class="footer">Generated on Thu Aug 21 2025 15:24:02 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="navelem"><a class="el" href="unionmsg__2d__data.html">msg_2d_data</a></li>
+    <li class="footer">Generated on Fri Aug 22 2025 12:00:22 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

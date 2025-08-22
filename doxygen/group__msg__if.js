@@ -9,6 +9,11 @@ var group__msg__if =
     [ "msg_header", "structmsg__header.html", [
       [ "timestamp_ns", "structmsg__header.html#a149e87c80efea835c380ed38d8b629f3", null ]
     ] ],
+    [ "msg_2d_data", "unionmsg__2d__data.html", [
+      [ "values", "unionmsg__2d__data.html#af9c8d970ecf97fb710ebc915df7378f0", null ],
+      [ "x", "unionmsg__2d__data.html#a1b974ecab4cf04e1d6c1b60c4ff34fd0", null ],
+      [ "y", "unionmsg__2d__data.html#a9b3dc3b664f3fe798223f84b28fc553f", null ]
+    ] ],
     [ "msg_3d_data", "unionmsg__3d__data.html", [
       [ "values", "unionmsg__3d__data.html#a39b68f65daf2e6827b28a55afef43636", null ],
       [ "x", "unionmsg__3d__data.html#ab7d45b0515d829850357b9acd54edcd2", null ],

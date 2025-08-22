@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a7a8306048031f70cbb979d888d5e5f56":[2,2,1,6,1],
+"group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a8de0832aee41d2ac2cbb1997a3d3fbb8":[2,2,1,6,4],
 "group__stat.html#ggae70dc85d406e951d17890605c02aa7d5aa47c3639be1fe073620c78a64eeaeae7":[2,2,1,6,9],
 "group__stat.html#ggae70dc85d406e951d17890605c02aa7d5ac1f842601f5eada4a18a081986996955":[2,2,1,6,3],
 "group__stat.html#ggae70dc85d406e951d17890605c02aa7d5adceebbc176186b2bbeb1b53731478bcd":[2,2,1,6,8],
@@ -224,15 +226,14 @@ var NAVTREEINDEX2 =
 "structmsg__logging.html#a4d857ff86ef0a385277ad6c14e3ab051":[2,6,2,0,2],
 "structmsg__logging.html#a7c3bb6dcedb5b1bfe2c1aabf897f0289":[2,6,2,0,0],
 "structmsg__sensor__cockpit.html":[2,6,1,3,2],
-"structmsg__sensor__cockpit.html#a0e92ed4c35a1ea483628fd8c35e34fb2":[2,6,1,3,2,4],
-"structmsg__sensor__cockpit.html#a1c514bb089268f9fe5de4d3c3974eb7c":[2,6,1,3,2,1],
-"structmsg__sensor__cockpit.html#a342369b0318bd172770633f0d85fd81e":[2,6,1,3,2,2],
+"structmsg__sensor__cockpit.html#a0e92ed4c35a1ea483628fd8c35e34fb2":[2,6,1,3,2,3],
+"structmsg__sensor__cockpit.html#a342369b0318bd172770633f0d85fd81e":[2,6,1,3,2,1],
 "structmsg__sensor__cockpit.html#a383b6e1f9ba4768898322f5eefd20731":[2,6,1,3,2,0],
-"structmsg__sensor__cockpit.html#a75da20daa7293f9626d8b1a9404c9042":[2,6,1,3,2,5],
-"structmsg__sensor__cockpit.html#aa7403cd5bd552d0757cea3ddd938a05a":[2,6,1,3,2,6],
-"structmsg__sensor__cockpit.html#ac0c1d9949700cb52910e7cb18996fa7d":[2,6,1,3,2,8],
-"structmsg__sensor__cockpit.html#ae7c8c3c1b403462c3d60a1a12e2d76b6":[2,6,1,3,2,3],
-"structmsg__sensor__cockpit.html#af9ef1c3c8ab02af5e70febfe2e11facf":[2,6,1,3,2,7],
+"structmsg__sensor__cockpit.html#a75da20daa7293f9626d8b1a9404c9042":[2,6,1,3,2,4],
+"structmsg__sensor__cockpit.html#aa7403cd5bd552d0757cea3ddd938a05a":[2,6,1,3,2,5],
+"structmsg__sensor__cockpit.html#ac0c1d9949700cb52910e7cb18996fa7d":[2,6,1,3,2,7],
+"structmsg__sensor__cockpit.html#ae7c8c3c1b403462c3d60a1a12e2d76b6":[2,6,1,3,2,2],
+"structmsg__sensor__cockpit.html#af9ef1c3c8ab02af5e70febfe2e11facf":[2,6,1,3,2,6],
 "structmsg__sensor__gps.html":[2,6,1,3,5],
 "structmsg__sensor__gps.html#a3fe2f00a3b3b290cd972264ea16b7172":[2,6,1,3,5,0],
 "structmsg__sensor__gps.html#a5d5ad0a9395c8fef414bd3972173ab15":[2,6,1,3,5,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structmsg__sensor__pow.html#a480f24f62b956c1e4c54a1fae5ec7771":[2,6,1,3,6,0],
 "structmsg__sensor__pow.html#a75d6ef74388490f15c3235830761df81":[2,6,1,3,6,3],
 "structmsg__sensor__wheel.html":[2,6,1,3,3],
-"structmsg__sensor__wheel.html#a4db0e8b9d986bf7474afcacf75cfffa5":[2,6,1,3,3,4],
-"structmsg__sensor__wheel.html#a53e4aab8e999508be59553a000cb9323":[2,6,1,3,3,3]
+"structmsg__sensor__wheel.html#a4db0e8b9d986bf7474afcacf75cfffa5":[2,6,1,3,3,4]
 };

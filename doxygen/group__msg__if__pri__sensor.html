@@ -178,9 +178,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="sensor_8h.html">nturt/msg/interfaces/sensor.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a>                                                          \</div>
-<div class="line">      <span class="stringliteral">&quot;\n\r\tsteer (deg): %g&quot;</span>                                            \</div>
-<div class="line">      <span class="stringliteral">&quot;\n\r\taccel (%%): %g, pedal plaus (%%): %g, apps (deg): (%g, %g)&quot;</span> \</div>
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a>                                    \</div>
+<div class="line">      <span class="stringliteral">&quot;\n\r\tsteer (deg): %g&quot;</span>                      \</div>
+<div class="line">      <span class="stringliteral">&quot;\n\r\taccel (%%): %g, apps (deg): (%g, %g)&quot;</span> \</div>
 <div class="line">      <span class="stringliteral">&quot;\n\r\tbrake (%%): %g, bse (kPa): (%g, %g)&quot;</span></div>
 <div class="ttc" id="agroup__msg__if__pri_html_ga4abb496d8bf5b7fb2b9d33a7362d06f7"><div class="ttname"><a href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a></div><div class="ttdeci">#define PRImsg_header</div><div class="ttdoc">Insert msg_header format string.</div><div class="ttdef"><b>Definition</b> common.h:33</div></div>
 </div><!-- fragment -->
@@ -205,9 +205,8 @@ Macros</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="sensor_8h.html">nturt/msg/interfaces/sensor.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a>((data).header), (double)((data).steer),                   \</div>
-<div class="line">      (double)((data).accel), (double)((data).accel_pedal_plaus),             \</div>
-<div class="line">      (double)((data).apps1), (double)((data).apps2), (double)((data).brake), \</div>
-<div class="line">      (double)((data).bse1), (double)((data).bse2)</div>
+<div class="line">      (double)((data).accel), (double)((data).apps1), (double)((data).apps2), \</div>
+<div class="line">      (double)((data).brake), (double)((data).bse1), (double)((data).bse2)</div>
 <div class="ttc" id="agroup__msg__if__pri_html_ga62bc45b20f45b7ad6cb0a6c2aeb93aa7"><div class="ttname"><a href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a></div><div class="ttdeci">#define PRImsg_header_arg(data)</div><div class="ttdoc">Insert msg_header arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:40</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__sensor__cockpit.html">msg_sensor_cockpit</a> arguments to printf format. </p>
@@ -285,7 +284,7 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a> <span class="stringliteral">&quot;\n\r\tacceleration (m/s^2): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#gaa9496b9305421a141ab31d719b2a962d">PRImsg_3d_data</a> \</div>
 <div class="line">                <span class="stringliteral">&quot;\n\r\tgyration (rad/s): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#gaa9496b9305421a141ab31d719b2a962d">PRImsg_3d_data</a>     \</div>
 <div class="line">                <span class="stringliteral">&quot;\n\r\teular angle (deg): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#gaa9496b9305421a141ab31d719b2a962d">PRImsg_3d_data</a></div>
-<div class="ttc" id="agroup__msg__if__pri_html_gaa9496b9305421a141ab31d719b2a962d"><div class="ttname"><a href="group__msg__if__pri.html#gaa9496b9305421a141ab31d719b2a962d">PRImsg_3d_data</a></div><div class="ttdeci">#define PRImsg_3d_data</div><div class="ttdoc">Insert msg_3d_data format string.</div><div class="ttdef"><b>Definition</b> common.h:45</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_gaa9496b9305421a141ab31d719b2a962d"><div class="ttname"><a href="group__msg__if__pri.html#gaa9496b9305421a141ab31d719b2a962d">PRImsg_3d_data</a></div><div class="ttdeci">#define PRImsg_3d_data</div><div class="ttdoc">Insert msg_3d_data format string.</div><div class="ttdef"><b>Definition</b> common.h:55</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__sensor__imu.html">msg_sensor_imu</a> printf format string. </p>
 
@@ -309,7 +308,7 @@ Macros</h2></td></tr>
 <p><code>#include &lt;<a class="el" href="sensor_8h.html">nturt/msg/interfaces/sensor.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a>((data).header), <a class="code hl_define" href="group__msg__if__pri.html#ga5faa5fb2e611a6f362483cc8a8f2aa23">PRImsg_3d_data_arg</a>((data).accel), \</div>
 <div class="line">      PRImsg_3d_data_arg((data).gyro), <a class="code hl_define" href="group__msg__if__pri.html#ga5faa5fb2e611a6f362483cc8a8f2aa23">PRImsg_3d_data_arg</a>((data).orient)</div>
-<div class="ttc" id="agroup__msg__if__pri_html_ga5faa5fb2e611a6f362483cc8a8f2aa23"><div class="ttname"><a href="group__msg__if__pri.html#ga5faa5fb2e611a6f362483cc8a8f2aa23">PRImsg_3d_data_arg</a></div><div class="ttdeci">#define PRImsg_3d_data_arg(data)</div><div class="ttdoc">Insert msg_3d_data arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:52</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_ga5faa5fb2e611a6f362483cc8a8f2aa23"><div class="ttname"><a href="group__msg__if__pri.html#ga5faa5fb2e611a6f362483cc8a8f2aa23">PRImsg_3d_data_arg</a></div><div class="ttdeci">#define PRImsg_3d_data_arg(data)</div><div class="ttdoc">Insert msg_3d_data arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:62</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__sensor__imu.html">msg_sensor_imu</a> arguments to printf format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -389,7 +388,7 @@ Macros</h2></td></tr>
 <div class="line">                <span class="stringliteral">&quot;\n\r\ttorque (Nm): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a>       \</div>
 <div class="line">                <span class="stringliteral">&quot;\n\r\ttire temp (deg C): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a> \</div>
 <div class="line">                <span class="stringliteral">&quot;\n\r\tsuspension travel (m): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a></div>
-<div class="ttc" id="agroup__msg__if__pri_html_ga2b695efa25bb85aed9c7061a17dfc17d"><div class="ttname"><a href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a></div><div class="ttdeci">#define PRImsg_4wheel_data</div><div class="ttdoc">Insert msg_4wheel_data format string.</div><div class="ttdef"><b>Definition</b> common.h:56</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_ga2b695efa25bb85aed9c7061a17dfc17d"><div class="ttname"><a href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a></div><div class="ttdeci">#define PRImsg_4wheel_data</div><div class="ttdoc">Insert msg_4wheel_data format string.</div><div class="ttdef"><b>Definition</b> common.h:66</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__sensor__wheel.html">msg_sensor_wheel</a> printf format string. </p>
 
@@ -415,7 +414,7 @@ Macros</h2></td></tr>
 <div class="line">      PRImsg_4wheel_data_arg((data).torque),                              \</div>
 <div class="line">      PRImsg_4wheel_data_arg((data).tire_temp),                           \</div>
 <div class="line">      PRImsg_4wheel_data_arg((data).susp_travel)</div>
-<div class="ttc" id="agroup__msg__if__pri_html_ga0700155d223f615de6f90ea9573bce8c"><div class="ttname"><a href="group__msg__if__pri.html#ga0700155d223f615de6f90ea9573bce8c">PRImsg_4wheel_data_arg</a></div><div class="ttdeci">#define PRImsg_4wheel_data_arg(data)</div><div class="ttdoc">Insert msg_4wheel_data arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:63</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_ga0700155d223f615de6f90ea9573bce8c"><div class="ttname"><a href="group__msg__if__pri.html#ga0700155d223f615de6f90ea9573bce8c">PRImsg_4wheel_data_arg</a></div><div class="ttdeci">#define PRImsg_4wheel_data_arg(data)</div><div class="ttdoc">Insert msg_4wheel_data arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:73</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__sensor__wheel.html">msg_sensor_wheel</a> arguments to printf format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -432,7 +431,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Aug 21 2025 15:24:02 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Fri Aug 22 2025 12:00:22 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

@@ -130,6 +130,10 @@ $(function(){initNavTree('group__can__convert.html',''); initResizable(true); })
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ga488c339242fd8595f274cebfb53f5a86" id="r_ga488c339242fd8595f274cebfb53f5a86"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga488c339242fd8595f274cebfb53f5a86">INV_DIR_L</a>&#160;&#160;&#160;-1.0F</td></tr>
+<tr class="separator:ga488c339242fd8595f274cebfb53f5a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga121d0eee3f57dea86b1b8fc980efd810" id="r_ga121d0eee3f57dea86b1b8fc980efd810"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga121d0eee3f57dea86b1b8fc980efd810">INV_DIR_R</a>&#160;&#160;&#160;1.0F</td></tr>
+<tr class="separator:ga121d0eee3f57dea86b1b8fc980efd810"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga18eed08e2447eed966f67d23aacabf37" id="r_ga18eed08e2447eed966f67d23aacabf37"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a>&#160;&#160;&#160;100.0F</td></tr>
 <tr class="separator:ga18eed08e2447eed966f67d23aacabf37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeeacb4d03f20e5474ac5ee37e4485203" id="r_gaeeacb4d03f20e5474ac5ee37e4485203"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaeeacb4d03f20e5474ac5ee37e4485203">MOTOR_REDUCTION_RATIO</a>&#160;&#160;&#160;13.1F</td></tr>
@@ -146,23 +150,32 @@ Macros</h2></td></tr>
 <tr class="memitem:ga95f88199c5bb7966230590e0354d7880" id="r_ga95f88199c5bb7966230590e0354d7880"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga95f88199c5bb7966230590e0354d7880">BSE_RAW_PHY_TO_CAN</a>(phy)</td></tr>
 <tr class="memdesc:ga95f88199c5bb7966230590e0354d7880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Brake pressure physical data in kPa (float), convert to bar (uint8_t).  <br /></td></tr>
 <tr class="separator:ga95f88199c5bb7966230590e0354d7880"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae19ca4018cdf8d5f53d460303ccc5acb" id="r_gae19ca4018cdf8d5f53d460303ccc5acb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gae19ca4018cdf8d5f53d460303ccc5acb">ROTATION_SPEED_PHY_TO_CAN</a>(phy)</td></tr>
-<tr class="memdesc:gae19ca4018cdf8d5f53d460303ccc5acb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotational speed physical data in RPM (float), convert to RPM (uint16_t).  <br /></td></tr>
-<tr class="separator:gae19ca4018cdf8d5f53d460303ccc5acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9303bcfff8d09073982f70441ad46c14" id="r_ga9303bcfff8d09073982f70441ad46c14"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga9303bcfff8d09073982f70441ad46c14">VELOCITY_PHY_TO_CAN</a>(phy)</td></tr>
+<tr class="memdesc:ga9303bcfff8d09073982f70441ad46c14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Velocity physical data in m/s (float), convert to mm/s (int16_t).  <br /></td></tr>
+<tr class="separator:ga9303bcfff8d09073982f70441ad46c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga690935232bb14532fda4a6901c83a2eb" id="r_ga690935232bb14532fda4a6901c83a2eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga690935232bb14532fda4a6901c83a2eb">ANGULAR_VELOCITY_PHY_TO_CAN</a>(phy)</td></tr>
+<tr class="memdesc:ga690935232bb14532fda4a6901c83a2eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angular velocity physical data in RPM (float), convert to RPM (uint16_t).  <br /></td></tr>
+<tr class="separator:ga690935232bb14532fda4a6901c83a2eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafdf5b5ed3b3b6a2cbf84c8649bc481c9" id="r_gafdf5b5ed3b3b6a2cbf84c8649bc481c9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gafdf5b5ed3b3b6a2cbf84c8649bc481c9">SUSP_PHY_TO_CAN</a>(phy)</td></tr>
 <tr class="separator:gafdf5b5ed3b3b6a2cbf84c8649bc481c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga966023893076e48dad923d15e0559b69" id="r_ga966023893076e48dad923d15e0559b69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga966023893076e48dad923d15e0559b69">INV_TORQUE_PHY_TO_CAN</a>(phy)</td></tr>
-<tr class="memdesc:ga966023893076e48dad923d15e0559b69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Torque command physical data in Nm (float), convert to 0.001 rated torque (int16_t).  <br /></td></tr>
-<tr class="separator:ga966023893076e48dad923d15e0559b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13c1064df9f44ad78e55046c1d3b6b08" id="r_ga13c1064df9f44ad78e55046c1d3b6b08"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga13c1064df9f44ad78e55046c1d3b6b08">INV_TORQUE_PHY_TO_CAN_L</a>(phy)</td></tr>
+<tr class="memdesc:ga13c1064df9f44ad78e55046c1d3b6b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Left torque command physical data in Nm (float), convert to 0.001 rated torque (int16_t).  <br /></td></tr>
+<tr class="separator:ga13c1064df9f44ad78e55046c1d3b6b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3832a5e5e94afd4cae14fd47d4d2d7e6" id="r_ga3832a5e5e94afd4cae14fd47d4d2d7e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga3832a5e5e94afd4cae14fd47d4d2d7e6">INV_TORQUE_PHY_TO_CAN_R</a>(phy)</td></tr>
+<tr class="memdesc:ga3832a5e5e94afd4cae14fd47d4d2d7e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right torque command physical data in Nm (float), convert to 0.001 rated torque (int16_t).  <br /></td></tr>
+<tr class="separator:ga3832a5e5e94afd4cae14fd47d4d2d7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga080ae4a85d68752effb6464cd79f5970" id="r_ga080ae4a85d68752effb6464cd79f5970"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga080ae4a85d68752effb6464cd79f5970">STEER_CAN_TO_PHY</a>(can)</td></tr>
 <tr class="memdesc:ga080ae4a85d68752effb6464cd79f5970"><td class="mdescLeft">&#160;</td><td class="mdescRight">Steering angle CAN data in 0.01 deg (int16_t), convert to deg (float).  <br /></td></tr>
 <tr class="separator:ga080ae4a85d68752effb6464cd79f5970"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa624f5c812f5e58b28be72dbf987cb73" id="r_gaa624f5c812f5e58b28be72dbf987cb73"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaa624f5c812f5e58b28be72dbf987cb73">PEDAL_TRAV_CAN_TO_PHY</a>(can)</td></tr>
 <tr class="memdesc:gaa624f5c812f5e58b28be72dbf987cb73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pedal travel CAN data in % (float), convert to % (uint8_t).  <br /></td></tr>
 <tr class="separator:gaa624f5c812f5e58b28be72dbf987cb73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24ced5844c57d3c3758311fbd0fe7dae" id="r_ga24ced5844c57d3c3758311fbd0fe7dae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga24ced5844c57d3c3758311fbd0fe7dae">ROTATION_SPEED_CAN_TO_PHY</a>(can)</td></tr>
-<tr class="memdesc:ga24ced5844c57d3c3758311fbd0fe7dae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotational speed CAN data in RPM (uint16_t), convert to RPM (float).  <br /></td></tr>
-<tr class="separator:ga24ced5844c57d3c3758311fbd0fe7dae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90ea09c6c35f440c0e0bc1a64e4b5a59" id="r_ga90ea09c6c35f440c0e0bc1a64e4b5a59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga90ea09c6c35f440c0e0bc1a64e4b5a59">VELOCITY_CAN_TO_PHY</a>(can)</td></tr>
+<tr class="memdesc:ga90ea09c6c35f440c0e0bc1a64e4b5a59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Velocity CAN data in mm/s (uint16_t), convert to m/s (float).  <br /></td></tr>
+<tr class="separator:ga90ea09c6c35f440c0e0bc1a64e4b5a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7ca163b8bc43236ae141948544c9b62" id="r_gad7ca163b8bc43236ae141948544c9b62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad7ca163b8bc43236ae141948544c9b62">ANGULAR_VELOCITY_CAN_TO_PHY</a>(can)</td></tr>
+<tr class="memdesc:gad7ca163b8bc43236ae141948544c9b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angular velocity CAN data in RPM (uint16_t), convert to RPM (float).  <br /></td></tr>
+<tr class="separator:gad7ca163b8bc43236ae141948544c9b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga865368634dffcb6706daa5767626b4f6" id="r_ga865368634dffcb6706daa5767626b4f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga865368634dffcb6706daa5767626b4f6">ACC_VOLT_CAN_TO_PHY</a>(can)</td></tr>
 <tr class="memdesc:ga865368634dffcb6706daa5767626b4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accumulator voltage CAN data in 1/1024 V (uint32_t), convert to V (float).  <br /></td></tr>
 <tr class="separator:ga865368634dffcb6706daa5767626b4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,12 +188,18 @@ Macros</h2></td></tr>
 <tr class="memitem:gad65c5ee324a63794d0e488a4e5e5d4d8" id="r_gad65c5ee324a63794d0e488a4e5e5d4d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad65c5ee324a63794d0e488a4e5e5d4d8">ACC_CAPACITY_CAN_TO_PHY</a>(can)</td></tr>
 <tr class="memdesc:gad65c5ee324a63794d0e488a4e5e5d4d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accumulator capacity CAN data in 10 mAh (int16_t), convert to mAh (float).  <br /></td></tr>
 <tr class="separator:gad65c5ee324a63794d0e488a4e5e5d4d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0a37792d6bb835dfc48104cb1ecd50be" id="r_ga0a37792d6bb835dfc48104cb1ecd50be"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga0a37792d6bb835dfc48104cb1ecd50be">INV_SPEED_CAN_TO_PHY</a>(can)</td></tr>
-<tr class="memdesc:ga0a37792d6bb835dfc48104cb1ecd50be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverter speed CAN data in RPM (int16_t) before reduction, convert to RPM (float) after reduction.  <br /></td></tr>
-<tr class="separator:ga0a37792d6bb835dfc48104cb1ecd50be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebb19feee7c812dd257f7b0bfedc6dfc" id="r_gaebb19feee7c812dd257f7b0bfedc6dfc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaebb19feee7c812dd257f7b0bfedc6dfc">INV_TORQUE_CAN_TO_PHY</a>(can)</td></tr>
-<tr class="memdesc:gaebb19feee7c812dd257f7b0bfedc6dfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverter torque CAN data in 0.001 rated torque (int16_t), convert to Nm (float).  <br /></td></tr>
-<tr class="separator:gaebb19feee7c812dd257f7b0bfedc6dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade8cdaf1642e4fe5c0193ccf0b5ddea4" id="r_gade8cdaf1642e4fe5c0193ccf0b5ddea4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gade8cdaf1642e4fe5c0193ccf0b5ddea4">INV_SPEED_CAN_TO_PHY_L</a>(can)</td></tr>
+<tr class="memdesc:gade8cdaf1642e4fe5c0193ccf0b5ddea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Left inverter speed CAN data in RPM (int16_t) before reduction, convert to RPM (float) after reduction.  <br /></td></tr>
+<tr class="separator:gade8cdaf1642e4fe5c0193ccf0b5ddea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab460e226cf030a049006cb63cd48e9c" id="r_gaab460e226cf030a049006cb63cd48e9c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaab460e226cf030a049006cb63cd48e9c">INV_SPEED_CAN_TO_PHY_R</a>(can)</td></tr>
+<tr class="memdesc:gaab460e226cf030a049006cb63cd48e9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right inverter speed CAN data in RPM (int16_t) before reduction, convert to RPM (float) after reduction.  <br /></td></tr>
+<tr class="separator:gaab460e226cf030a049006cb63cd48e9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5ef12797f8c597b9b4c6b2a139d9691" id="r_gab5ef12797f8c597b9b4c6b2a139d9691"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab5ef12797f8c597b9b4c6b2a139d9691">INV_TORQUE_CAN_TO_PHY_L</a>(can)</td></tr>
+<tr class="memdesc:gab5ef12797f8c597b9b4c6b2a139d9691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Left inverter torque CAN data in 0.001 rated torque (int16_t), convert to Nm (float).  <br /></td></tr>
+<tr class="separator:gab5ef12797f8c597b9b4c6b2a139d9691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafddc63cc8deabb0bdd1f78b6cd4990f8" id="r_gafddc63cc8deabb0bdd1f78b6cd4990f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gafddc63cc8deabb0bdd1f78b6cd4990f8">INV_TORQUE_CAN_TO_PHY_R</a>(can)</td></tr>
+<tr class="memdesc:gafddc63cc8deabb0bdd1f78b6cd4990f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right inverter torque CAN data in 0.001 rated torque (int16_t), convert to Nm (float).  <br /></td></tr>
+<tr class="separator:gafddc63cc8deabb0bdd1f78b6cd4990f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga427c2e5abeb802a8c06e8e2df7716049" id="r_ga427c2e5abeb802a8c06e8e2df7716049"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga427c2e5abeb802a8c06e8e2df7716049">INV_VOLT_CAN_TO_PHY</a>(can)</td></tr>
 <tr class="memdesc:ga427c2e5abeb802a8c06e8e2df7716049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverter voltage CAN data in 0.01 V (uint16_t), convert to V (float).  <br /></td></tr>
 <tr class="separator:ga427c2e5abeb802a8c06e8e2df7716049"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -294,6 +313,50 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">((float)(can) / 1024.0F)</div>
 </div><!-- fragment -->
 <p>Accumulator voltage CAN data in 1/1024 V (uint32_t), convert to V (float). </p>
+
+</div>
+</div>
+<a id="gad7ca163b8bc43236ae141948544c9b62" name="gad7ca163b8bc43236ae141948544c9b62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad7ca163b8bc43236ae141948544c9b62">&#9670;&#160;</a></span>ANGULAR_VELOCITY_CAN_TO_PHY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ANGULAR_VELOCITY_CAN_TO_PHY</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>can</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">((float)(can))</div>
+</div><!-- fragment -->
+<p>Angular velocity CAN data in RPM (uint16_t), convert to RPM (float). </p>
+
+</div>
+</div>
+<a id="ga690935232bb14532fda4a6901c83a2eb" name="ga690935232bb14532fda4a6901c83a2eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga690935232bb14532fda4a6901c83a2eb">&#9670;&#160;</a></span>ANGULAR_VELOCITY_PHY_TO_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ANGULAR_VELOCITY_PHY_TO_CAN</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>phy</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">((uint16_t)(phy))</div>
+</div><!-- fragment -->
+<p>Angular velocity physical data in RPM (float), convert to RPM (uint16_t). </p>
 
 </div>
 </div>
@@ -473,6 +536,38 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="ga488c339242fd8595f274cebfb53f5a86" name="ga488c339242fd8595f274cebfb53f5a86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga488c339242fd8595f274cebfb53f5a86">&#9670;&#160;</a></span>INV_DIR_L</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INV_DIR_L&#160;&#160;&#160;-1.0F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+
+</div>
+</div>
+<a id="ga121d0eee3f57dea86b1b8fc980efd810" name="ga121d0eee3f57dea86b1b8fc980efd810"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga121d0eee3f57dea86b1b8fc980efd810">&#9670;&#160;</a></span>INV_DIR_R</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INV_DIR_R&#160;&#160;&#160;1.0F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+
+</div>
+</div>
 <a id="ga18eed08e2447eed966f67d23aacabf37" name="ga18eed08e2447eed966f67d23aacabf37"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga18eed08e2447eed966f67d23aacabf37">&#9670;&#160;</a></span>INV_RATED_TORQUE</h2>
 
@@ -489,14 +584,14 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="ga0a37792d6bb835dfc48104cb1ecd50be" name="ga0a37792d6bb835dfc48104cb1ecd50be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0a37792d6bb835dfc48104cb1ecd50be">&#9670;&#160;</a></span>INV_SPEED_CAN_TO_PHY</h2>
+<a id="gade8cdaf1642e4fe5c0193ccf0b5ddea4" name="gade8cdaf1642e4fe5c0193ccf0b5ddea4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gade8cdaf1642e4fe5c0193ccf0b5ddea4">&#9670;&#160;</a></span>INV_SPEED_CAN_TO_PHY_L</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define INV_SPEED_CAN_TO_PHY</td>
+          <td class="memname">#define INV_SPEED_CAN_TO_PHY_L</td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>can</em></span></td><td>)</td>
           <td></td>
@@ -505,10 +600,35 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">((can) / <a class="code hl_define" href="#gaeeacb4d03f20e5474ac5ee37e4485203">MOTOR_REDUCTION_RATIO</a>)</div>
-<div class="ttc" id="agroup__can__convert_html_gaeeacb4d03f20e5474ac5ee37e4485203"><div class="ttname"><a href="#gaeeacb4d03f20e5474ac5ee37e4485203">MOTOR_REDUCTION_RATIO</a></div><div class="ttdeci">#define MOTOR_REDUCTION_RATIO</div><div class="ttdef"><b>Definition</b> convert.h:26</div></div>
+<b>Value:</b><div class="fragment"><div class="line">  (<a class="code hl_define" href="#ga488c339242fd8595f274cebfb53f5a86">INV_DIR_L</a> * <a class="code hl_define" href="#gad7ca163b8bc43236ae141948544c9b62">ANGULAR_VELOCITY_CAN_TO_PHY</a>(can) / <a class="code hl_define" href="#gaeeacb4d03f20e5474ac5ee37e4485203">MOTOR_REDUCTION_RATIO</a>)</div>
+<div class="ttc" id="agroup__can__convert_html_ga488c339242fd8595f274cebfb53f5a86"><div class="ttname"><a href="#ga488c339242fd8595f274cebfb53f5a86">INV_DIR_L</a></div><div class="ttdeci">#define INV_DIR_L</div><div class="ttdef"><b>Definition</b> convert.h:25</div></div>
+<div class="ttc" id="agroup__can__convert_html_gad7ca163b8bc43236ae141948544c9b62"><div class="ttname"><a href="#gad7ca163b8bc43236ae141948544c9b62">ANGULAR_VELOCITY_CAN_TO_PHY</a></div><div class="ttdeci">#define ANGULAR_VELOCITY_CAN_TO_PHY(can)</div><div class="ttdoc">Angular velocity CAN data in RPM (uint16_t), convert to RPM (float).</div><div class="ttdef"><b>Definition</b> convert.h:78</div></div>
+<div class="ttc" id="agroup__can__convert_html_gaeeacb4d03f20e5474ac5ee37e4485203"><div class="ttname"><a href="#gaeeacb4d03f20e5474ac5ee37e4485203">MOTOR_REDUCTION_RATIO</a></div><div class="ttdeci">#define MOTOR_REDUCTION_RATIO</div><div class="ttdef"><b>Definition</b> convert.h:28</div></div>
 </div><!-- fragment -->
-<p>Inverter speed CAN data in RPM (int16_t) before reduction, convert to RPM (float) after reduction. </p>
+<p>Left inverter speed CAN data in RPM (int16_t) before reduction, convert to RPM (float) after reduction. </p>
+
+</div>
+</div>
+<a id="gaab460e226cf030a049006cb63cd48e9c" name="gaab460e226cf030a049006cb63cd48e9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaab460e226cf030a049006cb63cd48e9c">&#9670;&#160;</a></span>INV_SPEED_CAN_TO_PHY_R</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INV_SPEED_CAN_TO_PHY_R</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>can</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">  (<a class="code hl_define" href="#ga121d0eee3f57dea86b1b8fc980efd810">INV_DIR_R</a> * <a class="code hl_define" href="#gad7ca163b8bc43236ae141948544c9b62">ANGULAR_VELOCITY_CAN_TO_PHY</a>(can) / <a class="code hl_define" href="#gaeeacb4d03f20e5474ac5ee37e4485203">MOTOR_REDUCTION_RATIO</a>)</div>
+<div class="ttc" id="agroup__can__convert_html_ga121d0eee3f57dea86b1b8fc980efd810"><div class="ttname"><a href="#ga121d0eee3f57dea86b1b8fc980efd810">INV_DIR_R</a></div><div class="ttdeci">#define INV_DIR_R</div><div class="ttdef"><b>Definition</b> convert.h:26</div></div>
+</div><!-- fragment -->
+<p>Right inverter speed CAN data in RPM (int16_t) before reduction, convert to RPM (float) after reduction. </p>
 
 </div>
 </div>
@@ -534,14 +654,14 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="gaebb19feee7c812dd257f7b0bfedc6dfc" name="gaebb19feee7c812dd257f7b0bfedc6dfc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaebb19feee7c812dd257f7b0bfedc6dfc">&#9670;&#160;</a></span>INV_TORQUE_CAN_TO_PHY</h2>
+<a id="gab5ef12797f8c597b9b4c6b2a139d9691" name="gab5ef12797f8c597b9b4c6b2a139d9691"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab5ef12797f8c597b9b4c6b2a139d9691">&#9670;&#160;</a></span>INV_TORQUE_CAN_TO_PHY_L</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define INV_TORQUE_CAN_TO_PHY</td>
+          <td class="memname">#define INV_TORQUE_CAN_TO_PHY_L</td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>can</em></span></td><td>)</td>
           <td></td>
@@ -550,21 +670,43 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">((0.001F * <a class="code hl_define" href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a> * (can)))</div>
-<div class="ttc" id="agroup__can__convert_html_ga18eed08e2447eed966f67d23aacabf37"><div class="ttname"><a href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a></div><div class="ttdeci">#define INV_RATED_TORQUE</div><div class="ttdef"><b>Definition</b> convert.h:25</div></div>
+<b>Value:</b><div class="fragment"><div class="line">  (<a class="code hl_define" href="#ga488c339242fd8595f274cebfb53f5a86">INV_DIR_L</a> * 0.001F * <a class="code hl_define" href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a> * (can))</div>
+<div class="ttc" id="agroup__can__convert_html_ga18eed08e2447eed966f67d23aacabf37"><div class="ttname"><a href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a></div><div class="ttdeci">#define INV_RATED_TORQUE</div><div class="ttdef"><b>Definition</b> convert.h:27</div></div>
 </div><!-- fragment -->
-<p>Inverter torque CAN data in 0.001 rated torque (int16_t), convert to Nm (float). </p>
+<p>Left inverter torque CAN data in 0.001 rated torque (int16_t), convert to Nm (float). </p>
 
 </div>
 </div>
-<a id="ga966023893076e48dad923d15e0559b69" name="ga966023893076e48dad923d15e0559b69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga966023893076e48dad923d15e0559b69">&#9670;&#160;</a></span>INV_TORQUE_PHY_TO_CAN</h2>
+<a id="gafddc63cc8deabb0bdd1f78b6cd4990f8" name="gafddc63cc8deabb0bdd1f78b6cd4990f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafddc63cc8deabb0bdd1f78b6cd4990f8">&#9670;&#160;</a></span>INV_TORQUE_CAN_TO_PHY_R</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define INV_TORQUE_PHY_TO_CAN</td>
+          <td class="memname">#define INV_TORQUE_CAN_TO_PHY_R</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>can</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">  (<a class="code hl_define" href="#ga121d0eee3f57dea86b1b8fc980efd810">INV_DIR_R</a> * 0.001F * <a class="code hl_define" href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a> * (can))</div>
+</div><!-- fragment -->
+<p>Right inverter torque CAN data in 0.001 rated torque (int16_t), convert to Nm (float). </p>
+
+</div>
+</div>
+<a id="ga13c1064df9f44ad78e55046c1d3b6b08" name="ga13c1064df9f44ad78e55046c1d3b6b08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga13c1064df9f44ad78e55046c1d3b6b08">&#9670;&#160;</a></span>INV_TORQUE_PHY_TO_CAN_L</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INV_TORQUE_PHY_TO_CAN_L</td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>phy</em></span></td><td>)</td>
           <td></td>
@@ -573,9 +715,31 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  ((int16_t)(1000.0F / <a class="code hl_define" href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a> * (phy)))</div>
+<b>Value:</b><div class="fragment"><div class="line">  ((int16_t)(<a class="code hl_define" href="#ga488c339242fd8595f274cebfb53f5a86">INV_DIR_L</a> * 1000.0F / <a class="code hl_define" href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a> * (phy)))</div>
 </div><!-- fragment -->
-<p>Torque command physical data in Nm (float), convert to 0.001 rated torque (int16_t). </p>
+<p>Left torque command physical data in Nm (float), convert to 0.001 rated torque (int16_t). </p>
+
+</div>
+</div>
+<a id="ga3832a5e5e94afd4cae14fd47d4d2d7e6" name="ga3832a5e5e94afd4cae14fd47d4d2d7e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3832a5e5e94afd4cae14fd47d4d2d7e6">&#9670;&#160;</a></span>INV_TORQUE_PHY_TO_CAN_R</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INV_TORQUE_PHY_TO_CAN_R</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>phy</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">  ((int16_t)(<a class="code hl_define" href="#ga121d0eee3f57dea86b1b8fc980efd810">INV_DIR_R</a> * 1000.0F / <a class="code hl_define" href="#ga18eed08e2447eed966f67d23aacabf37">INV_RATED_TORQUE</a> * (phy)))</div>
+</div><!-- fragment -->
+<p>Right torque command physical data in Nm (float), convert to 0.001 rated torque (int16_t). </p>
 
 </div>
 </div>
@@ -661,50 +825,6 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="ga24ced5844c57d3c3758311fbd0fe7dae" name="ga24ced5844c57d3c3758311fbd0fe7dae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga24ced5844c57d3c3758311fbd0fe7dae">&#9670;&#160;</a></span>ROTATION_SPEED_CAN_TO_PHY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ROTATION_SPEED_CAN_TO_PHY</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>can</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">((float)(can))</div>
-</div><!-- fragment -->
-<p>Rotational speed CAN data in RPM (uint16_t), convert to RPM (float). </p>
-
-</div>
-</div>
-<a id="gae19ca4018cdf8d5f53d460303ccc5acb" name="gae19ca4018cdf8d5f53d460303ccc5acb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae19ca4018cdf8d5f53d460303ccc5acb">&#9670;&#160;</a></span>ROTATION_SPEED_PHY_TO_CAN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ROTATION_SPEED_PHY_TO_CAN</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>phy</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">((uint16_t)(phy))</div>
-</div><!-- fragment -->
-<p>Rotational speed physical data in RPM (float), convert to RPM (uint16_t). </p>
-
-</div>
-</div>
 <a id="ga080ae4a85d68752effb6464cd79f5970" name="ga080ae4a85d68752effb6464cd79f5970"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga080ae4a85d68752effb6464cd79f5970">&#9670;&#160;</a></span>STEER_CAN_TO_PHY</h2>
 
@@ -770,12 +890,56 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="ga90ea09c6c35f440c0e0bc1a64e4b5a59" name="ga90ea09c6c35f440c0e0bc1a64e4b5a59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga90ea09c6c35f440c0e0bc1a64e4b5a59">&#9670;&#160;</a></span>VELOCITY_CAN_TO_PHY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define VELOCITY_CAN_TO_PHY</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>can</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">(0.001F * (can))</div>
+</div><!-- fragment -->
+<p>Velocity CAN data in mm/s (uint16_t), convert to m/s (float). </p>
+
+</div>
+</div>
+<a id="ga9303bcfff8d09073982f70441ad46c14" name="ga9303bcfff8d09073982f70441ad46c14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9303bcfff8d09073982f70441ad46c14">&#9670;&#160;</a></span>VELOCITY_PHY_TO_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define VELOCITY_PHY_TO_CAN</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>phy</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">((uint16_t)(1000.0F * (phy)))</div>
+</div><!-- fragment -->
+<p>Velocity physical data in m/s (float), convert to mm/s (int16_t). </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Aug 21 2025 15:24:02 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Fri Aug 22 2025 12:00:22 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

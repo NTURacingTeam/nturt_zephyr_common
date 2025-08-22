@@ -143,12 +143,6 @@ Macros</h2></td></tr>
 <tr class="memitem:ga346336ce168bad8dd586bdcea21e3455" id="r_ga346336ce168bad8dd586bdcea21e3455"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga346336ce168bad8dd586bdcea21e3455">PRImsg_ts_inv_arg</a>(data)</td></tr>
 <tr class="memdesc:ga346336ce168bad8dd586bdcea21e3455"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__ts__inv.html">msg_ts_inv</a> arguments to printf format.  <br /></td></tr>
 <tr class="separator:ga346336ce168bad8dd586bdcea21e3455"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga472f591f5057c886ee8ef2ad80aa7eea" id="r_ga472f591f5057c886ee8ef2ad80aa7eea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga472f591f5057c886ee8ef2ad80aa7eea">PRImsg_ts_emcy_stop</a>&#160;&#160;&#160;<a class="el" href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a> &quot;\n\r\temcy_stop: %d&quot;</td></tr>
-<tr class="memdesc:ga472f591f5057c886ee8ef2ad80aa7eea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a> printf format string.  <br /></td></tr>
-<tr class="separator:ga472f591f5057c886ee8ef2ad80aa7eea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0faa458f0dfc65dfd1ea22b124fb19e" id="r_gaf0faa458f0dfc65dfd1ea22b124fb19e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaf0faa458f0dfc65dfd1ea22b124fb19e">PRImsg_ts_emcy_stop_arg</a>(data)</td></tr>
-<tr class="memdesc:gaf0faa458f0dfc65dfd1ea22b124fb19e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a> arguments to printf format.  <br /></td></tr>
-<tr class="separator:gaf0faa458f0dfc65dfd1ea22b124fb19e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Tractive system message printing format strings. </p>
@@ -207,58 +201,6 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="ga472f591f5057c886ee8ef2ad80aa7eea" name="ga472f591f5057c886ee8ef2ad80aa7eea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga472f591f5057c886ee8ef2ad80aa7eea">&#9670;&#160;</a></span>PRImsg_ts_emcy_stop</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PRImsg_ts_emcy_stop&#160;&#160;&#160;<a class="el" href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a> &quot;\n\r\temcy_stop: %d&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="tractive_8h.html">nturt/msg/interfaces/tractive.h</a>&gt;</code></p>
-
-<p>Insert <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a> printf format string. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The emergency stop message data. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="gaf0faa458f0dfc65dfd1ea22b124fb19e" name="gaf0faa458f0dfc65dfd1ea22b124fb19e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf0faa458f0dfc65dfd1ea22b124fb19e">&#9670;&#160;</a></span>PRImsg_ts_emcy_stop_arg</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PRImsg_ts_emcy_stop_arg</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="tractive_8h.html">nturt/msg/interfaces/tractive.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a>((data).header), (data).emcy_stop</div>
-</div><!-- fragment -->
-<p>Insert <a class="el" href="structmsg__ts__emcy__stop.html">msg_ts_emcy_stop</a> arguments to printf format. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The emergency stop message data. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gab080daa91f73dd45e57b850cf430c48b" name="gab080daa91f73dd45e57b850cf430c48b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab080daa91f73dd45e57b850cf430c48b">&#9670;&#160;</a></span>PRImsg_ts_inv</h2>
 
@@ -278,8 +220,8 @@ Macros</h2></td></tr>
 <div class="line">                <span class="stringliteral">&quot;\n\r\tmos temperature (deg C): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a>   \</div>
 <div class="line">                <span class="stringliteral">&quot;\n\r\tmotor temperature (deg C): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a> \</div>
 <div class="line">                <span class="stringliteral">&quot;\n\r\tmcu temperature (deg C): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a></div>
-<div class="ttc" id="agroup__msg__if__pri_html_ga2b695efa25bb85aed9c7061a17dfc17d"><div class="ttname"><a href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a></div><div class="ttdeci">#define PRImsg_4wheel_data</div><div class="ttdoc">Insert msg_4wheel_data format string.</div><div class="ttdef"><b>Definition</b> common.h:56</div></div>
-<div class="ttc" id="agroup__msg__if__pri_html_gae0f3b3594443ee8d2ea54ed1201c1493"><div class="ttname"><a href="group__msg__if__pri.html#gae0f3b3594443ee8d2ea54ed1201c1493">PRImsg_4wheel_flags</a></div><div class="ttdeci">#define PRImsg_4wheel_flags</div><div class="ttdoc">Insert msg_4wheel_flags format string.</div><div class="ttdef"><b>Definition</b> common.h:67</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_ga2b695efa25bb85aed9c7061a17dfc17d"><div class="ttname"><a href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a></div><div class="ttdeci">#define PRImsg_4wheel_data</div><div class="ttdoc">Insert msg_4wheel_data format string.</div><div class="ttdef"><b>Definition</b> common.h:66</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_gae0f3b3594443ee8d2ea54ed1201c1493"><div class="ttname"><a href="group__msg__if__pri.html#gae0f3b3594443ee8d2ea54ed1201c1493">PRImsg_4wheel_flags</a></div><div class="ttdeci">#define PRImsg_4wheel_flags</div><div class="ttdoc">Insert msg_4wheel_flags format string.</div><div class="ttdef"><b>Definition</b> common.h:77</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__ts__inv.html">msg_ts_inv</a> printf format string. </p>
 
@@ -307,7 +249,7 @@ Macros</h2></td></tr>
 <div class="line">      PRImsg_4wheel_data_arg((data).inv_temp),                              \</div>
 <div class="line">      PRImsg_4wheel_data_arg((data).motor_temp),                            \</div>
 <div class="line">      PRImsg_4wheel_data_arg((data).mcu_temp)</div>
-<div class="ttc" id="agroup__msg__if__pri_html_ga1c6e1cae56c97116cd800793afd6d462"><div class="ttname"><a href="group__msg__if__pri.html#ga1c6e1cae56c97116cd800793afd6d462">PRImsg_4wheel_flags_arg</a></div><div class="ttdeci">#define PRImsg_4wheel_flags_arg(data)</div><div class="ttdoc">Insert msg_4wheel_flags arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:74</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_ga1c6e1cae56c97116cd800793afd6d462"><div class="ttname"><a href="group__msg__if__pri.html#ga1c6e1cae56c97116cd800793afd6d462">PRImsg_4wheel_flags_arg</a></div><div class="ttdeci">#define PRImsg_4wheel_flags_arg(data)</div><div class="ttdoc">Insert msg_4wheel_flags arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:84</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__ts__inv.html">msg_ts_inv</a> arguments to printf format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -324,7 +266,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Aug 21 2025 15:24:02 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Fri Aug 22 2025 12:00:22 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

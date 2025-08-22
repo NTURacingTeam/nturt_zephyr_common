@@ -23,6 +23,7 @@ var group__err__code =
       [ "ERR_CODE_HB_SENSORS", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a6579a8ff6bc0df9d64033546df987211", null ],
       [ "ERR_CODE_HB_RPI", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a04dc0f1cccd42f349b0f4a445685f040", null ],
       [ "ERR_CODE_HB_IMU", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852af5e1eec9d23b243bf6da541f78020766", null ],
+      [ "ERR_CODE_HB_GPS", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852ad73726d923203080fe941392f7d11787", null ],
       [ "ERR_CODE_HB_ACC", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a8bd13ae1202f9f2bf96e4f90bf9c80f4", null ],
       [ "ERR_CODE_HB_INV_FL", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a8d8f5013f0b930bb9586cb64a940ce57", null ],
       [ "ERR_CODE_HB_INV_FR", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a1d1516e3f407aefd3f479327773a9ab6", null ],
