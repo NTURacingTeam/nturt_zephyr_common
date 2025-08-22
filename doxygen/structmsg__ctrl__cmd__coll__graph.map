@@ -1,0 +1,5 @@
+<map id="msg_ctrl_cmd" name="msg_ctrl_cmd">
+<area shape="rect" id="Node000001" title="Control command message." alt="" coords="5,93,119,119"/>
+<area shape="rect" id="Node000002" href="$structmsg__header.html" title="Message header." alt="" coords="11,5,113,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,45,65,93,59,93,59,45"/>
+</map>

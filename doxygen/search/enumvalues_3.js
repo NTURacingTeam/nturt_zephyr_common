@@ -12,13 +12,14 @@ var searchData=
   ['sensor_5fchan_5fquat_5fy_9',['SENSOR_CHAN_QUAT_Y',['../jy901b_8h.html#a9595cb04ae406394cba4a3d6ff17eb36a4f9d85faeda8a2795252384c63adafd8',1,'jy901b.h']]],
   ['sensor_5fchan_5fquat_5fz_10',['SENSOR_CHAN_QUAT_Z',['../jy901b_8h.html#a9595cb04ae406394cba4a3d6ff17eb36a5eb94b65fb4940dc6bb88346d2f5fee2',1,'jy901b.h']]],
   ['state_5fall_11',['STATE_ALL',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5aa47c3639be1fe073620c78a64eeaeae7',1,'states.h']]],
-  ['state_5ferr_12',['STATE_ERR',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5adceebbc176186b2bbeb1b53731478bcd',1,'states.h']]],
-  ['state_5ferr_5ffree_13',['STATE_ERR_FREE',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a7a8306048031f70cbb979d888d5e5f56',1,'states.h']]],
-  ['state_5finvalid_14',['STATE_INVALID',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a56285fc9e39dbb4dd2f0a34e561a79fd',1,'states.h']]],
-  ['state_5fready_15',['STATE_READY',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a5ae0bbfe1a737c76e53253b05168b56b',1,'states.h']]],
-  ['state_5frtd_5fblink_16',['STATE_RTD_BLINK',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5ac1f842601f5eada4a18a081986996955',1,'states.h']]],
-  ['state_5frtd_5fready_17',['STATE_RTD_READY',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a1059cfa20ce6a6c6d78a069ea68665b1',1,'states.h']]],
-  ['state_5frtd_5fsound_18',['STATE_RTD_SOUND',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a783a1604eb534051f8a6fe9b24bf0517',1,'states.h']]],
-  ['state_5frtd_5fsteady_19',['STATE_RTD_STEADY',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a8de0832aee41d2ac2cbb1997a3d3fbb8',1,'states.h']]],
-  ['state_5frunning_20',['STATE_RUNNING',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5addfe11c6d06c4e27bd6efc18cc4862a6',1,'states.h']]]
+  ['state_5ferror_12',['STATE_ERROR',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5ad55c0bfe3a7d3ae983e81a98e3384d6c',1,'states.h']]],
+  ['state_5finvalid_13',['STATE_INVALID',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a56285fc9e39dbb4dd2f0a34e561a79fd',1,'states.h']]],
+  ['state_5fready_14',['STATE_READY',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a5ae0bbfe1a737c76e53253b05168b56b',1,'states.h']]],
+  ['state_5frtd_5fblink_15',['STATE_RTD_BLINK',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5ac1f842601f5eada4a18a081986996955',1,'states.h']]],
+  ['state_5frtd_5fready_16',['STATE_RTD_READY',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a1059cfa20ce6a6c6d78a069ea68665b1',1,'states.h']]],
+  ['state_5frtd_5fsound_17',['STATE_RTD_SOUND',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a783a1604eb534051f8a6fe9b24bf0517',1,'states.h']]],
+  ['state_5frtd_5fsteady_18',['STATE_RTD_STEADY',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a8de0832aee41d2ac2cbb1997a3d3fbb8',1,'states.h']]],
+  ['state_5frunning_19',['STATE_RUNNING',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5addfe11c6d06c4e27bd6efc18cc4862a6',1,'states.h']]],
+  ['state_5frunning_5ferror_20',['STATE_RUNNING_ERROR',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5a43cabfaca4eb88b94155f2493d808db2',1,'states.h']]],
+  ['state_5frunning_5fok_21',['STATE_RUNNING_OK',['../group__stat.html#ggae70dc85d406e951d17890605c02aa7d5af9dcdcd6a79c3f36968f83f34f670a59',1,'states.h']]]
 ];

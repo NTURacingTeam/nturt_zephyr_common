@@ -163,31 +163,37 @@ Typedefs</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:gae70dc85d406e951d17890605c02aa7d5" id="r_gae70dc85d406e951d17890605c02aa7d5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gae70dc85d406e951d17890605c02aa7d5">states_state</a> { <br />
 &#160;&#160;<a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a56285fc9e39dbb4dd2f0a34e561a79fd">STATE_INVALID</a> = 0
-, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a7a8306048031f70cbb979d888d5e5f56">STATE_ERR_FREE</a> = BIT(0)
-, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a5ae0bbfe1a737c76e53253b05168b56b">STATE_READY</a> = BIT(1)
-, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5ac1f842601f5eada4a18a081986996955">STATE_RTD_BLINK</a> = BIT(2)
+, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a5ae0bbfe1a737c76e53253b05168b56b">STATE_READY</a> = BIT(0)
+, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5ac1f842601f5eada4a18a081986996955">STATE_RTD_BLINK</a> = BIT(1)
+, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a8de0832aee41d2ac2cbb1997a3d3fbb8">STATE_RTD_STEADY</a> = BIT(2)
 , <br />
-&#160;&#160;<a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a8de0832aee41d2ac2cbb1997a3d3fbb8">STATE_RTD_STEADY</a> = BIT(3)
-, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a1059cfa20ce6a6c6d78a069ea68665b1">STATE_RTD_READY</a> = BIT(4)
-, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a783a1604eb534051f8a6fe9b24bf0517">STATE_RTD_SOUND</a> = BIT(5)
-, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5addfe11c6d06c4e27bd6efc18cc4862a6">STATE_RUNNING</a> = BIT(6)
+&#160;&#160;<a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a1059cfa20ce6a6c6d78a069ea68665b1">STATE_RTD_READY</a> = BIT(3)
+, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a783a1604eb534051f8a6fe9b24bf0517">STATE_RTD_SOUND</a> = BIT(4)
+, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5addfe11c6d06c4e27bd6efc18cc4862a6">STATE_RUNNING</a> = BIT(5)
+, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5af9dcdcd6a79c3f36968f83f34f670a59">STATE_RUNNING_OK</a> = BIT(6)
 , <br />
-&#160;&#160;<a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5adceebbc176186b2bbeb1b53731478bcd">STATE_ERR</a> = BIT(7)
+&#160;&#160;<a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a43cabfaca4eb88b94155f2493d808db2">STATE_RUNNING_ERROR</a> = BIT(7)
+, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5ad55c0bfe3a7d3ae983e81a98e3384d6c">STATE_ERROR</a> = BIT(8)
 , <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5aa47c3639be1fe073620c78a64eeaeae7">STATE_ALL</a> = UINT32_MAX
-, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a69f2e4c341a631b2553a755d312b6836">NUM_STATE</a> = 8
+, <a class="el" href="#ggae70dc85d406e951d17890605c02aa7d5a69f2e4c341a631b2553a755d312b6836">NUM_STATE</a> = 9
 <br />
  }</td></tr>
 <tr class="memdesc:gae70dc85d406e951d17890605c02aa7d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">State machine states.  <a href="#gae70dc85d406e951d17890605c02aa7d5">More...</a><br /></td></tr>
 <tr class="separator:gae70dc85d406e951d17890605c02aa7d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga40fbd3fbed5f5054e6eadb75d8244d87" id="r_ga40fbd3fbed5f5054e6eadb75d8244d87"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga40fbd3fbed5f5054e6eadb75d8244d87">states_trans_cmd</a> { <br />
 &#160;&#160;<a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87af6c2800833faedd0a4f3c226356977ab">TRANS_CMD_INVALID</a> = 0
-, <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87a720cbf3ed5db32344f86f13a01322cd5">TRANS_CMD_ERR</a>
-, <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87a7c8681ce7b2b0cf39a4a3bcb70dda686">TRANS_CMD_ERR_CLEAR</a>
 , <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87a6c80917201d181d8547846cc1f077f22">TRANS_CMD_PEDAL</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87afc70fb00a331c2b156700dd16ec49c3e">TRANS_CMD_PEDAL_CLEAR</a>
+, <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87afc70fb00a331c2b156700dd16ec49c3e">TRANS_CMD_PEDAL_CLEAR</a>
 , <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87a292ac14fee909dec25dea23a961de521">TRANS_CMD_RTD</a>
+, <br />
+&#160;&#160;<a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87a170bebbbd0279d40a7f7cb47c55a8159">TRANS_CMD_RTD_FORCED</a>
 , <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87a8dde6e422f8b076d0e970540da804b3a">TRANS_CMD_RTD_FINISH</a>
+, <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87a9a8edb25ff9a91659f3df857737c4d2a">TRANS_CMD_ERROR</a>
+, <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87aeb705b5c9c9dbcce2f9921c2fbf2d359">TRANS_CMD_ERROR_CLEARED</a>
+, <br />
+&#160;&#160;<a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87a474e154dfd8526558514662dc8a37d22">TRANS_CMD_ERROR_RUNNING</a>
+, <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87af16e18269825ef0186feba07620a34fb">TRANS_CMD_ERROR_CLEARED_RUNNING</a>
+, <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87a7fbe505d0138ddf8aabcd74fc95412ed">TRANS_CMD_FATAL_ERROR</a>
 , <a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87ad1b45973197b6639de506385bc31b6cf">TRANS_CMD_DISABLE</a>
 , <br />
 &#160;&#160;<a class="el" href="#gga40fbd3fbed5f5054e6eadb75d8244d87ac53b97a968e8f562b634ac23ef6ccd33">NUM_TRANS_CMD</a>
@@ -297,7 +303,7 @@ Functions</h2></td></tr>
 <div class="line">      .handler = _handler,                                                 \</div>
 <div class="line">      .user_data = _user_data,                                             \</div>
 <div class="line">  }</div>
-<div class="ttc" id="astructstates__callback_html"><div class="ttname"><a href="structstates__callback.html">states_callback</a></div><div class="ttdoc">State transition callback.</div><div class="ttdef"><b>Definition</b> states.h:126</div></div>
+<div class="ttc" id="astructstates__callback_html"><div class="ttname"><a href="structstates__callback.html">states_callback</a></div><div class="ttdoc">State transition callback.</div><div class="ttdef"><b>Definition</b> states.h:133</div></div>
 </div><!-- fragment -->
 <p>Same as <a class="el" href="#ga0f2c22bf86ea931607d2369eb2821789">STATES_CALLBACK_DEFINE</a>, but with a custom name for the callback. </p>
 
@@ -366,14 +372,15 @@ Functions</h2></td></tr>
 <p>State machine states. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5a56285fc9e39dbb4dd2f0a34e561a79fd" name="ggae70dc85d406e951d17890605c02aa7d5a56285fc9e39dbb4dd2f0a34e561a79fd"></a>STATE_INVALID&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5a7a8306048031f70cbb979d888d5e5f56" name="ggae70dc85d406e951d17890605c02aa7d5a7a8306048031f70cbb979d888d5e5f56"></a>STATE_ERR_FREE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5a5ae0bbfe1a737c76e53253b05168b56b" name="ggae70dc85d406e951d17890605c02aa7d5a5ae0bbfe1a737c76e53253b05168b56b"></a>STATE_READY&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5ac1f842601f5eada4a18a081986996955" name="ggae70dc85d406e951d17890605c02aa7d5ac1f842601f5eada4a18a081986996955"></a>STATE_RTD_BLINK&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5a8de0832aee41d2ac2cbb1997a3d3fbb8" name="ggae70dc85d406e951d17890605c02aa7d5a8de0832aee41d2ac2cbb1997a3d3fbb8"></a>STATE_RTD_STEADY&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5a1059cfa20ce6a6c6d78a069ea68665b1" name="ggae70dc85d406e951d17890605c02aa7d5a1059cfa20ce6a6c6d78a069ea68665b1"></a>STATE_RTD_READY&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5a783a1604eb534051f8a6fe9b24bf0517" name="ggae70dc85d406e951d17890605c02aa7d5a783a1604eb534051f8a6fe9b24bf0517"></a>STATE_RTD_SOUND&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5addfe11c6d06c4e27bd6efc18cc4862a6" name="ggae70dc85d406e951d17890605c02aa7d5addfe11c6d06c4e27bd6efc18cc4862a6"></a>STATE_RUNNING&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5adceebbc176186b2bbeb1b53731478bcd" name="ggae70dc85d406e951d17890605c02aa7d5adceebbc176186b2bbeb1b53731478bcd"></a>STATE_ERR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5af9dcdcd6a79c3f36968f83f34f670a59" name="ggae70dc85d406e951d17890605c02aa7d5af9dcdcd6a79c3f36968f83f34f670a59"></a>STATE_RUNNING_OK&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5a43cabfaca4eb88b94155f2493d808db2" name="ggae70dc85d406e951d17890605c02aa7d5a43cabfaca4eb88b94155f2493d808db2"></a>STATE_RUNNING_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5ad55c0bfe3a7d3ae983e81a98e3384d6c" name="ggae70dc85d406e951d17890605c02aa7d5ad55c0bfe3a7d3ae983e81a98e3384d6c"></a>STATE_ERROR&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5aa47c3639be1fe073620c78a64eeaeae7" name="ggae70dc85d406e951d17890605c02aa7d5aa47c3639be1fe073620c78a64eeaeae7"></a>STATE_ALL&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggae70dc85d406e951d17890605c02aa7d5a69f2e4c341a631b2553a755d312b6836" name="ggae70dc85d406e951d17890605c02aa7d5a69f2e4c341a631b2553a755d312b6836"></a>NUM_STATE&#160;</td><td class="fielddoc"></td></tr>
 </table>
@@ -397,12 +404,16 @@ Functions</h2></td></tr>
 <p>State transition commands. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87af6c2800833faedd0a4f3c226356977ab" name="gga40fbd3fbed5f5054e6eadb75d8244d87af6c2800833faedd0a4f3c226356977ab"></a>TRANS_CMD_INVALID&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87a720cbf3ed5db32344f86f13a01322cd5" name="gga40fbd3fbed5f5054e6eadb75d8244d87a720cbf3ed5db32344f86f13a01322cd5"></a>TRANS_CMD_ERR&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87a7c8681ce7b2b0cf39a4a3bcb70dda686" name="gga40fbd3fbed5f5054e6eadb75d8244d87a7c8681ce7b2b0cf39a4a3bcb70dda686"></a>TRANS_CMD_ERR_CLEAR&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87a6c80917201d181d8547846cc1f077f22" name="gga40fbd3fbed5f5054e6eadb75d8244d87a6c80917201d181d8547846cc1f077f22"></a>TRANS_CMD_PEDAL&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87afc70fb00a331c2b156700dd16ec49c3e" name="gga40fbd3fbed5f5054e6eadb75d8244d87afc70fb00a331c2b156700dd16ec49c3e"></a>TRANS_CMD_PEDAL_CLEAR&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87a292ac14fee909dec25dea23a961de521" name="gga40fbd3fbed5f5054e6eadb75d8244d87a292ac14fee909dec25dea23a961de521"></a>TRANS_CMD_RTD&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87a170bebbbd0279d40a7f7cb47c55a8159" name="gga40fbd3fbed5f5054e6eadb75d8244d87a170bebbbd0279d40a7f7cb47c55a8159"></a>TRANS_CMD_RTD_FORCED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87a8dde6e422f8b076d0e970540da804b3a" name="gga40fbd3fbed5f5054e6eadb75d8244d87a8dde6e422f8b076d0e970540da804b3a"></a>TRANS_CMD_RTD_FINISH&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87a9a8edb25ff9a91659f3df857737c4d2a" name="gga40fbd3fbed5f5054e6eadb75d8244d87a9a8edb25ff9a91659f3df857737c4d2a"></a>TRANS_CMD_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87aeb705b5c9c9dbcce2f9921c2fbf2d359" name="gga40fbd3fbed5f5054e6eadb75d8244d87aeb705b5c9c9dbcce2f9921c2fbf2d359"></a>TRANS_CMD_ERROR_CLEARED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87a474e154dfd8526558514662dc8a37d22" name="gga40fbd3fbed5f5054e6eadb75d8244d87a474e154dfd8526558514662dc8a37d22"></a>TRANS_CMD_ERROR_RUNNING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87af16e18269825ef0186feba07620a34fb" name="gga40fbd3fbed5f5054e6eadb75d8244d87af16e18269825ef0186feba07620a34fb"></a>TRANS_CMD_ERROR_CLEARED_RUNNING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87a7fbe505d0138ddf8aabcd74fc95412ed" name="gga40fbd3fbed5f5054e6eadb75d8244d87a7fbe505d0138ddf8aabcd74fc95412ed"></a>TRANS_CMD_FATAL_ERROR&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87ad1b45973197b6639de506385bc31b6cf" name="gga40fbd3fbed5f5054e6eadb75d8244d87ad1b45973197b6639de506385bc31b6cf"></a>TRANS_CMD_DISABLE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga40fbd3fbed5f5054e6eadb75d8244d87ac53b97a968e8f562b634ac23ef6ccd33" name="gga40fbd3fbed5f5054e6eadb75d8244d87ac53b97a968e8f562b634ac23ef6ccd33"></a>NUM_TRANS_CMD&#160;</td><td class="fielddoc"></td></tr>
 </table>
@@ -594,7 +605,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Aug 22 2025 12:00:22 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Fri Aug 22 2025 15:21:24 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

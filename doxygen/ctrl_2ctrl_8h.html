@@ -109,6 +109,7 @@ $(function(){initNavTree('ctrl_2ctrl_8h.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">ctrl.h File Reference</div></div>
 </div><!--header-->
@@ -117,6 +118,8 @@ $(function(){initNavTree('ctrl_2ctrl_8h.html',''); initResizable(true); });
 <p>Control system.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;zephyr/kernel.h&gt;</code><br />
+<code>#include &lt;zephyr/sys/util.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for ctrl.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -124,28 +127,35 @@ $(function(){initNavTree('ctrl_2ctrl_8h.html',''); initResizable(true); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="ctrl_2ctrl_8h__incl.png" border="0" usemap="#avcu_2ctrl_2ctrl_8h" alt=""/></div>
 <map name="avcu_2ctrl_2ctrl_8h" id="avcu_2ctrl_2ctrl_8h">
-<area shape="rect" title="Control system." alt="" coords="5,5,112,31"/>
-<area shape="rect" title=" " alt="" coords="23,79,94,104"/>
-<area shape="poly" title=" " alt="" coords="61,31,61,65,56,65,56,31"/>
+<area shape="rect" title="Control system." alt="" coords="109,5,215,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,76,104"/>
+<area shape="poly" title=" " alt="" coords="144,33,73,74,71,69,141,28"/>
+<area shape="rect" title=" " alt="" coords="101,79,223,104"/>
+<area shape="poly" title=" " alt="" coords="165,31,165,65,159,65,159,31"/>
+<area shape="rect" title=" " alt="" coords="248,79,377,104"/>
+<area shape="poly" title=" " alt="" coords="187,28,277,70,274,75,185,33"/>
 </map>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gabc42d38e0645d905e504de7e832280a3" id="r_gabc42d38e0645d905e504de7e832280a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#gabc42d38e0645d905e504de7e832280a3">TORQ_DEFAULT</a>&#160;&#160;&#160;50</td></tr>
+<tr class="separator:gabc42d38e0645d905e504de7e832280a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d742ce20b9793c45311f2afa36b1c1e" id="r_ga5d742ce20b9793c45311f2afa36b1c1e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga5d742ce20b9793c45311f2afa36b1c1e">CTRL_PARAM_DECLARE</a>(...)</td></tr>
+<tr class="separator:ga5d742ce20b9793c45311f2afa36b1c1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f2418cf6e2c2eec31068e54f63f29b4" id="r_ga0f2418cf6e2c2eec31068e54f63f29b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga0f2418cf6e2c2eec31068e54f63f29b4">CTRL_PARAM_EXTERN</a>(...)</td></tr>
+<tr class="separator:ga0f2418cf6e2c2eec31068e54f63f29b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d" id="r_ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d">CTRL_PARAM_DEFINE</a>(list)</td></tr>
+<tr class="separator:ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47538799636797468a27ef47970cc24c" id="r_ga47538799636797468a27ef47970cc24c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>(name,  type,  default)</td></tr>
+<tr class="separator:ga47538799636797468a27ef47970cc24c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3067a2b210cc2192638d0c8e454332da" id="r_ga3067a2b210cc2192638d0c8e454332da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga3067a2b210cc2192638d0c8e454332da">CTRL_PARAM_LIST</a></td></tr>
+<tr class="separator:ga3067a2b210cc2192638d0c8e454332da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9167080936819d73e399e2d10fd6d2aa" id="r_ga9167080936819d73e399e2d10fd6d2aa"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga9167080936819d73e399e2d10fd6d2aa">ctrl_inv_torq_fl_get</a> ()</td></tr>
-<tr class="separator:ga9167080936819d73e399e2d10fd6d2aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa39a1f5bb3b09cd2913bda022daa6def" id="r_gaa39a1f5bb3b09cd2913bda022daa6def"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#gaa39a1f5bb3b09cd2913bda022daa6def">ctrl_inv_torq_fr_get</a> ()</td></tr>
-<tr class="separator:gaa39a1f5bb3b09cd2913bda022daa6def"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a9a8655f83109121cbb485d1de18459" id="r_ga5a9a8655f83109121cbb485d1de18459"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga5a9a8655f83109121cbb485d1de18459">ctrl_inv_torq_rl_get</a> ()</td></tr>
-<tr class="separator:ga5a9a8655f83109121cbb485d1de18459"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2af0f632aef48fd36551e6d5b73b8bb0" id="r_ga2af0f632aef48fd36551e6d5b73b8bb0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga2af0f632aef48fd36551e6d5b73b8bb0">ctrl_inv_torq_rr_get</a> ()</td></tr>
-<tr class="separator:ga2af0f632aef48fd36551e6d5b73b8bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga99536211729387bbfa9174d5cdbade2e" id="r_ga99536211729387bbfa9174d5cdbade2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga99536211729387bbfa9174d5cdbade2e">ctrl_inv_torq_fl_set</a> (uint8_t torq)</td></tr>
-<tr class="separator:ga99536211729387bbfa9174d5cdbade2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9cb5c1801f344a3a2c71ed22785c0f5e" id="r_ga9cb5c1801f344a3a2c71ed22785c0f5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga9cb5c1801f344a3a2c71ed22785c0f5e">ctrl_inv_torq_rl_set</a> (uint8_t torq)</td></tr>
-<tr class="separator:ga9cb5c1801f344a3a2c71ed22785c0f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad339e85319a5485d051a8e501a0e736f" id="r_gad339e85319a5485d051a8e501a0e736f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#gad339e85319a5485d051a8e501a0e736f">ctrl_inv_torq_rr_set</a> (uint8_t torq)</td></tr>
-<tr class="separator:gad339e85319a5485d051a8e501a0e736f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f218f62f531b158355007d149ae813e" id="r_ga1f218f62f531b158355007d149ae813e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#ga1f218f62f531b158355007d149ae813e">CTRL_PARAM_DECLARE</a> (<a class="el" href="group__ctrl.html#ga3067a2b210cc2192638d0c8e454332da">CTRL_PARAM_LIST</a>)</td></tr>
+<tr class="separator:ga1f218f62f531b158355007d149ae813e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadcf45cbf4c12c3b9c8c863a57ac06028" id="r_gadcf45cbf4c12c3b9c8c863a57ac06028"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl.html#gadcf45cbf4c12c3b9c8c863a57ac06028">ctrl_settings_save</a> ()</td></tr>
 <tr class="separator:gadcf45cbf4c12c3b9c8c863a57ac06028"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -161,7 +171,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b9144e6444b31eee0214207794a480a7.html">vcu</a></li><li class="navelem"><a class="el" href="dir_7250e0025911024ac81cc0c7da914acc.html">ctrl</a></li><li class="navelem"><a class="el" href="ctrl_2ctrl_8h.html">ctrl.h</a></li>
-    <li class="footer">Generated on Fri Aug 22 2025 12:00:22 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Fri Aug 22 2025 15:21:24 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

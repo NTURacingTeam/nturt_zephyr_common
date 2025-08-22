@@ -15,11 +15,15 @@ var searchData=
   ['tm_5fsteer_5fangle_12',['TM_STEER_ANGLE',['../group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a4f065d11e9ba11fb7bb8411e506f384c',1,'telemetry.h']]],
   ['tm_5fvcu_5fstates_13',['TM_VCU_STATES',['../group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a5c890b7b619853b29aecf16d6e1284a4',1,'telemetry.h']]],
   ['trans_5fcmd_5fdisable_14',['TRANS_CMD_DISABLE',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87ad1b45973197b6639de506385bc31b6cf',1,'states.h']]],
-  ['trans_5fcmd_5ferr_15',['TRANS_CMD_ERR',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a720cbf3ed5db32344f86f13a01322cd5',1,'states.h']]],
-  ['trans_5fcmd_5ferr_5fclear_16',['TRANS_CMD_ERR_CLEAR',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a7c8681ce7b2b0cf39a4a3bcb70dda686',1,'states.h']]],
-  ['trans_5fcmd_5finvalid_17',['TRANS_CMD_INVALID',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87af6c2800833faedd0a4f3c226356977ab',1,'states.h']]],
-  ['trans_5fcmd_5fpedal_18',['TRANS_CMD_PEDAL',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a6c80917201d181d8547846cc1f077f22',1,'states.h']]],
-  ['trans_5fcmd_5fpedal_5fclear_19',['TRANS_CMD_PEDAL_CLEAR',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87afc70fb00a331c2b156700dd16ec49c3e',1,'states.h']]],
-  ['trans_5fcmd_5frtd_20',['TRANS_CMD_RTD',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a292ac14fee909dec25dea23a961de521',1,'states.h']]],
-  ['trans_5fcmd_5frtd_5ffinish_21',['TRANS_CMD_RTD_FINISH',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a8dde6e422f8b076d0e970540da804b3a',1,'states.h']]]
+  ['trans_5fcmd_5ferror_15',['TRANS_CMD_ERROR',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a9a8edb25ff9a91659f3df857737c4d2a',1,'states.h']]],
+  ['trans_5fcmd_5ferror_5fcleared_16',['TRANS_CMD_ERROR_CLEARED',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87aeb705b5c9c9dbcce2f9921c2fbf2d359',1,'states.h']]],
+  ['trans_5fcmd_5ferror_5fcleared_5frunning_17',['TRANS_CMD_ERROR_CLEARED_RUNNING',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87af16e18269825ef0186feba07620a34fb',1,'states.h']]],
+  ['trans_5fcmd_5ferror_5frunning_18',['TRANS_CMD_ERROR_RUNNING',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a474e154dfd8526558514662dc8a37d22',1,'states.h']]],
+  ['trans_5fcmd_5ffatal_5ferror_19',['TRANS_CMD_FATAL_ERROR',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a7fbe505d0138ddf8aabcd74fc95412ed',1,'states.h']]],
+  ['trans_5fcmd_5finvalid_20',['TRANS_CMD_INVALID',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87af6c2800833faedd0a4f3c226356977ab',1,'states.h']]],
+  ['trans_5fcmd_5fpedal_21',['TRANS_CMD_PEDAL',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a6c80917201d181d8547846cc1f077f22',1,'states.h']]],
+  ['trans_5fcmd_5fpedal_5fclear_22',['TRANS_CMD_PEDAL_CLEAR',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87afc70fb00a331c2b156700dd16ec49c3e',1,'states.h']]],
+  ['trans_5fcmd_5frtd_23',['TRANS_CMD_RTD',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a292ac14fee909dec25dea23a961de521',1,'states.h']]],
+  ['trans_5fcmd_5frtd_5ffinish_24',['TRANS_CMD_RTD_FINISH',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a8dde6e422f8b076d0e970540da804b3a',1,'states.h']]],
+  ['trans_5fcmd_5frtd_5fforced_25',['TRANS_CMD_RTD_FORCED',['../group__stat.html#gga40fbd3fbed5f5054e6eadb75d8244d87a170bebbbd0279d40a7f7cb47c55a8159',1,'states.h']]]
 ];

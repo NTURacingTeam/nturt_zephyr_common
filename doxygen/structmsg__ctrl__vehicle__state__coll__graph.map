@@ -1,0 +1,7 @@
+<map id="msg_ctrl_vehicle_state" name="msg_ctrl_vehicle_state">
+<area shape="rect" id="Node000001" title="Vehicle state message." alt="" coords="36,93,208,119"/>
+<area shape="rect" id="Node000002" href="$structmsg__header.html" title="Message header." alt="" coords="5,5,108,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,40,115,91,111,94,72,43"/>
+<area shape="rect" id="Node000003" href="$unionmsg__2d__data.html" title="2D data." alt="" coords="133,5,242,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="172,43,133,94,129,91,168,40"/>
+</map>
