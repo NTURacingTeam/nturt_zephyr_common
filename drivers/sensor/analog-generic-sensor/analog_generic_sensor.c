@@ -33,6 +33,55 @@ struct analog_generic_config {
   int tolerance;
 };
 
+static int sensor_adc_read(const struct device* dev, int* _mv) {
+  const struct analog_generic_config* config = dev->config;
+
+  int ret;
+  uint16_t raw;
+  struct adc_sequence seq = {
+      .buffer = &raw,
+      .buffer_size = sizeof(raw),
+  };
+
+  adc_sequence_init_dt(&config->adc, &seq);
+  ret = adc_read_dt(&config->adc, &seq);
+  if (ret < 0) {
+    LOG_ERR("Failed to read ADC channel %s: %s", config->adc.dev->name,
+            strerror(-ret));
+    return ret;
+  }
+
+  int mv = raw;
+  adc_raw_to_millivolts_dt(&config->adc, &mv);
+  LOG_DBG("Sensor %s raw %d mv", dev->name, mv);
+
+  if (mv <
+      config->min_voltage - config->voltage_range * config->tolerance / 100) {
+    LOG_ERR_THROTTLE(
+        K_MSEC(500), "Sensor %s voltage below range by %d%% (%d mv)", dev->name,
+        100 * (config->min_voltage - mv) / config->min_voltage, mv);
+    return -EINVAL;
+
+  } else if (mv < config->min_voltage) {
+    *_mv = config->min_voltage;
+
+  } else if (mv > config->max_voltage +
+                      config->voltage_range * config->tolerance / 100) {
+    LOG_ERR_THROTTLE(
+        K_MSEC(500), "Sensor %s voltage above range by %d%% (%d mv)", dev->name,
+        100 * (mv - config->max_voltage) / config->max_voltage, mv);
+    return -EINVAL;
+
+  } else if (mv > config->max_voltage) {
+    *_mv = config->max_voltage;
+
+  } else {
+    *_mv = mv;
+  }
+
+  return 0;
+}
+
 static int analog_generic_init(const struct device* dev) {
   const struct analog_generic_config* config = dev->config;
 
@@ -46,6 +95,12 @@ static int analog_generic_init(const struct device* dev) {
   if (ret < 0) {
     LOG_ERR("Failed to setup ADC channel %s: %s", config->adc.dev->name,
             strerror(-ret));
+    return ret;
+  }
+
+  int mv;
+  ret = sensor_adc_read(dev, &mv);
+  if (ret < 0) {
     return ret;
   }
 
@@ -65,35 +120,11 @@ static int analog_generic_sample_fetch(const struct device* dev,
     return -ENOTSUP;
   }
 
-  uint16_t raw;
-  struct adc_sequence seq = {
-      .buffer = &raw,
-      .buffer_size = sizeof(raw),
-  };
-
-  int ret = 0;
-  adc_sequence_init_dt(&config->adc, &seq);
-  ret = adc_read_dt(&config->adc, &seq);
+  int ret;
+  int mv;
+  ret = sensor_adc_read(dev, &mv);
   if (ret < 0) {
-    LOG_ERR("Failed to read ADC channel %s: %s", config->adc.dev->name,
-            strerror(-ret));
     return ret;
-  }
-
-  int mv = raw;
-  adc_raw_to_millivolts_dt(&config->adc, &mv);
-  LOG_DBG("Sensor %s raw %d mv", dev->name, mv);
-
-  if (mv <
-      config->min_voltage - config->voltage_range * config->tolerance / 100) {
-    goto err_range;
-  } else if (mv < config->min_voltage) {
-    mv = config->min_voltage;
-  } else if (mv > config->max_voltage +
-                      config->voltage_range * config->tolerance / 100) {
-    goto err_range;
-  } else if (mv > config->max_voltage) {
-    mv = config->max_voltage;
   }
 
   int64_t val_range = sensor_value_to_micro(&config->max_value) -
@@ -105,11 +136,6 @@ static int analog_generic_sample_fetch(const struct device* dev,
   sensor_value_from_micro(&data->val, val);
 
   return 0;
-
-err_range:
-  LOG_ERR_THROTTLE(K_MSEC(500), "Sensor %s voltage out of range: %d mV",
-                   dev->name, mv);
-  return -EIO;
 }
 
 static int analog_generic_channel_get(const struct device* dev,

@@ -633,10 +633,7 @@ static void sensor_axis_thread(void* arg1, void* arg2, void* arg3) {
 }
 
 static int sensor_axis_sensor_init(const struct device* dev) {
-  struct sensor_axis_sensor_data* data = dev->data;
   const struct sensor_axis_sensor_config* config = dev->config;
-
-  k_mutex_init(&data->lock);
 
   if (!device_is_ready(config->sensor)) {
     LOG_ERR("Sensor %s not ready", config->sensor->name);
@@ -682,6 +679,7 @@ static int sensor_axis_init(const struct device* dev) {
                                                                                \
   static struct sensor_axis_sensor_data node_id##_data = {                     \
       .error = INPUT_ERROR_NONE,                                               \
+      .lock = Z_MUTEX_INITIALIZER(node_id##_data.lock),                        \
       .in_min = DT_PROP(node_id, in_min),                                      \
       .in_max = DT_PROP(node_id, in_max),                                      \
       .cb = NULL,                                                              \
