@@ -69,8 +69,7 @@ struct sensor_axis_channel_config {
 struct sensor_axis_data {
   struct k_timer timer;
   struct k_thread thread;
-  K_KERNEL_STACK_MEMBER(thread_stack,
-                        CONFIG_INPUT_SENSOR_AXIS_THREAD_STACK_SIZE);
+  K_KERNEL_STACK_MEMBER(thread_stack, CONFIG_INPUT_SENSOR_AXIS_STACK_SIZE);
 };
 
 struct sensor_axis_config {

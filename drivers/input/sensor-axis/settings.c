@@ -28,8 +28,9 @@ static int calib_export(int (*export_func)(const char* name, const void* val,
 static const struct device* axises[] = {
     DT_INST_FOREACH_STATUS_OKAY(_SENSOR_AXIS_GET)};
 
-SETTINGS_STATIC_HANDLER_DEFINE(sensor_axis, SENSOR_AXIS_SETTINGS_ROOT, NULL,
-                               calib_load, NULL, calib_export);
+SETTINGS_STATIC_HANDLER_DEFINE(_SENSOR_AXIS_SETTINGS_ROOT,
+                               SENSOR_AXIS_SETTINGS_ROOT, NULL, calib_load,
+                               NULL, calib_export);
 
 /* function definition -------------------------------------------------------*/
 int sensor_axis_sensor_calib_save(const struct device* dev) {

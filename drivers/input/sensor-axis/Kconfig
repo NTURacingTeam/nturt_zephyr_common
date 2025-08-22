@@ -7,7 +7,7 @@ menuconfig INPUT_SENSOR_AXIS
 
 if INPUT_SENSOR_AXIS
 
-config INPUT_SENSOR_AXIS_THREAD_STACK_SIZE
+config INPUT_SENSOR_AXIS_STACK_SIZE
 	int "Sensor axis processing thread stack size"
 	default 1024
 	help

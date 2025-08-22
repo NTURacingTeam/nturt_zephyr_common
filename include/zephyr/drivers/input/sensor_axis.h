@@ -14,8 +14,10 @@
  */
 
 /* macro ---------------------------------------------------------------------*/
+#define _SENSOR_AXIS_SETTINGS_ROOT sensor_axis
+
 /// @brief Settings root path for sensor_axis.
-#define SENSOR_AXIS_SETTINGS_ROOT "sensor_axis"
+#define SENSOR_AXIS_SETTINGS_ROOT STRINGIFY(_SENSOR_AXIS_SETTINGS_ROOT)
 
 /* type ----------------------------------------------------------------------*/
 /**
