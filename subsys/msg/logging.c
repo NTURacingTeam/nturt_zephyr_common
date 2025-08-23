@@ -22,6 +22,7 @@
 #include "nturt/msg/msg.h"
 #include "nturt/sys/fs.h"
 #include "nturt/sys/sys.h"
+#include "nturt/sys/util.h"
 
 LOG_MODULE_REGISTER(nturt_msg_logging, CONFIG_NTURT_MSG_LOG_LEVEL);
 
@@ -36,9 +37,17 @@ LOG_MODULE_REGISTER(nturt_msg_logging, CONFIG_NTURT_MSG_LOG_LEVEL);
        : 0)
 
 /* type ----------------------------------------------------------------------*/
+enum msg_logging_packet_type {
+  PACKET_TYPE_DATA = 0,
+  PACKET_TYPE_STOP,
+
+  MAX_PACKET_TYPE,
+};
+
 struct msg_logging_packet_header {
   MPSC_PBUF_HDR;
-  uint32_t len : 32 - MPSC_PBUF_HDR_BITS;
+  enum msg_logging_packet_type type : 2;
+  uint32_t len : 30 - MPSC_PBUF_HDR_BITS;
   const struct zbus_channel *chan;
 };
 
@@ -58,16 +67,18 @@ struct msg_logging_ctx {
 };
 
 /* static function declaration -----------------------------------------------*/
-static uint32_t msg_logging_packet_get_wlen(
-    const union mpsc_pbuf_generic *packet);
-static void msg_logging_packet_drop(const struct mpsc_pbuf_buffer *buffer,
-                                    const union mpsc_pbuf_generic *packet);
 static void msg_logging_init(struct msg_logging_ctx *ctx);
+static struct msg_logging_packet *msg_logging_packet_alloc(
+    const struct zbus_channel *chan, enum msg_logging_packet_type type);
 
 static int init();
 
 static void msg_cb(const struct zbus_channel *chan);
 static void logging_work(struct k_work *work);
+static uint32_t msg_logging_packet_get_wlen(
+    const union mpsc_pbuf_generic *packet);
+static void msg_logging_packet_drop(const struct mpsc_pbuf_buffer *buffer,
+                                    const union mpsc_pbuf_generic *packet);
 
 /* static variable -----------------------------------------------------------*/
 static struct msg_logging_ctx g_ctx = {
@@ -159,6 +170,13 @@ int msg_chan_logging_stop(const struct zbus_channel *chan) {
     goto out;
   }
 
+  struct msg_logging_packet *packet =
+      msg_logging_packet_alloc(chan, PACKET_TYPE_STOP);
+  if (packet == NULL) {
+    ret = -ENOMEM;
+    goto out;
+  }
+
   ret = zbus_chan_rm_obs(chan, &msg_logging_listener, K_FOREVER);
   if (ret < 0) {
     LOG_ERR("zbus_chan_remove_obs(%s) failed: %s", zbus_chan_name(chan),
@@ -166,38 +184,35 @@ int msg_chan_logging_stop(const struct zbus_channel *chan) {
     goto out;
   }
 
-  ret = fs_close(&logging->file);
-  if (ret < 0) {
-    LOG_ERR("fs_close failed: %s", strerror(-ret));
-    goto out;
+  logging->is_logging = false;
+
+  mpsc_pbuf_commit(&g_ctx.mpsc_pbuf, (union mpsc_pbuf_generic *)packet);
+  if (!k_work_is_pending(&g_ctx.logging_work)) {
+    sys_work_submit(&g_ctx.logging_work);
   }
 
-  logging->is_logging = false;
+  // does not unlock the mutex so that other operations must wait until stop is
+  // processed in the sys workqueue
+
+  return 0;
 
 out:
   k_mutex_unlock(&logging->lock);
   return ret;
 }
 
+void msg_logging_sync_work(struct k_work *work) {
+  struct k_work_delayable *dwork = k_work_delayable_from_work(work);
+  struct msg_logging *logging =
+      CONTAINER_OF(dwork, struct msg_logging, sync_dwork);
+
+  int ret = fs_sync(&logging->file);
+  if (ret < 0) {
+    LOG_ERR("fs_sync failed: %s", strerror(-ret));
+  }
+}
+
 /* static function definition ------------------------------------------------*/
-static uint32_t msg_logging_packet_get_wlen(
-    const union mpsc_pbuf_generic *_packet) {
-  const struct msg_logging_packet *packet =
-      (const struct msg_logging_packet *)_packet;
-
-  return packet->header.len;
-}
-
-static void msg_logging_packet_drop(const struct mpsc_pbuf_buffer *buffer,
-                                    const union mpsc_pbuf_generic *_packet) {
-  (void)buffer;
-
-  const struct msg_logging_packet *packet =
-      (const struct msg_logging_packet *)_packet;
-
-  LOG_ERR("Dropping packet from %s", zbus_chan_name(packet->header.chan));
-}
-
 static void msg_logging_init(struct msg_logging_ctx *ctx) {
   struct mpsc_pbuf_buffer_config config = {
       .buf = ctx->__mpsc_pbuf_buf,
@@ -210,6 +225,30 @@ static void msg_logging_init(struct msg_logging_ctx *ctx) {
   mpsc_pbuf_init(&ctx->mpsc_pbuf, &config);
 }
 
+static struct msg_logging_packet *msg_logging_packet_alloc(
+    const struct zbus_channel *chan, enum msg_logging_packet_type type) {
+  size_t len = sizeof(struct msg_logging_packet);
+  if (type == PACKET_TYPE_DATA) {
+    len += zbus_chan_msg_size(chan);
+  }
+  len = DIV_ROUND_UP(len, 4);
+
+  union mpsc_pbuf_generic *_packet =
+      mpsc_pbuf_alloc(&g_ctx.mpsc_pbuf, len, K_NO_WAIT);
+  if (_packet == NULL) {
+    LOG_ERR("Failed to allocate packet for %s", zbus_chan_name(chan));
+    return NULL;
+  }
+
+  struct msg_logging_packet *packet = (struct msg_logging_packet *)_packet;
+
+  packet->header.type = type;
+  packet->header.len = len;
+  packet->header.chan = chan;
+
+  return packet;
+}
+
 static int init() {
   msg_logging_init(&g_ctx);
 
@@ -217,24 +256,15 @@ static int init() {
 }
 
 static void msg_cb(const struct zbus_channel *chan) {
-  size_t len = sizeof(struct msg_logging_packet) + zbus_chan_msg_size(chan);
-  len = DIV_ROUND_UP(len, 4);
-
-  union mpsc_pbuf_generic *_packet =
-      mpsc_pbuf_alloc(&g_ctx.mpsc_pbuf, len, K_NO_WAIT);
-  if (_packet == NULL) {
-    LOG_ERR("Failed to allocate packet for %s", zbus_chan_name(chan));
+  struct msg_logging_packet *packet =
+      msg_logging_packet_alloc(chan, PACKET_TYPE_DATA);
+  if (packet == NULL) {
     return;
   }
 
-  struct msg_logging_packet *packet = (struct msg_logging_packet *)_packet;
+  memcpy(packet->data, zbus_chan_const_msg(chan), zbus_chan_msg_size(chan));
 
-  packet->header.len = len;
-  packet->header.chan = chan;
-  memcpy(packet->data, chan->message, zbus_chan_msg_size(chan));
-
-  mpsc_pbuf_commit(&g_ctx.mpsc_pbuf, _packet);
-
+  mpsc_pbuf_commit(&g_ctx.mpsc_pbuf, (union mpsc_pbuf_generic *)packet);
   if (!k_work_is_pending(&g_ctx.logging_work)) {
     sys_work_submit(&g_ctx.logging_work);
   }
@@ -256,24 +286,68 @@ static void logging_work(struct k_work *work) {
   struct msg_chan_data *chan_data = zbus_chan_user_data(chan);
   struct msg_logging *logging = &chan_data->logging;
 
-  if (logging->is_logging) {
-    char buf[512];
-    buf[0] = '\n';
+  int ret;
+  switch (packet->header.type) {
+    case PACKET_TYPE_DATA: {
+      char buf[512];
+      buf[0] = '\n';
 
-    int size = msg_chan_csv_write(chan, packet->data, buf + 1, sizeof(buf) - 1);
-    if (size >= sizeof(buf) - 1) {
-      LOG_ERR("msg_chan_csv_write(%s) failed: buffer too small",
-              zbus_chan_name(chan));
-      return;
-    }
+      int size =
+          msg_chan_csv_write(chan, packet->data, buf + 1, sizeof(buf) - 1);
+      if (size >= sizeof(buf) - 1) {
+        LOG_ERR("msg_chan_csv_write(%s) failed: buffer too small",
+                zbus_chan_name(chan));
+        goto out;
+      }
 
-    fs_write(&logging->file, buf, size + 1);
-    fs_sync(&logging->file);
+      ret = fs_write(&logging->file, buf, size + 1);
+      if (ret < 0) {
+        LOG_ERR("fs_write failed: %s", strerror(-ret));
+        goto out;
+      }
+
+      sys_work_schedule(&logging->sync_dwork,
+                        K_MSEC(CONFIG_VCU_MSG_LOGGING_SYNC_INTERVAL));
+    } break;
+
+    case PACKET_TYPE_STOP:
+      ret = fs_close(&logging->file);
+      if (ret < 0) {
+        LOG_ERR("fs_close failed: %s", strerror(-ret));
+      }
+
+      k_work_cancel_delayable(&logging->sync_dwork);
+      k_mutex_unlock(&logging->lock);
+
+      break;
+
+    default:
+      break;
   }
 
+out:
   mpsc_pbuf_free(&ctx->mpsc_pbuf, _packet);
 
   if (mpsc_pbuf_is_pending(&ctx->mpsc_pbuf)) {
     sys_work_submit(&ctx->logging_work);
   }
+}
+
+static uint32_t msg_logging_packet_get_wlen(
+    const union mpsc_pbuf_generic *_packet) {
+  const struct msg_logging_packet *packet =
+      (const struct msg_logging_packet *)_packet;
+
+  return packet->header.len;
+}
+
+static void msg_logging_packet_drop(const struct mpsc_pbuf_buffer *buffer,
+                                    const union mpsc_pbuf_generic *_packet) {
+  (void)buffer;
+
+  const struct msg_logging_packet *packet =
+      (const struct msg_logging_packet *)_packet;
+
+  LOG_ERR_THROTTLE(K_MSEC(500), "Dropping packet from %s",
+                   zbus_chan_name(packet->header.chan));
 }

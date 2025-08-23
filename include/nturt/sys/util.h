@@ -16,6 +16,7 @@
 
 // zephyr includes
 #include <zephyr/kernel.h>
+#include <zephyr/sys/cbprintf.h>
 #include <zephyr/sys/util.h>
 
 // project includes
@@ -83,13 +84,6 @@
 #define N_FOR_EACH(F, sep, ...) \
   N_FOR_EACH_ENGINE(_FOR_EACH, sep, F, _, __VA_ARGS__)
 
-#define _WORK_CTX_DEFINE(_i, _work_handler, _ctx, _args) \
-  [_i] = {                                               \
-      .work = Z_WORK_INITIALIZER(_work_handler),         \
-      .ctx = _ctx,                                       \
-      .args = _args[_i],                                 \
-  }
-
 /**
  * @brief Get the deferenced type of a pointer type.
  *
@@ -119,10 +113,10 @@
 
 /**
  * @brief Check if all bits in @p mask are set in @p value .
- * 
+ *
  * @param[in] value Value to check.
  * @param[in] mask Mask to check against.
- * @return True if all bits in @p mask are set in @p value . 
+ * @return True if all bits in @p mask are set in @p value .
  */
 #define IS_MASK_SET(value, mask) (((value) & (mask)) == (mask))
 
@@ -187,6 +181,45 @@
  */
 #define LOG_ERR_THROTTLE(min_separation, ...) \
   _LOG_THROTTLE(ERR, min_separation, __VA_ARGS__)
+
+/**
+ * @brief Insert format string to print @p x.
+ *
+ * @param[in] x The data to print.
+ */
+#define PRI(x)                    \
+  _Generic((x),                   \
+      char: "%c",                 \
+      signed char: "%hhd",        \
+      unsigned char: "%hhu",      \
+      short: "%hd",               \
+      unsigned short: "%hu",      \
+      int: "%d",                  \
+      unsigned int: "%u",         \
+      long: "%ld",                \
+      unsigned long: "%lu",       \
+      long long: "%lld",          \
+      unsigned long long: "%llu", \
+      float: "%f",                \
+      double: "%f",               \
+      long double: "%Lf",         \
+      char*: "%s",                \
+      void*: "%p",                \
+      default: "%p")
+
+/**
+ * @brief Insert @p x to printf format.
+ *
+ * @param[in] x The data to print.
+ */
+#define PRI_arg(x) _Generic(Z_ARGIFY(x), float: (double)(x), default: (x))
+
+#define _WORK_CTX_DEFINE(_i, _work_handler, _ctx, _args) \
+  [_i] = {                                               \
+      .work = Z_WORK_INITIALIZER(_work_handler),         \
+      .ctx = _ctx,                                       \
+      .args = _args[_i],                                 \
+  }
 
 /**
  * @brief Define work context buffer for the bottom half of an ISR.

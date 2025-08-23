@@ -24,7 +24,7 @@
 
 #define INV_DIR_L -1.0F
 #define INV_DIR_R 1.0F
-#define INV_RATED_TORQUE 100.0F
+#define INV_RATED_TORQUE 20.0F
 #define MOTOR_REDUCTION_RATIO 13.1F
 
 /* Physical to CAN -----------------------------------------------------------*/

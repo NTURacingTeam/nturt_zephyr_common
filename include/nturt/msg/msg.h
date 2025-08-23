@@ -90,7 +90,9 @@
       .print = _MSG_PRINT(msg),                                               \
       .csv_header = _MSG_CSV_HEADER(msg),                                     \
       .csv_write = _MSG_CSV_WRITE(msg),                                       \
-  };                                                                          \
+      IF_ENABLED(CONFIG_NTURT_MSG_LOGGING,                                    \
+                 (.logging = MSG_LOGGING_INITIALIZER(                         \
+                      _MSG_CHAN_DATA(msg).logging), ))};                      \
                                                                               \
   ZBUS_CHAN_DEFINE(_MSG_CHAN(msg), struct msg, NULL, &_MSG_CHAN_DATA(msg),    \
                    ZBUS_OBSERVERS_EMPTY, ZBUS_MSG_INIT(0))
