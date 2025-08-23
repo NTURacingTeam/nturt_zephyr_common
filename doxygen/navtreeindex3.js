@@ -1,5 +1,8 @@
 var NAVTREEINDEX3 =
 {
+"structmsg__ctrl__vehicle__state.html#add0be0496929cbb725c537727c983e66":[2,6,1,0,2,1],
+"structmsg__ctrl__word.html":[2,6,1,0,3],
+"structmsg__ctrl__word.html#a6f1b811c999096475dea5de5281bd6e6":[2,6,1,0,3,0],
 "structmsg__ctrl__word.html#ab5996a1949f94ce5399c068c77ddcb15":[2,6,1,0,3,1],
 "structmsg__header.html":[2,6,1,6],
 "structmsg__header.html#a149e87c80efea835c380ed38d8b629f3":[2,6,1,6,0],
@@ -7,6 +10,7 @@ var NAVTREEINDEX3 =
 "structmsg__logging.html#a34346a86f6a27e36de9368857520fd06":[2,6,2,0,1],
 "structmsg__logging.html#a4d857ff86ef0a385277ad6c14e3ab051":[2,6,2,0,2],
 "structmsg__logging.html#a7c3bb6dcedb5b1bfe2c1aabf897f0289":[2,6,2,0,0],
+"structmsg__logging.html#a8d286c69630ecebeb5360ee7b9492187":[2,6,2,0,3],
 "structmsg__sensor__cockpit.html":[2,6,1,3,2],
 "structmsg__sensor__cockpit.html#a0e92ed4c35a1ea483628fd8c35e34fb2":[2,6,1,3,2,3],
 "structmsg__sensor__cockpit.html#a342369b0318bd172770633f0d85fd81e":[2,6,1,3,2,1],

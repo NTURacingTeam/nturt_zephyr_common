@@ -127,6 +127,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a34346a86f6a27e36de9368857520fd06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c3bb6dcedb5b1bfe2c1aabf897f0289" id="r_a7c3bb6dcedb5b1bfe2c1aabf897f0289"><td class="memItemLeft" align="right" valign="top">struct fs_file_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c3bb6dcedb5b1bfe2c1aabf897f0289">file</a></td></tr>
 <tr class="separator:a7c3bb6dcedb5b1bfe2c1aabf897f0289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d286c69630ecebeb5360ee7b9492187" id="r_a8d286c69630ecebeb5360ee7b9492187"><td class="memItemLeft" align="right" valign="top">struct k_work_delayable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d286c69630ecebeb5360ee7b9492187">sync_dwork</a></td></tr>
+<tr class="separator:a8d286c69630ecebeb5360ee7b9492187"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Message logging support. </p>
@@ -157,6 +159,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>If the message is currently being logged. </p>
 
 </div>
 </div>
@@ -175,6 +178,21 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
+<a id="a8d286c69630ecebeb5360ee7b9492187" name="a8d286c69630ecebeb5360ee7b9492187"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d286c69630ecebeb5360ee7b9492187">&#9670;&#160;</a></span>sync_dwork</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct k_work_delayable msg_logging::sync_dwork</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Work for syncing message log file. </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>nturt/msg/<a class="el" href="logging_8h.html">logging.h</a></li>
 </ul>
@@ -184,7 +202,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structmsg__logging.html">msg_logging</a></li>
-    <li class="footer">Generated on Fri Aug 22 2025 15:35:08 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sat Aug 23 2025 12:48:58 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

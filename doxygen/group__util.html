@@ -189,6 +189,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ga4b95009fbe6957eb1883c2d9b98c8ef2" id="r_ga4b95009fbe6957eb1883c2d9b98c8ef2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga4b95009fbe6957eb1883c2d9b98c8ef2">LOG_ERR_THROTTLE</a>(min_separation, ...)</td></tr>
 <tr class="memdesc:ga4b95009fbe6957eb1883c2d9b98c8ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes an ERROR level message to the log with throttling.  <br /></td></tr>
 <tr class="separator:ga4b95009fbe6957eb1883c2d9b98c8ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50eed582828a055d528da709815c5af9" id="r_ga50eed582828a055d528da709815c5af9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga50eed582828a055d528da709815c5af9">PRI</a>(x)</td></tr>
+<tr class="memdesc:ga50eed582828a055d528da709815c5af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert format string to print <code>x</code>.  <br /></td></tr>
+<tr class="separator:ga50eed582828a055d528da709815c5af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga233ad140365f9757fac1b567a03b6743" id="r_ga233ad140365f9757fac1b567a03b6743"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga233ad140365f9757fac1b567a03b6743">PRI_arg</a>(x)</td></tr>
+<tr class="memdesc:ga233ad140365f9757fac1b567a03b6743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <code>x</code> to printf format.  <br /></td></tr>
+<tr class="separator:ga233ad140365f9757fac1b567a03b6743"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6b8755c6ad5ec1ab214cdade6eba5200" id="r_ga6b8755c6ad5ec1ab214cdade6eba5200"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga6b8755c6ad5ec1ab214cdade6eba5200">WORK_CTX_BUF_DEFINE</a>(_name,  _size,  _work_handler,  _ctx,  _args_type)</td></tr>
 <tr class="memdesc:ga6b8755c6ad5ec1ab214cdade6eba5200"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define work context buffer for the bottom half of an ISR.  <br /></td></tr>
 <tr class="separator:ga6b8755c6ad5ec1ab214cdade6eba5200"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,7 +235,7 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="#ga1438bcfb0e681201bb3d50e2c1dffe46">FLAG_SET_AND_CLEAR</a>(num, BIT(bit))</div>
-<div class="ttc" id="agroup__util_html_ga1438bcfb0e681201bb3d50e2c1dffe46"><div class="ttname"><a href="#ga1438bcfb0e681201bb3d50e2c1dffe46">FLAG_SET_AND_CLEAR</a></div><div class="ttdeci">#define FLAG_SET_AND_CLEAR(num, flag)</div><div class="ttdoc">Check if a flag is set and clear that flag if it so.</div><div class="ttdef"><b>Definition</b> util.h:137</div></div>
+<div class="ttc" id="agroup__util_html_ga1438bcfb0e681201bb3d50e2c1dffe46"><div class="ttname"><a href="#ga1438bcfb0e681201bb3d50e2c1dffe46">FLAG_SET_AND_CLEAR</a></div><div class="ttdeci">#define FLAG_SET_AND_CLEAR(num, flag)</div><div class="ttdoc">Check if a flag is set and clear that flag if it so.</div><div class="ttdef"><b>Definition</b> util.h:131</div></div>
 </div><!-- fragment -->
 <p>Check if a bit is set and clear that bit if it is so. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -679,6 +685,79 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga50eed582828a055d528da709815c5af9" name="ga50eed582828a055d528da709815c5af9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga50eed582828a055d528da709815c5af9">&#9670;&#160;</a></span>PRI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PRI</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">  _Generic((x),                   \</div>
+<div class="line">      <span class="keywordtype">char</span>: <span class="stringliteral">&quot;%c&quot;</span>,                 \</div>
+<div class="line">      <span class="keywordtype">signed</span> <span class="keywordtype">char</span>: <span class="stringliteral">&quot;%hhd&quot;</span>,        \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>: <span class="stringliteral">&quot;%hhu&quot;</span>,      \</div>
+<div class="line">      <span class="keywordtype">short</span>: <span class="stringliteral">&quot;%hd&quot;</span>,               \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span>: <span class="stringliteral">&quot;%hu&quot;</span>,      \</div>
+<div class="line">      <span class="keywordtype">int</span>: <span class="stringliteral">&quot;%d&quot;</span>,                  \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>: <span class="stringliteral">&quot;%u&quot;</span>,         \</div>
+<div class="line">      <span class="keywordtype">long</span>: <span class="stringliteral">&quot;%ld&quot;</span>,                \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>: <span class="stringliteral">&quot;%lu&quot;</span>,       \</div>
+<div class="line">      <span class="keywordtype">long</span> <span class="keywordtype">long</span>: <span class="stringliteral">&quot;%lld&quot;</span>,          \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span>: <span class="stringliteral">&quot;%llu&quot;</span>, \</div>
+<div class="line">      <span class="keywordtype">float</span>: <span class="stringliteral">&quot;%f&quot;</span>,                \</div>
+<div class="line">      <span class="keywordtype">double</span>: <span class="stringliteral">&quot;%f&quot;</span>,               \</div>
+<div class="line">      <span class="keywordtype">long</span> <span class="keywordtype">double</span>: <span class="stringliteral">&quot;%Lf&quot;</span>,         \</div>
+<div class="line">      <span class="keywordtype">char</span>*: <span class="stringliteral">&quot;%s&quot;</span>,                \</div>
+<div class="line">      <span class="keywordtype">void</span>*: <span class="stringliteral">&quot;%p&quot;</span>,                \</div>
+<div class="line">      <span class="keywordflow">default</span>: <span class="stringliteral">&quot;%p&quot;</span>)</div>
+</div><!-- fragment -->
+<p>Insert format string to print <code>x</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>The data to print. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga233ad140365f9757fac1b567a03b6743" name="ga233ad140365f9757fac1b567a03b6743"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga233ad140365f9757fac1b567a03b6743">&#9670;&#160;</a></span>PRI_arg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PRI_arg</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">_Generic(Z_ARGIFY(x), <span class="keywordtype">float</span>: (<span class="keywordtype">double</span>)(x), <span class="keywordflow">default</span>: (x))</div>
+</div><!-- fragment -->
+<p>Insert <code>x</code> to printf format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>The data to print. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga7755688b6ed949784c4c5a1ebf2072fd" name="ga7755688b6ed949784c4c5a1ebf2072fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga7755688b6ed949784c4c5a1ebf2072fd">&#9670;&#160;</a></span>TYPEOF_FIELD</h2>
 
@@ -730,8 +809,8 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  (((<span class="keyword">struct </span><a class="code hl_struct" href="structwork__ctx.html">work_ctx</a>*)CONTAINER_OF(_work, <span class="keyword">struct</span> <a class="code hl_struct" href="structwork__ctx.html">work_ctx</a>, <a class="code hl_variable" href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work</a>))-&gt;ctx)</div>
-<div class="ttc" id="astructwork__ctx_html"><div class="ttname"><a href="structwork__ctx.html">work_ctx</a></div><div class="ttdoc">Work context.</div><div class="ttdef"><b>Definition</b> util.h:233</div></div>
-<div class="ttc" id="astructwork__ctx_html_afa7a3d02898de6f5b9015f70da3ed91c"><div class="ttname"><a href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work_ctx::work</a></div><div class="ttdeci">struct k_work work</div><div class="ttdoc">Work.</div><div class="ttdef"><b>Definition</b> util.h:235</div></div>
+<div class="ttc" id="astructwork__ctx_html"><div class="ttname"><a href="structwork__ctx.html">work_ctx</a></div><div class="ttdoc">Work context.</div><div class="ttdef"><b>Definition</b> util.h:266</div></div>
+<div class="ttc" id="astructwork__ctx_html_afa7a3d02898de6f5b9015f70da3ed91c"><div class="ttname"><a href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work_ctx::work</a></div><div class="ttdeci">struct k_work work</div><div class="ttdoc">Work.</div><div class="ttdef"><b>Definition</b> util.h:268</div></div>
 </div><!-- fragment -->
 <p>Get the context of the work. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -817,7 +896,7 @@ Functions</h2></td></tr>
 <div class="line">      .size = _size,                                                       \</div>
 <div class="line">      .work_ctxs = CONCAT(_name, _work_ctx),                               \</div>
 <div class="line">  }</div>
-<div class="ttc" id="astructwork__ctx__buf_html"><div class="ttname"><a href="structwork__ctx__buf.html">work_ctx_buf</a></div><div class="ttdoc">Work context buffer.</div><div class="ttdef"><b>Definition</b> util.h:245</div></div>
+<div class="ttc" id="astructwork__ctx__buf_html"><div class="ttname"><a href="structwork__ctx__buf.html">work_ctx_buf</a></div><div class="ttdoc">Work context buffer.</div><div class="ttdef"><b>Definition</b> util.h:278</div></div>
 </div><!-- fragment -->
 <p>Define work context buffer for the bottom half of an ISR. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -901,7 +980,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Aug 22 2025 15:35:08 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sat Aug 23 2025 12:48:58 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

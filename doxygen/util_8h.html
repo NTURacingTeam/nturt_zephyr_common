@@ -120,6 +120,7 @@ $(function(){initNavTree('util_8h.html',''); initResizable(true); });
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
 <code>#include &lt;zephyr/kernel.h&gt;</code><br />
+<code>#include &lt;zephyr/sys/cbprintf.h&gt;</code><br />
 <code>#include &lt;zephyr/sys/util.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="util__loops_8h.html">nturt/sys/util_loops.h</a>&quot;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -129,15 +130,17 @@ $(function(){initNavTree('util_8h.html',''); initResizable(true); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="util_8h__incl.png" border="0" usemap="#anturt_2sys_2util_8h" alt=""/></div>
 <map name="anturt_2sys_2util_8h" id="anturt_2sys_2util_8h">
-<area shape="rect" title="Utility macros and functions." alt="" coords="182,5,298,31"/>
+<area shape="rect" title="Utility macros and functions." alt="" coords="271,5,387,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,80,104"/>
-<area shape="poly" title=" " alt="" coords="209,33,89,76,87,71,207,28"/>
+<area shape="poly" title=" " alt="" coords="284,33,94,80,93,75,283,28"/>
 <area shape="rect" title=" " alt="" coords="104,79,227,104"/>
-<area shape="poly" title=" " alt="" coords="230,33,189,71,186,67,226,29"/>
-<area shape="rect" title=" " alt="" coords="251,79,381,104"/>
-<area shape="poly" title=" " alt="" coords="254,29,295,67,292,71,250,33"/>
-<area shape="rect" href="util__loops_8h.html" title=" " alt="" coords="405,79,563,104"/>
-<area shape="poly" title=" " alt="" coords="280,28,432,72,431,77,278,33"/>
+<area shape="poly" title=" " alt="" coords="304,33,206,76,203,71,302,28"/>
+<area shape="rect" title=" " alt="" coords="251,79,408,104"/>
+<area shape="poly" title=" " alt="" coords="332,31,332,65,327,65,327,31"/>
+<area shape="rect" title=" " alt="" coords="433,79,562,104"/>
+<area shape="poly" title=" " alt="" coords="357,28,458,71,456,76,355,33"/>
+<area shape="rect" href="util__loops_8h.html" title=" " alt="" coords="586,79,745,104"/>
+<area shape="poly" title=" " alt="" coords="384,28,598,73,597,78,383,33"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -227,6 +230,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ga4b95009fbe6957eb1883c2d9b98c8ef2" id="r_ga4b95009fbe6957eb1883c2d9b98c8ef2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__util.html#ga4b95009fbe6957eb1883c2d9b98c8ef2">LOG_ERR_THROTTLE</a>(min_separation, ...)</td></tr>
 <tr class="memdesc:ga4b95009fbe6957eb1883c2d9b98c8ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes an ERROR level message to the log with throttling.  <br /></td></tr>
 <tr class="separator:ga4b95009fbe6957eb1883c2d9b98c8ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50eed582828a055d528da709815c5af9" id="r_ga50eed582828a055d528da709815c5af9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__util.html#ga50eed582828a055d528da709815c5af9">PRI</a>(x)</td></tr>
+<tr class="memdesc:ga50eed582828a055d528da709815c5af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert format string to print <code>x</code>.  <br /></td></tr>
+<tr class="separator:ga50eed582828a055d528da709815c5af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga233ad140365f9757fac1b567a03b6743" id="r_ga233ad140365f9757fac1b567a03b6743"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__util.html#ga233ad140365f9757fac1b567a03b6743">PRI_arg</a>(x)</td></tr>
+<tr class="memdesc:ga233ad140365f9757fac1b567a03b6743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <code>x</code> to printf format.  <br /></td></tr>
+<tr class="separator:ga233ad140365f9757fac1b567a03b6743"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6b8755c6ad5ec1ab214cdade6eba5200" id="r_ga6b8755c6ad5ec1ab214cdade6eba5200"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__util.html#ga6b8755c6ad5ec1ab214cdade6eba5200">WORK_CTX_BUF_DEFINE</a>(_name,  _size,  _work_handler,  _ctx,  _args_type)</td></tr>
 <tr class="memdesc:ga6b8755c6ad5ec1ab214cdade6eba5200"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define work context buffer for the bottom half of an ISR.  <br /></td></tr>
 <tr class="separator:ga6b8755c6ad5ec1ab214cdade6eba5200"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -255,7 +264,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3b50b866d123226444b3aee8206a85f.html">nturt</a></li><li class="navelem"><a class="el" href="dir_325f2b8d42a416e6ec0025fc6c9d5abc.html">sys</a></li><li class="navelem"><a class="el" href="util_8h.html">util.h</a></li>
-    <li class="footer">Generated on Fri Aug 22 2025 15:35:08 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sat Aug 23 2025 12:48:58 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

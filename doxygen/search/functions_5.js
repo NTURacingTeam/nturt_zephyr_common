@@ -8,5 +8,6 @@ var searchData=
   ['msg_5fchan_5flogging_5fstart_5',['msg_chan_logging_start',['../group__msg__logging.html#ga7f9fc299e3d84d26220c5350a6d6ec67',1,'logging.h']]],
   ['msg_5fchan_5flogging_5fstop_6',['msg_chan_logging_stop',['../group__msg__logging.html#gae119e8c1bf78905fa51ccef262120f0c',1,'logging.h']]],
   ['msg_5fchan_5fprint_7',['msg_chan_print',['../group__msg.html#gab04f9f5b6c72f995d5123da2fed991f2',1,'msg.h']]],
-  ['msg_5fheader_5finit_8',['msg_header_init',['../group__msg__if.html#ga441b1113671fb5d80d6e80009d600eec',1,'common.h']]]
+  ['msg_5fheader_5finit_8',['msg_header_init',['../group__msg__if.html#ga441b1113671fb5d80d6e80009d600eec',1,'common.h']]],
+  ['msg_5flogging_5fsync_5fwork_9',['msg_logging_sync_work',['../group__msg__logging.html#ga763ac1b0888f0f8e89e0899d2d4ddbe9',1,'logging.h']]]
 ];
