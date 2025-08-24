@@ -110,7 +110,6 @@ $(function(){initNavTree('group__ctrl.html',''); initResizable(true); });
 <div class="header">
   <div class="summary">
 <a href="#groups">Topics</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Control</div></div>
 </div><!--header-->
@@ -125,14 +124,18 @@ $(function(){initNavTree('group__ctrl.html',''); initResizable(true); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="group__ctrl.png" border="0" usemap="#agroup____ctrl" alt=""/></div>
 <map name="agroup____ctrl" id="agroup____ctrl">
-<area shape="rect" title="Control system." alt="" coords="5,31,75,56"/>
-<area shape="rect" href="group__ctrl__inv.html" title="Inverter control." alt="" coords="123,5,247,31"/>
-<area shape="rect" href="group__stat.html" title="Control system state machine." alt="" coords="153,55,216,80"/>
+<area shape="rect" title="Control system." alt="" coords="5,55,75,80"/>
+<area shape="rect" href="group__ctrl__inv.html" title="Inverter control." alt="" coords="137,5,261,31"/>
+<area shape="rect" href="group__ctrl__param.html" title="Control system parameters." alt="" coords="123,55,275,80"/>
+<area shape="rect" href="group__stat.html" title="Control system state machine." alt="" coords="167,104,230,129"/>
 </map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
 Topics</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl__param.html">Control parameters.</a></td></tr>
+<tr class="memdesc:group__ctrl__param"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control system parameters. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ctrl__inv.html">Inverter Control</a></td></tr>
 <tr class="memdesc:group__ctrl__inv"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverter control. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,220 +143,15 @@ Topics</h2></td></tr>
 <tr class="memdesc:group__stat"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control system state machine. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gabc42d38e0645d905e504de7e832280a3" id="r_gabc42d38e0645d905e504de7e832280a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gabc42d38e0645d905e504de7e832280a3">TORQ_DEFAULT</a>&#160;&#160;&#160;50</td></tr>
-<tr class="separator:gabc42d38e0645d905e504de7e832280a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47538799636797468a27ef47970cc24c" id="r_ga47538799636797468a27ef47970cc24c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>(name,  type,  default)</td></tr>
-<tr class="memdesc:ga47538799636797468a27ef47970cc24c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify aa control parameter. Used in <a class="el" href="#ga5d742ce20b9793c45311f2afa36b1c1e">CTRL_PARAM_DECLARE</a>, <a class="el" href="#ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d">CTRL_PARAM_DEFINE</a> and <a class="el" href="#ga0f2418cf6e2c2eec31068e54f63f29b4">CTRL_PARAM_EXTERN</a>.  <br /></td></tr>
-<tr class="separator:ga47538799636797468a27ef47970cc24c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d742ce20b9793c45311f2afa36b1c1e" id="r_ga5d742ce20b9793c45311f2afa36b1c1e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga5d742ce20b9793c45311f2afa36b1c1e">CTRL_PARAM_DECLARE</a>(...)</td></tr>
-<tr class="memdesc:ga5d742ce20b9793c45311f2afa36b1c1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare control parameters in setter and getter functions.  <br /></td></tr>
-<tr class="separator:ga5d742ce20b9793c45311f2afa36b1c1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f2418cf6e2c2eec31068e54f63f29b4" id="r_ga0f2418cf6e2c2eec31068e54f63f29b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga0f2418cf6e2c2eec31068e54f63f29b4">CTRL_PARAM_EXTERN</a>(...)</td></tr>
-<tr class="memdesc:ga0f2418cf6e2c2eec31068e54f63f29b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare control parameters as extern variables.  <br /></td></tr>
-<tr class="separator:ga0f2418cf6e2c2eec31068e54f63f29b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d" id="r_ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d">CTRL_PARAM_DEFINE</a>(list)</td></tr>
-<tr class="memdesc:ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define control parameters and their getter/setter functions.  <br /></td></tr>
-<tr class="separator:ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3067a2b210cc2192638d0c8e454332da" id="r_ga3067a2b210cc2192638d0c8e454332da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga3067a2b210cc2192638d0c8e454332da">CTRL_PARAM_LIST</a></td></tr>
-<tr class="memdesc:ga3067a2b210cc2192638d0c8e454332da"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of control parameters.  <br /></td></tr>
-<tr class="separator:ga3067a2b210cc2192638d0c8e454332da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga1f218f62f531b158355007d149ae813e" id="r_ga1f218f62f531b158355007d149ae813e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga1f218f62f531b158355007d149ae813e">CTRL_PARAM_DECLARE</a> (<a class="el" href="#ga3067a2b210cc2192638d0c8e454332da">CTRL_PARAM_LIST</a>)</td></tr>
-<tr class="separator:ga1f218f62f531b158355007d149ae813e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadcf45cbf4c12c3b9c8c863a57ac06028" id="r_gadcf45cbf4c12c3b9c8c863a57ac06028"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gadcf45cbf4c12c3b9c8c863a57ac06028">ctrl_settings_save</a> ()</td></tr>
 <tr class="memdesc:gadcf45cbf4c12c3b9c8c863a57ac06028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save current control parameter settings.  <br /></td></tr>
 <tr class="separator:gadcf45cbf4c12c3b9c8c863a57ac06028"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Control system. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga47538799636797468a27ef47970cc24c" name="ga47538799636797468a27ef47970cc24c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga47538799636797468a27ef47970cc24c">&#9670;&#160;</a></span>CTRL_PARAM</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CTRL_PARAM</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>default</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="ctrl_2ctrl_8h.html">vcu/ctrl/ctrl.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">(name, type, <span class="keywordflow">default</span>)</div>
-</div><!-- fragment -->
-<p>Specify aa control parameter. Used in <a class="el" href="#ga5d742ce20b9793c45311f2afa36b1c1e">CTRL_PARAM_DECLARE</a>, <a class="el" href="#ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d">CTRL_PARAM_DEFINE</a> and <a class="el" href="#ga0f2418cf6e2c2eec31068e54f63f29b4">CTRL_PARAM_EXTERN</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name of the parameter. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of the parameter. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">default</td><td>Default value of the parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga5d742ce20b9793c45311f2afa36b1c1e" name="ga5d742ce20b9793c45311f2afa36b1c1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5d742ce20b9793c45311f2afa36b1c1e">&#9670;&#160;</a></span>CTRL_PARAM_DECLARE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CTRL_PARAM_DECLARE</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="ctrl_2ctrl_8h.html">vcu/ctrl/ctrl.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">FOR_EACH(_CTRL_PARAM_DECLARE, (;), __VA_ARGS__)</div>
-</div><!-- fragment -->
-<p>Declare control parameters in setter and getter functions. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>Control parameters to declare, must be specified by <a class="el" href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d" name="ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2b9caaa4ec8a2fc61d0e9c5abc2ea61d">&#9670;&#160;</a></span>CTRL_PARAM_DEFINE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CTRL_PARAM_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>list</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="ctrl_2ctrl_8h.html">vcu/ctrl/ctrl.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">FOR_EACH(_CTRL_PARAM_DEFINE, (), list)</div>
-</div><!-- fragment -->
-<p>Define control parameters and their getter/setter functions. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>Control parameters to define, must be specified by <a class="el" href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga0f2418cf6e2c2eec31068e54f63f29b4" name="ga0f2418cf6e2c2eec31068e54f63f29b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0f2418cf6e2c2eec31068e54f63f29b4">&#9670;&#160;</a></span>CTRL_PARAM_EXTERN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CTRL_PARAM_EXTERN</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="ctrl_2ctrl_8h.html">vcu/ctrl/ctrl.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">FOR_EACH(_CTRL_PARAM_EXTERN, (;), __VA_ARGS__)</div>
-</div><!-- fragment -->
-<p>Declare control parameters as extern variables. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>Control parameters to declare, must be specified by <a class="el" href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga3067a2b210cc2192638d0c8e454332da" name="ga3067a2b210cc2192638d0c8e454332da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3067a2b210cc2192638d0c8e454332da">&#9670;&#160;</a></span>CTRL_PARAM_LIST</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CTRL_PARAM_LIST</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="ctrl_2ctrl_8h.html">vcu/ctrl/ctrl.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>(torq_fl, uint8_t, <a class="code hl_define" href="#gabc42d38e0645d905e504de7e832280a3">TORQ_DEFAULT</a>),     \</div>
-<div class="line">      CTRL_PARAM(torq_fr, uint8_t, <a class="code hl_define" href="#gabc42d38e0645d905e504de7e832280a3">TORQ_DEFAULT</a>), \</div>
-<div class="line">      CTRL_PARAM(torq_rl, uint8_t, <a class="code hl_define" href="#gabc42d38e0645d905e504de7e832280a3">TORQ_DEFAULT</a>), \</div>
-<div class="line">      CTRL_PARAM(torq_rr, uint8_t, <a class="code hl_define" href="#gabc42d38e0645d905e504de7e832280a3">TORQ_DEFAULT</a>)</div>
-<div class="ttc" id="agroup__ctrl_html_ga47538799636797468a27ef47970cc24c"><div class="ttname"><a href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a></div><div class="ttdeci">#define CTRL_PARAM(name, type, default)</div><div class="ttdoc">Specify aa control parameter. Used in CTRL_PARAM_DECLARE, CTRL_PARAM_DEFINE and CTRL_PARAM_EXTERN.</div><div class="ttdef"><b>Definition</b> ctrl.h:39</div></div>
-<div class="ttc" id="agroup__ctrl_html_gabc42d38e0645d905e504de7e832280a3"><div class="ttname"><a href="#gabc42d38e0645d905e504de7e832280a3">TORQ_DEFAULT</a></div><div class="ttdeci">#define TORQ_DEFAULT</div><div class="ttdef"><b>Definition</b> ctrl.h:29</div></div>
-</div><!-- fragment -->
-<p>List of control parameters. </p>
-
-</div>
-</div>
-<a id="gabc42d38e0645d905e504de7e832280a3" name="gabc42d38e0645d905e504de7e832280a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabc42d38e0645d905e504de7e832280a3">&#9670;&#160;</a></span>TORQ_DEFAULT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TORQ_DEFAULT&#160;&#160;&#160;50</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="ctrl_2ctrl_8h.html">vcu/ctrl/ctrl.h</a>&gt;</code></p>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga1f218f62f531b158355007d149ae813e" name="ga1f218f62f531b158355007d149ae813e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1f218f62f531b158355007d149ae813e">&#9670;&#160;</a></span>CTRL_PARAM_DECLARE()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CTRL_PARAM_DECLARE </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="#ga3067a2b210cc2192638d0c8e454332da">CTRL_PARAM_LIST</a></td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;<a class="el" href="ctrl_2ctrl_8h.html">vcu/ctrl/ctrl.h</a>&gt;</code></p>
-
-</div>
-</div>
 <a id="gadcf45cbf4c12c3b9c8c863a57ac06028" name="gadcf45cbf4c12c3b9c8c863a57ac06028"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gadcf45cbf4c12c3b9c8c863a57ac06028">&#9670;&#160;</a></span>ctrl_settings_save()</h2>
 
@@ -381,7 +179,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Aug 23 2025 12:48:58 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sun Aug 24 2025 14:07:49 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

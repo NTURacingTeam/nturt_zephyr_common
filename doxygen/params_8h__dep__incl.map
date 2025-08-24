@@ -1,0 +1,7 @@
+<map id="vcu/ctrl/params.h" name="vcu/ctrl/params.h">
+<area shape="rect" id="Node000001" title="Control system parameters." alt="" coords="97,5,231,31"/>
+<area shape="rect" id="Node000002" href="$nturt__vcu_2include_2vcu_2canbus_2convert_8h.html" title="VCU CAN bus data conversion macros." alt="" coords="5,79,165,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,42,100,80,96,76,139,38"/>
+<area shape="rect" id="Node000003" href="$ctrl_2ctrl_8h.html" title="Control system." alt="" coords="189,79,296,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="189,38,232,76,228,80,185,42"/>
+</map>

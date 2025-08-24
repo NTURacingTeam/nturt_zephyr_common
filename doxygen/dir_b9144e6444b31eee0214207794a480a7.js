@@ -1,5 +1,6 @@
 var dir_b9144e6444b31eee0214207794a480a7 =
 [
+    [ "canbus", "dir_dde40761b9f6f3fe05d141f93c147187.html", "dir_dde40761b9f6f3fe05d141f93c147187" ],
     [ "ctrl", "dir_7250e0025911024ac81cc0c7da914acc.html", "dir_7250e0025911024ac81cc0c7da914acc" ],
     [ "dt-bindings", "dir_0873838b9caf743c276c8340d1cdafde.html", "dir_0873838b9caf743c276c8340d1cdafde" ],
     [ "msg", "dir_1bc49244a2b4c5e656448af01976e3f1.html", "dir_1bc49244a2b4c5e656448af01976e3f1" ],

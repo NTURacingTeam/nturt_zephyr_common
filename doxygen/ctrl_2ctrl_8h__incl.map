@@ -1,9 +1,9 @@
 <map id="vcu/ctrl/ctrl.h" name="vcu/ctrl/ctrl.h">
-<area shape="rect" id="Node000001" title="Control system." alt="" coords="109,5,215,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,76,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,33,73,74,71,69,141,28"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="101,79,223,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="165,31,165,65,159,65,159,31"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="248,79,377,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="187,28,277,70,274,75,185,33"/>
+<area shape="rect" id="Node000001" title="Control system." alt="" coords="49,5,155,31"/>
+<area shape="rect" id="Node000002" href="$params_8h.html" title="Control system parameters." alt="" coords="35,79,169,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,31,105,65,99,65,99,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,76,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,106,62,143,58,140,90,103"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="100,152,229,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="114,103,147,140,143,143,110,106"/>
 </map>

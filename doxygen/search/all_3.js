@@ -24,7 +24,7 @@ var searchData=
   ['dashboard_5fspeed_21',['DASHBOARD_SPEED',['../group__dashboard.html#ggaf16343cb157ded78eb9c7c6f90879eb1a187c3592d94a41d4ffe5a8d668d243f9',1,'dashboard.h']]],
   ['dashboard_5ftest_22',['DASHBOARD_TEST',['../group__dashboard.html#gga4bfe54d32c9c89dc36538cfa2b81246ea0491dedaeb45be42f03955e3e492a268',1,'dashboard.h']]],
   ['data_23',['data',['../structagg__typed.html#aea6a87ae24a4f7ffc7ccc4a9b4487489',1,'agg_typed::data'],['../structtm__group__data.html#a914c975a77d5dc46949391156972d050',1,'tm_group_data::data'],['../structtm__data.html#adffe86d2f2624ef96a024e867075e2a8',1,'tm_data::data']]],
-  ['data_20conversion_24',['CAN bus data conversion.',['../group__can__convert.html',1,'']]],
+  ['data_20conversion_24',['data conversion',['../group__can__convert.html',1,'CAN bus data conversion.'],['../group__can__convert__vcu.html',1,'VCU CAN bus data conversion.']]],
   ['data_5fsize_25',['data_size',['../structagg__typed.html#a54942a658a6453cf1600e8abb5ee3589',1,'agg_typed']]],
   ['datas_26',['datas',['../structtm__group.html#adb7f5b0a8df9c93c0bc65220f8b4a077',1,'tm_group']]],
   ['deffered_27',['deffered',['../structcmd.html#aafbfe9d1ba72e361261bd5794cc55f48',1,'cmd']]],
