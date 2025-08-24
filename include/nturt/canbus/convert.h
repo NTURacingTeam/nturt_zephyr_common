@@ -22,11 +22,6 @@
  * @{
  */
 
-#define INV_DIR_L -1.0F
-#define INV_DIR_R 1.0F
-#define INV_RATED_TORQUE 20.0F
-#define MOTOR_REDUCTION_RATIO 13.1F
-
 /* Physical to CAN -----------------------------------------------------------*/
 /// @brief Steering angle physical data in deg (float), convert to 0.01 deg
 /// (int16_t).
@@ -53,15 +48,9 @@
 /// @todo
 #define SUSP_PHY_TO_CAN(phy) (phy)
 
-/// @brief Left torque command physical data in Nm (float), convert to 0.001
-/// rated torque (int16_t).
-#define INV_TORQUE_PHY_TO_CAN_L(phy) \
-  ((int16_t)(INV_DIR_L * 1000.0F / INV_RATED_TORQUE * (phy)))
-
-/// @brief Right torque command physical data in Nm (float), convert to 0.001
-/// rated torque (int16_t).
-#define INV_TORQUE_PHY_TO_CAN_R(phy) \
-  ((int16_t)(INV_DIR_R * 1000.0F / INV_RATED_TORQUE * (phy)))
+/// @brief Inverter torque physical data in 0~1 rated torque (float), convert to
+/// 0.001 rated torque (int16_t).
+#define INV_TORQ_PHY_TO_CAN(phy) ((int16_t)(1000.0F * (phy)))
 
 /* CAN to physical -----------------------------------------------------------*/
 /// @brief Steering angle CAN data in 0.01 deg (int16_t), convert to deg
@@ -93,25 +82,9 @@
 /// (float).
 #define ACC_CAPACITY_CAN_TO_PHY(can) (10.0F * (can))
 
-/// @brief Left inverter speed CAN data in RPM (int16_t) before reduction,
-/// convert to RPM (float) after reduction.
-#define INV_SPEED_CAN_TO_PHY_L(can) \
-  (INV_DIR_L * ANGULAR_VELOCITY_CAN_TO_PHY(can) / MOTOR_REDUCTION_RATIO)
-
-/// @brief Right inverter speed CAN data in RPM (int16_t) before reduction,
-/// convert to RPM (float) after reduction.
-#define INV_SPEED_CAN_TO_PHY_R(can) \
-  (INV_DIR_R * ANGULAR_VELOCITY_CAN_TO_PHY(can) / MOTOR_REDUCTION_RATIO)
-
-/// @brief Left inverter torque CAN data in 0.001 rated torque (int16_t),
-/// convert to Nm (float).
-#define INV_TORQUE_CAN_TO_PHY_L(can) \
-  (INV_DIR_L * 0.001F * INV_RATED_TORQUE * (can))
-
-/// @brief Right inverter torque CAN data in 0.001 rated torque (int16_t),
-/// convert to Nm (float).
-#define INV_TORQUE_CAN_TO_PHY_R(can) \
-  (INV_DIR_R * 0.001F * INV_RATED_TORQUE * (can))
+/// @brief Inverter torque CAN data in 0.001 rated torque (int16_t), convert to
+/// 0~1 rated torque (float).
+#define INV_TORQUE_CAN_TO_PHY(can) (0.001F * (can))
 
 /// @brief Inverter voltage CAN data in 0.01 V (uint16_t), convert to V (float).
 #define INV_VOLT_CAN_TO_PHY(can) (0.01F * (can))
