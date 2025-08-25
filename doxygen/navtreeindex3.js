@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"structmsg__ctrl__cmd.html#ab793ddafb30e8f2e9325ea1593752827":[2,6,1,0,5,0],
 "structmsg__ctrl__cmd.html#ac73def6fe8a578883d4f88ba8a547d5c":[2,6,1,0,5,1],
 "structmsg__ctrl__torque.html":[2,6,1,0,4],
 "structmsg__ctrl__torque.html#a2e34fa6a73999c8e86d6d6464fc0e76e":[2,6,1,0,4,0],

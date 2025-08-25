@@ -192,6 +192,8 @@ Macros</h2></td></tr>
 <tr class="memitem:ga50eed582828a055d528da709815c5af9" id="r_ga50eed582828a055d528da709815c5af9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga50eed582828a055d528da709815c5af9">PRI</a>(x)</td></tr>
 <tr class="memdesc:ga50eed582828a055d528da709815c5af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert format string to print <code>x</code>.  <br /></td></tr>
 <tr class="separator:ga50eed582828a055d528da709815c5af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d34aa2c33c80db2ba863393c173a09f" id="r_ga9d34aa2c33c80db2ba863393c173a09f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga9d34aa2c33c80db2ba863393c173a09f">SCN</a>(x)</td></tr>
+<tr class="separator:ga9d34aa2c33c80db2ba863393c173a09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga233ad140365f9757fac1b567a03b6743" id="r_ga233ad140365f9757fac1b567a03b6743"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga233ad140365f9757fac1b567a03b6743">PRI_arg</a>(x)</td></tr>
 <tr class="memdesc:ga233ad140365f9757fac1b567a03b6743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <code>x</code> to printf format.  <br /></td></tr>
 <tr class="separator:ga233ad140365f9757fac1b567a03b6743"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -758,6 +760,43 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga9d34aa2c33c80db2ba863393c173a09f" name="ga9d34aa2c33c80db2ba863393c173a09f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9d34aa2c33c80db2ba863393c173a09f">&#9670;&#160;</a></span>SCN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SCN</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">  _Generic((x),                   \</div>
+<div class="line">      <span class="keywordtype">char</span>: <span class="stringliteral">&quot;%c&quot;</span>,                 \</div>
+<div class="line">      <span class="keywordtype">signed</span> <span class="keywordtype">char</span>: <span class="stringliteral">&quot;%hhd&quot;</span>,        \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>: <span class="stringliteral">&quot;%hhu&quot;</span>,      \</div>
+<div class="line">      <span class="keywordtype">short</span>: <span class="stringliteral">&quot;%hd&quot;</span>,               \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span>: <span class="stringliteral">&quot;%hu&quot;</span>,      \</div>
+<div class="line">      <span class="keywordtype">int</span>: <span class="stringliteral">&quot;%d&quot;</span>,                  \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>: <span class="stringliteral">&quot;%u&quot;</span>,         \</div>
+<div class="line">      <span class="keywordtype">long</span>: <span class="stringliteral">&quot;%ld&quot;</span>,                \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>: <span class="stringliteral">&quot;%lu&quot;</span>,       \</div>
+<div class="line">      <span class="keywordtype">long</span> <span class="keywordtype">long</span>: <span class="stringliteral">&quot;%lld&quot;</span>,          \</div>
+<div class="line">      <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span>: <span class="stringliteral">&quot;%llu&quot;</span>, \</div>
+<div class="line">      <span class="keywordtype">float</span>: <span class="stringliteral">&quot;%f&quot;</span>,                \</div>
+<div class="line">      <span class="keywordtype">double</span>: <span class="stringliteral">&quot;%lf&quot;</span>,              \</div>
+<div class="line">      <span class="keywordtype">long</span> <span class="keywordtype">double</span>: <span class="stringliteral">&quot;%Lf&quot;</span>,         \</div>
+<div class="line">      <span class="keywordtype">char</span>*: <span class="stringliteral">&quot;%s&quot;</span>,                \</div>
+<div class="line">      <span class="keywordtype">void</span>*: <span class="stringliteral">&quot;%p&quot;</span>,                \</div>
+<div class="line">      <span class="keywordflow">default</span>: <span class="stringliteral">&quot;%p&quot;</span>)</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="ga7755688b6ed949784c4c5a1ebf2072fd" name="ga7755688b6ed949784c4c5a1ebf2072fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga7755688b6ed949784c4c5a1ebf2072fd">&#9670;&#160;</a></span>TYPEOF_FIELD</h2>
 
@@ -809,8 +848,8 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  (((<span class="keyword">struct </span><a class="code hl_struct" href="structwork__ctx.html">work_ctx</a>*)CONTAINER_OF(_work, <span class="keyword">struct</span> <a class="code hl_struct" href="structwork__ctx.html">work_ctx</a>, <a class="code hl_variable" href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work</a>))-&gt;ctx)</div>
-<div class="ttc" id="astructwork__ctx_html"><div class="ttname"><a href="structwork__ctx.html">work_ctx</a></div><div class="ttdoc">Work context.</div><div class="ttdef"><b>Definition</b> util.h:266</div></div>
-<div class="ttc" id="astructwork__ctx_html_afa7a3d02898de6f5b9015f70da3ed91c"><div class="ttname"><a href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work_ctx::work</a></div><div class="ttdeci">struct k_work work</div><div class="ttdoc">Work.</div><div class="ttdef"><b>Definition</b> util.h:268</div></div>
+<div class="ttc" id="astructwork__ctx_html"><div class="ttname"><a href="structwork__ctx.html">work_ctx</a></div><div class="ttdoc">Work context.</div><div class="ttdef"><b>Definition</b> util.h:286</div></div>
+<div class="ttc" id="astructwork__ctx_html_afa7a3d02898de6f5b9015f70da3ed91c"><div class="ttname"><a href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work_ctx::work</a></div><div class="ttdeci">struct k_work work</div><div class="ttdoc">Work.</div><div class="ttdef"><b>Definition</b> util.h:288</div></div>
 </div><!-- fragment -->
 <p>Get the context of the work. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -896,7 +935,7 @@ Functions</h2></td></tr>
 <div class="line">      .size = _size,                                                       \</div>
 <div class="line">      .work_ctxs = CONCAT(_name, _work_ctx),                               \</div>
 <div class="line">  }</div>
-<div class="ttc" id="astructwork__ctx__buf_html"><div class="ttname"><a href="structwork__ctx__buf.html">work_ctx_buf</a></div><div class="ttdoc">Work context buffer.</div><div class="ttdef"><b>Definition</b> util.h:278</div></div>
+<div class="ttc" id="astructwork__ctx__buf_html"><div class="ttname"><a href="structwork__ctx__buf.html">work_ctx_buf</a></div><div class="ttdoc">Work context buffer.</div><div class="ttdef"><b>Definition</b> util.h:298</div></div>
 </div><!-- fragment -->
 <p>Define work context buffer for the bottom half of an ISR. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -980,7 +1019,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Aug 24 2025 14:07:49 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Mon Aug 25 2025 07:45:20 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

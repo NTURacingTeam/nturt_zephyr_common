@@ -16,6 +16,7 @@ var util_8h =
     [ "N_FOR_EACH_IDX_FIXED_ARG", "group__util.html#gac980ae00a9050ad5a135319e3c27a9be", null ],
     [ "PRI", "group__util.html#ga50eed582828a055d528da709815c5af9", null ],
     [ "PRI_arg", "group__util.html#ga233ad140365f9757fac1b567a03b6743", null ],
+    [ "SCN", "group__util.html#ga9d34aa2c33c80db2ba863393c173a09f", null ],
     [ "TYPEOF_FIELD", "group__util.html#ga7755688b6ed949784c4c5a1ebf2072fd", null ],
     [ "WORK_CTX", "group__util.html#ga2549afcb2ada736e5b4e65f426123097", null ],
     [ "WORK_CTX_ARGS", "group__util.html#ga4e1bed12a722b64a0e0db284fbb6780d", null ],
