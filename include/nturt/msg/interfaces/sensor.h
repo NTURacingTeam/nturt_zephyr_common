@@ -49,9 +49,8 @@
  * @param[in] data The cockpit sensor data.
  */
 #define PRImsg_sensor_cockpit_arg(data)                                       \
-  PRImsg_header_arg((data).header), (double)((data).steer),                   \
-      (double)((data).accel), (double)((data).apps1), (double)((data).apps2), \
-      (double)((data).brake), (double)((data).bse1), (double)((data).bse2)
+  PRImsg_header_arg((data).header), (data).steer, (data).accel, (data).apps1, \
+      (data).apps2, (data).brake, (data).bse1, (data).bse2
 
 /// @brief Insert @ref msg_sensor_wheel printf format string.
 #define PRImsg_sensor_wheel                                     \
@@ -112,9 +111,9 @@
  *
  * @param[in] data The power sensor data.
  */
-#define PRImsg_sensor_pow_arg(data)                           \
-  PRImsg_header_arg((data).header), (double)((data).in_volt), \
-      (double)((data).v5_curr), (double)((data).v5_rpi_curr)
+#define PRImsg_sensor_pow_arg(data)                                 \
+  PRImsg_header_arg((data).header), (data).in_volt, (data).v5_curr, \
+      (data).v5_rpi_curr
 
 /**
  * @} // msg_if_pri_sensor
@@ -140,10 +139,9 @@
  *
  * @param[in] data The cockpit sensor data.
  */
-#define CSV_PRImsg_sensor_cockpit_arg(data)                                   \
-  CSV_PRImsg_header_arg((data).header), (double)((data).steer),               \
-      (double)((data).accel), (double)((data).apps1), (double)((data).apps2), \
-      (double)((data).brake), (double)((data).bse1), (double)((data).bse2)
+#define CSV_PRImsg_sensor_cockpit_arg(data)                         \
+  CSV_PRImsg_header_arg((data).header), (data).steer, (data).accel, \
+      (data).apps1, (data).apps2, (data).brake, (data).bse1, (data).bse2
 
 /// @brief CSV header for @ref msg_sensor_wheel.
 #define CSV_PRImsg_sensor_wheel_header \
@@ -218,9 +216,9 @@
  *
  * @param[in] data The power sensor data.
  */
-#define CSV_PRImsg_sensor_pow_arg(data)                           \
-  CSV_PRImsg_header_arg((data).header), (double)((data).in_volt), \
-      (double)((data).v5_curr), (double)((data).v5_rpi_curr)
+#define CSV_PRImsg_sensor_pow_arg(data)                                 \
+  CSV_PRImsg_header_arg((data).header), (data).in_volt, (data).v5_curr, \
+      (data).v5_rpi_curr
 
 /**
  * @} // msg_if_csv_sensor
@@ -233,25 +231,25 @@ struct msg_sensor_cockpit {
   struct msg_header header;
 
   /** Steering angle. Unit: degree */
-  float steer;
+  double steer;
 
   /** Accelerator pedal travel. Unit: % */
-  float accel;
+  double accel;
 
   /** Accelerator pedal position sensor (APPS) 1. Unit: degree */
-  float apps1;
+  double apps1;
 
   /** Accelerator pedal position sensor (APPS) 2. Unit: degree */
-  float apps2;
+  double apps2;
 
   /** Brake pedal travel. Unit: % */
-  float brake;
+  double brake;
 
   /** Brake system encoder (BSE) 1. Unit: kPa */
-  float bse1;
+  double bse1;
 
   /** Brake system encoder (BSE) 2. Unit: kPa */
-  float bse2;
+  double bse2;
 };
 
 /// @brief Wheel sensors message.
@@ -311,13 +309,13 @@ struct msg_sensor_pow {
   struct msg_header header;
 
   /** Input voltage. Unit: V */
-  float in_volt;
+  double in_volt;
 
   /** 5V current. Unit: A */
-  float v5_curr;
+  double v5_curr;
 
   /** 5V Raspberry Pi current. Unit: A */
-  float v5_rpi_curr;
+  double v5_rpi_curr;
 };
 
 /**

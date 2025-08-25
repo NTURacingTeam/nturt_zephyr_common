@@ -50,10 +50,9 @@
  *
  * @param[in] data The accumulator message data.
  */
-#define PRImsg_ts_acc_arg(data)                                               \
-  PRImsg_header_arg((data).header), (data).ok ? "true" : "false",             \
-      (double)((data).volt), (double)((data).current), (double)((data).temp), \
-      (data).soc, (double)((data).capacity)
+#define PRImsg_ts_acc_arg(data)                                                \
+  PRImsg_header_arg((data).header), (data).ok ? "true" : "false", (data).volt, \
+      (data).current, (data).temp, (data).soc, (data).capacity
 
 /// @brief Insert @ref msg_ts_inv printf format string.
 #define PRImsg_ts_inv                                                   \
@@ -101,10 +100,9 @@
  *
  * @param[in] data The accumulator message data.
  */
-#define CSV_PRImsg_ts_acc_arg(data)                                            \
-  CSV_PRImsg_header_arg((data).header), (int)(data).ok, (double)((data).volt), \
-      (double)((data).current), (double)((data).temp), (data).soc,             \
-      (double)((data).capacity)
+#define CSV_PRImsg_ts_acc_arg(data)                                  \
+  CSV_PRImsg_header_arg((data).header), (int)(data).ok, (data).volt, \
+      (data).current, (data).temp, (data).soc, (data).capacity
 
 /// @brief CSV header for @ref msg_ts_inv.
 #define CSV_PRImsg_ts_inv_header \
@@ -151,19 +149,19 @@ struct msg_ts_acc {
   bool ok;
 
   /** Accumulator voltage. Unit: V. */
-  float volt;
+  double volt;
 
   /** Accumulator current. Unit: A. */
-  float current;
+  double current;
 
   /** Accumulator temperature. Unit: °C. */
-  float temp;
+  double temp;
 
   /** Accumulator state of charge (SOC). Unit: %. */
   int soc;
 
   /** Accumulator capacity. Unit: mAh. */
-  float capacity;
+  double capacity;
 };
 
 /// @brief Inverter message.

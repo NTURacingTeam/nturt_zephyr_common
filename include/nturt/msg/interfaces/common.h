@@ -49,7 +49,7 @@
  *
  * @param[in] data The 2D data.
  */
-#define PRImsg_2d_data_arg(data) "", (double)(data).x, (double)(data).y
+#define PRImsg_2d_data_arg(data) "", (data).x, (data).y
 
 /// @brief Insert @ref msg_3d_data format string.
 #define PRImsg_3d_data "s(%g, %g, %g)"
@@ -59,8 +59,7 @@
  *
  * @param[in] data The 3D data.
  */
-#define PRImsg_3d_data_arg(data) \
-  "", (double)(data).x, (double)(data).y, (double)(data).z
+#define PRImsg_3d_data_arg(data) "", (data).x, (data).y, (data).z
 
 /// @brief Insert @ref msg_4wheel_data format string.
 #define PRImsg_4wheel_data "s(%g, %g, %g, %g)"
@@ -71,7 +70,7 @@
  * @param[in] data The 4-wheel data.
  */
 #define PRImsg_4wheel_data_arg(data) \
-  "", (double)(data).fl, (double)(data).fr, (double)(data).rl, (double)(data).rr
+  "", (data).fl, (data).fr, (data).rl, (data).rr
 
 /// @brief Insert @ref msg_4wheel_flags format string.
 #define PRImsg_4wheel_flags "s(0x%X, 0x%X, 0x%X, 0x%X)"
@@ -122,7 +121,7 @@
  *
  * @param[in] data The 2D data.
  */
-#define CSV_PRImsg_2d_data_arg(data) (double)(data).x, (double)(data).y
+#define CSV_PRImsg_2d_data_arg(data) (data).x, (data).y
 
 /** @brief CSV header for @ref msg_3d_data.
  *
@@ -139,8 +138,7 @@
  *
  * @param[in] data The 3D data.
  */
-#define CSV_PRImsg_3d_data_arg(data) \
-  (double)(data).x, (double)(data).y, (double)(data).z
+#define CSV_PRImsg_3d_data_arg(data) (data).x, (data).y, (data).z
 
 /** @brief CSV header for @ref msg_4wheel_data.
  *
@@ -159,7 +157,7 @@
  * @param[in] data The 4-wheel data.
  */
 #define CSV_PRImsg_4wheel_data_arg(data) \
-  (double)(data).fl, (double)(data).fr, (double)(data).rl, (double)(data).rr
+  (data).fl, (data).fr, (data).rl, (data).rr
 
 /** @brief CSV header for @ref msg_4wheel_flags.
  *
@@ -199,51 +197,51 @@ struct msg_header {
 /// @brief 2D data.
 union msg_2d_data {
   /** 2D data in an array. */
-  float values[2];
+  double values[2];
 
   struct {
     /** X-axis value. */
-    float x;
+    double x;
 
     /** Y-axis value. */
-    float y;
+    double y;
   };
 };
 
 /// @brief 3D data.
 union msg_3d_data {
   /** 3D data in an array. */
-  float values[3];
+  double values[3];
 
   struct {
     /** X-axis value. */
-    float x;
+    double x;
 
     /** Y-axis value. */
-    float y;
+    double y;
 
     /** Z-axis value. */
-    float z;
+    double z;
   };
 };
 
 /// @brief 4-wheel data.
 union msg_4wheel_data {
   /** 4-wheel data in an array. */
-  float values[4];
+  double values[4];
 
   struct {
     /** Front left wheel data. */
-    float fl;
+    double fl;
 
     /** Front right wheel data. */
-    float fr;
+    double fr;
 
     /** Rear left wheel data. */
-    float rl;
+    double rl;
 
     /** Rear right wheel data. */
-    float rr;
+    double rr;
   };
 };
 
