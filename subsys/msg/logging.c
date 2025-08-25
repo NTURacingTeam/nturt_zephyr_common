@@ -307,7 +307,7 @@ static void logging_work(struct k_work *work) {
       }
 
       sys_work_schedule(&logging->sync_dwork,
-                        K_MSEC(CONFIG_VCU_MSG_LOGGING_SYNC_INTERVAL));
+                        K_MSEC(CONFIG_NTURT_MSG_LOGGING_SYNC_INTERVAL));
     } break;
 
     case PACKET_TYPE_STOP:

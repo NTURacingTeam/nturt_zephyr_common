@@ -37,6 +37,12 @@ config NTURT_MSG_LOGGING_BUF_SIZE
 	help
 	  Size of the buffer used for logging messages in bytes.
 
+config NTURT_MSG_LOGGING_SYNC_INTERVAL
+	int "Message logging sync interval"
+	default 1000
+	help
+	  Interval in milliseconds to sync the message log file.
+
 endif # NTURT_MSG_LOGGING
 
 config NTURT_MSG_SHELL
