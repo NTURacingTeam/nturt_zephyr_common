@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__stat.html#ga1a1c242a0935e17b2a9df357c6419a08":[2,2,2,5],
 "group__stat.html#ga2741efd1ed6e0d4b1725a9659276326d":[2,2,2,11],
 "group__stat.html#ga2d8afe0901d99e922325e65ba3a0d88c":[2,2,2,4],
 "group__stat.html#ga40244f4e272d6c9426aa695a50dbb65d":[2,2,2,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structmsg__chan__data.html#a0644764143219bf1cb820c72330a8513":[2,6,3,0],
 "structmsg__chan__data.html#a2fa82ee4041987b7d1b220a88558eb30":[2,6,3,2],
 "structmsg__chan__data.html#aba0f644efabb8d70b5a30cd1a53018b9":[2,6,3,1],
-"structmsg__ctrl__cmd.html":[2,6,1,0,5],
-"structmsg__ctrl__cmd.html#a70eae6046b5c06eeb547119883dece83":[2,6,1,0,5,2]
+"structmsg__ctrl__cmd.html":[2,6,1,0,5]
 };

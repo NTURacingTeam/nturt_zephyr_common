@@ -82,7 +82,7 @@ var searchData=
   ['states_5ftransition_5finfo_79',['states_transition_info',['../group__stat.html#ga92af485e8d00a86a1e6f1874b89f3930',1,'states.h']]],
   ['states_5fvalid_5ftransition_80',['states_valid_transition',['../group__stat.html#gad926cf2d1b8f0c52696abd6065efbbc8',1,'states.h']]],
   ['status_81',['status',['../structmsg__ts__inv.html#ac2c97b22b5bdecf4bb0e149fda7b11db',1,'msg_ts_inv']]],
-  ['steer_82',['steer',['../structmsg__sensor__cockpit.html#ac0c1d9949700cb52910e7cb18996fa7d',1,'msg_sensor_cockpit']]],
+  ['steer_82',['steer',['../structmsg__sensor__cockpit.html#aa0601a400931e46b5be24e5998c50229',1,'msg_sensor_cockpit']]],
   ['steer_5fcan_5fto_5fphy_83',['STEER_CAN_TO_PHY',['../group__can__convert.html#ga080ae4a85d68752effb6464cd79f5970',1,'convert.h']]],
   ['steer_5fphy_5fto_5fcan_84',['STEER_PHY_TO_CAN',['../group__can__convert.html#ga2de7efcaab1944a5a7f46cf7ea55b6cf',1,'convert.h']]],
   ['stop_85',['stop',['../structdashboard__mode__info.html#a0ed2d041b35b7ba3fad80fb84bfe03dd',1,'dashboard_mode_info']]],

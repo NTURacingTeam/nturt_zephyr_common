@@ -8,7 +8,7 @@ var searchData=
   ['start_5',['start',['../structdashboard__mode__info.html#ad6c1f0c2891f27e1c21572b06fdccd66',1,'dashboard_mode_info']]],
   ['states_6',['states',['../structstates__callback.html#a8d8a4f1375b6913cbd5631a85ed4452c',1,'states_callback']]],
   ['status_7',['status',['../structmsg__ts__inv.html#ac2c97b22b5bdecf4bb0e149fda7b11db',1,'msg_ts_inv']]],
-  ['steer_8',['steer',['../structmsg__sensor__cockpit.html#ac0c1d9949700cb52910e7cb18996fa7d',1,'msg_sensor_cockpit']]],
+  ['steer_8',['steer',['../structmsg__sensor__cockpit.html#aa0601a400931e46b5be24e5998c50229',1,'msg_sensor_cockpit']]],
   ['stop_9',['stop',['../structdashboard__mode__info.html#a0ed2d041b35b7ba3fad80fb84bfe03dd',1,'dashboard_mode_info']]],
   ['susp_5ftravel_10',['susp_travel',['../structmsg__sensor__wheel.html#a6327b01dea863b5a7fad4f69de7cd343',1,'msg_sensor_wheel']]],
   ['sync_5fdwork_11',['sync_dwork',['../structmsg__logging.html#a8d286c69630ecebeb5360ee7b9492187',1,'msg_logging']]]

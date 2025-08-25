@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a6e88218129aa1c67cdc8d332e1528c0e":[2,5,0,0,10],
 "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a74104496ec81c16bfb9e71ecce241a23":[2,5,0,0,5],
 "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a77bedca93ec26ee1e2f9a1752dfd4a4b":[2,5,0,0,17],
 "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a8bd13ae1202f9f2bf96e4f90bf9c80f4":[2,5,0,0,23],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "group__msg__logging.html#ga7f9fc299e3d84d26220c5350a6d6ec67":[2,6,2,2],
 "group__msg__logging.html#gae119e8c1bf78905fa51ccef262120f0c":[2,6,2,3],
 "group__stat.html":[2,2,2],
-"group__stat.html#ga0f2c22bf86ea931607d2369eb2821789":[2,2,2,2],
-"group__stat.html#ga1a1c242a0935e17b2a9df357c6419a08":[2,2,2,5]
+"group__stat.html#ga0f2c22bf86ea931607d2369eb2821789":[2,2,2,2]
 };

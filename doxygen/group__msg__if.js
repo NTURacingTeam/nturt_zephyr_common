@@ -10,22 +10,22 @@ var group__msg__if =
       [ "timestamp_ns", "structmsg__header.html#a149e87c80efea835c380ed38d8b629f3", null ]
     ] ],
     [ "msg_2d_data", "unionmsg__2d__data.html", [
-      [ "values", "unionmsg__2d__data.html#af9c8d970ecf97fb710ebc915df7378f0", null ],
-      [ "x", "unionmsg__2d__data.html#a1b974ecab4cf04e1d6c1b60c4ff34fd0", null ],
-      [ "y", "unionmsg__2d__data.html#a9b3dc3b664f3fe798223f84b28fc553f", null ]
+      [ "values", "unionmsg__2d__data.html#a66279ba83d760fed2c90fe66714261a6", null ],
+      [ "x", "unionmsg__2d__data.html#acd0da80ce6b3cb9a20e2cc476d799ef6", null ],
+      [ "y", "unionmsg__2d__data.html#a557a9962090884f70e281e113dd2b15a", null ]
     ] ],
     [ "msg_3d_data", "unionmsg__3d__data.html", [
-      [ "values", "unionmsg__3d__data.html#a39b68f65daf2e6827b28a55afef43636", null ],
-      [ "x", "unionmsg__3d__data.html#ab7d45b0515d829850357b9acd54edcd2", null ],
-      [ "y", "unionmsg__3d__data.html#ad27bbec077ace948074448aa9f1b446d", null ],
-      [ "z", "unionmsg__3d__data.html#ad25ba994598f75cdc765d46fad892200", null ]
+      [ "values", "unionmsg__3d__data.html#a0eb68030498ed875a0eacecbbb4fe8a7", null ],
+      [ "x", "unionmsg__3d__data.html#a4984bbc91d112180ff08775eb00fb54e", null ],
+      [ "y", "unionmsg__3d__data.html#a2b17c61a5136cc9a8158e33adb200469", null ],
+      [ "z", "unionmsg__3d__data.html#a5705bea2d035da484635bdd34eb74b4e", null ]
     ] ],
     [ "msg_4wheel_data", "unionmsg__4wheel__data.html", [
-      [ "fl", "unionmsg__4wheel__data.html#a81b80c2797c48fe16e34655d4930d762", null ],
-      [ "fr", "unionmsg__4wheel__data.html#a8b84f6a158a804269fcb13af9eb509ae", null ],
-      [ "rl", "unionmsg__4wheel__data.html#a16f749c4259eddc17781f1546cdcaaa3", null ],
-      [ "rr", "unionmsg__4wheel__data.html#a38799af06e9d16c4a7eb00fcdd93a060", null ],
-      [ "values", "unionmsg__4wheel__data.html#a4333db33bc36cf5cd4cbb882b2d1401e", null ]
+      [ "fl", "unionmsg__4wheel__data.html#ae820f7a1b65f3b2b9666779b0f9e1a4a", null ],
+      [ "fr", "unionmsg__4wheel__data.html#a4ac7d773dd3b53423df53755ad13d6c5", null ],
+      [ "rl", "unionmsg__4wheel__data.html#a0b8aaf8e53fdfec84cc36cfdb6471127", null ],
+      [ "rr", "unionmsg__4wheel__data.html#a839c9c792bae55c6f49eacb478576dde", null ],
+      [ "values", "unionmsg__4wheel__data.html#a8efff751915c9c08dab2a0e5e208edef", null ]
     ] ],
     [ "msg_4wheel_flags", "unionmsg__4wheel__flags.html", [
       [ "fl", "unionmsg__4wheel__flags.html#aadf94596059e3bda4a0d5f0491165f60", null ],

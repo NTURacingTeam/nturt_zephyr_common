@@ -3,14 +3,14 @@ var group__msg__if__sensor =
     [ "Sensor Message CSV", "group__msg__if__csv__sensor.html", "group__msg__if__csv__sensor" ],
     [ "Sensor Message Printing", "group__msg__if__pri__sensor.html", "group__msg__if__pri__sensor" ],
     [ "msg_sensor_cockpit", "structmsg__sensor__cockpit.html", [
-      [ "accel", "structmsg__sensor__cockpit.html#a383b6e1f9ba4768898322f5eefd20731", null ],
-      [ "apps1", "structmsg__sensor__cockpit.html#a342369b0318bd172770633f0d85fd81e", null ],
-      [ "apps2", "structmsg__sensor__cockpit.html#ae7c8c3c1b403462c3d60a1a12e2d76b6", null ],
-      [ "brake", "structmsg__sensor__cockpit.html#a0e92ed4c35a1ea483628fd8c35e34fb2", null ],
-      [ "bse1", "structmsg__sensor__cockpit.html#a75da20daa7293f9626d8b1a9404c9042", null ],
-      [ "bse2", "structmsg__sensor__cockpit.html#aa7403cd5bd552d0757cea3ddd938a05a", null ],
+      [ "accel", "structmsg__sensor__cockpit.html#aa61db7a56a3afc95a2551a8a9f6ead93", null ],
+      [ "apps1", "structmsg__sensor__cockpit.html#a3581da06bc95b3dac7acf242cb81bec4", null ],
+      [ "apps2", "structmsg__sensor__cockpit.html#a259bf890525c33e99035995608ac6943", null ],
+      [ "brake", "structmsg__sensor__cockpit.html#af51ad32e5840f320817805c074d8f5a6", null ],
+      [ "bse1", "structmsg__sensor__cockpit.html#a514ce8743036db3a49ba57f31fb3b423", null ],
+      [ "bse2", "structmsg__sensor__cockpit.html#a2fe75c10df5871e00d35abcff96524ea", null ],
       [ "header", "structmsg__sensor__cockpit.html#af9ef1c3c8ab02af5e70febfe2e11facf", null ],
-      [ "steer", "structmsg__sensor__cockpit.html#ac0c1d9949700cb52910e7cb18996fa7d", null ]
+      [ "steer", "structmsg__sensor__cockpit.html#aa0601a400931e46b5be24e5998c50229", null ]
     ] ],
     [ "msg_sensor_wheel", "structmsg__sensor__wheel.html", [
       [ "header", "structmsg__sensor__wheel.html#aa22990532230227d1af4b6dd30f3400e", null ],
@@ -32,9 +32,9 @@ var group__msg__if__sensor =
     ] ],
     [ "msg_sensor_pow", "structmsg__sensor__pow.html", [
       [ "header", "structmsg__sensor__pow.html#a480f24f62b956c1e4c54a1fae5ec7771", null ],
-      [ "in_volt", "structmsg__sensor__pow.html#a3b0c7440ea449631669f57c3aecc5c10", null ],
-      [ "v5_curr", "structmsg__sensor__pow.html#a41e623d0143c74e5196190651407300b", null ],
-      [ "v5_rpi_curr", "structmsg__sensor__pow.html#a75d6ef74388490f15c3235830761df81", null ]
+      [ "in_volt", "structmsg__sensor__pow.html#a74913f0cdd20f28c84563d7bb13acadd", null ],
+      [ "v5_curr", "structmsg__sensor__pow.html#aa984ab421195526fe103868bc6f01341", null ],
+      [ "v5_rpi_curr", "structmsg__sensor__pow.html#a9b006535a09cb674afe80f103d312142", null ]
     ] ],
     [ "MSG_SENSOR_LIST", "group__msg__if__sensor.html#ga9dbf5ed2d27147d0244187e0418bc534", null ]
 ];

@@ -186,9 +186,8 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="tractive_8h.html">nturt/msg/interfaces/tractive.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a>((data).header), (data).ok ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>,             \</div>
-<div class="line">      (double)((data).volt), (double)((data).current), (double)((data).temp), \</div>
-<div class="line">      (data).soc, (double)((data).capacity)</div>
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a>((data).header), (data).ok ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>, (data).volt, \</div>
+<div class="line">      (data).current, (data).temp, (data).soc, (data).capacity</div>
 <div class="ttc" id="agroup__msg__if__pri_html_ga62bc45b20f45b7ad6cb0a6c2aeb93aa7"><div class="ttname"><a href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a></div><div class="ttdeci">#define PRImsg_header_arg(data)</div><div class="ttdoc">Insert msg_header arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:40</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__ts__acc.html">msg_ts_acc</a> arguments to printf format. </p>
@@ -220,8 +219,8 @@ Macros</h2></td></tr>
 <div class="line">                <span class="stringliteral">&quot;\n\r\tmos temperature (deg C): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a>   \</div>
 <div class="line">                <span class="stringliteral">&quot;\n\r\tmotor temperature (deg C): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a> \</div>
 <div class="line">                <span class="stringliteral">&quot;\n\r\tmcu temperature (deg C): %&quot;</span> <a class="code hl_define" href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a></div>
-<div class="ttc" id="agroup__msg__if__pri_html_ga2b695efa25bb85aed9c7061a17dfc17d"><div class="ttname"><a href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a></div><div class="ttdeci">#define PRImsg_4wheel_data</div><div class="ttdoc">Insert msg_4wheel_data format string.</div><div class="ttdef"><b>Definition</b> common.h:66</div></div>
-<div class="ttc" id="agroup__msg__if__pri_html_gae0f3b3594443ee8d2ea54ed1201c1493"><div class="ttname"><a href="group__msg__if__pri.html#gae0f3b3594443ee8d2ea54ed1201c1493">PRImsg_4wheel_flags</a></div><div class="ttdeci">#define PRImsg_4wheel_flags</div><div class="ttdoc">Insert msg_4wheel_flags format string.</div><div class="ttdef"><b>Definition</b> common.h:77</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_ga2b695efa25bb85aed9c7061a17dfc17d"><div class="ttname"><a href="group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d">PRImsg_4wheel_data</a></div><div class="ttdeci">#define PRImsg_4wheel_data</div><div class="ttdoc">Insert msg_4wheel_data format string.</div><div class="ttdef"><b>Definition</b> common.h:65</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_gae0f3b3594443ee8d2ea54ed1201c1493"><div class="ttname"><a href="group__msg__if__pri.html#gae0f3b3594443ee8d2ea54ed1201c1493">PRImsg_4wheel_flags</a></div><div class="ttdeci">#define PRImsg_4wheel_flags</div><div class="ttdoc">Insert msg_4wheel_flags format string.</div><div class="ttdef"><b>Definition</b> common.h:76</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__ts__inv.html">msg_ts_inv</a> printf format string. </p>
 
@@ -249,7 +248,7 @@ Macros</h2></td></tr>
 <div class="line">      PRImsg_4wheel_data_arg((data).inv_temp),                              \</div>
 <div class="line">      PRImsg_4wheel_data_arg((data).motor_temp),                            \</div>
 <div class="line">      PRImsg_4wheel_data_arg((data).mcu_temp)</div>
-<div class="ttc" id="agroup__msg__if__pri_html_ga1c6e1cae56c97116cd800793afd6d462"><div class="ttname"><a href="group__msg__if__pri.html#ga1c6e1cae56c97116cd800793afd6d462">PRImsg_4wheel_flags_arg</a></div><div class="ttdeci">#define PRImsg_4wheel_flags_arg(data)</div><div class="ttdoc">Insert msg_4wheel_flags arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:84</div></div>
+<div class="ttc" id="agroup__msg__if__pri_html_ga1c6e1cae56c97116cd800793afd6d462"><div class="ttname"><a href="group__msg__if__pri.html#ga1c6e1cae56c97116cd800793afd6d462">PRImsg_4wheel_flags_arg</a></div><div class="ttdeci">#define PRImsg_4wheel_flags_arg(data)</div><div class="ttdoc">Insert msg_4wheel_flags arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:83</div></div>
 </div><!-- fragment -->
 <p>Insert <a class="el" href="structmsg__ts__inv.html">msg_ts_inv</a> arguments to printf format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -266,7 +265,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Aug 25 2025 07:45:20 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Mon Aug 25 2025 09:35:17 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>
