@@ -190,9 +190,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga4b95009fbe6957eb1883c2d9b98c8ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes an ERROR level message to the log with throttling.  <br /></td></tr>
 <tr class="separator:ga4b95009fbe6957eb1883c2d9b98c8ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga50eed582828a055d528da709815c5af9" id="r_ga50eed582828a055d528da709815c5af9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga50eed582828a055d528da709815c5af9">PRI</a>(x)</td></tr>
-<tr class="memdesc:ga50eed582828a055d528da709815c5af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert format string to print <code>x</code>.  <br /></td></tr>
+<tr class="memdesc:ga50eed582828a055d528da709815c5af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert format string to print <code>x</code> .  <br /></td></tr>
 <tr class="separator:ga50eed582828a055d528da709815c5af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9d34aa2c33c80db2ba863393c173a09f" id="r_ga9d34aa2c33c80db2ba863393c173a09f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga9d34aa2c33c80db2ba863393c173a09f">SCN</a>(x)</td></tr>
+<tr class="memdesc:ga9d34aa2c33c80db2ba863393c173a09f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert format string to scan <code>x</code> .  <br /></td></tr>
 <tr class="separator:ga9d34aa2c33c80db2ba863393c173a09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga233ad140365f9757fac1b567a03b6743" id="r_ga233ad140365f9757fac1b567a03b6743"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga233ad140365f9757fac1b567a03b6743">PRI_arg</a>(x)</td></tr>
 <tr class="memdesc:ga233ad140365f9757fac1b567a03b6743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert <code>x</code> to printf format.  <br /></td></tr>
@@ -722,7 +723,7 @@ Functions</h2></td></tr>
 <div class="line">      <span class="keywordtype">void</span>*: <span class="stringliteral">&quot;%p&quot;</span>,                \</div>
 <div class="line">      <span class="keywordflow">default</span>: <span class="stringliteral">&quot;%p&quot;</span>)</div>
 </div><!-- fragment -->
-<p>Insert format string to print <code>x</code>. </p>
+<p>Insert format string to print <code>x</code> . </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>The data to print. </td></tr>
@@ -795,6 +796,14 @@ Functions</h2></td></tr>
 <div class="line">      <span class="keywordtype">void</span>*: <span class="stringliteral">&quot;%p&quot;</span>,                \</div>
 <div class="line">      <span class="keywordflow">default</span>: <span class="stringliteral">&quot;%p&quot;</span>)</div>
 </div><!-- fragment -->
+<p>Insert format string to scan <code>x</code> . </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>The data to scan, NOT the pointer to it. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ga7755688b6ed949784c4c5a1ebf2072fd" name="ga7755688b6ed949784c4c5a1ebf2072fd"></a>
@@ -848,8 +857,8 @@ Functions</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="util_8h.html">nturt/sys/util.h</a>&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line">  (((<span class="keyword">struct </span><a class="code hl_struct" href="structwork__ctx.html">work_ctx</a>*)CONTAINER_OF(_work, <span class="keyword">struct</span> <a class="code hl_struct" href="structwork__ctx.html">work_ctx</a>, <a class="code hl_variable" href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work</a>))-&gt;ctx)</div>
-<div class="ttc" id="astructwork__ctx_html"><div class="ttname"><a href="structwork__ctx.html">work_ctx</a></div><div class="ttdoc">Work context.</div><div class="ttdef"><b>Definition</b> util.h:286</div></div>
-<div class="ttc" id="astructwork__ctx_html_afa7a3d02898de6f5b9015f70da3ed91c"><div class="ttname"><a href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work_ctx::work</a></div><div class="ttdeci">struct k_work work</div><div class="ttdoc">Work.</div><div class="ttdef"><b>Definition</b> util.h:288</div></div>
+<div class="ttc" id="astructwork__ctx_html"><div class="ttname"><a href="structwork__ctx.html">work_ctx</a></div><div class="ttdoc">Work context.</div><div class="ttdef"><b>Definition</b> util.h:291</div></div>
+<div class="ttc" id="astructwork__ctx_html_afa7a3d02898de6f5b9015f70da3ed91c"><div class="ttname"><a href="structwork__ctx.html#afa7a3d02898de6f5b9015f70da3ed91c">work_ctx::work</a></div><div class="ttdeci">struct k_work work</div><div class="ttdoc">Work.</div><div class="ttdef"><b>Definition</b> util.h:293</div></div>
 </div><!-- fragment -->
 <p>Get the context of the work. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -935,7 +944,7 @@ Functions</h2></td></tr>
 <div class="line">      .size = _size,                                                       \</div>
 <div class="line">      .work_ctxs = CONCAT(_name, _work_ctx),                               \</div>
 <div class="line">  }</div>
-<div class="ttc" id="astructwork__ctx__buf_html"><div class="ttname"><a href="structwork__ctx__buf.html">work_ctx_buf</a></div><div class="ttdoc">Work context buffer.</div><div class="ttdef"><b>Definition</b> util.h:298</div></div>
+<div class="ttc" id="astructwork__ctx__buf_html"><div class="ttname"><a href="structwork__ctx__buf.html">work_ctx_buf</a></div><div class="ttdoc">Work context buffer.</div><div class="ttdef"><b>Definition</b> util.h:303</div></div>
 </div><!-- fragment -->
 <p>Define work context buffer for the bottom half of an ISR. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1019,7 +1028,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Aug 26 2025 14:05:29 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Wed Aug 27 2025 07:43:40 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>
