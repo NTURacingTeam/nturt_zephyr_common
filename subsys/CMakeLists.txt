@@ -5,6 +5,7 @@ add_subdirectory(msg)
 add_subdirectory(sensing)
 add_subdirectory(sys)
 add_subdirectory(telemetry)
+add_subdirectory(usb)
 
 if(CONFIG_NTURT)
 

@@ -183,7 +183,7 @@
   _LOG_THROTTLE(ERR, min_separation, __VA_ARGS__)
 
 /**
- * @brief Insert format string to print @p x.
+ * @brief Insert format string to print @p x .
  *
  * @param[in] x The data to print.
  */
@@ -207,6 +207,11 @@
       void*: "%p",                \
       default: "%p")
 
+/**
+ * @brief Insert format string to scan @p x .
+ *
+ * @param[in] x The data to scan, NOT the pointer to it.
+ */
 #define SCN(x)                    \
   _Generic((x),                   \
       char: "%c",                 \

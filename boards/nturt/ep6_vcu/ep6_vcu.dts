@@ -8,10 +8,10 @@
     compatible = "nturt,ep6_vcu";
 
     chosen {
-        zephyr,console = &usart1;
-        zephyr,shell-uart = &usart1;
-        // zephyr,console = &cdc_acm_uart0;
-        // zephyr,shell-uart = &cdc_acm_uart0;
+        // zephyr,console = &usart1;
+        // zephyr,shell-uart = &usart1;
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
         zephyr,sram = &sram0;
         zephyr,flash = &flash0;
         zephyr,dtcm = &dtcm;
@@ -19,6 +19,7 @@
         zephyr,canbus = &fdcan1;
         zephyr,canopen-green-led = &canopen_green_led;
         zephyr,canopen-red-led = &canopen_red_led;
+        zephyr,usb-device = &usbotg_fs;
 
         nturt,rtc = &rtc;
         nturt,fstab = &fstab;

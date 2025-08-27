@@ -1,0 +1,57 @@
+DT_CHOSEN_ZEPHYR_USB_DEVICE := zephyr,usb-device
+
+menuconfig NTURT_USB
+	bool "USB device support"
+	depends on NTURT
+	depends on $(dt_chosen_enabled,$(DT_CHOSEN_ZEPHYR_USB_DEVICE))
+	select USB_DEVICE_STACK_NEXT
+	imply HWINFO
+
+if NTURT_USB
+
+module = NTURT_USB
+module-str = USB support
+source "subsys/logging/Kconfig.template.log_config"
+
+choice UDC_DRIVER_LOG_LEVEL_CHOICE
+	default UDC_DRIVER_LOG_LEVEL_ERR
+endchoice
+choice USBD_LOG_LEVEL_CHOICE
+	default USBD_LOG_LEVEL_ERR
+endchoice
+
+config NTURT_USB_INIT_PRIORITY
+	int "Init priority"
+	default 50
+	help
+	  USB support initialization priority.
+
+config NTURT_USB_CDC_ACM
+	bool "USB CDC ACM support"
+	depends on DT_HAS_ZEPHYR_CDC_ACM_UART_ENABLED
+	default y
+	select USBD_CDC_ACM_CLASS
+
+if NTURT_USB_CDC_ACM
+
+choice USBD_CDC_ACM_LOG_LEVEL_CHOICE
+	default USBD_CDC_ACM_LOG_LEVEL_ERR
+endchoice
+
+endif # NTURT_USB_CDC_ACM
+
+config NTURT_USB_MSC
+	bool "USB MSC support"
+	depends on NTURT_FS
+	default y
+	select USBD_MSC_CLASS
+
+if NTURT_USB_MSC
+
+choice USBD_MSC_LOG_LEVEL_CHOICE
+	default USBD_MSC_LOG_LEVEL_ERR
+endchoice
+
+endif # NTURT_USB_MSC
+
+endif # NTURT_USB

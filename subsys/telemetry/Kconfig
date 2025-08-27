@@ -1,6 +1,6 @@
 menuconfig NTURT_TM
-	depends on NTURT
 	bool "Telemetry support"
+	depends on NTURT
 	depends on SYS_HASH_FUNC32
 	depends on SYS_HASH_MAP
 	select NTURT_MSG
