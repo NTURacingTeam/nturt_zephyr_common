@@ -105,9 +105,9 @@
 /// rad/s (double).
 #define IMU_GYRO_CAN_TO_PHY(can) (0.001745 * (can))
 
-/// @brief IMU orientation CAN data in 0.01 deg (int16_t), convert to deg
-/// (double).
-#define IMU_ORIENT_CAN_TO_PHY(can) (0.01 * (can))
+/// @brief IMU orientation CAN data in 0.0001 quaternion (int16_t), convert to
+/// quaternion (double).
+#define IMU_ORIENT_CAN_TO_PHY(can) (0.0001 * (can))
 
 /// @brief GPS longitude CAN data in 1E-7 deg (int32_t), convert to deg
 /// (double).

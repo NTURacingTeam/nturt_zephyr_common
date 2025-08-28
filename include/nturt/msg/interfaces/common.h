@@ -61,6 +61,12 @@
  */
 #define PRImsg_3d_data_arg(data) "", (data).x, (data).y, (data).z
 
+/// @brief Insert @ref msg_4d_data format string.
+#define PRImsg_4d_data "s(%g, %g, %g, %g)"
+
+/// @brief Insert @ref msg_4d_data arguments to print format.
+#define PRImsg_4d_data_arg(data) "", (data).w, (data).x, (data).y, (data).z
+
 /// @brief Insert @ref msg_4wheel_data format string.
 #define PRImsg_4wheel_data "s(%g, %g, %g, %g)"
 
@@ -140,6 +146,23 @@
  */
 #define CSV_PRImsg_3d_data_arg(data) (data).x, (data).y, (data).z
 
+/** @brief CSV header for @ref msg_4d_data.
+ *
+ * @param[in] data The 4D data.
+ */
+#define CSV_PRImsg_4d_data_header(data) \
+  STRINGIFY(data) "_w," STRINGIFY(data) "_x," STRINGIFY(data) "_y," STRINGIFY(data) "_z"
+
+/// @brief Insert @ref msg_4d_data CSV format string.
+#define CSV_PRImsg_4d_data "f,%f,%f,%f"
+
+/**
+ * @brief Insert @ref msg_4d_data arguments to CSV print format.
+ *
+ * @param[in] data The 4D data.
+ */
+#define CSV_PRImsg_4d_data_arg(data) (data).w, (data).x, (data).y, (data).z
+
 /** @brief CSV header for @ref msg_4wheel_data.
  *
  * @param[in] data The 4-wheel data.
@@ -214,6 +237,26 @@ union msg_3d_data {
   double values[3];
 
   struct {
+    /** X-axis value. */
+    double x;
+
+    /** Y-axis value. */
+    double y;
+
+    /** Z-axis value. */
+    double z;
+  };
+};
+
+/// @brief 4D data.
+union msg_4d_data {
+  /** 4D data in an array. */
+  double values[4];
+
+  struct {
+    /** W-axis value. */
+    double w;
+
     /** X-axis value. */
     double x;
 

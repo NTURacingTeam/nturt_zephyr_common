@@ -74,7 +74,7 @@
 #define PRImsg_sensor_imu                                      \
   PRImsg_header "\n\r\tacceleration (m/s^2): %" PRImsg_3d_data \
                 "\n\r\tgyration (rad/s): %" PRImsg_3d_data     \
-                "\n\r\teular angle (deg): %" PRImsg_3d_data
+                "\n\r\tquaternion: %" PRImsg_4d_data
 
 /**
  * @brief Insert @ref msg_sensor_imu arguments to printf format.
@@ -83,7 +83,7 @@
  */
 #define PRImsg_sensor_imu_arg(data)                                   \
   PRImsg_header_arg((data).header), PRImsg_3d_data_arg((data).accel), \
-      PRImsg_3d_data_arg((data).gyro), PRImsg_3d_data_arg((data).orient)
+      PRImsg_3d_data_arg((data).gyro), PRImsg_4d_data_arg((data).orient)
 
 /// @brief Insert @ref msg_sensor_gps printf format string.
 #define PRImsg_sensor_gps           \
@@ -172,12 +172,12 @@
 #define CSV_PRImsg_sensor_imu_header                                      \
   CSV_PRImsg_header_header                                                \
       "," CSV_PRImsg_3d_data_header(accel) "," CSV_PRImsg_3d_data_header( \
-          gyro) "," CSV_PRImsg_3d_data_header(orient)
+          gyro) "," CSV_PRImsg_4d_data_header(orient)
 
 /// @brief Insert @ref msg_sensor_imu CSV format string.
 #define CSV_PRImsg_sensor_imu                                       \
   CSV_PRImsg_header ",%" CSV_PRImsg_3d_data ",%" CSV_PRImsg_3d_data \
-                    ",%" CSV_PRImsg_3d_data
+                    ",%" CSV_PRImsg_4d_data
 
 /**
  * @brief Insert @ref msg_sensor_imu arguments to CSV print format.
@@ -187,7 +187,7 @@
 #define CSV_PRImsg_sensor_imu_arg(data)                                       \
   CSV_PRImsg_header_arg((data).header), CSV_PRImsg_3d_data_arg((data).accel), \
       CSV_PRImsg_3d_data_arg((data).gyro),                                    \
-      CSV_PRImsg_3d_data_arg((data).orient)
+      CSV_PRImsg_4d_data_arg((data).orient)
 
 /// @brief CSV header for @ref msg_sensor_gps.
 #define CSV_PRImsg_sensor_gps_header \
@@ -287,8 +287,8 @@ struct msg_sensor_imu {
   /** Angular velocity. Unit: rad/s */
   union msg_3d_data gyro;
 
-  /** Orientation in Eular angles. Unit: deg */
-  union msg_3d_data orient;
+  /** Orientation in Quaternion. */
+  union msg_4d_data orient;
 };
 
 /// @brief GPS message.
