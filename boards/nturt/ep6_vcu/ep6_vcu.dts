@@ -94,7 +94,7 @@
         };
 
         pow_low: pow-low {
-            gpios = <&gpioc 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            gpios = <&gpioc 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
             zephyr,code = <INPUT_KEY_0>;
         };
     };

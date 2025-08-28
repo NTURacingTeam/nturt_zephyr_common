@@ -71,6 +71,7 @@ void sys_shutdown() {
   if (IS_ENABLED(CONFIG_POWEROFF)) {
     sys_poweroff();
   } else {
+    irq_lock();
     while (true) {
       // spin
     }
