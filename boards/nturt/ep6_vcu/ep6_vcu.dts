@@ -8,10 +8,8 @@
     compatible = "nturt,ep6_vcu";
 
     chosen {
-        // zephyr,console = &usart1;
-        // zephyr,shell-uart = &usart1;
-        zephyr,console = &cdc_acm_uart0;
-        zephyr,shell-uart = &cdc_acm_uart0;
+        zephyr,console = &usart1;
+        zephyr,shell-uart = &usart1;
         zephyr,sram = &sram0;
         zephyr,flash = &flash0;
         zephyr,dtcm = &dtcm;
@@ -522,8 +520,4 @@ zephyr_udc0: &usbotg_fs {
     pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
     pinctrl-names = "default";
     status = "okay";
-
-    cdc_acm_uart0: cdc_acm_uart0 {
-        compatible = "zephyr,cdc-acm-uart";
-    };
 };

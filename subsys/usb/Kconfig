@@ -26,6 +26,22 @@ config NTURT_USB_INIT_PRIORITY
 	help
 	  USB support initialization priority.
 
+config NTURT_USB_VID
+	hex "USB Vendor ID"
+	default 0x8000
+
+config NTURT_USB_PID
+	hex "USB Product ID"
+	default 0x0000
+
+config NTURT_USB_MANUFACTURER_STRING
+	string "USB Manufacturer String"
+	default "NTU Racing Team"
+
+config NTURT_USB_PRODUCT_STRING
+	string "USB Product String"
+	default "Zephyr Common Library"
+
 config NTURT_USB_CDC_ACM
 	bool "USB CDC ACM support"
 	depends on DT_HAS_ZEPHYR_CDC_ACM_UART_ENABLED

@@ -20,12 +20,13 @@ static int init();
 static const struct device *const usb_device =
     DEVICE_DT_GET(DT_CHOSEN(zephyr_usb_device));
 
-USBD_DEVICE_DEFINE(usb_ctx, usb_device, 0x2fe3, 0x0004);
+USBD_DEVICE_DEFINE(usb_ctx, usb_device, CONFIG_NTURT_USB_VID,
+                   CONFIG_NTURT_USB_PID);
 
 USBD_DESC_LANG_DEFINE(usb_desc_lang);
 USBD_DESC_MANUFACTURER_DEFINE(usb_desc_manufacturer,
-                              "National Taiwan University Racing Team");
-USBD_DESC_PRODUCT_DEFINE(usb_desc_product, "Vechicle Control Unit");
+                              CONFIG_NTURT_USB_MANUFACTURER_STRING);
+USBD_DESC_PRODUCT_DEFINE(usb_desc_product, CONFIG_NTURT_USB_PRODUCT_STRING);
 #ifdef CONFIG_HWINFO
 USBD_DESC_SERIAL_NUMBER_DEFINE(usb_desc_serial_number);
 #endif
@@ -37,7 +38,8 @@ USBD_CONFIGURATION_DEFINE(usb_config, USB_SCD_SELF_POWERED, 0,
 SYS_INIT(init, APPLICATION, CONFIG_NTURT_USB_INIT_PRIORITY);
 
 #if CONFIG_NTURT_USB_MSC
-USBD_DEFINE_MSC_LUN(sd, "SD", "Zephyr", "SD", "0.00");
+USBD_DEFINE_MSC_LUN(sd, "SD", CONFIG_NTURT_USB_MANUFACTURER_STRING,
+                    CONFIG_NTURT_USB_PRODUCT_STRING, "0.00");
 #endif
 
 /* static function definition ------------------------------------------------*/
