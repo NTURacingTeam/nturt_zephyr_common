@@ -20,6 +20,13 @@ var group__msg__if =
       [ "y", "unionmsg__3d__data.html#a2b17c61a5136cc9a8158e33adb200469", null ],
       [ "z", "unionmsg__3d__data.html#a5705bea2d035da484635bdd34eb74b4e", null ]
     ] ],
+    [ "msg_4d_data", "unionmsg__4d__data.html", [
+      [ "values", "unionmsg__4d__data.html#a3e2e88c9f77e28ac6f25191936ec3d67", null ],
+      [ "w", "unionmsg__4d__data.html#ac316e9b91c3f59d377cc7f38013dd83a", null ],
+      [ "x", "unionmsg__4d__data.html#a9bef21bee70d97826dda37c04c984112", null ],
+      [ "y", "unionmsg__4d__data.html#a583039098bd2ee8a425ab46f0129f0b3", null ],
+      [ "z", "unionmsg__4d__data.html#afaedade6fc55b6930b1724b6ee824bc4", null ]
+    ] ],
     [ "msg_4wheel_data", "unionmsg__4wheel__data.html", [
       [ "fl", "unionmsg__4wheel__data.html#ae820f7a1b65f3b2b9666779b0f9e1a4a", null ],
       [ "fr", "unionmsg__4wheel__data.html#a4ac7d773dd3b53423df53755ad13d6c5", null ],

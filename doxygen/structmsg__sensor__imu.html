@@ -125,11 +125,13 @@ $(function(){initNavTree('structmsg__sensor__imu.html',''); initResizable(true);
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="structmsg__sensor__imu__coll__graph.png" border="0" usemap="#amsg__sensor__imu_coll__map" alt="Collaboration graph"/></div>
 <map name="amsg__sensor__imu_coll__map" id="amsg__sensor__imu_coll__map">
-<area shape="rect" title="IMU message." alt="" coords="56,123,188,148"/>
+<area shape="rect" title="IMU message." alt="" coords="121,108,253,133"/>
 <area shape="rect" href="structmsg__header.html" title="Message header." alt="" coords="5,5,108,31"/>
-<area shape="poly" title=" " alt="" coords="72,41,118,121,113,124,68,44"/>
+<area shape="poly" title=" " alt="" coords="81,38,134,82,170,106,167,110,131,86,78,42"/>
 <area shape="rect" href="unionmsg__3d__data.html" title="3D data." alt="" coords="133,5,242,31"/>
-<area shape="poly" title=" " alt="" coords="183,45,173,72,159,100,138,124,134,121,154,97,168,70,178,43"/>
+<area shape="poly" title=" " alt="" coords="190,45,190,108,185,108,185,45"/>
+<area shape="rect" href="unionmsg__4d__data.html" title="4D data." alt="" coords="266,5,375,31"/>
+<area shape="poly" title=" " alt="" coords="296,41,204,110,201,106,293,37"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -141,8 +143,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a4049645a3445141fdc40d1e8f6443e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a691a5a5d5ef69230013e872a4736cc58" id="r_a691a5a5d5ef69230013e872a4736cc58"><td class="memItemLeft" align="right" valign="top">union <a class="el" href="unionmsg__3d__data.html">msg_3d_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a691a5a5d5ef69230013e872a4736cc58">gyro</a></td></tr>
 <tr class="separator:a691a5a5d5ef69230013e872a4736cc58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cfaf40b77d4e52f1931094d9f844206" id="r_a1cfaf40b77d4e52f1931094d9f844206"><td class="memItemLeft" align="right" valign="top">union <a class="el" href="unionmsg__3d__data.html">msg_3d_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1cfaf40b77d4e52f1931094d9f844206">orient</a></td></tr>
-<tr class="separator:a1cfaf40b77d4e52f1931094d9f844206"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefd259210edd8fa91e309dff91940a72" id="r_aefd259210edd8fa91e309dff91940a72"><td class="memItemLeft" align="right" valign="top">union <a class="el" href="unionmsg__4d__data.html">msg_4d_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aefd259210edd8fa91e309dff91940a72">orient</a></td></tr>
+<tr class="separator:aefd259210edd8fa91e309dff91940a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>IMU message. </p>
@@ -192,18 +194,18 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a id="a1cfaf40b77d4e52f1931094d9f844206" name="a1cfaf40b77d4e52f1931094d9f844206"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1cfaf40b77d4e52f1931094d9f844206">&#9670;&#160;</a></span>orient</h2>
+<a id="aefd259210edd8fa91e309dff91940a72" name="aefd259210edd8fa91e309dff91940a72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefd259210edd8fa91e309dff91940a72">&#9670;&#160;</a></span>orient</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">union <a class="el" href="unionmsg__3d__data.html">msg_3d_data</a> msg_sensor_imu::orient</td>
+          <td class="memname">union <a class="el" href="unionmsg__4d__data.html">msg_4d_data</a> msg_sensor_imu::orient</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Orientation in Eular angles. Unit: deg </p>
+<p>Orientation in Quaternion. </p>
 
 </div>
 </div>
@@ -216,7 +218,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structmsg__sensor__imu.html">msg_sensor_imu</a></li>
-    <li class="footer">Generated on Wed Aug 27 2025 07:43:40 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Thu Aug 28 2025 15:06:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

@@ -1,5 +1,12 @@
 var NAVTREEINDEX2 =
 {
+"group__msg__logging.html":[2,6,2],
+"group__msg__logging.html#ga763ac1b0888f0f8e89e0899d2d4ddbe9":[2,6,2,4],
+"group__msg__logging.html#ga7ecc7e35f8f0a483f17af0e6d78c071a":[2,6,2,1],
+"group__msg__logging.html#ga7f9fc299e3d84d26220c5350a6d6ec67":[2,6,2,2],
+"group__msg__logging.html#gae119e8c1bf78905fa51ccef262120f0c":[2,6,2,3],
+"group__stat.html":[2,2,2],
+"group__stat.html#ga0f2c22bf86ea931607d2369eb2821789":[2,2,2,2],
 "group__stat.html#ga1a1c242a0935e17b2a9df357c6419a08":[2,2,2,5],
 "group__stat.html#ga2741efd1ed6e0d4b1725a9659276326d":[2,2,2,11],
 "group__stat.html#ga2d8afe0901d99e922325e65ba3a0d88c":[2,2,2,4],
@@ -242,12 +249,5 @@ var NAVTREEINDEX2 =
 "structerr__callback.html#ae6c23abde4e671b15a0855f1af3cfedb":[2,5,3,2],
 "structerr__filter.html":[2,5,2],
 "structerr__filter.html#a1b6cec9d2bcc88cff58865ca5be1bbc1":[2,5,2,2],
-"structerr__filter.html#a373af57873d99b5dba780f848f112020":[2,5,2,1],
-"structerr__filter.html#a55b7dd395d09bc660a0b5b5c80e6c1f4":[2,5,2,0],
-"structerr__filter.html#af282d0c79df96a08aebd59fc0cbf3984":[2,5,2,3],
-"structmsg__chan__data.html":[2,6,3],
-"structmsg__chan__data.html#a0644764143219bf1cb820c72330a8513":[2,6,3,0],
-"structmsg__chan__data.html#a2fa82ee4041987b7d1b220a88558eb30":[2,6,3,2],
-"structmsg__chan__data.html#aba0f644efabb8d70b5a30cd1a53018b9":[2,6,3,1],
-"structmsg__ctrl__cmd.html":[2,6,1,0,5]
+"structerr__filter.html#a373af57873d99b5dba780f848f112020":[2,5,2,1]
 };

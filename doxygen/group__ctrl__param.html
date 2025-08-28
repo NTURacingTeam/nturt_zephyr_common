@@ -143,6 +143,10 @@ Macros</h2></td></tr>
 <tr class="separator:gacee17f2cd89cf2f05e82c99313bbc22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc95995b6d74eb0ab13ee481f1ae070a" id="r_gabc95995b6d74eb0ab13ee481f1ae070a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gabc95995b6d74eb0ab13ee481f1ae070a">PARAM_TORQ_SLEW</a>&#160;&#160;&#160;4.0</td></tr>
 <tr class="separator:gabc95995b6d74eb0ab13ee481f1ae070a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c992f8266a4d2128fc84d507f41dc63" id="r_ga6c992f8266a4d2128fc84d507f41dc63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga6c992f8266a4d2128fc84d507f41dc63">PARAM_TORQ_DERATE_BEGIN</a>&#160;&#160;&#160;3000.0</td></tr>
+<tr class="separator:ga6c992f8266a4d2128fc84d507f41dc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e0a0f9af7ce3971b59e0f90afed3814" id="r_ga8e0a0f9af7ce3971b59e0f90afed3814"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga8e0a0f9af7ce3971b59e0f90afed3814">PARAM_TORQ_DERATE_END</a>&#160;&#160;&#160;5000.0</td></tr>
+<tr class="separator:ga8e0a0f9af7ce3971b59e0f90afed3814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga47538799636797468a27ef47970cc24c" id="r_ga47538799636797468a27ef47970cc24c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>(name,  type,  default)</td></tr>
 <tr class="memdesc:ga47538799636797468a27ef47970cc24c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify aa control parameter. Used in <a class="el" href="#ga5d742ce20b9793c45311f2afa36b1c1e">CTRL_PARAM_DECLARE</a>, CTRL_PARAM_DEFINE and <a class="el" href="#ga0f2418cf6e2c2eec31068e54f63f29b4">CTRL_PARAM_EXTERN</a>.  <br /></td></tr>
 <tr class="separator:ga47538799636797468a27ef47970cc24c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -272,14 +276,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="params_8h.html">vcu/ctrl/params.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>(torq_limit_fl, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gacee17f2cd89cf2f05e82c99313bbc22b">PARAM_TORQ_LIMIT</a>),                       \</div>
-<div class="line">      CTRL_PARAM(torq_limit_fr, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gacee17f2cd89cf2f05e82c99313bbc22b">PARAM_TORQ_LIMIT</a>),                   \</div>
-<div class="line">      CTRL_PARAM(torq_limit_rl, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gacee17f2cd89cf2f05e82c99313bbc22b">PARAM_TORQ_LIMIT</a>),                   \</div>
-<div class="line">      CTRL_PARAM(torq_limit_rr, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gacee17f2cd89cf2f05e82c99313bbc22b">PARAM_TORQ_LIMIT</a>),                   \</div>
-<div class="line">      CTRL_PARAM(torq_slew, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gabc95995b6d74eb0ab13ee481f1ae070a">PARAM_TORQ_SLEW</a>),                        \</div>
-<div class="line">      CTRL_PARAM(fb_ratio, <span class="keywordtype">double</span>, 0.5), <a class="code hl_define" href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>(tv_gain, <span class="keywordtype">double</span>, 2.0), \</div>
-<div class="line">      CTRL_PARAM(target_sr, <span class="keywordtype">double</span>, 0.1)</div>
-<div class="ttc" id="agroup__ctrl__param_html_ga47538799636797468a27ef47970cc24c"><div class="ttname"><a href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a></div><div class="ttdeci">#define CTRL_PARAM(name, type, default)</div><div class="ttdoc">Specify aa control parameter. Used in CTRL_PARAM_DECLARE, CTRL_PARAM_DEFINE and CTRL_PARAM_EXTERN.</div><div class="ttdef"><b>Definition</b> params.h:47</div></div>
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a>(torq_derate_begin, <span class="keywordtype">double</span>, <a class="code hl_define" href="#ga6c992f8266a4d2128fc84d507f41dc63">PARAM_TORQ_DERATE_BEGIN</a>), \</div>
+<div class="line">      CTRL_PARAM(torq_derate_end, <span class="keywordtype">double</span>, <a class="code hl_define" href="#ga8e0a0f9af7ce3971b59e0f90afed3814">PARAM_TORQ_DERATE_END</a>), \</div>
+<div class="line">      CTRL_PARAM(torq_limit_fl, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gacee17f2cd89cf2f05e82c99313bbc22b">PARAM_TORQ_LIMIT</a>),        \</div>
+<div class="line">      CTRL_PARAM(torq_limit_fr, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gacee17f2cd89cf2f05e82c99313bbc22b">PARAM_TORQ_LIMIT</a>),        \</div>
+<div class="line">      CTRL_PARAM(torq_limit_rl, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gacee17f2cd89cf2f05e82c99313bbc22b">PARAM_TORQ_LIMIT</a>),        \</div>
+<div class="line">      CTRL_PARAM(torq_limit_rr, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gacee17f2cd89cf2f05e82c99313bbc22b">PARAM_TORQ_LIMIT</a>),        \</div>
+<div class="line">      CTRL_PARAM(torq_slew, <span class="keywordtype">double</span>, <a class="code hl_define" href="#gabc95995b6d74eb0ab13ee481f1ae070a">PARAM_TORQ_SLEW</a>)</div>
+<div class="ttc" id="agroup__ctrl__param_html_ga47538799636797468a27ef47970cc24c"><div class="ttname"><a href="#ga47538799636797468a27ef47970cc24c">CTRL_PARAM</a></div><div class="ttdeci">#define CTRL_PARAM(name, type, default)</div><div class="ttdoc">Specify aa control parameter. Used in CTRL_PARAM_DECLARE, CTRL_PARAM_DEFINE and CTRL_PARAM_EXTERN.</div><div class="ttdef"><b>Definition</b> params.h:49</div></div>
+<div class="ttc" id="agroup__ctrl__param_html_ga6c992f8266a4d2128fc84d507f41dc63"><div class="ttname"><a href="#ga6c992f8266a4d2128fc84d507f41dc63">PARAM_TORQ_DERATE_BEGIN</a></div><div class="ttdeci">#define PARAM_TORQ_DERATE_BEGIN</div><div class="ttdef"><b>Definition</b> params.h:38</div></div>
+<div class="ttc" id="agroup__ctrl__param_html_ga8e0a0f9af7ce3971b59e0f90afed3814"><div class="ttname"><a href="#ga8e0a0f9af7ce3971b59e0f90afed3814">PARAM_TORQ_DERATE_END</a></div><div class="ttdeci">#define PARAM_TORQ_DERATE_END</div><div class="ttdef"><b>Definition</b> params.h:39</div></div>
 <div class="ttc" id="agroup__ctrl__param_html_gabc95995b6d74eb0ab13ee481f1ae070a"><div class="ttname"><a href="#gabc95995b6d74eb0ab13ee481f1ae070a">PARAM_TORQ_SLEW</a></div><div class="ttdeci">#define PARAM_TORQ_SLEW</div><div class="ttdef"><b>Definition</b> params.h:37</div></div>
 <div class="ttc" id="agroup__ctrl__param_html_gacee17f2cd89cf2f05e82c99313bbc22b"><div class="ttname"><a href="#gacee17f2cd89cf2f05e82c99313bbc22b">PARAM_TORQ_LIMIT</a></div><div class="ttdeci">#define PARAM_TORQ_LIMIT</div><div class="ttdef"><b>Definition</b> params.h:36</div></div>
 </div><!-- fragment -->
@@ -351,6 +357,38 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga6c992f8266a4d2128fc84d507f41dc63" name="ga6c992f8266a4d2128fc84d507f41dc63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6c992f8266a4d2128fc84d507f41dc63">&#9670;&#160;</a></span>PARAM_TORQ_DERATE_BEGIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PARAM_TORQ_DERATE_BEGIN&#160;&#160;&#160;3000.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="params_8h.html">vcu/ctrl/params.h</a>&gt;</code></p>
+
+</div>
+</div>
+<a id="ga8e0a0f9af7ce3971b59e0f90afed3814" name="ga8e0a0f9af7ce3971b59e0f90afed3814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8e0a0f9af7ce3971b59e0f90afed3814">&#9670;&#160;</a></span>PARAM_TORQ_DERATE_END</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PARAM_TORQ_DERATE_END&#160;&#160;&#160;5000.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="params_8h.html">vcu/ctrl/params.h</a>&gt;</code></p>
+
+</div>
+</div>
 <a id="gacee17f2cd89cf2f05e82c99313bbc22b" name="gacee17f2cd89cf2f05e82c99313bbc22b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gacee17f2cd89cf2f05e82c99313bbc22b">&#9670;&#160;</a></span>PARAM_TORQ_LIMIT</h2>
 
@@ -408,7 +446,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 27 2025 07:43:40 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Thu Aug 28 2025 15:06:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

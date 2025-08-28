@@ -8,6 +8,8 @@ var group__msg__if__pri =
     [ "PRImsg_2d_data_arg", "group__msg__if__pri.html#ga2630331b19247001ca996559ece127dc", null ],
     [ "PRImsg_3d_data", "group__msg__if__pri.html#gaa9496b9305421a141ab31d719b2a962d", null ],
     [ "PRImsg_3d_data_arg", "group__msg__if__pri.html#ga5faa5fb2e611a6f362483cc8a8f2aa23", null ],
+    [ "PRImsg_4d_data", "group__msg__if__pri.html#gafebd9da5f0173438c31e0f5a01ad1e4a", null ],
+    [ "PRImsg_4d_data_arg", "group__msg__if__pri.html#ga45d0d2b84c854625981c42b980eb759b", null ],
     [ "PRImsg_4wheel_data", "group__msg__if__pri.html#ga2b695efa25bb85aed9c7061a17dfc17d", null ],
     [ "PRImsg_4wheel_data_arg", "group__msg__if__pri.html#ga0700155d223f615de6f90ea9573bce8c", null ],
     [ "PRImsg_4wheel_flags", "group__msg__if__pri.html#gae0f3b3594443ee8d2ea54ed1201c1493", null ],

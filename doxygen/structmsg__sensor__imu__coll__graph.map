@@ -1,7 +1,9 @@
 <map id="msg_sensor_imu" name="msg_sensor_imu">
-<area shape="rect" id="Node000001" title="IMU message." alt="" coords="56,123,188,148"/>
+<area shape="rect" id="Node000001" title="IMU message." alt="" coords="121,108,253,133"/>
 <area shape="rect" id="Node000002" href="$structmsg__header.html" title="Message header." alt="" coords="5,5,108,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,41,118,121,113,124,68,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,38,134,82,170,106,167,110,131,86,78,42"/>
 <area shape="rect" id="Node000003" href="$unionmsg__3d__data.html" title="3D data." alt="" coords="133,5,242,31"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="183,45,173,72,159,100,138,124,134,121,154,97,168,70,178,43"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,45,190,108,185,108,185,45"/>
+<area shape="rect" id="Node000004" href="$unionmsg__4d__data.html" title="4D data." alt="" coords="266,5,375,31"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="296,41,204,110,201,106,293,37"/>
 </map>

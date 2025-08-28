@@ -10,6 +10,7 @@ var annotated_dup =
     [ "err_filter", "structerr__filter.html", "structerr__filter" ],
     [ "msg_2d_data", "unionmsg__2d__data.html", "unionmsg__2d__data" ],
     [ "msg_3d_data", "unionmsg__3d__data.html", "unionmsg__3d__data" ],
+    [ "msg_4d_data", "unionmsg__4d__data.html", "unionmsg__4d__data" ],
     [ "msg_4wheel_data", "unionmsg__4wheel__data.html", "unionmsg__4wheel__data" ],
     [ "msg_4wheel_flags", "unionmsg__4wheel__flags.html", "unionmsg__4wheel__flags" ],
     [ "msg_chan_data", "structmsg__chan__data.html", "structmsg__chan__data" ],

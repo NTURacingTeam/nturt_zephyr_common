@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NTURT Zephyr: work_ctx Struct Reference</title>
+<title>NTURT Zephyr: msg_4d_data Union Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,7 +82,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('structwork__ctx.html',''); initResizable(true); });
+$(function(){initNavTree('unionmsg__4d__data.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -110,87 +110,133 @@ $(function(){initNavTree('structwork__ctx.html',''); initResizable(true); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">work_ctx Struct Reference<div class="ingroups"><a class="el" href="group__sys.html">System</a> &raquo; <a class="el" href="group__util.html">Utility</a></div></div></div>
+  <div class="headertitle"><div class="title">msg_4d_data Union Reference<div class="ingroups"><a class="el" href="group__msg.html">Message</a> &raquo; <a class="el" href="group__msg__if.html">Message Interface</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Work context.  
+<p>4D data.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;nturt/sys/util.h&gt;</code></p>
+<p><code>#include &lt;nturt/msg/interfaces/common.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:afa7a3d02898de6f5b9015f70da3ed91c" id="r_afa7a3d02898de6f5b9015f70da3ed91c"><td class="memItemLeft" align="right" valign="top">struct k_work&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa7a3d02898de6f5b9015f70da3ed91c">work</a></td></tr>
-<tr class="memdesc:afa7a3d02898de6f5b9015f70da3ed91c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Work.  <br /></td></tr>
-<tr class="separator:afa7a3d02898de6f5b9015f70da3ed91c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5089e1776d55da6830d1cea2da981dfb" id="r_a5089e1776d55da6830d1cea2da981dfb"><td class="memItemLeft" align="right" valign="top">void *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5089e1776d55da6830d1cea2da981dfb">ctx</a></td></tr>
-<tr class="memdesc:a5089e1776d55da6830d1cea2da981dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context of the work.  <br /></td></tr>
-<tr class="separator:a5089e1776d55da6830d1cea2da981dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28f99bfbf34cc3f3a0a48b9b5cf1f134" id="r_a28f99bfbf34cc3f3a0a48b9b5cf1f134"><td class="memItemLeft" align="right" valign="top">void *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28f99bfbf34cc3f3a0a48b9b5cf1f134">args</a></td></tr>
-<tr class="memdesc:a28f99bfbf34cc3f3a0a48b9b5cf1f134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to arguments for the work.  <br /></td></tr>
-<tr class="separator:a28f99bfbf34cc3f3a0a48b9b5cf1f134"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e2e88c9f77e28ac6f25191936ec3d67" id="r_a3e2e88c9f77e28ac6f25191936ec3d67"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e2e88c9f77e28ac6f25191936ec3d67">values</a> [4]</td></tr>
+<tr class="separator:a3e2e88c9f77e28ac6f25191936ec3d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9253358b0b5e0a0a20f5a4e22023ea2" id="r_aa9253358b0b5e0a0a20f5a4e22023ea2"><td class="memItemLeft" >struct {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac329ef4aa2fc762642320d7e1e98a2d7" id="r_ac329ef4aa2fc762642320d7e1e98a2d7"><td class="memItemLeft" >&#160;&#160;&#160;double&#160;&#160;&#160;<a class="el" href="#ac316e9b91c3f59d377cc7f38013dd83a">w</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:ac329ef4aa2fc762642320d7e1e98a2d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a774eee34e1ec0b354e5ecfe581cee2ea" id="r_a774eee34e1ec0b354e5ecfe581cee2ea"><td class="memItemLeft" >&#160;&#160;&#160;double&#160;&#160;&#160;<a class="el" href="#a9bef21bee70d97826dda37c04c984112">x</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a774eee34e1ec0b354e5ecfe581cee2ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50b320353835b3a859d1fb534a182a7a" id="r_a50b320353835b3a859d1fb534a182a7a"><td class="memItemLeft" >&#160;&#160;&#160;double&#160;&#160;&#160;<a class="el" href="#a583039098bd2ee8a425ab46f0129f0b3">y</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a50b320353835b3a859d1fb534a182a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e8219383df38de529a2271741094b1e" id="r_a8e8219383df38de529a2271741094b1e"><td class="memItemLeft" >&#160;&#160;&#160;double&#160;&#160;&#160;<a class="el" href="#afaedade6fc55b6930b1724b6ee824bc4">z</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a8e8219383df38de529a2271741094b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9253358b0b5e0a0a20f5a4e22023ea2" id="r_aa9253358b0b5e0a0a20f5a4e22023ea2"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom">&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:aa9253358b0b5e0a0a20f5a4e22023ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Work context. </p>
+<div class="textblock"><p>4D data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a28f99bfbf34cc3f3a0a48b9b5cf1f134" name="a28f99bfbf34cc3f3a0a48b9b5cf1f134"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28f99bfbf34cc3f3a0a48b9b5cf1f134">&#9670;&#160;</a></span>args</h2>
+<a id="aa9253358b0b5e0a0a20f5a4e22023ea2" name="aa9253358b0b5e0a0a20f5a4e22023ea2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9253358b0b5e0a0a20f5a4e22023ea2">&#9670;&#160;</a></span>[struct]</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* const work_ctx::args</td>
+          <td class="memname">struct  { ... }  <a class="el" href="unionmsg__4d__data.html">msg_4d_data</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Pointer to arguments for the work. </p>
-
 </div>
 </div>
-<a id="a5089e1776d55da6830d1cea2da981dfb" name="a5089e1776d55da6830d1cea2da981dfb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5089e1776d55da6830d1cea2da981dfb">&#9670;&#160;</a></span>ctx</h2>
+<a id="a3e2e88c9f77e28ac6f25191936ec3d67" name="a3e2e88c9f77e28ac6f25191936ec3d67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e2e88c9f77e28ac6f25191936ec3d67">&#9670;&#160;</a></span>values</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* const work_ctx::ctx</td>
+          <td class="memname">double msg_4d_data::values[4]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Pointer to context of the work. </p>
+<p>4D data in an array. </p>
 
 </div>
 </div>
-<a id="afa7a3d02898de6f5b9015f70da3ed91c" name="afa7a3d02898de6f5b9015f70da3ed91c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa7a3d02898de6f5b9015f70da3ed91c">&#9670;&#160;</a></span>work</h2>
+<a id="ac316e9b91c3f59d377cc7f38013dd83a" name="ac316e9b91c3f59d377cc7f38013dd83a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac316e9b91c3f59d377cc7f38013dd83a">&#9670;&#160;</a></span>w</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct k_work work_ctx::work</td>
+          <td class="memname">double msg_4d_data::w</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Work. </p>
+<p>W-axis value. </p>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li>nturt/sys/<a class="el" href="util_8h.html">util.h</a></li>
+<a id="a9bef21bee70d97826dda37c04c984112" name="a9bef21bee70d97826dda37c04c984112"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bef21bee70d97826dda37c04c984112">&#9670;&#160;</a></span>x</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double msg_4d_data::x</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>X-axis value. </p>
+
+</div>
+</div>
+<a id="a583039098bd2ee8a425ab46f0129f0b3" name="a583039098bd2ee8a425ab46f0129f0b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a583039098bd2ee8a425ab46f0129f0b3">&#9670;&#160;</a></span>y</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double msg_4d_data::y</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Y-axis value. </p>
+
+</div>
+</div>
+<a id="afaedade6fc55b6930b1724b6ee824bc4" name="afaedade6fc55b6930b1724b6ee824bc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afaedade6fc55b6930b1724b6ee824bc4">&#9670;&#160;</a></span>z</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double msg_4d_data::z</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Z-axis value. </p>
+
+</div>
+</div>
+<hr/>The documentation for this union was generated from the following file:<ul>
+<li>nturt/msg/interfaces/<a class="el" href="common_8h.html">common.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="structwork__ctx.html">work_ctx</a></li>
+    <li class="navelem"><a class="el" href="unionmsg__4d__data.html">msg_4d_data</a></li>
     <li class="footer">Generated on Thu Aug 28 2025 15:06:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
