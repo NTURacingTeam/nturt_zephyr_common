@@ -1,0 +1,21 @@
+---
+- name: Remote Flash.
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Create a temporary file.
+      ansible.builtin.tempfile:
+        state: file
+        suffix: .elf
+      register: temp_file
+
+    - name: Copy ELF file to remote device.
+      ansible.builtin.copy:
+        src: "{{ app_dir }}/build/zephyr/zephyr.elf"
+        dest: "{{ temp_file.path }}"
+        mode: "0755"
+
+    - name: Flash it using openocd.
+      ansible.builtin.command:
+        cmd: "openocd -f board/st_nucleo_h743zi.cfg -c \"program {{ temp_file.path }} verify reset exit\""

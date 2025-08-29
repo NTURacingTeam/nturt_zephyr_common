@@ -1,0 +1,6 @@
+west-commands:
+  - file: scripts/remote_flash.py
+    commands:
+      - name: remote_flash
+        class: RemoteFlash
+        help: Flash a Zephyr application from a remote device
