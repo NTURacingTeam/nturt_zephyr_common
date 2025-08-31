@@ -151,7 +151,8 @@
  * @param[in] data The 4D data.
  */
 #define CSV_PRImsg_4d_data_header(data) \
-  STRINGIFY(data) "_w," STRINGIFY(data) "_x," STRINGIFY(data) "_y," STRINGIFY(data) "_z"
+  STRINGIFY(data)                       \
+  "_w," STRINGIFY(data) "_x," STRINGIFY(data) "_y," STRINGIFY(data) "_z"
 
 /// @brief Insert @ref msg_4d_data CSV format string.
 #define CSV_PRImsg_4d_data "f,%f,%f,%f"
