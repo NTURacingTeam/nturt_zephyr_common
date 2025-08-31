@@ -24,11 +24,12 @@ var searchData=
   ['states_5fstates_5fstr_21',['states_states_str',['../group__stat.html#gaefbb301e6cf2e6fa45cef3b7d895d2ea',1,'states.h']]],
   ['states_5ftransition_22',['states_transition',['../group__stat.html#ga2741efd1ed6e0d4b1725a9659276326d',1,'states.h']]],
   ['states_5ftransition_5finfo_23',['states_transition_info',['../group__stat.html#ga92af485e8d00a86a1e6f1874b89f3930',1,'states.h']]],
-  ['states_5fvalid_5ftransition_24',['states_valid_transition',['../group__stat.html#gad926cf2d1b8f0c52696abd6065efbbc8',1,'states.h']]],
-  ['sys_5freset_25',['sys_reset',['../group__sys.html#gab6b96b3e2ccb8160d8d45dd1d16810f7',1,'sys.h']]],
-  ['sys_5fset_5ftime_26',['sys_set_time',['../group__sys.html#ga659a090d4105ea9244c19e1dfe4bf814',1,'sys.h']]],
-  ['sys_5fshutdown_27',['sys_shutdown',['../group__sys.html#gab947a3d81d282ec75217b14195a237aa',1,'sys.h']]],
-  ['sys_5fwork_5freschedule_28',['sys_work_reschedule',['../group__sys.html#ga908db0a2fc07364ba92bcf312d9e7ee4',1,'sys.h']]],
-  ['sys_5fwork_5fschedule_29',['sys_work_schedule',['../group__sys.html#ga96289f40eb2dfc15500c9defd87638c7',1,'sys.h']]],
-  ['sys_5fwork_5fsubmit_30',['sys_work_submit',['../group__sys.html#gaa31ceef5251cd4c733d27ae254bc8332',1,'sys.h']]]
+  ['states_5ftransition_5fpending_24',['states_transition_pending',['../group__stat.html#gab5900960348599dbf7d63548149deec6',1,'states.h']]],
+  ['states_5fvalid_5ftransition_25',['states_valid_transition',['../group__stat.html#gad926cf2d1b8f0c52696abd6065efbbc8',1,'states.h']]],
+  ['sys_5freset_26',['sys_reset',['../group__sys.html#gab6b96b3e2ccb8160d8d45dd1d16810f7',1,'sys.h']]],
+  ['sys_5fset_5ftime_27',['sys_set_time',['../group__sys.html#ga659a090d4105ea9244c19e1dfe4bf814',1,'sys.h']]],
+  ['sys_5fshutdown_28',['sys_shutdown',['../group__sys.html#gab947a3d81d282ec75217b14195a237aa',1,'sys.h']]],
+  ['sys_5fwork_5freschedule_29',['sys_work_reschedule',['../group__sys.html#ga908db0a2fc07364ba92bcf312d9e7ee4',1,'sys.h']]],
+  ['sys_5fwork_5fschedule_30',['sys_work_schedule',['../group__sys.html#ga96289f40eb2dfc15500c9defd87638c7',1,'sys.h']]],
+  ['sys_5fwork_5fsubmit_31',['sys_work_submit',['../group__sys.html#gaa31ceef5251cd4c733d27ae254bc8332',1,'sys.h']]]
 ];

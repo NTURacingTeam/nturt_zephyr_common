@@ -75,6 +75,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#c.states_trans_cmd"><code class="docutils literal notranslate"><span class="pre">states_trans_cmd</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.states_get"><code class="docutils literal notranslate"><span class="pre">states_get()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.states_valid_transition"><code class="docutils literal notranslate"><span class="pre">states_valid_transition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c.states_transition_pending"><code class="docutils literal notranslate"><span class="pre">states_transition_pending()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.states_transition"><code class="docutils literal notranslate"><span class="pre">states_transition()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.states_state_str"><code class="docutils literal notranslate"><span class="pre">states_state_str()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#c.states_states_str"><code class="docutils literal notranslate"><span class="pre">states_states_str()</span></code></a></li>
@@ -424,6 +425,20 @@ For example:</p>
 <li><p><strong>true</strong> – If the command can be executed. </p></li>
 <li><p><strong>false</strong> – If the command cannot be executed. </p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.states_transition_pending">
+<span class="target" id="group__stat_1gab5900960348599dbf7d63548149deec6"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">states_transition_pending</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.states_transition_pending" title="Link to this definition"></a><br /></dt>
+<dd><p>Check if a state transition is currently pending. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true If a state transition is pending. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>false If no state transition is pending. </p>
 </dd>
 </dl>
 </dd></dl>

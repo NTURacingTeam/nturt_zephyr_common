@@ -210,6 +210,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad926cf2d1b8f0c52696abd6065efbbc8" id="r_gad926cf2d1b8f0c52696abd6065efbbc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad926cf2d1b8f0c52696abd6065efbbc8">states_valid_transition</a> (enum <a class="el" href="#ga40fbd3fbed5f5054e6eadb75d8244d87">states_trans_cmd</a> <a class="el" href="structcmd.html">cmd</a>)</td></tr>
 <tr class="memdesc:gad926cf2d1b8f0c52696abd6065efbbc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test if a state transition command is valid.  <br /></td></tr>
 <tr class="separator:gad926cf2d1b8f0c52696abd6065efbbc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5900960348599dbf7d63548149deec6" id="r_gab5900960348599dbf7d63548149deec6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab5900960348599dbf7d63548149deec6">states_transition_pending</a> ()</td></tr>
+<tr class="memdesc:gab5900960348599dbf7d63548149deec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a state transition is currently pending.  <br /></td></tr>
+<tr class="separator:gab5900960348599dbf7d63548149deec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2741efd1ed6e0d4b1725a9659276326d" id="r_ga2741efd1ed6e0d4b1725a9659276326d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga2741efd1ed6e0d4b1725a9659276326d">states_transition</a> (enum <a class="el" href="#ga40fbd3fbed5f5054e6eadb75d8244d87">states_trans_cmd</a> <a class="el" href="structcmd.html">cmd</a>)</td></tr>
 <tr class="memdesc:ga2741efd1ed6e0d4b1725a9659276326d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a state transition command to transition to a new state.  <br /></td></tr>
 <tr class="separator:ga2741efd1ed6e0d4b1725a9659276326d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -566,6 +569,30 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="gab5900960348599dbf7d63548149deec6" name="gab5900960348599dbf7d63548149deec6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab5900960348599dbf7d63548149deec6">&#9670;&#160;</a></span>states_transition_pending()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool states_transition_pending </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="ctrl_2states_8h.html">vcu/ctrl/states.h</a>&gt;</code></p>
+
+<p>Check if a state transition is currently pending. </p>
+<dl class="section return"><dt>Returns</dt><dd>true If a state transition is pending. </dd>
+<dd>
+false If no state transition is pending. </dd></dl>
+
+</div>
+</div>
 <a id="gad926cf2d1b8f0c52696abd6065efbbc8" name="gad926cf2d1b8f0c52696abd6065efbbc8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad926cf2d1b8f0c52696abd6065efbbc8">&#9670;&#160;</a></span>states_valid_transition()</h2>
 
@@ -605,7 +632,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Aug 28 2025 15:06:12 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sun Aug 31 2025 10:07:29 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

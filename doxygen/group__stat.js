@@ -49,5 +49,6 @@ var group__stat =
     [ "states_states_str", "group__stat.html#gaefbb301e6cf2e6fa45cef3b7d895d2ea", null ],
     [ "states_transition", "group__stat.html#ga2741efd1ed6e0d4b1725a9659276326d", null ],
     [ "states_transition_info", "group__stat.html#ga92af485e8d00a86a1e6f1874b89f3930", null ],
+    [ "states_transition_pending", "group__stat.html#gab5900960348599dbf7d63548149deec6", null ],
     [ "states_valid_transition", "group__stat.html#gad926cf2d1b8f0c52696abd6065efbbc8", null ]
 ];
