@@ -9,6 +9,8 @@ var group__err__code =
       [ "ERR_CODE_BSE1", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a74104496ec81c16bfb9e71ecce241a23", null ],
       [ "ERR_CODE_BSE2", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a2bfa0d955e9a65ef51a03fa0d1a1e788", null ],
       [ "ERR_CODE_PEDAL_PLAUS", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852aa8ea9cf567cec1dcecf1e3aefd4accfa", null ],
+      [ "ERR_CODE_ACC", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a322358c252e981b4a106d2d2116ac3c2", null ],
+      [ "ERR_CODE_ACC_COMM", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852ac1404f22edb15ea45bb78571c124a461", null ],
       [ "ERR_CODE_INV_FL", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852ab2876cd4fe0eeaada75ea459eacacb5d", null ],
       [ "ERR_CODE_INV_FR", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a5b3f6b2ed806b86daef71e1c86d63ef4", null ],
       [ "ERR_CODE_INV_RL", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a6e88218129aa1c67cdc8d332e1528c0e", null ],

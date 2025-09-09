@@ -160,9 +160,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="tractive_8h.html">nturt/msg/interfaces/tractive.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a>                                                               \</div>
-<div class="line">      <span class="stringliteral">&quot;\n\r\tok: %s, voltage (V): %g, current (A): %g, temperature (deg C): &quot;</span> \</div>
-<div class="line">      <span class="stringliteral">&quot;%g&quot;</span>                                                                    \</div>
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a>                                                \</div>
+<div class="line">      <span class="stringliteral">&quot;\n\r\tstatus: %hhu, voltage (V): %g, current (A): %g, &quot;</span> \</div>
+<div class="line">      <span class="stringliteral">&quot;temperature (deg C): %g&quot;</span>                                \</div>
 <div class="line">      <span class="stringliteral">&quot;\n\r\tsoc (%%): %d capacity (mAh): %g&quot;</span></div>
 <div class="ttc" id="agroup__msg__if__pri_html_ga4abb496d8bf5b7fb2b9d33a7362d06f7"><div class="ttname"><a href="group__msg__if__pri.html#ga4abb496d8bf5b7fb2b9d33a7362d06f7">PRImsg_header</a></div><div class="ttdeci">#define PRImsg_header</div><div class="ttdoc">Insert msg_header format string.</div><div class="ttdef"><b>Definition</b> common.h:33</div></div>
 </div><!-- fragment -->
@@ -186,7 +186,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p><code>#include &lt;<a class="el" href="tractive_8h.html">nturt/msg/interfaces/tractive.h</a>&gt;</code></p>
-<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a>((data).header), (data).ok ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>, (data).volt, \</div>
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a>((data).header), (data).status, (data).volt, \</div>
 <div class="line">      (data).current, (data).temp, (data).soc, (data).capacity</div>
 <div class="ttc" id="agroup__msg__if__pri_html_ga62bc45b20f45b7ad6cb0a6c2aeb93aa7"><div class="ttname"><a href="group__msg__if__pri.html#ga62bc45b20f45b7ad6cb0a6c2aeb93aa7">PRImsg_header_arg</a></div><div class="ttdeci">#define PRImsg_header_arg(data)</div><div class="ttdoc">Insert msg_header arguments to print format.</div><div class="ttdef"><b>Definition</b> common.h:40</div></div>
 </div><!-- fragment -->
@@ -265,7 +265,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Aug 31 2025 10:07:29 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Tue Sep 9 2025 01:38:35 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

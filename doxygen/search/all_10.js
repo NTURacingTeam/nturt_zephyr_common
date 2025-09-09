@@ -82,7 +82,7 @@ var searchData=
   ['states_5ftransition_5finfo_79',['states_transition_info',['../group__stat.html#ga92af485e8d00a86a1e6f1874b89f3930',1,'states.h']]],
   ['states_5ftransition_5fpending_80',['states_transition_pending',['../group__stat.html#gab5900960348599dbf7d63548149deec6',1,'states.h']]],
   ['states_5fvalid_5ftransition_81',['states_valid_transition',['../group__stat.html#gad926cf2d1b8f0c52696abd6065efbbc8',1,'states.h']]],
-  ['status_82',['status',['../structmsg__ts__inv.html#ac2c97b22b5bdecf4bb0e149fda7b11db',1,'msg_ts_inv']]],
+  ['status_82',['status',['../structmsg__ts__acc.html#ae6ad46fe5bf595f4a1c09444ea3965a9',1,'msg_ts_acc::status'],['../structmsg__ts__inv.html#ac2c97b22b5bdecf4bb0e149fda7b11db',1,'msg_ts_inv::status']]],
   ['steer_83',['steer',['../structmsg__sensor__cockpit.html#aa0601a400931e46b5be24e5998c50229',1,'msg_sensor_cockpit']]],
   ['steer_5fcan_5fto_5fphy_84',['STEER_CAN_TO_PHY',['../group__can__convert.html#ga080ae4a85d68752effb6464cd79f5970',1,'convert.h']]],
   ['steer_5fphy_5fto_5fcan_85',['STEER_PHY_TO_CAN',['../group__can__convert.html#ga2de7efcaab1944a5a7f46cf7ea55b6cf',1,'convert.h']]],
