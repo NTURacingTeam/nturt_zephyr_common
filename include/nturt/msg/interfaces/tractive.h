@@ -39,10 +39,10 @@
  */
 
 /// @brief Insert @ref msg_ts_acc printf format string.
-#define PRImsg_ts_acc                                                         \
-  PRImsg_header                                                               \
-      "\n\r\tok: %s, voltage (V): %g, current (A): %g, temperature (deg C): " \
-      "%g"                                                                    \
+#define PRImsg_ts_acc                                          \
+  PRImsg_header                                                \
+      "\n\r\tstatus: %hhu, voltage (V): %g, current (A): %g, " \
+      "temperature (deg C): %g"                                \
       "\n\r\tsoc (%%): %d capacity (mAh): %g"
 
 /**
@@ -50,8 +50,8 @@
  *
  * @param[in] data The accumulator message data.
  */
-#define PRImsg_ts_acc_arg(data)                                                \
-  PRImsg_header_arg((data).header), (data).ok ? "true" : "false", (data).volt, \
+#define PRImsg_ts_acc_arg(data)                                 \
+  PRImsg_header_arg((data).header), (data).status, (data).volt, \
       (data).current, (data).temp, (data).soc, (data).capacity
 
 /// @brief Insert @ref msg_ts_inv printf format string.
@@ -90,18 +90,18 @@
 
 /// @brief CSV header for @ref msg_ts_acc.
 #define CSV_PRImsg_ts_acc_header \
-  CSV_PRImsg_header_header ",ok,volt,current,temp,soc,capacity"
+  CSV_PRImsg_header_header ",status,volt,current,temp,soc,capacity"
 
 /// @brief Insert @ref msg_ts_acc CSV format string.
-#define CSV_PRImsg_ts_acc CSV_PRImsg_header ",%i,%f,%f,%f,%d,%f"
+#define CSV_PRImsg_ts_acc CSV_PRImsg_header ",%hhu,%f,%f,%f,%d,%f"
 
 /**
  * @brief Insert @ref msg_ts_acc arguments to CSV print format.
  *
  * @param[in] data The accumulator message data.
  */
-#define CSV_PRImsg_ts_acc_arg(data)                                  \
-  CSV_PRImsg_header_arg((data).header), (int)(data).ok, (data).volt, \
+#define CSV_PRImsg_ts_acc_arg(data)                                 \
+  CSV_PRImsg_header_arg((data).header), (data).status, (data).volt, \
       (data).current, (data).temp, (data).soc, (data).capacity
 
 /// @brief CSV header for @ref msg_ts_inv.
@@ -146,7 +146,7 @@ struct msg_ts_acc {
   struct msg_header header;
 
   /** Accumulator status. */
-  bool ok;
+  uint8_t status;
 
   /** Accumulator voltage. Unit: V. */
   double volt;
