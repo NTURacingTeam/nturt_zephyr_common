@@ -57,9 +57,11 @@ static int sensor_adc_read(const struct device* dev, int* _mv) {
 
   if (mv <
       config->min_voltage - config->voltage_range * config->tolerance / 100) {
-    LOG_ERR_THROTTLE(
-        K_MSEC(500), "Sensor %s voltage below range by %d%% (%d mv)", dev->name,
-        100 * (config->min_voltage - mv) / config->min_voltage, mv);
+    LOG_ERR_THROTTLE(K_MSEC(500),
+                     "Sensor %s voltage below range by %d%% (%d mv)", dev->name,
+                     100 * (config->min_voltage - mv) /
+                         (config->max_voltage - config->min_voltage),
+                     mv);
     return -EINVAL;
 
   } else if (mv < config->min_voltage) {
@@ -67,9 +69,11 @@ static int sensor_adc_read(const struct device* dev, int* _mv) {
 
   } else if (mv > config->max_voltage +
                       config->voltage_range * config->tolerance / 100) {
-    LOG_ERR_THROTTLE(
-        K_MSEC(500), "Sensor %s voltage above range by %d%% (%d mv)", dev->name,
-        100 * (mv - config->max_voltage) / config->max_voltage, mv);
+    LOG_ERR_THROTTLE(K_MSEC(500),
+                     "Sensor %s voltage above range by %d%% (%d mv)", dev->name,
+                     100 * (mv - config->max_voltage) /
+                         (config->max_voltage - config->min_voltage),
+                     mv);
     return -EINVAL;
 
   } else if (mv > config->max_voltage) {
