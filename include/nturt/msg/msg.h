@@ -208,7 +208,7 @@ int msg_chan_csv_write(const struct zbus_channel *chan, const void *data,
                        char *buf, size_t len);
 
 /**
- * @brief Publishing function for @ref MSG_AGG_DEFINE.
+ * @brief Publishing function for @ref AGG_DEFINE.
  *
  * @warning Internal use only.
  */

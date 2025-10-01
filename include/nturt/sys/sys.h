@@ -43,7 +43,7 @@
  *
  * @param[in] handler Handler for shutting down.
  * @param[in] user_data Pointer to custom data for the callback.
- * @param[in] _priority Priority of the callback.
+ * @param[in] priority Priority of the callback.
  *
  * @note Since the name of the callback is derived from the name of @p handler ,
  * if the same handler is used for multiple callbacks,
