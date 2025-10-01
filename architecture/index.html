@@ -49,10 +49,13 @@
               <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="principles.html">Architecture Principles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vehicle_control_unit.html">Vehicle Control Unit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="survey.html">Survey</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sensing.html">Sensing System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hardware-overview">Hardware Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="principles.html">Architecture Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vehicle_control_unit.html">Vehicle Control Unit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="survey.html">Survey</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sensing.html">Sensing System</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="decisions/index.html">Architecture Decision Records</a></li>
@@ -97,6 +100,27 @@
              
   <section id="architecture">
 <span id="archecture"></span><h1>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h1>
+<section id="hardware-overview">
+<h2>Hardware Overview<a class="headerlink" href="#hardware-overview" title="Link to this heading"></a></h2>
+<p>This is the architecture of the electrical system of the vehicle.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/electrical_system.svg"><img alt="../_images/electrical_system.svg" src="../_images/electrical_system.svg" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The electrical system of the vehicle.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Within the vehicle, there are currently 6 independent processors that control
+different subsystems of the vehicle, including:</p>
+<ul class="simple">
+<li><p>Vehicle Control Unit (VCU) using STM32 MCU</p></li>
+<li><p>Embedded computer for wireless communication and data logging using Raspberry
+Pi</p></li>
+<li><p>Motor Controllers using STM32 MCU</p></li>
+<li><p>Battery Management System (BMS) for both HV and LV batteries using STM32 MCU</p></li>
+</ul>
+<p>Currently, only vehicle control unit is using this software framework, but it
+should also be extended to support other microcontrollers of the race car.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="principles.html">Architecture Principles</a></li>
@@ -105,6 +129,7 @@
 <li class="toctree-l1"><a class="reference internal" href="sensing.html">Sensing System</a></li>
 </ul>
 </div>
+</section>
 </section>
 
 

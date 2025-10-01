@@ -200,7 +200,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga4f9b11a2c2e146701386cb00040ac1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a message in CSV format to a buffer based on the channel.  <br /></td></tr>
 <tr class="separator:ga4f9b11a2c2e146701386cb00040ac1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1af7c548ef368479c8ee90a75e842f33" id="r_ga1af7c548ef368479c8ee90a75e842f33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga1af7c548ef368479c8ee90a75e842f33">msg_agg_publish</a> (const void *data, void *user_data)</td></tr>
-<tr class="memdesc:ga1af7c548ef368479c8ee90a75e842f33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishing function for MSG_AGG_DEFINE.  <br /></td></tr>
+<tr class="memdesc:ga1af7c548ef368479c8ee90a75e842f33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishing function for <a class="el" href="group__msg__agg.html#gacea980b7e48de0678a3a8d7c60829f4a">AGG_DEFINE</a>.  <br /></td></tr>
 <tr class="separator:ga1af7c548ef368479c8ee90a75e842f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7bb769f1de6d91640b64981c9c65f86c" id="r_ga7bb769f1de6d91640b64981c9c65f86c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga7bb769f1de6d91640b64981c9c65f86c">MSG_CHAN_DECLARE</a> (<a class="el" href="#ga58512d178f5fc7ee151c4f96e70f3237">MSG_VCU_LIST</a>)</td></tr>
 <tr class="separator:ga7bb769f1de6d91640b64981c9c65f86c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -267,7 +267,7 @@ Variables</h2></td></tr>
 <div class="line">                   watermark, flag, <a class="code hl_function" href="#ga1af7c548ef368479c8ee90a75e842f33">msg_agg_publish</a>, (<span class="keywordtype">void</span> *)&amp;_MSG_CHAN(msg), \</div>
 <div class="line">                   __VA_ARGS__);</div>
 <div class="ttc" id="agroup__msg__agg_html_ga190039420aa8359fcdb561d53cdc8522"><div class="ttname"><a href="group__msg__agg.html#ga190039420aa8359fcdb561d53cdc8522">AGG_TYPED_DEFINE</a></div><div class="ttdeci">#define AGG_TYPED_DEFINE(_name, _type, _init_val, _period, _min_separation, _watermark, _flag, _publish, _user_data,...)</div><div class="ttdoc">Define a data aggregation named _name to monitor the update of members within a data type....</div><div class="ttdef"><b>Definition</b> aggregation.h:153</div></div>
-<div class="ttc" id="agroup__msg_html_ga1af7c548ef368479c8ee90a75e842f33"><div class="ttname"><a href="#ga1af7c548ef368479c8ee90a75e842f33">msg_agg_publish</a></div><div class="ttdeci">void msg_agg_publish(const void *data, void *user_data)</div><div class="ttdoc">Publishing function for MSG_AGG_DEFINE.</div></div>
+<div class="ttc" id="agroup__msg_html_ga1af7c548ef368479c8ee90a75e842f33"><div class="ttname"><a href="#ga1af7c548ef368479c8ee90a75e842f33">msg_agg_publish</a></div><div class="ttdeci">void msg_agg_publish(const void *data, void *user_data)</div><div class="ttdoc">Publishing function for AGG_DEFINE.</div></div>
 </div><!-- fragment -->
 <p>Define a data aggregration for aggregating into message <code>msg</code> . May be specified as <code>static</code> to limit the scope of the aggregation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -473,7 +473,7 @@ Variables</h2></td></tr>
 
 <p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2msg_2msg_8h.html">nturt/msg/msg.h</a>&gt;</code></p>
 
-<p>Publishing function for MSG_AGG_DEFINE. </p>
+<p>Publishing function for <a class="el" href="group__msg__agg.html#gacea980b7e48de0678a3a8d7c60829f4a">AGG_DEFINE</a>. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Internal use only. </dd></dl>
 
 </div>
@@ -682,7 +682,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 9 2025 01:38:35 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Wed Oct 1 2025 06:30:54 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

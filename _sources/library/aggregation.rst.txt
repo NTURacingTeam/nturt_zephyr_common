@@ -110,7 +110,7 @@ The aggregation module can be used in two main ways:
   aggregation. This macro sets up an aggregation for a specific struct type,
   allowing you to monitor and update individual members. This is useful for
   aggregating updates to fields within a message in `message types
-  <https://nturacingteam.github.io/nturt_zephyr_common/doxygen/group__msg__interface.html>`_
+  <https://nturacingteam.github.io/nturt_zephyr_common/doxygen/group__msg__if.html>`_
   or data structure.
 
 Suppose we have a struct representing a message:
