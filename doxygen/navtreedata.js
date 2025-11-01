@@ -26,7 +26,6 @@ var NAVTREE =
 [
   [ "NTURT Zephyr", "index.html", [
     [ "NTU Racing Team Zephyr Common Library", "index.html", null ],
-    [ "Todo List", "todo.html", null ],
     [ "Topics", "topics.html", "topics" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
