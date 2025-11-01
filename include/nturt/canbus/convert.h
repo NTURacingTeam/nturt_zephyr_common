@@ -45,8 +45,9 @@
 /// (uint16_t).
 #define ANGULAR_VELOCITY_PHY_TO_CAN(phy) ((uint16_t)(phy))
 
-/// @todo
-#define SUSP_PHY_TO_CAN(phy) (phy)
+/// @brief Suspension travel physical data in m (double), convert to 0.00001 m +
+/// 0.3m (int16_t).
+#define SUSP_PHY_TO_CAN(phy) ((int16_t)(10000.0 * (phy - 0.3)))
 
 /// @brief Inverter torque physical data in 0~1 rated torque (double), convert
 /// to 0.001 rated torque (int16_t).
