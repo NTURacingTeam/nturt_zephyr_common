@@ -18,7 +18,7 @@
         io-channels = <&adc1 14>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
         min-voltage = <50>;
-        max-voltage = <3100>;
+        max-voltage = <3300>;
         min-value = <(-130) 0>;
         max-value = <130 0>;
     };
