@@ -41,6 +41,7 @@ it should also be extended to support other controllers of the race car.
    :hidden:
 
    develop/getting_started
+   develop/cli
    develop/doxygen
    develop/test
    develop/notes/index
