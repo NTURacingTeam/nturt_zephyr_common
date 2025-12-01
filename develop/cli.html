@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command Line Interface &mdash; NTU Racing Team Zephyr Common Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="doxygen.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/decisions/index.html">Architecture Decision Records</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">Common Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/vcu/index.html">VCU Library</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#available-commands">Available Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#canopen">canopen</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subcommands">Subcommands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#err">err</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Subcommands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#msg">msg</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Subcommands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sensor-axis">sensor_axis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Subcommands</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nturt-vcu-commands">nturt_vcu Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ctrl">ctrl</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Subcommands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dashboard">dashboard</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">Subcommands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#states">states</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">Subcommands</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doxygen.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/index.html">Developer’s Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">Doc Implementation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NTU Racing Team Zephyr Common</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Command Line Interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/develop/cli.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="command-line-interface">
+<span id="develop-cli"></span><h1>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Link to this heading"></a></h1>
+<p>The firmware exposes a <a class="reference external" href="https://docs.zephyrproject.org/4.2.0/services/shell/index.html">Zephyr shell</a>
+for interactive inspection and control. This page lists the custom commands
+implemented in this repository and the additional commands provided by
+<code class="docutils literal notranslate"><span class="pre">nturt_vcu</span></code> application. Please refer to the <a class="reference external" href="https://docs.zephyrproject.org/4.2.0/index.html">Zephyr documentation</a> for other commands provided
+by Zephyr.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All custom commands support <a class="reference external" href="https://docs.zephyrproject.org/4.2.0/services/shell/index.html#tab-feature">tab completion feature</a>
+and <a class="reference external" href="https://docs.zephyrproject.org/4.2.0/services/shell/index.html#command-help">command help</a>
+for ease of use.</p>
+</div>
+<section id="available-commands">
+<h2>Available Commands<a class="headerlink" href="#available-commands" title="Link to this heading"></a></h2>
+<section id="canopen">
+<h3>canopen<a class="headerlink" href="#canopen" title="Link to this heading"></a></h3>
+<p>CANopen diagnostics.</p>
+<section id="subcommands">
+<h4>Subcommands<a class="headerlink" href="#subcommands" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">error</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">get</span></code>: Print currently set CANopen errors.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="err">
+<h3>err<a class="headerlink" href="#err" title="Link to this heading"></a></h3>
+<p>Error handling commands provided by <a class="reference internal" href="../library/errors.html#library-errors"><span class="std std-ref">Error Handling</span></a>.</p>
+<section id="id1">
+<h4>Subcommands<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">list</span></code>: Print all registered errors with severity tagging.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get</span></code>: Show currently set errors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span></code>: Set an error by name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clear</span></code>: Clear a set error by name.</p></li>
+</ul>
+</section>
+</section>
+<section id="msg">
+<h3>msg<a class="headerlink" href="#msg" title="Link to this heading"></a></h3>
+<p>Message passing diagnostics.</p>
+<section id="id2">
+<h4>Subcommands<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stats</span></code>: Display statistics for each channel.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dump</span></code>: Dump every message published by a given channel to console.</p></li>
+</ul>
+</section>
+</section>
+<section id="sensor-axis">
+<h3>sensor_axis<a class="headerlink" href="#sensor-axis" title="Link to this heading"></a></h3>
+<p>Sensor axis input diagnostics and calibration utilities.</p>
+<section id="id3">
+<h4>Subcommands<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">channel</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">list</span></code>: List the underlying sensors that form a channel.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calib_set</span></code>: Calibrate all sensors in the channel using the current
+readings and save them to settings.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">calib_get</span></code>: Read the stored calibration points for a specific sensor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calib_set</span></code>: Calibrate a single sensor using its current reading abd  save
+it to settings.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dump_raw</span></code>: Dump raw sensor output to console.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="nturt-vcu-commands">
+<h2>nturt_vcu Commands<a class="headerlink" href="#nturt-vcu-commands" title="Link to this heading"></a></h2>
+<p>The following commands are provided by <code class="docutils literal notranslate"><span class="pre">nturt_vcu</span></code>.</p>
+<section id="ctrl">
+<h3>ctrl<a class="headerlink" href="#ctrl" title="Link to this heading"></a></h3>
+<p>Control system management.</p>
+<section id="id4">
+<h4>Subcommands<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">param</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">list</span></code>: Print all control parameters with current values and types.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get</span></code>: Gat the value of a parameter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span></code>: Update a parameter and save it to settings. Values must match the
+parameter type.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inv</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">fault_reset</span></code>: Clear inverter fault.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="dashboard">
+<h3>dashboard<a class="headerlink" href="#dashboard" title="Link to this heading"></a></h3>
+<p>Dashboard and display controls.</p>
+<section id="id5">
+<h4>Subcommands<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">brightness</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">get</span></code>: Get the current dashboard brightness level.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span></code>: Set dashboard brightness level and save it to settings.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">get</span></code> Display the active dashboard mode.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span></code> Set the dashboard display mode.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="states">
+<h3>states<a class="headerlink" href="#states" title="Link to this heading"></a></h3>
+<p>Control state machine commands provided by <a class="reference internal" href="../library/vcu/states.html#library-vcu-states"><span class="std std-ref">State Machine</span></a>.</p>
+<section id="id6">
+<h4>Subcommands<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get</span></code> Print the current state bitmask along with human-readable names.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trans</span></code> Request a state transition.</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doxygen.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, NTU Racing Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

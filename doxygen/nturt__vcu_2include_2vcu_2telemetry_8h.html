@@ -174,9 +174,12 @@ Enumerations</h2></td></tr>
 , <a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5aa6f44b9985ffe8600fc0a3c704b6e715">TM_BSE2</a>
 , <a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a5c890b7b619853b29aecf16d6e1284a4">TM_VCU_STATES</a>
 , <br />
-&#160;&#160;<a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a3aa27a4c6184a699396d5b3af3ebb873">TM_INV_RL_CTRL_WORD</a>
+&#160;&#160;<a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a68cf4619ea96d24509b5e6b800a5e083">TM_SUSP_TRAVEL_FL</a>
+, <a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5ac112dbb26206dd963d9e0140ad667787">TM_SUSP_TRAVEL_RL</a>
+, <a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a3aa27a4c6184a699396d5b3af3ebb873">TM_INV_RL_CTRL_WORD</a>
 , <a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5aa0d2126a1037d79eedd2fcf56026d2ce">TM_INV_RL_TARGET_TORQUE</a>
-, <a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5af4472e0efc9fd07b9483db7fdb4da34e">TM_INV_RR_CTRL_WORD</a>
+, <br />
+&#160;&#160;<a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5af4472e0efc9fd07b9483db7fdb4da34e">TM_INV_RR_CTRL_WORD</a>
 , <a class="el" href="group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a5507e0ac044caee9f11eab894d51f8f3">TM_INV_RR_TARGET_TORQUE</a>
 <br />
  }</td></tr>
@@ -201,6 +204,10 @@ Functions</h2></td></tr>
 <tr class="separator:ga1e5512f2536869288f02a9fb3830c131"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa668f550caf1c1e289dc46088b2e5560" id="r_gaa668f550caf1c1e289dc46088b2e5560"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__tm__vcu.html#gaa668f550caf1c1e289dc46088b2e5560">TM_DATA_DECLARE</a> (vcu_states, uint16_t)</td></tr>
 <tr class="separator:gaa668f550caf1c1e289dc46088b2e5560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga240b1e01496a886286d7cd2fb7fa72ab" id="r_ga240b1e01496a886286d7cd2fb7fa72ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__tm__vcu.html#ga240b1e01496a886286d7cd2fb7fa72ab">TM_DATA_DECLARE</a> (susp_travel_fl, int16_t)</td></tr>
+<tr class="separator:ga240b1e01496a886286d7cd2fb7fa72ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4a18eb9627894b42d3f8c7244ef0ff1" id="r_gaa4a18eb9627894b42d3f8c7244ef0ff1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__tm__vcu.html#gaa4a18eb9627894b42d3f8c7244ef0ff1">TM_DATA_DECLARE</a> (susp_travel_rl, int16_t)</td></tr>
+<tr class="separator:gaa4a18eb9627894b42d3f8c7244ef0ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga19c9f9025b2e1f5f5bf49ccc9342b325" id="r_ga19c9f9025b2e1f5f5bf49ccc9342b325"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__tm__vcu.html#ga19c9f9025b2e1f5f5bf49ccc9342b325">TM_DATA_DECLARE</a> (inv_rl_ctrl_word, uint16_t)</td></tr>
 <tr class="separator:ga19c9f9025b2e1f5f5bf49ccc9342b325"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaaf02f2d6e1899f0dc8357711fbec1d7a" id="r_gaaf02f2d6e1899f0dc8357711fbec1d7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__tm__vcu.html#gaaf02f2d6e1899f0dc8357711fbec1d7a">TM_DATA_DECLARE</a> (inv_rl_target_torque, int16_t)</td></tr>
@@ -222,7 +229,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b9144e6444b31eee0214207794a480a7.html">vcu</a></li><li class="navelem"><a class="el" href="nturt__vcu_2include_2vcu_2telemetry_8h.html">telemetry.h</a></li>
-    <li class="footer">Generated on Sat Nov 1 2025 13:21:28 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Mon Dec 1 2025 02:20:30 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

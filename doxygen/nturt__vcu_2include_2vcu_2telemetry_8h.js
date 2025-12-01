@@ -9,6 +9,8 @@ var nturt__vcu_2include_2vcu_2telemetry_8h =
       [ "TM_BSE1", "group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a9fabcfffbf2aa991543b3ebb0bcd2081", null ],
       [ "TM_BSE2", "group__tm__vcu.html#gga20c11863537956e75b269b98551646f5aa6f44b9985ffe8600fc0a3c704b6e715", null ],
       [ "TM_VCU_STATES", "group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a5c890b7b619853b29aecf16d6e1284a4", null ],
+      [ "TM_SUSP_TRAVEL_FL", "group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a68cf4619ea96d24509b5e6b800a5e083", null ],
+      [ "TM_SUSP_TRAVEL_RL", "group__tm__vcu.html#gga20c11863537956e75b269b98551646f5ac112dbb26206dd963d9e0140ad667787", null ],
       [ "TM_INV_RL_CTRL_WORD", "group__tm__vcu.html#gga20c11863537956e75b269b98551646f5a3aa27a4c6184a699396d5b3af3ebb873", null ],
       [ "TM_INV_RL_TARGET_TORQUE", "group__tm__vcu.html#gga20c11863537956e75b269b98551646f5aa0d2126a1037d79eedd2fcf56026d2ce", null ],
       [ "TM_INV_RR_CTRL_WORD", "group__tm__vcu.html#gga20c11863537956e75b269b98551646f5af4472e0efc9fd07b9483db7fdb4da34e", null ],
@@ -25,5 +27,7 @@ var nturt__vcu_2include_2vcu_2telemetry_8h =
     [ "TM_DATA_DECLARE", "group__tm__vcu.html#ga597cdc4834bb7338ed1841e14e2df091", null ],
     [ "TM_DATA_DECLARE", "group__tm__vcu.html#gaaa0ef0c19e804ebb9ca96cf69662a849", null ],
     [ "TM_DATA_DECLARE", "group__tm__vcu.html#ga7c51738ef61f0a3252d7b952ca70a210", null ],
+    [ "TM_DATA_DECLARE", "group__tm__vcu.html#ga240b1e01496a886286d7cd2fb7fa72ab", null ],
+    [ "TM_DATA_DECLARE", "group__tm__vcu.html#gaa4a18eb9627894b42d3f8c7244ef0ff1", null ],
     [ "TM_DATA_DECLARE", "group__tm__vcu.html#gaa668f550caf1c1e289dc46088b2e5560", null ]
 ];
