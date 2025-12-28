@@ -12,6 +12,7 @@ var canopen_8h =
       [ "NODE_ID_VCU", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a4e4a1d7fd2499f441c18ba3f8f19e8ff", null ],
       [ "NODE_ID_SENSORS", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a0209495749b3f54ba6e0b123ab7e5561", null ],
       [ "NODE_ID_RPI", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a518fc3c666e04c63d0d553a4cfbb0690", null ],
+      [ "NODE_ID_RPI_IMU", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960a12d284b7d177b513b1563a03dcff1e49", null ],
       [ "NODE_ID_IMU", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960ac2df563f12024afc47050de9547f5804", null ],
       [ "NODE_ID_GPS", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960ab43f1925bb070a35a13986e44504cebd", null ],
       [ "NODE_ID_ACC", "group__can__open.html#gga2a6b313a05938a780bb0f09b7969f960af9aacb3e58bcbffaadc28aeafac3a6ca", null ],
