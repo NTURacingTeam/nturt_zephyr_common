@@ -1,7 +1,7 @@
 ---
 all:
   hosts:
-    raspberrypi-ep6-0824.taile09edb.ts.net:
+    raspberrypi-ep6-0824.tail5e7bac.ts.net:
       ansible_user: pi
       ansible_password: raspberry
       ansible_become_password: raspberry
