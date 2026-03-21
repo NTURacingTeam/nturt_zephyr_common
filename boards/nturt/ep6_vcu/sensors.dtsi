@@ -69,41 +69,42 @@
         compatible = "analog-generic-sensor";
         io-channels = <&adc3 4>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
-        min-voltage = <300>;
-        max-voltage = <2614>;
-        min-value = <0 370000>;
-        max-value = <0 310000>;
+        min-voltage = <249>;
+        max-voltage = <2598>;
+        min-value = <0 82000>;
+        max-value = <0 0>;
     };
 
     susp_fr: susp-fr {
         compatible = "analog-generic-sensor";
         io-channels = <&adc3 8>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
-        min-voltage = <600>;
-        max-voltage = <3000>;
-        min-value = <0 0>;
-        max-value = <10 0>;
-        status = "disabled";
+        min-voltage = <249>;
+        max-voltage = <2598>;
+        min-value = <0 82000>;
+        max-value = <0 0>;
+        //  status = "disabled";
     };
 
     susp_rl: susp-rl {
         compatible = "analog-generic-sensor";
         io-channels = <&adc3 5>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
-        min-voltage = <425>;
-        max-voltage = <2500>;
-        min-value = <0 400000>;
-        max-value = <0 330000>;
+        min-voltage = <190>;
+        max-voltage = <2583>;
+        min-value = <0 103000>;
+        max-value = <0 0>;
+        // status = "disabled";
     };
 
     susp_rr: susp-rr {
         compatible = "analog-generic-sensor";
         io-channels = <&adc3 9>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
-        min-voltage = <600>;
-        max-voltage = <3000>;
-        min-value = <0 0>;
-        max-value = <10 0>;
-        status = "disabled";
+        min-voltage = <190>;
+        max-voltage = <2583>;
+        min-value = <0 103000>;
+        max-value = <0 0>;
+        //  status = "disabled";
     };
 };
