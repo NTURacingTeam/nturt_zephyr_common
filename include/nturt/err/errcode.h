@@ -58,6 +58,8 @@ enum err_code {
   ERR_CODE_HB_INV_FR,
   ERR_CODE_HB_INV_RL,
   ERR_CODE_HB_INV_RR,
+
+  ERR_CODE_REVERSE,
 };
 
 /**
