@@ -1,0 +1,558 @@
+/dts-v1/;
+#include <st/h7/stm32h743Xi.dtsi>
+#include <st/h7/stm32h743zitx-pinctrl.dtsi>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    model = "NTURT Epsilon 7 Vehicle Control Unit";
+    compatible = "nturt,ep7_vcu";
+
+    chosen {
+        zephyr,console = &usart1;
+        zephyr,shell-uart = &usart1;
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+        zephyr,dtcm = &dtcm;
+        zephyr,code-partition = &slot0_partition;
+        zephyr,canbus = &fdcan1;
+        zephyr,usb-device = &usbotg_fs;
+
+        nturt,rtc = &rtc;
+        nturt,fstab = &fstab;
+        nturt,buzzer = &buzzer;
+        nturt,pow-in-volt = &pow_in_volt;
+        nturt,pow-low = &pow_low;
+    };
+
+    aliases {
+        rtc = &rtc;
+    };
+
+    fstab: fstab {
+        compatible = "zephyr,fstab";
+        fatfs {
+            compatible = "zephyr,fstab,fatfs";
+            mount-point = "/SD:";
+            disk-access;
+            automount;
+        };
+    };
+
+    // dummy only to expose node properties to the device tree
+    dummy_leds: dummy-leds {
+        compatible = "gpio-leds";
+        status = "disabled";
+
+        buzzer: buzzer {
+            gpios = <&gpiod 3 GPIO_ACTIVE_HIGH>;
+        };
+    };
+
+    // dummy only to expose node properties to the device tree
+    dummy_buttons: dummy-buttons {
+        compatible = "gpio-keys";
+        status = "disabled";
+
+        pow_low: pow-low {
+            gpios = <&gpiog 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+            zephyr,code = <INPUT_KEY_0>;
+        };
+    };
+
+    pow_in_volt: pow-in-volt {
+        compatible = "voltage-divider";
+        io-channels = <&adc3 2>;
+        full-ohms = <(49900 + 5600)>;
+        output-ohms = <5600>;
+    };
+};
+
+// include here for them to reference the added nodes above
+#include "dashboard.dtsi"
+#include "sensors.dtsi"
+
+&clk_lsi {
+    status = "okay";
+};
+
+&clk_csi {
+    status = "okay";
+};
+
+&clk_hsi48 {
+    status = "okay";
+};
+
+&clk_hse {
+    clock-frequency = <DT_FREQ_M(8)>;
+    status = "okay";
+};
+
+&clk_lse {
+    status = "okay";
+};
+
+&pll {
+    div-m = <2>;
+    mul-n = <240>;
+    div-p = <2>;
+    div-q = <20>;
+    div-r = <2>;
+    clocks = <&clk_hse>;
+    status = "okay";
+};
+
+&pll2 {
+    div-m = <2>;
+    mul-n = <200>;
+    div-p = <2>;
+    div-q = <20>;
+    div-r = <4>;
+    clocks = <&clk_hse>;
+    status = "okay";
+};
+
+&pll3 {
+    div-m = <2>;
+    mul-n = <128>;
+    div-p = <8>;
+    div-q = <8>;
+    div-r = <8>;
+    clocks = <&clk_hse>;
+    status = "okay";
+};
+
+&rcc {
+    clocks = <&pll>;
+    clock-frequency = <DT_FREQ_M(480)>;
+    d1cpre = <1>;
+    hpre = <2>;
+    d1ppre = <2>;
+    d2ppre1 = <2>;
+    d2ppre2 = <2>;
+    d3ppre = <2>;
+};
+
+&backup_sram {
+    status = "okay";
+};
+
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        // bootloader: 128KB
+        boot_partition: partition@0 {
+            label = "mcuboot";
+            reg = <0x00000000 DT_SIZE_K(128)>;
+            read-only;
+        };
+
+        // application image slot: 896KB
+        slot0_partition: partition@20000 {
+            label = "image-0";
+            reg = <0x00020000 DT_SIZE_K(896)>;
+        };
+
+        // backup slot: 896KB
+        slot1_partition: partition@100000 {
+            label = "image-1";
+            reg = <0x00100000 DT_SIZE_K(896)>;
+        };
+
+        // swap slot: 128KB
+        scratch_partition: partition@1E0000 {
+            label = "image-scratch";
+            reg = <0x001e0000 DT_SIZE_K(128)>;
+        };
+    };
+};
+
+&dma1 {
+    status = "okay";
+};
+
+&dma2 {
+    status = "okay";
+};
+
+&dmamux1 {
+    status = "okay";
+};
+
+// 16-bit APB4 timers at 240MHz, 10us resolution, 100 steps with 1ms period PWM
+&timers1 {
+    st,prescaler = <(2400 - 1)>;
+    status = "okay";
+
+    pwm1: pwm {
+        pinctrl-0 = <&tim1_ch1_pe9>;
+        pinctrl-names = "default";
+        status = "okay";
+    };
+};
+
+&rtc {
+	clocks = <&rcc STM32_CLOCK(APB4, 16U)>,
+             <&rcc STM32_SRC_LSE RTC_SEL(1)>;
+    status = "okay";
+};
+
+// sync clock from PLL3_R at 64MHz, 4us sampling time with 4 oversampling
+&adc1 {
+	clocks = <&rcc STM32_CLOCK(AHB1, 5U)>,
+             <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
+    pinctrl-0 = <&adc1_inp2_pf11 &adc1_inp3_pa6 &adc1_inp4_pc4 &adc1_inp5_pb1
+                 &adc1_inp6_pf12 &adc1_inp7_pa7 &adc1_inp8_pc5 &adc1_inp9_pb0
+                 &adc1_inp14_pa2 &adc1_inp15_pa3 &adc1_inp19_pa5>;
+    pinctrl-names = "default";
+    st,adc-clock-source = "SYNC";
+    st,adc-prescaler = <4>;
+    #address-cells = <1>;
+    #size-cells = <0>;
+    status = "okay";
+
+    // CL_CH17
+    channel@2 {
+        reg = <2>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH11
+    channel@3 {
+        reg = <3>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH13
+    channel@4 {
+        reg = <4>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH16
+    channel@5 {
+        reg = <5>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH18
+    channel@6 {
+        reg = <6>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH12
+    channel@7 {
+        reg = <7>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH14
+    channel@8 {
+        reg = <8>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH15
+    channel@9 {
+        reg = <9>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH7
+    channel@e {
+        reg = <14>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH8
+    channel@f {
+        reg = <15>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH9
+    channel@12 {
+        reg = <18>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH10
+    channel@13 {
+        reg = <19>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+};
+
+// sync clock from PLL3_R at 64MHz, 4us sampling time with 4 oversampling
+&adc2 {
+	clocks = <&rcc STM32_CLOCK(AHB1, 5U)>,
+             <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
+    pinctrl-0 = <&adc2_inp2_pf13 &adc2_inp6_pf14>;
+    pinctrl-names = "default";
+    st,adc-clock-source = "SYNC";
+    st,adc-prescaler = <4>;
+    #address-cells = <1>;
+    #size-cells = <0>;
+    status = "okay";
+
+    // CL_CH19
+    channel@2 {
+        reg = <2>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH20
+    channel@6 {
+        reg = <6>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+};
+
+// sync clock from PLL3_R at 64MHz, 4us sampling time with 4 oversampling
+&adc3 {
+	clocks = <&rcc STM32_CLOCK(AHB4, 24U)>,
+             <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
+    pinctrl-0 = <&adc3_inp2_pf9 &adc3_inp3_pf7 &adc3_inp4_pf5 &adc3_inp5_pf3
+                 &adc3_inp7_pf8 &adc3_inp8_pf6 &adc3_inp9_pf4>;
+    pinctrl-names = "default";
+    st,adc-clock-source = "SYNC";
+    st,adc-prescaler = <4>;
+    #address-cells = <1>;
+    #size-cells = <0>;
+    status = "okay";
+
+    // pow-in-volt
+    channel@2 {
+        reg = <2>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH5
+    channel@3 {
+        reg = <3>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH3
+    channel@4 {
+        reg = <4>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH1
+    channel@5 {
+        reg = <5>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH6
+    channel@7 {
+        reg = <7>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH4
+    channel@8 {
+        reg = <8>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH2
+    channel@9 {
+        reg = <9>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+};
+
+&usart1 {
+	clocks = <&rcc STM32_CLOCK(APB2, 4U)>,
+             <&rcc STM32_SRC_PLL3_Q USART16_SEL(2)>;
+    dmas = <&dmamux1 0 42 STM32_DMA_PERIPH_TX>,
+           <&dmamux1 1 41 STM32_DMA_PERIPH_RX>;
+    dma-names = "tx", "rx";
+    pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+    status = "okay";
+};
+
+&usart6 {
+	clocks = <&rcc STM32_CLOCK(APB2, 5U)>,
+             <&rcc STM32_SRC_PLL3_Q USART16_SEL(2)>;
+    pinctrl-0 = <&usart6_tx_pc6 &usart6_rx_pc7>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+    status = "okay";
+};
+
+&i2c2 {
+	clocks = <&rcc STM32_CLOCK(APB1, 22U)>,
+             <&rcc STM32_SRC_PLL3_R I2C123_SEL(1)>;
+    pinctrl-0 = <&i2c2_scl_pb10 &i2c2_sda_pb11>;
+    pinctrl-names = "default";
+    clock-frequency = <I2C_BITRATE_STANDARD>;
+    status = "okay";
+};
+
+&i2c4 {
+	clocks = <&rcc STM32_CLOCK(APB4, 7U)>,
+             <&rcc STM32_SRC_PLL3_R I2C4_SEL(1)>;
+    pinctrl-0 = <&i2c4_scl_pd12 &i2c4_sda_pd13>;
+    pinctrl-names = "default";
+    clock-frequency = <I2C_BITRATE_STANDARD>;
+    status = "okay";
+};
+
+&spi2 {
+	clocks = <&rcc STM32_CLOCK(APB1, 14U)>,
+             <&rcc STM32_SRC_PLL3_P SPI123_SEL(2)>;
+    dmas = <&dmamux1 2 40 STM32_DMA_PERIPH_TX>,
+           <&dmamux1 3 39 STM32_DMA_PERIPH_RX>;
+    dma-names = "tx", "rx";
+    pinctrl-0 = <&spi2_sck_pb13 &spi2_miso_pb14 &spi2_mosi_pb15>;
+    pinctrl-names = "default";
+    cs-gpios = <&gpiob 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    status = "okay";
+};
+
+// does not use dma since the dma overhead is higher than the transfer time of
+// 11 bytes
+&spi4 {
+	clocks = <&rcc STM32_CLOCK(APB2, 13U)>,
+             <&rcc STM32_SRC_PLL3_Q SPI45_SEL(2)>;
+    pinctrl-0 = <&spi4_sck_pe12 &spi4_miso_pe13 &spi4_mosi_pe14>;
+    pinctrl-names = "default";
+    cs-gpios = <&gpioe 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+               <&gpioe 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    status = "okay";
+};
+
+&fdcan1 {
+	clocks = <&rcc STM32_CLOCK(APB1_2, 8U)>,
+             <&rcc STM32_SRC_PLL2_Q FDCAN_SEL(2)>;
+    pinctrl-0 = <&fdcan1_tx_pb9 &fdcan1_rx_pb8>;
+    pinctrl-names = "default";
+    bitrate = <1000000>;
+    sample-point = <800>;
+    bitrate-data = <1000000>;
+    sample-point-data = <800>;
+    status = "okay";
+};
+
+&fdcan2 {
+	clocks = <&rcc STM32_CLOCK(APB1_2, 8U)>,
+             <&rcc STM32_SRC_PLL2_Q FDCAN_SEL(2)>;
+    pinctrl-0 = <&fdcan2_tx_pb6 &fdcan2_rx_pb5>;
+    pinctrl-names = "default";
+    bitrate = <1000000>;
+    sample-point = <800>;
+    bitrate-data = <1000000>;
+    sample-point-data = <800>;
+    status = "okay";
+};
+
+&sdmmc1 {
+	clocks = <&rcc STM32_CLOCK(AHB3, 16U)>,
+             <&rcc STM32_SRC_PLL1_Q SDMMC_SEL(0)>;
+    pinctrl-0 = <&sdmmc1_d0_pc8 &sdmmc1_d1_pc9 &sdmmc1_d2_pc10 &sdmmc1_d3_pc11
+                 &sdmmc1_ck_pc12 &sdmmc1_cmd_pd2>;
+    pinctrl-names = "default";
+    disk-name = "SD";
+    bus-width = <4>;
+    idma;
+    status = "okay";
+};
+
+zephyr_udc0: &usbotg_fs {
+    pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
+    pinctrl-names = "default";
+    status = "okay";
+};
