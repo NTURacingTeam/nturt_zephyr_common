@@ -2,33 +2,44 @@ if BOARD_EP7_VCU
 
 if DMA
 config DCACHE
-    default n
+	default n
 endif
 
 if SDMMC_STM32
 config SDMMC_STM32_HWFC
-    default y
+	default y
 endif
 
-if MIPI_DBI
-config DMA
-    default y
-config SPI
-    default y
-config SPI_STM32_DMA
-    default y
-endif
+ST_STM32_UART := st,stm32-uart
 
-if LOG_BACKEND_UART
+DT_CHOSEN_ZEPHYR_CONSOLE := zephyr,console
+config LOG_BACKEND_REAL_UART
+	bool
+	depends on LOG_BACKEND_UART
+	depends on $(dt_chosen_enabled,$(DT_CHOSEN_ZEPHYR_CONSOLE))
+	depends on $(dt_chosen_has_compat,$(DT_CHOSEN_ZEPHYR_CONSOLE),$(ST_STM32_UART))
+	default y
+
+if LOG_BACKEND_REAL_UART
 config UART_ASYNC_API
-    default y
+	default y
 config LOG_BACKEND_UART_ASYNC
-    default y
+	default y
 endif
 
-if SHELL_BACKEND_SERIAL
+DT_CHOSEN_ZEPHYR_SHELL_UART := zephyr,shell-uart
+config SHELL_BACKEND_REAL_UART
+	bool
+	depends on SHELL_BACKEND_SERIAL
+	depends on $(dt_chosen_enabled,$(DT_CHOSEN_ZEPHYR_SHELL_UART))
+	depends on $(dt_chosen_has_compat,$(DT_CHOSEN_ZEPHYR_SHELL_UART),$(ST_STM32_UART))
+	default y
+
+if SHELL_BACKEND_REAL_UART
 config UART_ASYNC_API
-    default y
+	default y
+config SHELL_ASYNC_API
+	default y
 endif
 
 endif # BOARD_EP7_VCU

@@ -15,7 +15,7 @@
 
     steer_encoder: steer-encoder {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 14>;
+        io-channels = <&adc3 4>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
         min-voltage = <50>;
         max-voltage = <3300>;
@@ -25,7 +25,7 @@
 
     apps1: accel-encoder1 {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc3 2>;
+        io-channels = <&adc3 5>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
         min-voltage = <1000>;
         max-voltage = <3000>;
@@ -35,7 +35,7 @@
 
     apps2: accel-encoder2 {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 17>;
+        io-channels = <&adc3 9>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
         min-voltage = <1000>;
         max-voltage = <3000>;
@@ -67,7 +67,7 @@
 
     susp_fl: susp-fl {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc3 4>;
+        io-channels = <&adc1 14>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
         min-voltage = <249>;
         max-voltage = <2598>;
@@ -77,34 +77,31 @@
 
     susp_fr: susp-fr {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc3 8>;
+        io-channels = <&adc1 15>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
         min-voltage = <249>;
         max-voltage = <2598>;
         min-value = <0 82000>;
         max-value = <0 0>;
-        //  status = "disabled";
     };
 
     susp_rl: susp-rl {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc3 5>;
+        io-channels = <&adc1 18>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
         min-voltage = <190>;
         max-voltage = <2583>;
         min-value = <0 103000>;
         max-value = <0 0>;
-        // status = "disabled";
     };
 
     susp_rr: susp-rr {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc3 9>;
+        io-channels = <&adc1 19>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
         min-voltage = <190>;
         max-voltage = <2583>;
         min-value = <0 103000>;
         max-value = <0 0>;
-        //  status = "disabled";
     };
 };

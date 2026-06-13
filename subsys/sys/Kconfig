@@ -32,7 +32,6 @@ config NTURT_WORKQUEUE_THREAD_PRIORITY
 	  Priority for the workqueue thread.
 
 DT_CHOSEN_NTURT_BUZZER := nturt,buzzer
-
 config NTURT_SYS_REBOOT_SOUND
 	bool "Reboot sound"
 	depends on $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_BUZZER))
@@ -42,7 +41,37 @@ config NTURT_SYS_REBOOT_SOUND
 config NTURT_SHELL
 	bool "Shell support"
 	select SHELL
-	select LOG_CMDS
-	select THREAD_RUNTIME_STATS
+
+if NTURT_SHELL
+
+DT_CHOSEN_ZEPHYR_CONSOLE := zephyr,console
+DT_CHOSEN_ZEPHYR_SHELL_UART := zephyr,shell-uart
+config LOG_SHELL_DIFFERENT_BACKEND
+	bool
+	depends on $(dt_chosen_enabled,$(DT_CHOSEN_ZEPHYR_CONSOLE))
+	depends on $(dt_chosen_enabled,$(DT_CHOSEN_ZEPHYR_SHELL_UART))
+	depends on "$(dt_chosen_path,$(DT_CHOSEN_ZEPHYR_CONSOLE))" != \
+		"$(dt_chosen_path,$(DT_CHOSEN_ZEPHYR_SHELL_UART))"
+	default y
+	help
+	  Log default to use shell as the backend if both console and shell use
+	  serial as the backend. This option makes the log output to correct serial
+	  port if the console and shell use different serial ports.
+
+if LOG_SHELL_DIFFERENT_BACKEND
+
+config LOG_BACKEND_UART
+	default y
+config SHELL_LOG_BACKEND
+	default n
+
+endif # LOG_SHELL_DIFFERENT_BACKEND
+
+config LOG_CMDS
+	default y
+config THREAD_RUNTIME_STATS
+	default y
+
+endif # NTURT_SHELL
 
 endif # NTURT_SYS

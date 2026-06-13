@@ -13,7 +13,7 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/util.h>
 
-LOG_MODULE_REGISTER(led_strip_gpio, CONFIG_AUXDISPLAY_LOG_LEVEL);
+LOG_MODULE_REGISTER(led_strip_gpio, CONFIG_LED_STRIP_LOG_LEVEL);
 
 struct gpio_map {
   const struct device *gpio_port;

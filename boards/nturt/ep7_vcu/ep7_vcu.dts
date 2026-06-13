@@ -1,6 +1,6 @@
 /dts-v1/;
-#include <st/h7/stm32h743Xg.dtsi>
-#include <st/h7/stm32h743zgtx-pinctrl.dtsi>
+#include <st/h7/stm32h743Xi.dtsi>
+#include <st/h7/stm32h743zitx-pinctrl.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
 / {
@@ -15,36 +15,19 @@
         zephyr,dtcm = &dtcm;
         zephyr,code-partition = &slot0_partition;
         zephyr,canbus = &fdcan1;
-        zephyr,canopen-green-led = &canopen_green_led;
-        zephyr,canopen-red-led = &canopen_red_led;
         zephyr,usb-device = &usbotg_fs;
 
         nturt,rtc = &rtc;
         nturt,fstab = &fstab;
         nturt,buzzer = &buzzer;
-        nturt,brake-light = &brake_light;
-        nturt,rtd-light = &rtd_light;
-        nturt,imu = &imu;
         nturt,pow-in-volt = &pow_in_volt;
-        nturt,pow-5v-curr = &pow_5v_curr;
-        nturt,pow-5v-rpi-curr = &pow_5v_rpi_curr;
         nturt,pow-low = &pow_low;
     };
 
     aliases {
-        led0 = &canopen_green_led;
         rtc = &rtc;
     };
 
-    // mipi_dbi: mipi-dbi-spi {
-    //     compatible = "zephyr,mipi-dbi-spi";
-    //     spi-dev = <&spi1>;
-    //     dc-gpios = <&gpiog 10 GPIO_ACTIVE_HIGH>;
-    //     write-only;
-    //     #address-cells = <1>;
-    //     #size-cells = <0>;
-    // };
-    
     fstab: fstab {
         compatible = "zephyr,fstab";
         fatfs {
@@ -63,22 +46,6 @@
         buzzer: buzzer {
             gpios = <&gpiod 3 GPIO_ACTIVE_HIGH>;
         };
-
-        brake_light: brake-light {
-            gpios = <&gpioe 10 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>; // ?
-        };
-
-        rtd_light: rtd-light {
-            gpios = <&gpiod 9 GPIO_ACTIVE_HIGH>; // ?
-        };
-
-        canopen_green_led: canopen-green-led {
-            gpios = <&gpioe 14 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>; // ?
-        };
-
-        canopen_red_led: canopen-red-led {
-            gpios = <&gpioe 15 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>; // ?
-        };
     };
 
     // dummy only to expose node properties to the device tree
@@ -86,36 +53,17 @@
         compatible = "gpio-keys";
         status = "disabled";
 
-        apps_micro: apps-micro {
-            gpios = <&gpiof 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // ?
-            zephyr,code = <INPUT_KEY_0>;
-        };
-
         pow_low: pow-low {
-            gpios = <&gpiog 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // ?
+            gpios = <&gpiog 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
             zephyr,code = <INPUT_KEY_0>;
         };
     };
 
     pow_in_volt: pow-in-volt {
         compatible = "voltage-divider";
-        io-channels = <&adc1 16>;
+        io-channels = <&adc3 2>;
         full-ohms = <(49900 + 5600)>;
         output-ohms = <5600>;
-    };
-
-    pow_5v_curr: pow-5v-curr {
-        compatible = "current-sense-amplifier";
-        io-channels = <&adc1 6>;
-        sense-resistor-milli-ohms = <10>;
-        sense-gain-mult = <100>;
-    };
-
-    pow_5v_rpi_curr: pow-5v-rpi-curr {
-        compatible = "current-sense-amplifier";
-        io-channels = <&adc2 2>;
-        sense-resistor-milli-ohms = <10>;
-        sense-gain-mult = <100>;
     };
 };
 
@@ -234,13 +182,13 @@
     status = "okay";
 };
 
-// 16-bit APB1 timers at 240MHz, 10us resolution, 100 steps with 1ms period PWM
-&timers4 {
+// 16-bit APB4 timers at 240MHz, 10us resolution, 100 steps with 1ms period PWM
+&timers1 {
     st,prescaler = <(2400 - 1)>;
     status = "okay";
 
-    pwm4: pwm {
-        pinctrl-0 = <&tim4_ch2_pe9>; // ?
+    pwm1: pwm {
+        pinctrl-0 = <&tim1_ch1_pe9>;
         pinctrl-names = "default";
         status = "okay";
     };
@@ -256,7 +204,9 @@
 &adc1 {
 	clocks = <&rcc STM32_CLOCK(AHB1, 5U)>,
              <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
-    pinctrl-0 = <&adc1_inp6_pf12 &adc1_inp14_pa2 &adc1_inp16_pa0 &adc1_inp17_pa1>;
+    pinctrl-0 = <&adc1_inp2_pf11 &adc1_inp3_pa6 &adc1_inp4_pc4 &adc1_inp5_pb1
+                 &adc1_inp6_pf12 &adc1_inp7_pa7 &adc1_inp8_pc5 &adc1_inp9_pb0
+                 &adc1_inp14_pa2 &adc1_inp15_pa3 &adc1_inp19_pa5>;
     pinctrl-names = "default";
     st,adc-clock-source = "SYNC";
     st,adc-prescaler = <4>;
@@ -264,6 +214,47 @@
     #size-cells = <0>;
     status = "okay";
 
+    // CL_CH17
+    channel@2 {
+        reg = <2>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH11
+    channel@3 {
+        reg = <3>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH13
+    channel@4 {
+        reg = <4>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH16
+    channel@5 {
+        reg = <5>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH18
     channel@6 {
         reg = <6>;
         zephyr,gain = "ADC_GAIN_1";
@@ -273,6 +264,37 @@
         zephyr,oversampling = <2>;
     };
 
+    // CL_CH12
+    channel@7 {
+        reg = <7>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH14
+    channel@8 {
+        reg = <8>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH15
+    channel@9 {
+        reg = <9>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH7
     channel@e {
         reg = <14>;
         zephyr,gain = "ADC_GAIN_1";
@@ -282,8 +304,9 @@
         zephyr,oversampling = <2>;
     };
 
-    channel@10 {
-        reg = <16>;
+    // CL_CH8
+    channel@f {
+        reg = <15>;
         zephyr,gain = "ADC_GAIN_1";
         zephyr,reference = "ADC_REF_INTERNAL";
         zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
@@ -291,8 +314,19 @@
         zephyr,oversampling = <2>;
     };
 
-    channel@11 {
-        reg = <17>;
+    // CL_CH9
+    channel@12 {
+        reg = <18>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH10
+    channel@13 {
+        reg = <19>;
         zephyr,gain = "ADC_GAIN_1";
         zephyr,reference = "ADC_REF_INTERNAL";
         zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
@@ -305,7 +339,7 @@
 &adc2 {
 	clocks = <&rcc STM32_CLOCK(AHB1, 5U)>,
              <&rcc STM32_SRC_PLL3_R ADC_SEL(1)>;
-    pinctrl-0 = <&adc2_inp2_pf13>;
+    pinctrl-0 = <&adc2_inp2_pf13 &adc2_inp6_pf14>;
     pinctrl-names = "default";
     st,adc-clock-source = "SYNC";
     st,adc-prescaler = <4>;
@@ -313,8 +347,19 @@
     #size-cells = <0>;
     status = "okay";
 
+    // CL_CH19
     channel@2 {
         reg = <2>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
+        zephyr,resolution = <16>;
+        zephyr,oversampling = <2>;
+    };
+
+    // CL_CH20
+    channel@6 {
+        reg = <6>;
         zephyr,gain = "ADC_GAIN_1";
         zephyr,reference = "ADC_REF_INTERNAL";
         zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 65)>;
@@ -336,6 +381,7 @@
     #size-cells = <0>;
     status = "okay";
 
+    // pow-in-volt
     channel@2 {
         reg = <2>;
         zephyr,gain = "ADC_GAIN_1";
@@ -345,6 +391,7 @@
         zephyr,oversampling = <2>;
     };
 
+    // CL_CH5
     channel@3 {
         reg = <3>;
         zephyr,gain = "ADC_GAIN_1";
@@ -354,6 +401,7 @@
         zephyr,oversampling = <2>;
     };
 
+    // CL_CH3
     channel@4 {
         reg = <4>;
         zephyr,gain = "ADC_GAIN_1";
@@ -363,6 +411,7 @@
         zephyr,oversampling = <2>;
     };
 
+    // CL_CH1
     channel@5 {
         reg = <5>;
         zephyr,gain = "ADC_GAIN_1";
@@ -372,6 +421,7 @@
         zephyr,oversampling = <2>;
     };
 
+    // CL_CH6
     channel@7 {
         reg = <7>;
         zephyr,gain = "ADC_GAIN_1";
@@ -381,6 +431,7 @@
         zephyr,oversampling = <2>;
     };
 
+    // CL_CH4
     channel@8 {
         reg = <8>;
         zephyr,gain = "ADC_GAIN_1";
@@ -390,6 +441,7 @@
         zephyr,oversampling = <2>;
     };
 
+    // CL_CH2
     channel@9 {
         reg = <9>;
         zephyr,gain = "ADC_GAIN_1";
@@ -437,33 +489,14 @@
     pinctrl-names = "default";
     clock-frequency = <I2C_BITRATE_STANDARD>;
     status = "okay";
-
-    imu: lsm6dso@6b {
-        compatible = "st,lsm6dso";
-        reg = <0x6b>;
-        accel-range = <2>; // 4g
-        accel-odr = <4>; // 104Hz
-        gyro-range = <0>; // 250dps
-        gyro-odr = <4>; // 104Hz
-    };
 };
 
-// &spi1 {
-// 	clocks = <&rcc STM32_CLOCK(APB2, 12U)>,
-//              <&rcc STM32_SRC_PLL3_P SPI123_SEL(2)>;
-//     dmas = <&dmamux1 2 38 STM32_DMA_PERIPH_TX>,
-//            <&dmamux1 3 37 STM32_DMA_PERIPH_RX>;
-//     dma-names = "tx", "rx";
-//     pinctrl-0 = <&spi1_sck_pg11 &spi1_miso_pg9 &spi1_mosi_pd7>;
-//     pinctrl-names = "default";
-//     cs-gpios = <&gpiod 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-//     status = "okay";
-// };
-
-// dma ?
 &spi2 {
-    clocks = <&rcc STM32_CLOCK(APB1, 14U)>, // ?
-             <&rcc STM32_SRC_PLL3_P SPI123_SEL(2)>; // ?
+	clocks = <&rcc STM32_CLOCK(APB1, 14U)>,
+             <&rcc STM32_SRC_PLL3_P SPI123_SEL(2)>;
+    dmas = <&dmamux1 2 40 STM32_DMA_PERIPH_TX>,
+           <&dmamux1 3 39 STM32_DMA_PERIPH_RX>;
+    dma-names = "tx", "rx";
     pinctrl-0 = <&spi2_sck_pb13 &spi2_miso_pb14 &spi2_mosi_pb15>;
     pinctrl-names = "default";
     cs-gpios = <&gpiob 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
@@ -477,19 +510,10 @@
              <&rcc STM32_SRC_PLL3_Q SPI45_SEL(2)>;
     pinctrl-0 = <&spi4_sck_pe12 &spi4_miso_pe13 &spi4_mosi_pe14>;
     pinctrl-names = "default";
-    cs-gpios = <&gpioe 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, // cs0
-               <&gpioe 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // cs1
+    cs-gpios = <&gpioe 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+               <&gpioe 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
     status = "okay";
 };
-
-// &spi6 {
-// 	clocks = <&rcc STM32_CLOCK(APB4, 5U)>,
-//              <&rcc STM32_SRC_PLL3_Q SPI6_SEL(2)>;
-//     pinctrl-0 = <&spi6_sck_pb3 &spi6_miso_pb4 &spi6_mosi_pg14>;
-//     pinctrl-names = "default";
-//     cs-gpios = <&gpiog 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-//     status = "okay";
-// };
 
 &fdcan1 {
 	clocks = <&rcc STM32_CLOCK(APB1_2, 8U)>,
@@ -512,7 +536,7 @@
     sample-point = <800>;
     bitrate-data = <1000000>;
     sample-point-data = <800>;
-    status = "disabled";
+    status = "okay";
 };
 
 &sdmmc1 {

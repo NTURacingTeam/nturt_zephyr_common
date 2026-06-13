@@ -29,6 +29,8 @@ endif
 if SHELL_BACKEND_SERIAL
 config UART_ASYNC_API
     default y
+config SHELL_ASYNC_API
+    default y
 endif
 
 endif # BOARD_EP6_VCU
