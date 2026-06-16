@@ -2,9 +2,22 @@ var group__msg__if__ctrl =
 [
     [ "Control Message CSV", "group__msg__if__csv__ctrl.html", "group__msg__if__csv__ctrl" ],
     [ "Control Message Printing", "group__msg__if__pri__ctrl.html", "group__msg__if__pri__ctrl" ],
-    [ "msg_ctrl_vehicle_state", "structmsg__ctrl__vehicle__state.html", [
-      [ "header", "structmsg__ctrl__vehicle__state.html#a7c8bb74f95a71fae422c4f5f3694a76e", null ],
-      [ "velocity", "structmsg__ctrl__vehicle__state.html#add0be0496929cbb725c537727c983e66", null ]
+    [ "msg_ctrl_states", "structmsg__ctrl__states.html", [
+      [ "header", "structmsg__ctrl__states.html#ad43ead39396b39adbf632e06b1c79ddf", null ],
+      [ "velocity", "structmsg__ctrl__states.html#a7ae44c095ef33d85ac984cf0e5d3bca3", null ]
+    ] ],
+    [ "msg_ctrl_tc", "structmsg__ctrl__tc.html", [
+      [ "header", "structmsg__ctrl__tc.html#a9e2615ba2e03d6d8c5fec042a5607e2b", null ],
+      [ "sa", "structmsg__ctrl__tc.html#a953e22ec6ce6060fb308df058b7b12ce", null ],
+      [ "sr_l", "structmsg__ctrl__tc.html#a2068cab3e235c95c556d436e02eca477", null ],
+      [ "sr_r", "structmsg__ctrl__tc.html#a38085f01cea7732079492b869c47e38c", null ],
+      [ "yawrate_real", "structmsg__ctrl__tc.html#abb3225ea10dd1cf9d48d82e137fd8581", null ],
+      [ "yawrate_ref", "structmsg__ctrl__tc.html#a3316a986912b18e16f4014ec3b57e07f", null ]
+    ] ],
+    [ "msg_ctrl_tc_in", "structmsg__ctrl__tc__in.html", [
+      [ "header", "structmsg__ctrl__tc__in.html#afcdd6f75fa487b044d9dc4e29c4fecd4", null ],
+      [ "sr_l", "structmsg__ctrl__tc__in.html#a85152b307e0564de37e49fc5d4a63887", null ],
+      [ "sr_r", "structmsg__ctrl__tc__in.html#a81523c8a598705da460b774468b7a752", null ]
     ] ],
     [ "msg_ctrl_word", "structmsg__ctrl__word.html", [
       [ "ctrl", "structmsg__ctrl__word.html#a6f1b811c999096475dea5de5281bd6e6", null ],

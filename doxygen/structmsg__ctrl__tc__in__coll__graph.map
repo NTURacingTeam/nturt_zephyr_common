@@ -1,0 +1,5 @@
+<map id="msg_ctrl_tc_in" name="msg_ctrl_tc_in">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,93,121,119"/>
+<area shape="rect" id="Node000002" href="$structmsg__header.html" title="Message header." alt="" coords="12,5,115,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,45,66,93,61,93,61,45"/>
+</map>

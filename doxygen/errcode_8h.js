@@ -30,6 +30,7 @@ var errcode_8h =
       [ "ERR_CODE_HB_INV_FL", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a8d8f5013f0b930bb9586cb64a940ce57", null ],
       [ "ERR_CODE_HB_INV_FR", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a1d1516e3f407aefd3f479327773a9ab6", null ],
       [ "ERR_CODE_HB_INV_RL", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852ae1deb503d001f9d71b95e2d94b6ac271", null ],
-      [ "ERR_CODE_HB_INV_RR", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a2cd194709c6ff130c7eb0a11bdc34d40", null ]
+      [ "ERR_CODE_HB_INV_RR", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852a2cd194709c6ff130c7eb0a11bdc34d40", null ],
+      [ "ERR_CODE_REVERSE", "group__err__code.html#gga08b18ac8af0f3462354240d9732f3852ae16c726ed94789f9fc902975dfe27099", null ]
     ] ]
 ];
