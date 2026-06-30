@@ -96,7 +96,7 @@ static int init() {
   // set initial errors for monitored nodes
   for (int i = 0; i < CO->HBcons->numberOfMonitoredNodes; i++) {
     CO_HBconsNode_t *node = &CO->HBcons->monitoredNodes[i];
-    if (node->nodeId == 0 || node->nodeId > 127) {
+    if (node->time_us == 0 || node->nodeId == 0 || node->nodeId > 127) {
       continue;
     }
 

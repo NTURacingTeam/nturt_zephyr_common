@@ -19,8 +19,8 @@
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
         min-voltage = <50>;
         max-voltage = <3300>;
-        min-value = <(-130) 0>;
-        max-value = <130 0>;
+        min-value = <(-110) 0>;
+        max-value = <110 0>;
     };
 
     apps1: accel-encoder1 {

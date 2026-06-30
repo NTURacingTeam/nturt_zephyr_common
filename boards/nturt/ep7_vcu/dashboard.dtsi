@@ -20,68 +20,68 @@
     leds: leds {
         compatible = "gpio-leds";
 
-        led-0 {
-            gpios = <&ex_gpio10 7 GPIO_ACTIVE_HIGH>;
+        canopen_green_led: led-0 {
+            gpios = <&ex_gpio9 0 GPIO_ACTIVE_HIGH>;
         };
 
         led-1 {
-            gpios = <&ex_gpio10 6 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-2 {
-            gpios = <&ex_gpio10 5 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-3 {
-            gpios = <&ex_gpio10 4 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-4 {
-            gpios = <&ex_gpio10 3 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-5 {
-            gpios = <&ex_gpio10 2 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-6 {
-            gpios = <&ex_gpio10 1 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-7 {
-            gpios = <&ex_gpio10 0 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-8 {
-            gpios = <&ex_gpio9 7 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-9 {
-            gpios = <&ex_gpio9 6 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-10 {
-            gpios = <&ex_gpio9 5 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-11 {
-            gpios = <&ex_gpio9 4 GPIO_ACTIVE_HIGH>;
-        };
-
-        led-12 {
-            gpios = <&ex_gpio9 3 GPIO_ACTIVE_HIGH>;
-        };
-
-        canopen_green_led: led-13 {
             gpios = <&ex_gpio9 2 GPIO_ACTIVE_HIGH>;
         };
 
-        canopen_red_led: led-14 {
+        led-2 {
+            gpios = <&ex_gpio9 4 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-3 {
+            gpios = <&ex_gpio9 6 GPIO_ACTIVE_HIGH>;
+        };
+
+        canopen_red_led: led-4 {
             gpios = <&ex_gpio9 1 GPIO_ACTIVE_HIGH>;
         };
 
-        rtd_light: led-15 {
-            gpios = <&ex_gpio9 0 GPIO_ACTIVE_HIGH>;
+        led-5 {
+            gpios = <&ex_gpio9 3 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-6 {
+            gpios = <&ex_gpio9 5 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-7 {
+            gpios = <&ex_gpio9 7 GPIO_ACTIVE_HIGH>;
+        };
+
+        rtd_light: led-8 {
+            gpios = <&ex_gpio10 7 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-9 {
+            gpios = <&ex_gpio10 5 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-10 {
+            gpios = <&ex_gpio10 3 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-11 {
+            gpios = <&ex_gpio10 1 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-12 {
+            gpios = <&ex_gpio10 6 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-13 {
+            gpios = <&ex_gpio10 4 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-14 {
+            gpios = <&ex_gpio10 2 GPIO_ACTIVE_HIGH>;
+        };
+
+        led-15 {
+            gpios = <&ex_gpio10 0 GPIO_ACTIVE_HIGH>;
         };
     };
 
