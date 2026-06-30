@@ -42,4 +42,12 @@ config SHELL_ASYNC_API
 	default y
 endif
 
+DT_CHOSEN_NTURT_LED_STRIP := nturt,led-strip
+if $(dt_chosen_enabled,$(DT_CHOSEN_NTURT_LED_STRIP))
+config DMA
+    default y
+config SPI_STM32_DMA
+    default y
+endif
+
 endif # BOARD_EP7_VCU

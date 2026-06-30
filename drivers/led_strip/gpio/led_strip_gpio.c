@@ -173,9 +173,9 @@ static const struct led_strip_driver_api led_strip_gpio_api = {
 
 #define COLOR_GPIOS(inst, gpios)                                             \
   IF_ENABLED(DT_INST_NODE_HAS_PROP(inst, gpios),                             \
-             (static_assert(DT_INST_PROP_LEN(inst, gpios) ==                 \
-                                DT_INST_PROP(inst, chain_length) &&          \
-                            "Invalid number of " #gpios);                    \
+             (BUILD_ASSERT(DT_INST_PROP_LEN(inst, gpios) ==                  \
+                               DT_INST_PROP(inst, chain_length),             \
+                           "Invalid number of " #gpios);                     \
               static struct led_gpio                                         \
                   led_##gpios##_##inst[DT_INST_PROP_LEN(inst, gpios)];       \
               const static struct gpio_dt_spec gpios##_##inst[] = {          \

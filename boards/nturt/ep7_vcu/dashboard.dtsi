@@ -270,6 +270,7 @@
         compatible = "worldsemi,ws2812-spi";
         reg = <0>;
         spi-max-frequency = <DT_FREQ_M(4)>;
+		frame-format = <32768>; /* SPI_FRAME_FORMAT_TI */
 
         chain-length = <48>;
         spi-one-frame = <0x70>;

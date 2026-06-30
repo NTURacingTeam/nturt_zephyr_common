@@ -377,11 +377,11 @@ static const struct auxdisplay_driver_api gpio_seg_display_api = {
     .write = gpio_seg_display_write,
 };
 
-#define VALIDATE_GPIO_NUM(id, decimal_point)                          \
-  static_assert(COND_CODE_1(decimal_point,                            \
-                            (DT_PROP_LEN(id, segment_gpios) == 8),    \
-                            (DT_PROP_LEN(id, segment_gpios) == 7)) && \
-                "Invalid number of segment gpios")
+#define VALIDATE_GPIO_NUM(id, decimal_point)                            \
+  BUILD_ASSERT(                                                         \
+      COND_CODE_1(decimal_point, (DT_PROP_LEN(id, segment_gpios) == 8), \
+                  (DT_PROP_LEN(id, segment_gpios) == 7)),               \
+      "Invalid number of segment gpios")
 
 #define _DISP_GPIO(i, id) GPIO_DT_SPEC_GET_BY_IDX(id, segment_gpios, i)
 
