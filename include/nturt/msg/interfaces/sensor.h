@@ -74,7 +74,7 @@
 #define PRImsg_sensor_imu                                      \
   PRImsg_header "\n\r\tacceleration (m/s^2): %" PRImsg_3d_data \
                 "\n\r\tgyration (rad/s): %" PRImsg_3d_data     \
-                "\n\r\tquaternion: %" PRImsg_4d_data
+                "\n\r\teuler (deg): %" PRImsg_3d_data
 
 /**
  * @brief Insert @ref msg_sensor_imu arguments to printf format.
@@ -83,21 +83,23 @@
  */
 #define PRImsg_sensor_imu_arg(data)                                   \
   PRImsg_header_arg((data).header), PRImsg_3d_data_arg((data).accel), \
-      PRImsg_3d_data_arg((data).gyro), PRImsg_4d_data_arg((data).orient)
+      PRImsg_3d_data_arg((data).gyro), PRImsg_3d_data_arg((data).euler)
 
 /// @brief Insert @ref msg_sensor_gps printf format string.
 #define PRImsg_sensor_gps           \
   PRImsg_header                     \
       "\n\r\tlongitude (deg): %.7f" \
-      "\n\r\tlatitude (deg): %.7f"
+      "\n\r\tlatitude (deg): %.7f"  \
+      "\n\r\tvelocity (m/s): %" PRImsg_3d_data
 
 /**
  * @brief Insert @ref msg_sensor_gps arguments to printf format.
  *
  * @param[in] data The GPS sensor data.
  */
-#define PRImsg_sensor_gps_arg(data) \
-  PRImsg_header_arg((data).header), (data).longitude, (data).latitude
+#define PRImsg_sensor_gps_arg(data)                                    \
+  PRImsg_header_arg((data).header), (data).longitude, (data).latitude, \
+      PRImsg_3d_data_arg((data).velocity)
 
 /// @brief Insert @ref msg_sensor_pow printf format string.
 #define PRImsg_sensor_pow           \
@@ -172,12 +174,12 @@
 #define CSV_PRImsg_sensor_imu_header                                      \
   CSV_PRImsg_header_header                                                \
       "," CSV_PRImsg_3d_data_header(accel) "," CSV_PRImsg_3d_data_header( \
-          gyro) "," CSV_PRImsg_4d_data_header(orient)
+          gyro) "," CSV_PRImsg_3d_data_header(euler)
 
 /// @brief Insert @ref msg_sensor_imu CSV format string.
 #define CSV_PRImsg_sensor_imu                                       \
   CSV_PRImsg_header ",%" CSV_PRImsg_3d_data ",%" CSV_PRImsg_3d_data \
-                    ",%" CSV_PRImsg_4d_data
+                    ",%" CSV_PRImsg_3d_data
 
 /**
  * @brief Insert @ref msg_sensor_imu arguments to CSV print format.
@@ -187,22 +189,25 @@
 #define CSV_PRImsg_sensor_imu_arg(data)                                       \
   CSV_PRImsg_header_arg((data).header), CSV_PRImsg_3d_data_arg((data).accel), \
       CSV_PRImsg_3d_data_arg((data).gyro),                                    \
-      CSV_PRImsg_4d_data_arg((data).orient)
+      CSV_PRImsg_3d_data_arg((data).euler)
 
 /// @brief CSV header for @ref msg_sensor_gps.
 #define CSV_PRImsg_sensor_gps_header \
-  CSV_PRImsg_header_header ",longitude,latitude"
+  CSV_PRImsg_header_header           \
+      ",longitude,latitude," CSV_PRImsg_3d_data_header(velocity)
 
 /// @brief Insert @ref msg_sensor_gps CSV format string.
-#define CSV_PRImsg_sensor_gps CSV_PRImsg_header ",%.7f,%.7f"
+#define CSV_PRImsg_sensor_gps \
+  CSV_PRImsg_header ",%.7f,%.7f,%" CSV_PRImsg_3d_data
 
 /**
  * @brief Insert @ref msg_sensor_gps arguments to CSV print format.
  *
  * @param[in] data The GPS sensor data.
  */
-#define CSV_PRImsg_sensor_gps_arg(data) \
-  CSV_PRImsg_header_arg((data).header), (data).longitude, (data).latitude
+#define CSV_PRImsg_sensor_gps_arg(data)                                    \
+  CSV_PRImsg_header_arg((data).header), (data).longitude, (data).latitude, \
+      CSV_PRImsg_3d_data_arg((data).velocity)
 
 /// @brief CSV header for @ref msg_sensor_pow.
 #define CSV_PRImsg_sensor_pow_header \
@@ -287,8 +292,8 @@ struct msg_sensor_imu {
   /** Angular velocity. Unit: rad/s */
   union msg_3d_data gyro;
 
-  /** Orientation in Quaternion. */
-  union msg_4d_data orient;
+  /** Euler angles. Unit: deg */
+  union msg_3d_data euler;
 };
 
 /// @brief GPS message.
@@ -301,6 +306,9 @@ struct msg_sensor_gps {
 
   /** Latitude, postive for North, negative for South. Unit: deg */
   double latitude;
+
+  /** Velocity. Unit: m/s */
+  union msg_3d_data velocity;
 };
 
 /// @brief Power sensors message.
