@@ -6,7 +6,7 @@ var searchData=
   ['vcu_20can_20bus_20data_20conversion_3',['VCU CAN bus data conversion.',['../group__can__convert__vcu.html',1,'']]],
   ['vcu_20telemetry_4',['VCU Telemetry',['../group__tm__vcu.html',1,'']]],
   ['vcu_5ftm_5fdata_5faddr_5',['vcu_tm_data_addr',['../group__tm__vcu.html#ga20c11863537956e75b269b98551646f5',1,'telemetry.h']]],
-  ['velocity_6',['velocity',['../structmsg__ctrl__states.html#a7ae44c095ef33d85ac984cf0e5d3bca3',1,'msg_ctrl_states']]],
+  ['velocity_6',['velocity',['../structmsg__sensor__gps.html#aeab2f9f46815d4729c62228575cb7692',1,'msg_sensor_gps::velocity'],['../structmsg__ctrl__states.html#a7ae44c095ef33d85ac984cf0e5d3bca3',1,'msg_ctrl_states::velocity']]],
   ['velocity_5fcan_5fto_5fphy_7',['VELOCITY_CAN_TO_PHY',['../group__can__convert.html#ga90ea09c6c35f440c0e0bc1a64e4b5a59',1,'convert.h']]],
   ['velocity_5fphy_5fto_5fcan_8',['VELOCITY_PHY_TO_CAN',['../group__can__convert.html#ga9303bcfff8d09073982f70441ad46c14',1,'convert.h']]],
   ['volt_9',['volt',['../structmsg__ts__acc.html#a1757b6c2d3128eeaeec64136b2619028',1,'msg_ts_acc::volt'],['../structmsg__ts__inv.html#a18c262e4a534a33840ffd6dcdd0f9d55',1,'msg_ts_inv::volt']]]

@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__msg__if__pri__sensor.html":[1,6,1,2,1],
 "group__msg__if__pri__sensor.html":[1,6,1,3,1],
 "group__msg__if__pri__sensor.html#ga04d2a8586bf4dbe706878e1dc449fee4":[1,6,1,2,1,7],
 "group__msg__if__pri__sensor.html#ga04d2a8586bf4dbe706878e1dc449fee4":[1,6,1,3,1,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "logging_8h.html":[3,0,1,2,2],
 "msg_2interfaces_2ctrl_8h.html":[3,0,2,3,0,0],
 "msg_2interfaces_2states_8h.html":[3,0,2,3,0,2],
-"nturt__vcu_2include_2vcu_2canbus_2convert_8h.html":[3,0,2,0,0],
-"nturt__vcu_2include_2vcu_2msg_2interfaces_2interfaces_8h.html":[3,0,2,3,0,1]
+"nturt__vcu_2include_2vcu_2canbus_2convert_8h.html":[3,0,2,0,0]
 };

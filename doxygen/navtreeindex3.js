@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"nturt__vcu_2include_2vcu_2msg_2interfaces_2interfaces_8h.html":[3,0,2,3,0,1],
 "nturt__vcu_2include_2vcu_2msg_2msg_8h.html":[3,0,2,3,1],
 "nturt__vcu_2include_2vcu_2telemetry_8h.html":[3,0,2,5],
 "nturt__zephyr__common_2include_2nturt_2canbus_2convert_8h.html":[3,0,1,0,2],
@@ -122,6 +123,7 @@ var NAVTREEINDEX3 =
 "structmsg__sensor__gps.html#a3fe2f00a3b3b290cd972264ea16b7172":[1,6,1,3,5,0],
 "structmsg__sensor__gps.html#a5d5ad0a9395c8fef414bd3972173ab15":[1,6,1,3,5,2],
 "structmsg__sensor__gps.html#ad6720a4ec826fc732b18dcc9f89eb78e":[1,6,1,3,5,1],
+"structmsg__sensor__gps.html#aeab2f9f46815d4729c62228575cb7692":[1,6,1,3,5,3],
 "structmsg__sensor__imu.html":[1,6,1,3,4],
 "structmsg__sensor__imu.html#a4049645a3445141fdc40d1e8f6443e84":[1,6,1,3,4,0],
 "structmsg__sensor__imu.html#a691a5a5d5ef69230013e872a4736cc58":[1,6,1,3,4,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "util__loops_8h.html#a2d540744e0997b0275f1ae9e2436e1b2":[3,0,1,3,3,51],
 "util__loops_8h.html#a2eb9b080190b9c687e18a4dc1daf121c":[3,0,1,3,3,27],
 "util__loops_8h.html#a30e68279d5c77f1f6a5a5ba3eec4a902":[3,0,1,3,3,62],
-"util__loops_8h.html#a322931909f1a2dedba43541bfcb43a05":[3,0,1,3,3,54],
-"util__loops_8h.html#a3466cc2313e0597e33edd978275cd33a":[3,0,1,3,3,24],
-"util__loops_8h.html#a3ac94156a52d3ae5239b0cf4c79b565e":[3,0,1,3,3,6]
+"util__loops_8h.html#a322931909f1a2dedba43541bfcb43a05":[3,0,1,3,3,54]
 };

@@ -11,6 +11,7 @@ var group__can__convert =
     [ "BSE_RAW_PHY_TO_CAN", "group__can__convert.html#ga95f88199c5bb7966230590e0354d7880", null ],
     [ "GPS_LATITUDE_CAN_TO_PHY", "group__can__convert.html#gadb54a82cc089b12b210cdd9f3d819150", null ],
     [ "GPS_LONGITUDE_CAN_TO_PHY", "group__can__convert.html#gaa89302874450730e213bf36d12798215", null ],
+    [ "GPS_VELOCITY_CAN_TO_PHY", "group__can__convert.html#gacdf3460cf5f34f4732be16cc0210b714", null ],
     [ "IMU_ACCEL_CAN_TO_PHY", "group__can__convert.html#gad433bf336e8a84e5909a27a7d2de35f9", null ],
     [ "IMU_GYRO_CAN_TO_PHY", "group__can__convert.html#ga56bb4dffa4a408efdfe88d314ceabcca", null ],
     [ "IMU_ORIENT_CAN_TO_PHY", "group__can__convert.html#ga61b72e6d6cc823fe610ec125265eb715", null ],

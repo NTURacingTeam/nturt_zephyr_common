@@ -213,6 +213,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gadb54a82cc089b12b210cdd9f3d819150" id="r_gadb54a82cc089b12b210cdd9f3d819150"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gadb54a82cc089b12b210cdd9f3d819150">GPS_LATITUDE_CAN_TO_PHY</a>(can)</td></tr>
 <tr class="memdesc:gadb54a82cc089b12b210cdd9f3d819150"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPS latitude CAN data in 1E-7 deg (int32_t), convert to deg (double).  <br /></td></tr>
 <tr class="separator:gadb54a82cc089b12b210cdd9f3d819150"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacdf3460cf5f34f4732be16cc0210b714" id="r_gacdf3460cf5f34f4732be16cc0210b714"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gacdf3460cf5f34f4732be16cc0210b714">GPS_VELOCITY_CAN_TO_PHY</a>(can)</td></tr>
+<tr class="memdesc:gacdf3460cf5f34f4732be16cc0210b714"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPS velocity CAN data in 0.015625 m/s (int16_t), convert to m/s (double).  <br /></td></tr>
+<tr class="separator:gacdf3460cf5f34f4732be16cc0210b714"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>CAN bus data conversion macros. </p>
@@ -434,6 +437,28 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">(1E-7 * (can))</div>
 </div><!-- fragment -->
 <p>GPS longitude CAN data in 1E-7 deg (int32_t), convert to deg (double). </p>
+
+</div>
+</div>
+<a id="gacdf3460cf5f34f4732be16cc0210b714" name="gacdf3460cf5f34f4732be16cc0210b714"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacdf3460cf5f34f4732be16cc0210b714">&#9670;&#160;</a></span>GPS_VELOCITY_CAN_TO_PHY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GPS_VELOCITY_CAN_TO_PHY</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>can</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;<a class="el" href="nturt__zephyr__common_2include_2nturt_2canbus_2convert_8h.html">nturt/canbus/convert.h</a>&gt;</code></p>
+<b>Value:</b><div class="fragment"><div class="line">(0.015625 * (can))</div>
+</div><!-- fragment -->
+<p>GPS velocity CAN data in 0.015625 m/s (int16_t), convert to m/s (double). </p>
 
 </div>
 </div>
@@ -772,7 +797,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 16 2026 16:44:47 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Wed Jul 8 2026 13:13:39 for NTURT Zephyr by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>
