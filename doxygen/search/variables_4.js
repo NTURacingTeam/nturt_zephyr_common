@@ -5,5 +5,6 @@ var searchData=
   ['err_2',['err',['../structsensor__tol.html#a75e4142910306ae63db34539dcf5c587',1,'sensor_tol']]],
   ['errcode_3',['errcode',['../structerr.html#a31ef0ad79c3a42ba673a5849e7ecfbc2',1,'err']]],
   ['errcodes_4',['errcodes',['../structerr__filter.html#a55b7dd395d09bc660a0b5b5c80e6c1f4',1,'err_filter']]],
-  ['extension_5',['extension',['../structcanopen__od__init.html#aeedea8ba6cbbce2c4b070881d989a63c',1,'canopen_od_init']]]
+  ['euler_5',['euler',['../structmsg__sensor__imu.html#a04698c5564283c73b37dc8bfc1c10b56',1,'msg_sensor_imu']]],
+  ['extension_6',['extension',['../structcanopen__od__init.html#aeedea8ba6cbbce2c4b070881d989a63c',1,'canopen_od_init']]]
 ];

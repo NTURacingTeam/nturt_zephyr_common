@@ -21,9 +21,9 @@ var group__msg__if__sensor =
     ] ],
     [ "msg_sensor_imu", "structmsg__sensor__imu.html", [
       [ "accel", "structmsg__sensor__imu.html#a4049645a3445141fdc40d1e8f6443e84", null ],
+      [ "euler", "structmsg__sensor__imu.html#a04698c5564283c73b37dc8bfc1c10b56", null ],
       [ "gyro", "structmsg__sensor__imu.html#a691a5a5d5ef69230013e872a4736cc58", null ],
-      [ "header", "structmsg__sensor__imu.html#a97787dad9aaf27797ec928efb385cb46", null ],
-      [ "orient", "structmsg__sensor__imu.html#aefd259210edd8fa91e309dff91940a72", null ]
+      [ "header", "structmsg__sensor__imu.html#a97787dad9aaf27797ec928efb385cb46", null ]
     ] ],
     [ "msg_sensor_gps", "structmsg__sensor__gps.html", [
       [ "header", "structmsg__sensor__gps.html#a3fe2f00a3b3b290cd972264ea16b7172", null ],

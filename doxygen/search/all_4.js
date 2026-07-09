@@ -64,5 +64,6 @@ var searchData=
   ['errcodes_61',['errcodes',['../structerr__filter.html#a55b7dd395d09bc660a0b5b5c80e6c1f4',1,'err_filter']]],
   ['error_62',['Error',['../group__err.html',1,'']]],
   ['error_20codes_63',['Error Codes',['../group__err__code.html',1,'']]],
-  ['extension_64',['extension',['../structcanopen__od__init.html#aeedea8ba6cbbce2c4b070881d989a63c',1,'canopen_od_init']]]
+  ['euler_64',['euler',['../structmsg__sensor__imu.html#a04698c5564283c73b37dc8bfc1c10b56',1,'msg_sensor_imu']]],
+  ['extension_65',['extension',['../structcanopen__od__init.html#aeedea8ba6cbbce2c4b070881d989a63c',1,'canopen_od_init']]]
 ];
