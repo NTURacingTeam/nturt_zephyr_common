@@ -14,6 +14,22 @@
 
 LOG_MODULE_DECLARE(nturt_msg, CONFIG_NTURT_MSG_LOG_LEVEL);
 
+/* type ----------------------------------------------------------------------*/
+struct msg_agg_ctx {
+  struct k_work_q work_q;
+};
+
+/* static function declaration -----------------------------------------------*/
+static int init();
+
+/* static variable -----------------------------------------------------------*/
+static struct msg_agg_ctx g_ctx;
+
+SYS_INIT(init, APPLICATION, CONFIG_NTURT_MSG_INIT_PRIORITY);
+
+static K_THREAD_STACK_DEFINE(msg_agg_work_q_stack,
+                             CONFIG_NTURT_MSG_AGG_WORK_Q_STACK_SIZE);
+
 /* function definition -------------------------------------------------------*/
 void agg_update(struct agg *agg, int idx) {
   uint8_t flag = agg->member_flags[idx];
@@ -27,7 +43,7 @@ void agg_update(struct agg *agg, int idx) {
     // cold start
     if (k_timer_remaining_ticks(&agg->period_timer) == 0 &&
         !k_work_delayable_is_pending(&agg->work)) {
-      k_work_schedule(&agg->work, agg->watermark);
+      k_work_schedule_for_queue(&g_ctx.work_q, &agg->work, agg->watermark);
     }
 
     // fully updated after minimum separation time has elapsed
@@ -36,7 +52,8 @@ void agg_update(struct agg *agg, int idx) {
       k_timer_start(&agg->period_timer, agg->period, K_FOREVER);
       k_timer_start(&agg->early_timer, agg->min_separation, K_FOREVER);
 
-      int ret = k_work_reschedule(&agg->work, K_NO_WAIT);
+      int ret =
+          k_work_reschedule_for_queue(&g_ctx.work_q, &agg->work, K_NO_WAIT);
       if (ret == 0 || ret == 2) {
         LOG_WRN("Publishing %s took longer than minimum separation time",
                 agg->name);
@@ -48,7 +65,9 @@ void agg_update(struct agg *agg, int idx) {
 void agg_period_timer_cb(struct k_timer *timer) {
   struct agg *agg = CONTAINER_OF(timer, struct agg, period_timer);
 
-  K_SPINLOCK(&agg->lock) { k_work_schedule(&agg->work, agg->watermark); }
+  K_SPINLOCK(&agg->lock) {
+    k_work_schedule_for_queue(&g_ctx.work_q, &agg->work, agg->watermark);
+  }
 }
 
 void agg_early_timer_cb(struct k_timer *timer) {
@@ -59,7 +78,8 @@ void agg_early_timer_cb(struct k_timer *timer) {
     if (IS_MASK_SET(agg->updated, agg->fully_updated)) {
       k_timer_start(&agg->period_timer, agg->period, K_FOREVER);
       k_timer_start(&agg->early_timer, agg->min_separation, K_FOREVER);
-      int ret = k_work_reschedule(&agg->work, K_NO_WAIT);
+      int ret =
+          k_work_reschedule_for_queue(&g_ctx.work_q, &agg->work, K_NO_WAIT);
       if (ret == 0 || ret == 2) {
         LOG_WRN("Publishing %s took longer than minimum separation time",
                 agg->name);
@@ -111,4 +131,17 @@ void agg_typed_publish(struct agg *agg, void *user_data) {
   }
 
   agg_typed->publish(agg_typed->pub_data, user_data);
+}
+
+/* static function declaration -----------------------------------------------*/
+static int init() {
+  struct k_work_queue_config config = {
+      .name = "msg_agg_work_q",
+  };
+
+  k_work_queue_init(&g_ctx.work_q);
+  k_work_queue_start(&g_ctx.work_q, msg_agg_work_q_stack,
+                     K_THREAD_STACK_SIZEOF(msg_agg_work_q_stack),
+                     CONFIG_NTURT_MSG_AGG_WORK_Q_PRIORITY, &config);
+  return 0;
 }

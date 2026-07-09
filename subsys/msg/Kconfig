@@ -23,6 +23,18 @@ config NTURT_MSG_MAX_SIZE
 	  Maximum size of a message used to create buffers of the right size.
 	  Increase when appropriate.
 
+config NTURT_MSG_AGG_WORK_Q_STACK_SIZE
+	int "Aggregation work queue stack size"
+	default 2048
+	help
+	  Stack size for the work queue that process message aggregation.
+
+config NTURT_MSG_AGG_WORK_Q_PRIORITY
+	int "Aggregation work queue priority"
+	default -9
+	help
+	  Priority for the work queue that process message aggregation.
+
 config NTURT_MSG_LOGGING
 	bool "Message logging support"
 	depends on NTURT_FS
