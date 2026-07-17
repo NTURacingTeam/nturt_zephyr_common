@@ -100,11 +100,13 @@
 
 /// @brief IMU acceleration CAN data in 0.001 g (int16_t), convert to m/s^2
 /// (double).
-#define IMU_ACCEL_CAN_TO_PHY(can) (0.00981 * (can))
+/// xsens IMU (m/s^2) conversion factor: 0.00390625
+#define IMU_ACCEL_CAN_TO_PHY(can) (0.00390625 * (can))
 
 /// @brief IMU angular velocity CAN data in 0.1 deg/s (int16_t), convert to
 /// rad/s (double).
-#define IMU_GYRO_CAN_TO_PHY(can) (0.001745 * (can))
+/// xsens IMU (rad/s) to (degree/s) conversion factor: 57.3
+#define IMU_GYRO_CAN_TO_PHY(can) (57.3 * 0.00195313 * (can))
 
 /// @brief IMU euler angles CAN data in 0.0078125 deg (int16_t), convert to deg
 /// (double).
@@ -112,10 +114,10 @@
 
 /// @brief GPS longitude CAN data in 1E-7 deg (int32_t), convert to deg
 /// (double).
-#define GPS_LONGITUDE_CAN_TO_PHY(can) (1E-7 * (can))
+#define GPS_LONGITUDE_CAN_TO_PHY(can) (5.96046e-08 * (can))
 
 /// @brief GPS latitude CAN data in 1E-7 deg (int32_t), convert to deg (double).
-#define GPS_LATITUDE_CAN_TO_PHY(can) (1E-7 * (can))
+#define GPS_LATITUDE_CAN_TO_PHY(can) (5.96046e-08 * (can))
 
 /// @brief GPS velocity CAN data in 0.015625 m/s (int16_t), convert to m/s
 /// (double).
