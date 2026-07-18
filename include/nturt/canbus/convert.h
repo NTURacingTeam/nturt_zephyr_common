@@ -105,8 +105,8 @@
 
 /// @brief IMU angular velocity CAN data in 0.1 deg/s (int16_t), convert to
 /// rad/s (double).
-/// xsens IMU (rad/s) to (degree/s) conversion factor: 57.3
-#define IMU_GYRO_CAN_TO_PHY(can) (57.3 * 0.00195313 * (can))
+/// xsens IMU (rad/s)  
+#define IMU_GYRO_CAN_TO_PHY(can) (0.00195313 * (can))
 
 /// @brief IMU euler angles CAN data in 0.0078125 deg (int16_t), convert to deg
 /// (double).
