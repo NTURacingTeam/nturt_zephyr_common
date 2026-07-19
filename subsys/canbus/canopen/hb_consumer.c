@@ -43,15 +43,15 @@ ERR_DEFINE(hb_imu, ERR_CODE_HB_IMU, ERR_SEV_ERROR,
            "IMU not operational or heartbeat lost");
 ERR_DEFINE(hb_gps, ERR_CODE_HB_GPS, ERR_SEV_ERROR,
            "GPS not operational or heartbeat lost");
-ERR_DEFINE(hb_acc, ERR_CODE_HB_ACC, ERR_SEV_FATAL,
+ERR_DEFINE(hb_acc, ERR_CODE_HB_ACC, ERR_SEV_ERROR,
            "Accumulator not operational or heartbeat lost");
-ERR_DEFINE(hb_inv_fl, ERR_CODE_HB_INV_FL, ERR_SEV_FATAL,
+ERR_DEFINE(hb_inv_fl, ERR_CODE_HB_INV_FL, ERR_SEV_ERROR,
            "Inverter FL not operational or heartbeat lost");
-ERR_DEFINE(hb_inv_fr, ERR_CODE_HB_INV_FR, ERR_SEV_FATAL,
+ERR_DEFINE(hb_inv_fr, ERR_CODE_HB_INV_FR, ERR_SEV_ERROR,
            "Inverter FR not operational or heartbeat lost");
-ERR_DEFINE(hb_inv_rl, ERR_CODE_HB_INV_RL, ERR_SEV_FATAL,
+ERR_DEFINE(hb_inv_rl, ERR_CODE_HB_INV_RL, ERR_SEV_ERROR,
            "Inverter RL not operational or heartbeat lost");
-ERR_DEFINE(hb_inv_rr, ERR_CODE_HB_INV_RR, ERR_SEV_FATAL,
+ERR_DEFINE(hb_inv_rr, ERR_CODE_HB_INV_RR, ERR_SEV_ERROR,
            "Inverter RR not operational or heartbeat lost");
 
 /* static function definition ------------------------------------------------*/

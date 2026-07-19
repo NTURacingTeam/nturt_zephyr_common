@@ -15,7 +15,7 @@
 
     steer_encoder: steer-encoder {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 3>;
+        io-channels = <&adc1 9>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
         min-voltage = <50>;
         max-voltage = <3300>;
@@ -25,7 +25,7 @@
 
     apps1: accel-encoder1 {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 7>;
+        io-channels = <&adc1 4>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
         min-voltage = <1000>;
         max-voltage = <3000>;
@@ -35,7 +35,7 @@
 
     apps2: accel-encoder2 {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 19>;
+        io-channels = <&adc1 8>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
         min-voltage = <1000>;
         max-voltage = <3000>;
@@ -87,7 +87,7 @@
 
     susp_rl: susp-rl {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 4>;
+        io-channels = <&adc1 7>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
         min-voltage = <190>;
         max-voltage = <2583>;
@@ -97,7 +97,7 @@
 
     susp_rr: susp-rr {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 8>;
+        io-channels = <&adc1 19>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
         min-voltage = <190>;
         max-voltage = <2583>;
