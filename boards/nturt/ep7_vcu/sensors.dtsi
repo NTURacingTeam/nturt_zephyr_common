@@ -93,6 +93,7 @@
         max-voltage = <2583>;
         min-value = <0 103000>;
         max-value = <0 0>;
+        status = "disabled"; // disable susp_rl for now, as it is not used in the current design
     };
 
     susp_rr: susp-rr {
@@ -103,5 +104,6 @@
         max-voltage = <2583>;
         min-value = <0 103000>;
         max-value = <0 0>;
+        status = "disabled"; // disable susp_rr for now, as it is not used in the current design
     };
 };
