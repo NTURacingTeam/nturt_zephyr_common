@@ -87,7 +87,7 @@
 
     susp_rl: susp-rl {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 7>;
+        io-channels = <&adc3 5>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
         min-voltage = <190>;
         max-voltage = <2583>;
@@ -97,7 +97,7 @@
 
     susp_rr: susp-rr {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 19>;
+        io-channels = <&adc3 9>;
         zephyr,channel = <SENSOR_CHAN_DISTANCE>;
         min-voltage = <190>;
         max-voltage = <2583>;
