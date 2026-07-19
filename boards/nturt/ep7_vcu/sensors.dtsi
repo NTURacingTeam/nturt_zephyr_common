@@ -25,7 +25,7 @@
 
     apps1: accel-encoder1 {
         compatible = "analog-generic-sensor";
-        io-channels = <&adc1 18>;
+        io-channels = <&adc1 7>;
         zephyr,channel = <SENSOR_CHAN_ROTATION>;
         min-voltage = <1000>;
         max-voltage = <3000>;

@@ -1,11 +1,11 @@
 ---
 all:
   hosts:
-    # nturt-cm4-1.tail5e7bac.ts.net:
-    #   ansible_user: nturt
-    #   ansible_password: nturt03734301
-    #   ansible_become_password: nturt03734301
-    raspberrypi-ep6-0824.tail5e7bac.ts.net:
-      ansible_user: pi
-      ansible_password: raspberry
-      ansible_become_password: raspberry
+    nturt-cm4-1.tail5e7bac.ts.net:
+      ansible_user: nturt
+      ansible_password: nturt03734301
+      ansible_become_password: nturt03734301
+    # raspberrypi-ep6-0824.tail5e7bac.ts.net:
+    #   ansible_user: pi
+    #   ansible_password: raspberry
+    #   ansible_become_password: raspberry

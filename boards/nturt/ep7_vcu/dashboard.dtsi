@@ -20,7 +20,7 @@
     leds: leds {
         compatible = "gpio-leds";
 
-        canopen_green_led: led-0 {
+        led-0 {
             gpios = <&ex_gpio9 0 GPIO_ACTIVE_HIGH>;
         };
 
@@ -36,7 +36,7 @@
             gpios = <&ex_gpio9 6 GPIO_ACTIVE_HIGH>;
         };
 
-        canopen_red_led: led-4 {
+        led-4 {
             gpios = <&ex_gpio9 1 GPIO_ACTIVE_HIGH>;
         };
 
@@ -68,11 +68,11 @@
             gpios = <&ex_gpio10 1 GPIO_ACTIVE_HIGH>;
         };
 
-        led-12 {
+        canopen_green_led: led-12 {
             gpios = <&ex_gpio10 6 GPIO_ACTIVE_HIGH>;
         };
 
-        led-13 {
+        canopen_red_led: led-13 {
             gpios = <&ex_gpio10 4 GPIO_ACTIVE_HIGH>;
         };
 
